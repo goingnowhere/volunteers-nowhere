@@ -1,0 +1,143 @@
+
+
+<template name="volunteerUserProfile">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{getUserName user._id}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3 col-lg-3 " align="center">
+          <img alt="User Pic" src="{{imageFileLink user.profile.picture}}" class="img-circle img-responsive">
+        </div>
+        <div class=" col-md-9 col-lg-9 ">
+          <table class="table table-user-information">
+            <tbody>
+              <tr><td>{{_ "playaName"}}:</td><td>{{user.profile.playaName}}</td></tr>
+              <tr><td>{{_ "telephone"}}</td><td>{{user.profile.telephone}}</td></tr>
+              <tr><td>{{_ "email"}}</td>
+                <td>
+                  {{user.emails.[0].address}}
+                  {{#if user.emails.[0].verified}}
+                    {{fa 'check'}}
+                  {{/if}}
+                </td>
+              </tr>
+              <tr><td>{{_ "facebook"}}</td><td>{{user.profile.facebook}}</td></tr>
+              <tr><td>{{_ "has_car"}}</td><td>{{form.car}}</td></tr>
+              <tr><td>{{_ "available_for_cooking"}}</td><td>{{form.cooking}}</td></tr>
+              <tr><td>{{_ "roles"}}</td><td>
+                <div class="list-group">
+                  {{#each form.role}}
+                    <div class="list-group-item">{{getRoleName this}}</div>
+                  {{/each}}
+                </div>
+                </td>
+              </tr>
+              <tr><td>{{_ "skills"}}</td><td>
+                <div class="list-group">
+                  {{#each form.skills}}
+                    <div class="list-group-item">{{getSkillName this}}</div>
+                  {{/each}}
+                </div>
+                </td>
+              </tr>
+              <tr><td>{{_ "teams"}}</td><td>
+                <div class="list-group">
+                  {{#each form.teams}}
+                    <div class="list-group-item">{{getTeamName this}}</div>
+                  {{/each}}
+                </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <strong>{{_ "notes"}}:</strong>
+            <div>{{form.notes}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="volunteerBackendFilter">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="input-group">
+        <input id="user-car-filter" type="checkbox" />
+        <label for="user-car-filter">{{_ "has_car"}}</label>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="input-group">
+        <input id="user-cooking-filter" type="checkbox" />
+        <label for="user-cooking-filter">{{_ "available_for_cooking"}}</label>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      {{> reactiveTableFilter id="username-filter" label="User" fields=usernameFilterFields }}
+    </div>
+  </div>
+</template>
+
+<template name="volunteerBackend">
+  <div class="row">
+    <div class="col-md-3">
+      {{> volunteersStats }}
+      <!-- {{> volunteerBackendFilter}} -->
+      {{> reactiveTableFilter id="username-filter" fields=usernameFilterFields }}
+      {{> reactiveTable settings=VolunteerTableSettings }}
+    </div>
+    <div class="col-md-9">
+      {{#if showAreaSlider}}
+        <div class="panel">{{> volunteerBackendAreasSlider }}</div>
+      {{/if}}
+      {{#if currentResource.form}}
+      <div class='panel panel-default'>
+        <div class="row">
+          <div class="col-md-8">
+            {{> volunteerUserProfile currentResource}}
+          </div>
+          <div class="col-md-4">
+            <div class="pull-right">{{ fa "list" "showAreaSlider" }}</div>
+            {{#if currentResource.data._id}}
+              {{> quickForm meteormethod="VolunteerBackend.updateCrewForm" type="method-update"
+              id="updateVolunteerCrewForm" collection=VolunteerCrew doc=currentResource.data}}
+            {{else}}
+              {{> quickForm meteormethod="VolunteerBackend.insertCrewForm" type="method"
+                id="insertVolunteerCrewForm" collection=VolunteerCrew doc=currentResource.data}}
+            {{/if}}
+          </div>
+        </div>
+        {{> reactiveTable settings=VolunteerCrewTableSettings }}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="volunteersStats">
+  <h4><a href="{{pathFor 'volunteersDownload'}}">{{_ "numbers"}}</a></h4>
+  <ul>
+    <li>{{_ "users"}} : {{usersTotal}}</li>
+    <li>{{_ "volunteers"}} : {{volunteersTotal}}</li>
+    <li>{{_ "performers"}} : {{performersTotal}}</li>
+  </ul>
+</template>
+
+<template name="volunteerBackendAreasSlider">
+  <ul style="overflow-x:scroll;white-space:nowrap;" class="list-inline">
+    {{#each areas}}
+      <li class="list-group-item {{#if hasLeads}}list-group-item-success{{else}}list-group-item-warning{{/if}}">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>{{_ name}}</strong></li>
+          <li class="list-group-item">{{> areasSettingsLeads _id=_id}}</li>
+          <li class="list-group-item">{{_ "volunteers"}} {{_ "assigned"}}: {{shifts}}</li>
+          <li class="list-group-item">{{_ "volunteers"}} {{_ "available" }}: {{crews}}</li>
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</template>

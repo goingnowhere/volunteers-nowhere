@@ -1,0 +1,49 @@
+<template name="teamList">
+  <ul>
+  {{#each team in teams}}
+    <li>
+      {{team.name}}
+      <a href="/teams/edit/{{team._id}}">(edit)</a>
+      <a href="/teams/view/{{team._id}}">(shifts)</a>
+    </li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name="teams">
+    <h1>Teams</h1>
+
+    {{#unless currentUser}}
+      {{> atForm state="signIn"}}
+    {{else}}
+      {{> atNavButton}} <a href="/teams/add" class="btn btn-default"> New</a>
+      {{> teamForm}}
+    {{/unless}}
+
+    <h2>All Teams</h2>
+    {{> teamList}}
+</template>
+
+<template name="volunteer">
+    <h1>Volunteer</h1>
+
+    {{#unless currentUser}}
+      {{> atForm state="signIn"}}
+    {{else}}
+      {{> atNavButton}} <a href="/teams/add" class="btn btn-default"> New</a>
+      {{> volunteerForm}}
+    {{/unless}}
+
+</template>
+
+<template name="teamsView">
+  <h1>Teams Shifts</h1>
+  {{> teamsShifts}}
+</template>
+
+<template name="adminVolunteerForm">
+  <h1>FormBuilder {{name}}</h1>
+  <!-- {{#if Template.subscriptionsReady}} -->
+  {{> formBuilder this}}
+  <!-- {{/if}} -->
+</template>
