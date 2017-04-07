@@ -51,6 +51,7 @@ Factory.define('fakeTeam',Volunteers.Collections.Teams,
     'name': () -> faker.company.companyName()
     'visibility': 'public',
     'leads': () -> [ {'userId': getRandom('fakeUser')._id, 'role': 'lead'} ]
+    'description': () -> faker.lorem.paragraph()
     'tags': () -> faker.lorem.words(),
     'parents':[],
   })
@@ -64,8 +65,8 @@ Factory.define('fakeTeamShifts',Volunteers.Collections.TeamShifts,
     'visibility': 'public',
     'min': () -> faker.random.number(1,3),
     'max': () -> faker.random.number(4,6),
-    'start': () -> faker.date.recent(),
-    'end': () -> faker.date.recent(),
+    'start': () -> faker.date.recent(30),
+    'end': () -> moment(this.start).add(3, 'h').toDate()
   })
 _.times(50,() -> Factory.create('fakeTeamShifts'))
 
@@ -75,6 +76,6 @@ Factory.define('fakeTeamTasks',Volunteers.Collections.TeamTasks,
     'title': () -> faker.lorem.sentence()
     'description': () -> faker.lorem.paragraph()
     'visibility': 'public'
-    'dueDate': () -> faker.date.recent()
+    'dueDate': () -> faker.date.recent(30)
   })
 _.times(50,() -> Factory.create('fakeTeamTasks'))
