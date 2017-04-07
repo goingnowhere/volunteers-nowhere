@@ -1,50 +1,34 @@
-# Router.configure
-#   loadingTemplate: 'loading',
-#   notFoundTemplate: 'notFound'
+Router.configure
+  layoutTemplate: 'userLayout'
 
-Router.route '/teams/view/:_id',
-  name: 'teamsView'
-  template: 'teamsView'
-  waitOn: () -> [ Meteor.subscribe("teams") ]
-  data: () ->
-    if this.params && this.params._id && this.ready()
-      Teams.findOne(this.params._id)
+Router.route '/',
+  name: 'home'
+  template: 'home'
+
+Router.route '/teams/list',
+  name: 'teamsList'
+  template: 'teamsList'
 
 Router.route '/teams/add',
-  name: 'teams'
-  template: 'teams'
+  name: 'teamsAdd'
+  template: 'teamsView'
 
 Router.route '/teams/edit/:_id',
-  name: 'teamsEdit'
-  template: 'teams'
-  waitOn: () -> [ Meteor.subscribe("teams") ]
+  name: 'teamsView'
+  template: 'teamsView'
+  waitOn: () -> [ Meteor.subscribe("Volunteers.teams") ]
   data: () ->
     if this.params && this.params._id && this.ready()
-      Teams.findOne(this.params._id)
+      Volunteers.Collections.Teams.findOne(this.params._id)
 
 Router.route '/volunteer',
-  name: 'volunteer'
-  template: 'volunteer'
-  waitOn: () -> [
-    # Meteor.subscribe("FormBuilder.dynamicForms"),
-    Meteor.subscribe("volunteerForm"),
-   ]
-  data: () ->
-    if this.ready()
-      VolunteerForm.findOne()#{userId: this.userId})
-      # ff = FormBuilder.Collections.DynamicForms.findOne({name: "VolunteerForm"})
-      # _.extend(f,{formId : ff._id})
-
-Router.route '/admin/volunteer/forms',
   name: 'volunteerForm'
-  template: 'adminVolunteerForm'
-  waitOn: () -> [ Meteor.subscribe("FormBuilder.dynamicForms") ]
-  data: () -> {}
+  template: 'volunteer'
 
-Router.route '/admin/volunteer/forms/:_id',
-  name: 'volunteerFormEdit'
-  template: 'adminVolunteerForm'
-  waitOn: () -> [ Meteor.subscribe("FormBuilder.dynamicForms") ]
-  data: () ->
-    if this.params && this.params._id && this.ready()
-      FormBuilder.Collections.DynamicForms.findOne(this.params._id)
+Router.route '/volunteer/shifts',
+  name: 'volunteerShifts'
+  template: 'volunteerShifts'
+
+Router.route '/admin/volunteer/form',
+  name: 'volunteerFormBuilder'
+  template: 'volunteerFormBuilder'

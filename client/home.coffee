@@ -1,6 +1,6 @@
-Template.teamList.onCreated () ->
+Template.teamsList.onCreated () ->
   this.subscribe('users')
-  this.subscribe('teams')
+  this.subscribe('Volunteers.teams')
 
-Template.teamList.helpers
-  'teams': () -> Volunteers.Collections.Teams.find().fetch()
+Template.teamsList.helpers
+  'teams': () -> Volunteers.Collections.Teams.find()

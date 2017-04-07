@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "awesome-bootstrap-checkbox": {
-      "version": "1.0.0-alpha.4",
-      "resolved": "https://registry.npmjs.org/awesome-bootstrap-checkbox/-/awesome-bootstrap-checkbox-1.0.0-alpha.4.tgz",
-      "from": "awesome-bootstrap-checkbox@1.0.0-alpha.4"
-    }
-  }
-}
