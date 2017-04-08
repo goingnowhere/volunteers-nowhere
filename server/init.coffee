@@ -48,20 +48,28 @@ getRandom = (name) -> _.sample(Factory.get(name).collection.find().fetch())
 
 Factory.define('fakeTeam',Volunteers.Collections.Teams,
   {
-    'name': () -> faker.company.companyName()
+    'name': () -> faker.company.companyName(),
     'visibility': 'public',
-    'leads': () -> [ {'userId': getRandom('fakeUser')._id, 'role': 'lead'} ]
-    'description': () -> faker.lorem.paragraph()
+    'description': () -> faker.lorem.paragraph(),
     'tags': () -> faker.lorem.words(),
-    'parents':[],
   })
 _.times(10,() -> Factory.create('fakeTeam'))
 
+Factory.define('fakeLeads',Volunteers.Collections.TeamLeads,
+  {
+    'teamId': () -> getRandom('fakeTeam')._id,
+    'userId': () -> getRandom('fakeUser')._id,
+    'role': 'lead',
+    'description': () -> faker.lorem.paragraph(),
+    'visibility': 'public',
+  })
+_.times(15,() -> Factory.create('fakeLeads'))
+
 Factory.define('fakeTeamShifts',Volunteers.Collections.TeamShifts,
   {
-    'teamId': () -> getRandom('fakeTeam')._id
-    'title': () -> faker.lorem.sentence()
-    'description': () -> faker.lorem.paragraph()
+    'teamId': () -> getRandom('fakeTeam')._id,
+    'title': () -> faker.lorem.sentence(),
+    'description': () -> faker.lorem.paragraph(),
     'visibility': 'public',
     'min': () -> faker.random.number(1,3),
     'max': () -> faker.random.number(4,6),
@@ -72,10 +80,11 @@ _.times(50,() -> Factory.create('fakeTeamShifts'))
 
 Factory.define('fakeTeamTasks',Volunteers.Collections.TeamTasks,
   {
-    'teamId': () -> getRandom('fakeTeam')._id
-    'title': () -> faker.lorem.sentence()
-    'description': () -> faker.lorem.paragraph()
-    'visibility': 'public'
-    'dueDate': () -> faker.date.recent(30)
+    'teamId': () -> getRandom('fakeTeam')._id,
+    'title': () -> faker.lorem.sentence(),
+    'description': () -> faker.lorem.paragraph(),
+    'visibility': 'public',
+    'dueDate': () -> faker.date.recent(30),
+    'estimatedTime': () -> _.sample(["1-3hs", "3-6hs", "6-12hs","1d","2ds","more"])
   })
 _.times(50,() -> Factory.create('fakeTeamTasks'))
