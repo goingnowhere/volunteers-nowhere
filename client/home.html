@@ -1,8 +1,30 @@
-<template name="teamsList">
+<template name="teamList">
   <ul>
-  {{#each team in teams}}
+  {{#each team}}
     <li>
-      {{team.name}} <a href="{{pathFor 'teamsView' _id=team._id}}">(edit)</a>
+      {{name}}
+      <a href="{{pathFor 'teamView' _id=_id}}">(edit)</a>
+      <a href="{{pathFor 'teamDayViewGrid' _id=_id}}"> (view)</a>
+    </li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name="divisionsList">
+  <ul>
+  {{#each divisions}}
+    <li>
+      {{name}} <a href="{{pathFor 'divisionView' _id=_id}}">(edit)</a>
+    </li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name="departmentsList">
+  <ul>
+  {{#each departments}}
+    <li>
+      {{name}} <a href="{{pathFor 'departmentView' _id=_id}}">(edit)</a>
     </li>
   {{/each}}
   </ul>

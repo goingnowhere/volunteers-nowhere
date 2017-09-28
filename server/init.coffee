@@ -46,31 +46,74 @@ _.times(10,() -> Factory.create('fakeVolunteersForm'))
 
 getRandom = (name) -> _.sample(Factory.get(name).collection.find().fetch())
 
-Factory.define('fakeTeam',Volunteers.Collections.Teams,
+Factory.define('fakeDivision',Volunteers.Collections.Division,
   {
     'name': () -> faker.company.companyName(),
-    'visibility': 'public',
+    # 'policy': 'public',
     'description': () -> faker.lorem.paragraph(),
     'tags': () -> faker.lorem.words(),
   })
-_.times(10,() -> Factory.create('fakeTeam'))
+_.times(10,() -> Factory.create('fakeDivision'))
 
-Factory.define('fakeLeads',Volunteers.Collections.TeamLeads,
+Factory.define('fakeDivisionLead',Volunteers.Collections.Lead,
   {
-    'teamId': () -> getRandom('fakeTeam')._id,
+    'parentId': () -> getRandom('fakeDivision')._id,
     'userId': () -> getRandom('fakeUser')._id,
     'role': 'lead',
     'description': () -> faker.lorem.paragraph(),
-    'visibility': 'public',
+    'position': 'division',
+    'policy': _.sample(["public","requireApproval","adminOnly"]),
   })
-_.times(15,() -> Factory.create('fakeLeads'))
+_.times(10,() -> Factory.create('fakeDivisionLead'))
+
+Factory.define('fakeDepartment',Volunteers.Collections.Department,
+  {
+    'name': () -> faker.company.companyName(),
+    # 'policy': 'public',
+    'description': () -> faker.lorem.paragraph(),
+    'tags': () -> faker.lorem.words(),
+    'parentId': () -> getRandom('fakeDivision')._id
+  })
+_.times(20,() -> Factory.create('fakeDepartment'))
+
+Factory.define('fakeDepartmentLead',Volunteers.Collections.Lead,
+  {
+    'parentId': () -> getRandom('fakeDepartment')._id,
+    'userId': () -> getRandom('fakeUser')._id,
+    'role': 'lead',
+    'description': () -> faker.lorem.paragraph(),
+    'position': 'department',
+    'policy': _.sample(["public","requireApproval","adminOnly"]),
+  })
+_.times(10,() -> Factory.create('fakeDepartmentLead'))
+
+Factory.define('fakeTeam',Volunteers.Collections.Team,
+  {
+    'name': () -> faker.company.companyName(),
+    # 'policy': _.sample(["public","requireApproval","adminOnly"]),
+    'description': () -> faker.lorem.paragraph(),
+    'tags': () -> faker.lorem.words(),
+    'parentId': () -> getRandom('fakeDepartment')._id
+  })
+_.times(40,() -> Factory.create('fakeTeam'))
+
+Factory.define('fakeTeamLead',Volunteers.Collections.Lead,
+  {
+    'parentId': () -> getRandom('fakeTeam')._id,
+    'userId': () -> getRandom('fakeUser')._id,
+    'role': 'lead',
+    'description': () -> faker.lorem.paragraph(),
+    'position': 'team',
+    'policy': _.sample(["public","requireApproval","adminOnly"]),
+  })
+_.times(15,() -> Factory.create('fakeTeamLead'))
 
 Factory.define('fakeTeamShifts',Volunteers.Collections.TeamShifts,
   {
     'teamId': () -> getRandom('fakeTeam')._id,
     'title': () -> faker.lorem.sentence(),
     'description': () -> faker.lorem.paragraph(),
-    'visibility': 'public',
+    'policy': _.sample(["public","requireApproval","adminOnly"]),
     'min': () -> faker.random.number(1,3),
     'max': () -> faker.random.number(4,6),
     'start': () -> faker.date.recent(30),
@@ -83,8 +126,11 @@ Factory.define('fakeTeamTasks',Volunteers.Collections.TeamTasks,
     'teamId': () -> getRandom('fakeTeam')._id,
     'title': () -> faker.lorem.sentence(),
     'description': () -> faker.lorem.paragraph(),
-    'visibility': 'public',
-    'dueDate': () -> faker.date.recent(30),
-    'estimatedTime': () -> _.sample(["1-3hs", "3-6hs", "6-12hs","1d","2ds","more"])
+    'policy': _.sample(["public","requireApproval","adminOnly"]),
+    'dueDate': () -> faker.date.future(),
+    'estimatedTime': () -> _.sample(["1-3hs", "3-6hs", "6-12hs","1d","2ds","more"]),
+    'status': () -> _.sample(["pending", "archived", "done"])
+    'min': () -> faker.random.number(1,3),
+    'max': () -> faker.random.number(4,6),
   })
 _.times(50,() -> Factory.create('fakeTeamTasks'))

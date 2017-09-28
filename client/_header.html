@@ -32,19 +32,41 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle"
                 data-toggle="dropdown" role="button"
-                aria-haspopup="true" aria-expanded="false">{{_ "admin"}}<span class="caret"></span></a>
+                aria-haspopup="true" aria-expanded="false">{{_ "forms"}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="{{isActiveRoute 'teamsAdd'}}">
-                  <a href="{{pathFor 'teamsAdd'}}">{{_ "new_team"}}</a>
+                <li class="{{isActiveRoute 'teamList'}}">
+                  <a href="{{pathFor 'teamList'}}">{{_ "all_team"}}</a>
+                </li>
+                <li class="{{isActiveRoute 'divisionsList'}}">
+                  <a href="{{pathFor 'divisionsList'}}">{{_ "all_divisions"}}</a>
+                </li>
+                <li class="{{isActiveRoute 'departmentsList'}}">
+                  <a href="{{pathFor 'departmentsList'}}">{{_ "all_departments"}}</a>
+                </li>
+                <li class="{{isActiveRoute 'divisionAdd'}}">
+                  <a href="{{pathFor 'divisionAdd'}}">{{_ "new_division"}}</a>
+                </li>
+                <li class="{{isActiveRoute 'departmentAdd'}}">
+                  <a href="{{pathFor 'departmentAdd'}}">{{_ "new_department"}}</a>
+                </li>
+                <li class="{{isActiveRoute 'teamAdd'}}">
+                  <a href="{{pathFor 'teamAdd'}}">{{_ "new_team"}}</a>
                 </li>
                 <li class="{{isActiveRoute 'volunteerFormBuilder'}}">
                   <a href="{{pathFor 'volunteerFormBuilder'}}">{{_ "volunteer_formBuilder"}}</a>
                 </li>
-                <li class="{{isActiveRoute 'teamsList'}}">
-                  <a href="{{pathFor 'teamsList'}}">{{_ "all_teams"}}</a>
-                </li>
               </ul>
             </li>
+            <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle"
+                data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">{{_ "views"}}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li class="{{isActiveRoute 'teamDayView'}}">
+                  <a href="{{pathFor 'teamDayView'}}">{{_ "team_dashboard"}}</a>
+                </li>
+              </ul>
+            </li> -->
           {{/if}}
           <!-- {{#if currentUser}}
             <li class="dropdown">
