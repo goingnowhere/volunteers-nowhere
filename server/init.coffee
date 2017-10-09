@@ -8,8 +8,7 @@ Meteor.startup ->
     {
       email: 'admin@example.com',
       password: 'apple1'
-      profile: {
-        role: 'manager'}
+      profile: { role: 'manager'}
     },
   ]
 
@@ -18,7 +17,7 @@ Meteor.startup ->
       role = options.profile.role
       userId = Accounts.createUser(options)
       Meteor.users.update(userId, {$set: {"emails.0.verified" :true}})
-      Roles.addUsersToRoles(userId, role)
+      Roles.addUsersToRoles(userId, role, Roles.GLOBAL_GROUP)
 
 # ------------------------------------------------------------------------------
 
@@ -34,7 +33,7 @@ Factory.define('fakeUser', Meteor.users, {
     ]
   }
 ).after((user) ->
-  Roles.addUsersToRoles(user._id, user.profile.role)
+  Roles.addUsersToRoles(user._id, [ user.profile.role ] )
 )
 _.times(10,() -> Factory.create('fakeUser'))
 _.times(2,() -> Factory.create('fakeUser',{'profile.role': 'manager'}))
