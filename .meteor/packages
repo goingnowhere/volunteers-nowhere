@@ -27,7 +27,6 @@ alanning:roles
 useraccounts:bootstrap
 useraccounts:iron-routing
 
-abate:volunteers
 practicalmeteor:faker
 dburles:factory@1.1.0
 momentjs:moment
@@ -37,3 +36,4 @@ session
 dburles:collection-helpers
 accounts-base
 fortawesome:fontawesome
+abate:volunteers
