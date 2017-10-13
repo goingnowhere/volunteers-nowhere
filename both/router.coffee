@@ -25,9 +25,9 @@ Router.route '/department/list',
   name: 'departmentsList'
   template: 'departmentsList'
 
-Router.route '/team/add',
-  name: 'teamAdd'
-  template: 'teamView'
+# Router.route '/team/add',
+#   name: 'teamAdd'
+#   template: 'teamView'
 
 Router.route '/team/edit/:_id',
   name: 'teamView'
@@ -37,9 +37,9 @@ Router.route '/team/edit/:_id',
     if this.params && this.params._id && this.ready()
       Volunteers.Collections.Team.findOne(this.params._id)
 
-Router.route '/department/add',
-  name: 'departmentAdd'
-  template: 'departmentView'
+# Router.route '/department/add',
+#   name: 'departmentAdd'
+#   template: 'departmentView'
 
 Router.route '/department/edit/:_id',
   name: 'departmentView'

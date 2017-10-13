@@ -48,6 +48,7 @@ Meteor.startup ->
   Factory.define('fakeDivision',Volunteers.Collections.Division,
     {
       'name': () -> faker.company.companyName(),
+      'parentId': "top",
       # 'policy': 'public',
       'description': () -> faker.lorem.paragraph(),
       'tags': () -> faker.lorem.words(),
@@ -59,6 +60,7 @@ Meteor.startup ->
       'parentId': () -> getRandom('fakeDivision')._id,
       'userId': () -> getRandom('fakeUser')._id,
       'role': 'lead',
+      'title': "Meta-Lead",
       'description': () -> faker.lorem.paragraph(),
       'position': 'division',
       'policy': _.sample(["public","requireApproval","adminOnly"]),
@@ -80,6 +82,7 @@ Meteor.startup ->
       'parentId': () -> getRandom('fakeDepartment')._id,
       'userId': () -> getRandom('fakeUser')._id,
       'role': 'lead',
+      'title': "2nd level Lead",
       'description': () -> faker.lorem.paragraph(),
       'position': 'department',
       'policy': _.sample(["public","requireApproval","adminOnly"]),
@@ -101,6 +104,7 @@ Meteor.startup ->
       'parentId': () -> getRandom('fakeTeam')._id,
       'userId': () -> getRandom('fakeUser')._id,
       'role': 'lead',
+      'title': "Head Chef",
       'description': () -> faker.lorem.paragraph(),
       'position': 'team',
       'policy': _.sample(["public","requireApproval","adminOnly"]),
@@ -109,7 +113,7 @@ Meteor.startup ->
 
   Factory.define('fakeTeamShifts',Volunteers.Collections.TeamShifts,
     {
-      'teamId': () -> getRandom('fakeTeam')._id,
+      'parentId': () -> getRandom('fakeTeam')._id,
       'title': () -> faker.lorem.sentence(),
       'description': () -> faker.lorem.paragraph(),
       'policy': _.sample(["public","requireApproval","adminOnly"]),
@@ -122,7 +126,7 @@ Meteor.startup ->
 
   Factory.define('fakeTeamTasks',Volunteers.Collections.TeamTasks,
     {
-      'teamId': () -> getRandom('fakeTeam')._id,
+      'parentId': () -> getRandom('fakeTeam')._id,
       'title': () -> faker.lorem.sentence(),
       'description': () -> faker.lorem.paragraph(),
       'policy': _.sample(["public","requireApproval","adminOnly"]),

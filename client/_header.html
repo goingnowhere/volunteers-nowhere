@@ -25,7 +25,7 @@
                   <a href="{{pathFor 'volunteerForm'}}">{{_ "personal_data"}}</a>
                 </li>
                 <li class="{{isActiveRoute 'volunteerShifts'}}">
-                  <a href="{{pathFor 'volunteerShifts'}}">{{_ "shifts"}}</a>
+                  <a href="{{pathFor 'volunteerShifts'}}">{{_ "signups"}}</a>
                 </li>
               </ul>
             </li>
@@ -34,24 +34,24 @@
                 data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">{{_ "forms"}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="{{isActiveRoute 'teamList'}}">
-                  <a href="{{pathFor 'teamList'}}">{{_ "all_team"}}</a>
-                </li>
                 <li class="{{isActiveRoute 'divisionsList'}}">
                   <a href="{{pathFor 'divisionsList'}}">{{_ "all_divisions"}}</a>
                 </li>
                 <li class="{{isActiveRoute 'departmentsList'}}">
                   <a href="{{pathFor 'departmentsList'}}">{{_ "all_departments"}}</a>
                 </li>
+                <li class="{{isActiveRoute 'teamList'}}">
+                  <a href="{{pathFor 'teamList'}}">{{_ "all_team"}}</a>
+                </li>
                 <li class="{{isActiveRoute 'divisionAdd'}}">
                   <a href="{{pathFor 'divisionAdd'}}">{{_ "new_division"}}</a>
                 </li>
-                <li class="{{isActiveRoute 'departmentAdd'}}">
+                <!-- <li class="{{isActiveRoute 'departmentAdd'}}">
                   <a href="{{pathFor 'departmentAdd'}}">{{_ "new_department"}}</a>
                 </li>
                 <li class="{{isActiveRoute 'teamAdd'}}">
                   <a href="{{pathFor 'teamAdd'}}">{{_ "new_team"}}</a>
-                </li>
+                </li> -->
                 <li class="{{isActiveRoute 'volunteerFormBuilder'}}">
                   <a href="{{pathFor 'volunteerFormBuilder'}}">{{_ "volunteer_formBuilder"}}</a>
                 </li>
