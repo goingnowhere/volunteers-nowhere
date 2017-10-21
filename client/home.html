@@ -3,8 +3,8 @@
   {{#each team}}
     <li>
       {{name}}
-      <a href="{{pathFor 'teamView' _id=_id}}">(edit)</a>
-      <a href="{{pathFor 'teamDayViewGrid' _id=_id}}"> (view)</a>
+      <a href="{{pathFor 'teamView-test' _id=_id}}">(edit)</a>
+      <a href="{{pathFor 'teamDayViewGrid-test' _id=_id}}"> (view)</a>
     </li>
   {{/each}}
   </ul>
@@ -14,7 +14,7 @@
   <ul>
   {{#each divisions}}
     <li>
-      {{name}} <a href="{{pathFor 'divisionView' _id=_id}}">(edit)</a>
+      {{name}} <a href="{{pathFor 'divisionView-test' _id=_id}}">(edit)</a>
     </li>
   {{/each}}
   </ul>
@@ -24,7 +24,7 @@
   <ul>
   {{#each departments}}
     <li>
-      {{name}} <a href="{{pathFor 'departmentView' _id=_id}}">(edit)</a>
+      {{name}} <a href="{{pathFor 'departmentView-test' _id=_id}}">(edit)</a>
     </li>
   {{/each}}
   </ul>

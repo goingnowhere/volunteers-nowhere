@@ -1,4 +1,5 @@
 Meteor.startup ->
+  console.log "startup"
   allRoles = ['manager']
   if Meteor.roles.find().count() < 1
     for role in allRoles
@@ -41,7 +42,7 @@ Meteor.startup ->
     _.times(2,() -> Factory.create('fakeUser',{'profile.role': 'manager'}))
 
     Factory.define('fakeVolunteersForm',Volunteers.Collections.VolunteerForm,{
-      'userId': Factory.get('fakeUser'),
+      'userId': () -> Factory.get('fakeUser'),
     })
     _.times(10,() -> Factory.create('fakeVolunteersForm'))
 
@@ -50,8 +51,8 @@ Meteor.startup ->
     Factory.define('fakeDivision',Volunteers.Collections.Division,
       {
         'name': () -> faker.company.companyName(),
-        'parentId': "top",
-        # 'policy': 'public',
+        'parentId': () -> "top",
+        'policy': () -> 'public',
         'description': () -> faker.lorem.paragraph(),
         'tags': () -> faker.lorem.words(),
       })
@@ -61,18 +62,18 @@ Meteor.startup ->
       {
         'parentId': () -> getRandom('fakeDivision')._id,
         'userId': () -> getRandom('fakeUser')._id,
-        'role': 'lead',
-        'title': "Meta-Lead",
+        'role': () -> 'lead',
+        'title': () -> "Meta-Lead",
         'description': () -> faker.lorem.paragraph(),
-        'position': 'division',
-        'policy': _.sample(["public","requireApproval","adminOnly"]),
+        'position': () -> 'division',
+        'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
       })
     _.times(10,() -> Factory.create('fakeDivisionLead'))
 
     Factory.define('fakeDepartment',Volunteers.Collections.Department,
       {
         'name': () -> faker.company.companyName(),
-        # 'policy': 'public',
+        'policy': () -> 'public',
         'description': () -> faker.lorem.paragraph(),
         'tags': () -> faker.lorem.words(),
         'parentId': () -> getRandom('fakeDivision')._id
@@ -83,18 +84,19 @@ Meteor.startup ->
       {
         'parentId': () -> getRandom('fakeDepartment')._id,
         'userId': () -> getRandom('fakeUser')._id,
-        'role': 'lead',
-        'title': "2nd level Lead",
+        'role': () -> 'lead',
+        'title': () -> "2nd level Lead",
         'description': () -> faker.lorem.paragraph(),
-        'position': 'department',
-        'policy': _.sample(["public","requireApproval","adminOnly"]),
+        'position': () -> 'department',
+        'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
       })
     _.times(10,() -> Factory.create('fakeDepartmentLead'))
 
     Factory.define('fakeTeam',Volunteers.Collections.Team,
       {
         'name': () -> faker.company.companyName(),
-        # 'policy': _.sample(["public","requireApproval","adminOnly"]),
+        # 'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
+        'policy': () -> 'public',
         'description': () -> faker.lorem.paragraph(),
         'tags': () -> faker.lorem.words(),
         'parentId': () -> getRandom('fakeDepartment')._id
@@ -105,11 +107,11 @@ Meteor.startup ->
       {
         'parentId': () -> getRandom('fakeTeam')._id,
         'userId': () -> getRandom('fakeUser')._id,
-        'role': 'lead',
-        'title': "Head Chef",
+        'role': () -> 'lead',
+        'title': () -> "Head Chef",
         'description': () -> faker.lorem.paragraph(),
-        'position': 'team',
-        'policy': _.sample(["public","requireApproval","adminOnly"]),
+        'position': () -> 'team',
+        'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
       })
     _.times(15,() -> Factory.create('fakeTeamLead'))
 
@@ -118,7 +120,7 @@ Meteor.startup ->
         'parentId': () -> getRandom('fakeTeam')._id,
         'title': () -> faker.lorem.sentence(),
         'description': () -> faker.lorem.paragraph(),
-        'policy': _.sample(["public","requireApproval","adminOnly"]),
+        'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
         'min': () -> faker.random.number(1,3),
         'max': () -> faker.random.number(4,6),
         'start': () -> faker.date.recent(30),
@@ -131,7 +133,7 @@ Meteor.startup ->
         'parentId': () -> getRandom('fakeTeam')._id,
         'title': () -> faker.lorem.sentence(),
         'description': () -> faker.lorem.paragraph(),
-        'policy': _.sample(["public","requireApproval","adminOnly"]),
+        'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
         'dueDate': () -> faker.date.future(),
         'estimatedTime': () -> _.sample(["1-3hs", "3-6hs", "6-12hs","1d","2ds","more"]),
         'status': () -> _.sample(["pending", "archived", "done"])
