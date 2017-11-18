@@ -1,0 +1,55 @@
+volunteers:
+  image: pietropietro/nowhere-volunteers
+  restart: unless-stopped
+  links:
+    - mongodb
+  environment:
+    - MONGO_URL=mongodb://mongodb/volunteers
+    - DELAY=10
+    - VIRTUAL_HOST=vols.goingnowhere.org
+    - LETSENCRYPT_HOST=vols.goingnowhere.org
+    - LETSENCRYPT_EMAIL=root@vols.goingnowhere.org
+    - ROOT_URL=http://vols.goingnowhere.org
+#    - HTTPS_METHOD=noredirect
+#    - MONGO_SHARD_URL_one=mongodb://mongo/kadira?replicaSet=kadira
+#    - METEOR_SETTINGS="{default_users:false, init:false, revision:0.1}"
+#    - UNLOCK_MIGRATE=true
+
+nginx-proxy:
+  image: jwilder/nginx-proxy
+  ports:
+    - "443:443"
+    - "80:80"
+  volumes:
+    - ./nginx/certs:/etc/nginx/certs:ro
+    - ./nginx/vhost.d:/etc/nginx/vhost.d
+    - ./nginx/html:/usr/share/nginx/html
+    - ./nginx/conf.d:/etc/nginx/conf.d
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+  restart: always
+
+letsencrypt:
+  ## Automatic SSL certificate acquisition
+  image: jrcs/letsencrypt-nginx-proxy-companion
+  environment:
+    - ACME_TOS_HASH=cc88d8d9517f490191401e7b54e9ffd12a2b9082ec7a1d4cec6101f9f1647e7b
+  volumes:
+    - ./nginx/certs:/etc/nginx/certs:rw
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  volumes_from:
+    - nginx-proxy
+  restart: always
+
+mongodb:
+  image: mongo:latest
+  command: mongod --storageEngine=wiredTiger
+#  ports:
+#    - "27017:27017"
+  volumes_from:
+    - dbdata
+
+dbdata:
+  image: busybox
+  volumes:
+    - ./data/db:/data/db
+
