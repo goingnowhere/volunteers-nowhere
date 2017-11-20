@@ -23,7 +23,6 @@ iron:router
 zimme:active-route
 accounts-ui@1.1.9
 accounts-password
-alanning:roles
 useraccounts:bootstrap
 useraccounts:iron-routing
 
@@ -31,9 +30,9 @@ practicalmeteor:faker
 dburles:factory@1.1.0
 momentjs:moment
 dynamic-import@0.1.3
-ignacy130:yadmin
 session
 dburles:collection-helpers
 accounts-base
 fortawesome:fontawesome
 abate:volunteers
+piemonkey:roles

@@ -1,6 +1,6 @@
 Meteor.startup ->
   console.log "startup"
-  allRoles = ['manager']
+  allRoles = ['manager', 'user']
   if Meteor.roles.find().count() < 1
     for role in allRoles
       Roles.createRole role
@@ -18,7 +18,7 @@ Meteor.startup ->
       role = options.profile.role
       userId = Accounts.createUser(options)
       Meteor.users.update(userId, {$set: {"emails.0.verified" :true}})
-      Roles.addUsersToRoles(userId, role, Roles.GLOBAL_GROUP)
+      Roles.addUsersToRoles(userId, role)
 
 # ------------------------------------------------------------------------------
 Meteor.startup ->
