@@ -21,19 +21,18 @@ shell-server@0.3.0            # Server-side component of the `meteor shell` comm
 coffeescript
 iron:router
 zimme:active-route
-accounts-ui@1.2.0
-accounts-password@1.5.0
-alanning:roles
+accounts-ui@1.1.9
+accounts-password
 useraccounts:bootstrap
 useraccounts:iron-routing
 
 practicalmeteor:faker
 dburles:factory@1.1.0
 momentjs:moment
-dynamic-import@0.2.0
-ignacy130:yadmin
-session@1.1.7
+dynamic-import@0.1.3
+session
 dburles:collection-helpers
 accounts-base@1.4.0
 fortawesome:fontawesome
 abate:volunteers
+piemonkey:roles
