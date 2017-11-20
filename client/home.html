@@ -32,15 +32,41 @@
 
 <template name="home">
   {{#unless currentUser}}
-    {{> atForm state="signIn"}}
+    {{> atForm }}
   {{else}}
-    {{> volunteer}}
+    {{#unless profileCreated}}
+      {{> volunteer}}
+    {{else}}
+      {{> volunteerHome}}
+    {{/unless}}
   {{/unless}}
 </template>
 
 <template name="volunteer">
   <h1>Personal Information</h1>
   {{> addVolunteerForm }}
+</template>
+
+<template name="volunteerHome">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+            <!-- {{picture}} -->
+          <div class="panel-heading">
+            <h1 class="panel-title">
+              {{_ "welcome"}} {{ name}}
+            </h1>
+            <a href="{{pathFor 'volunteerForm'}}">{{_ "edit"}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <a class="btn btn-default" href="{{pathFor 'volunteerShifts'}}">{{_ "signups"}}</a>
+        {{> volunteerUserShifts }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <template name="volunteerShifts">
