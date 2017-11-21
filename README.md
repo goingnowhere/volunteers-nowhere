@@ -14,6 +14,7 @@ git clone git@gitlab.com:abate/meteor-volunteers.git
 git clone git@gitlab.com:abate/meteor-autoform-components.git
 git clone git@github.com:abate/meteor-autoform-datetimepicker.git
 git clone git@gitlab.com:abate/meteor-formbuilder.git
+git clone git@github.com:piemonkey/meteor-roles.git
 # install npm dependencies and run
 cd volunteers
 meteor npm install
