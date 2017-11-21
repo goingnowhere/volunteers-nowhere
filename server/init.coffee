@@ -1,7 +1,7 @@
 Meteor.startup ->
   console.log "startup"
-  allRoles = ['manager', 'user']
-  if Meteor.roles.find().count() < 1
+  allRoles = ['manager']
+  if Meteor.roles.find({ _id: { $in: allRoles } }).count() < 1
     for role in allRoles
       Roles.createRole role
 
@@ -9,59 +9,47 @@ Meteor.startup ->
     {
       email: 'admin@example.com',
       password: 'apple1'
-      profile: { role: 'manager'}
     },
   ]
 
   _.each defaultUsers, (options) ->
     if !Meteor.users.findOne({ "emails.address" : options.email })
-      role = options.profile.role
       userId = Accounts.createUser(options)
       Meteor.users.update(userId, {$set: {"emails.0.verified" :true}})
-      Roles.addUsersToRoles(userId, role)
+      Roles.addUsersToRoles(userId, 'manager')
 
 # ------------------------------------------------------------------------------
 Meteor.startup ->
   # pick one collection to avoid adding new data at each server restart
-  if Volunteers.Collections.Division.find().count() == 0
+  if Volunteers.Collections.Lead.find().count() == 0
     Factory.define('fakeUser', Meteor.users, {
       'profile':
         'firstName': () -> faker.name.firstName(),
         'lastName': () -> faker.name.lastName(),
-        'role': () -> 'user'
       'emails': () ->
         [
           'address': faker.internet.email(),
           'verified': true
         ]
       }
-    ).after((user) ->
-      Roles.addUsersToRoles(user._id, [ user.profile.role ] )
     )
     _.times(10,() -> Factory.create('fakeUser'))
-    _.times(2,() -> Factory.create('fakeUser',{'profile.role': 'manager'}))
 
     Factory.define('fakeVolunteersForm',Volunteers.Collections.VolunteerForm,{
       'userId': () -> Factory.get('fakeUser'),
     })
     _.times(10,() -> Factory.create('fakeVolunteersForm'))
 
-    getRandom = (name) -> _.sample(Factory.get(name).collection.find().fetch())
-
-    Factory.define('fakeDivision',Volunteers.Collections.Division,
-      {
-        'name': () -> faker.company.companyName(),
-        'parentId': () -> "top",
-        'policy': () -> 'public',
-        'description': () -> faker.lorem.paragraph(),
-        'tags': () -> faker.lorem.words(),
-      })
-    _.times(10,() -> Factory.create('fakeDivision'))
+    getRandom = (name) ->
+      if name != 'User'
+        _.sample(Volunteers.Collections[name].find().fetch())
+      else
+        _.sample(Factory.get('fakeUser').collection.find().fetch())
 
     Factory.define('fakeDivisionLead',Volunteers.Collections.Lead,
       {
-        'parentId': () -> getRandom('fakeDivision')._id,
-        'userId': () -> getRandom('fakeUser')._id,
+        'parentId': () -> getRandom('Division')._id,
+        'userId': () -> getRandom('User')._id,
         'role': () -> 'lead',
         'title': () -> "Meta-Lead",
         'description': () -> faker.lorem.paragraph(),
@@ -70,20 +58,10 @@ Meteor.startup ->
       })
     _.times(10,() -> Factory.create('fakeDivisionLead'))
 
-    Factory.define('fakeDepartment',Volunteers.Collections.Department,
-      {
-        'name': () -> faker.company.companyName(),
-        'policy': () -> 'public',
-        'description': () -> faker.lorem.paragraph(),
-        'tags': () -> faker.lorem.words(),
-        'parentId': () -> getRandom('fakeDivision')._id
-      })
-    _.times(20,() -> Factory.create('fakeDepartment'))
-
     Factory.define('fakeDepartmentLead',Volunteers.Collections.Lead,
       {
-        'parentId': () -> getRandom('fakeDepartment')._id,
-        'userId': () -> getRandom('fakeUser')._id,
+        'parentId': () -> getRandom('Department')._id,
+        'userId': () -> getRandom('User')._id,
         'role': () -> 'lead',
         'title': () -> "2nd level Lead",
         'description': () -> faker.lorem.paragraph(),
@@ -92,21 +70,10 @@ Meteor.startup ->
       })
     _.times(10,() -> Factory.create('fakeDepartmentLead'))
 
-    Factory.define('fakeTeam',Volunteers.Collections.Team,
-      {
-        'name': () -> faker.company.companyName(),
-        # 'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
-        'policy': () -> 'public',
-        'description': () -> faker.lorem.paragraph(),
-        'tags': () -> faker.lorem.words(),
-        'parentId': () -> getRandom('fakeDepartment')._id
-      })
-    _.times(40,() -> Factory.create('fakeTeam'))
-
     Factory.define('fakeTeamLead',Volunteers.Collections.Lead,
       {
-        'parentId': () -> getRandom('fakeTeam')._id,
-        'userId': () -> getRandom('fakeUser')._id,
+        'parentId': () -> getRandom('Team')._id,
+        'userId': () -> getRandom('User')._id,
         'role': () -> 'lead',
         'title': () -> "Head Chef",
         'description': () -> faker.lorem.paragraph(),
@@ -117,7 +84,7 @@ Meteor.startup ->
 
     Factory.define('fakeTeamShifts',Volunteers.Collections.TeamShifts,
       {
-        'parentId': () -> getRandom('fakeTeam')._id,
+        'parentId': () -> getRandom('Team')._id,
         'title': () -> faker.lorem.sentence(),
         'description': () -> faker.lorem.paragraph(),
         'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
@@ -130,7 +97,7 @@ Meteor.startup ->
 
     Factory.define('fakeTeamTasks',Volunteers.Collections.TeamTasks,
       {
-        'parentId': () -> getRandom('fakeTeam')._id,
+        'parentId': () -> getRandom('Team')._id,
         'title': () -> faker.lorem.sentence(),
         'description': () -> faker.lorem.paragraph(),
         'policy': () -> _.sample(["public","requireApproval","adminOnly"]),
