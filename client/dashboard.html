@@ -1,0 +1,31 @@
+
+<template name="userProfileEdit">
+  <h1>Edit Profile</h1>
+  {{> addVolunteerForm }}
+</template>
+
+<template name="dashboard">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+            <!-- {{picture}} -->
+          <div class="panel-heading">
+            <h1 class="panel-title">
+              Welcome {{ name}}
+            </h1>
+            <a href="{{pathFor 'volunteerForm'}}">Edit</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>Upcoming Shifts</h3>
+        {{> fullcalendar optionsShifts}}
+      </div>
+      <div class="col-md-4">
+        <h3>Upcoming Tasks</h3>
+        {{> fullcalendar optionsShifts}}
+      </div>
+    </div>
+  </div>
+</template>
