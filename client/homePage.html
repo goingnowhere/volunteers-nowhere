@@ -103,3 +103,15 @@
   </body>
 
 </template>
+
+<template name="termsCheckbox">
+  <div class="at-input inline field">
+    <div class="checkbox">
+      <label for="at-field-{{_id}}">
+      <input type="{{type}}" id="at-field-{{_id}}" name="at-field-{{_id}}" {{disabled}}>
+        <span class="checkbox-material"><span class="check"></span></span>
+        I've read and agree to the <a href="{{pathFor 'staticContentDisplay' _name='volunteersAgreement'}}">Volunteer Agreement</a>
+      </label>
+    </div>
+  </div>
+</template>

@@ -1,15 +1,20 @@
 Meteor.startup ->
-  console.log "startup"
-  allRoles = ['manager','user']
+  # console.log "startup #{Volunteers.eventName}"
+  allRoles = ['admin','manager','user']
   if Meteor.roles.find({ _id: { $in: allRoles } }).count() < 1
     for role in allRoles
       Roles.createRole role
 
   defaultUsers = [
     {
-      email: 'admin@example.com',
+      email: 'manager@example.com',
       password: 'apple1'
       roles: ['manager']
+    },
+    {
+      email: 'admin@example.com',
+      password: 'apple1'
+      roles: ['admin']
     },
   ]
 
@@ -18,4 +23,10 @@ Meteor.startup ->
       userId = Accounts.createUser(options)
       Meteor.users.update(userId, {$set: {"emails.0.verified" :true}})
       for role in options.roles
-        Roles.addUsersToRoles(userId, role)
+        if role == 'admin'
+          Roles.addUsersToRoles(userId, role)
+        else
+          Roles.addUsersToRoles(userId, role, Volunteers.eventName)
+
+  require('../imports/fixtures/index')
+  share.runFixtures(Volunteers)

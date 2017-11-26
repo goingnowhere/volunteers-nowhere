@@ -4,3 +4,4 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 Template._header.helpers
   'isManagerOrLead': () -> Volunteers.isManagerOrLead(Meteor.userId())
+  'isManager': () -> Volunteers.isManager(Meteor.userId())

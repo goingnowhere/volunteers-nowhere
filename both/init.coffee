@@ -1,5 +1,5 @@
 AccountsTemplates.configure
-  # defaultLayout: 'userLayout'
+  defaultLayout: 'userLayout'
   enablePasswordChange: true
   showForgotPasswordLink: true
   # sendVerificationEmail: true
@@ -33,13 +33,13 @@ AccountsTemplates.addField
     { text: 'en', value: 'en' }
   ]
 
-# AccountsTemplates.addField
-#   _id: 'terms'
-#   type: 'checkbox'
-#   template: "termsCheckbox"
-#   errStr: "You must agree to the Terms and Conditions"
-#   func: (value) -> !value
-#   negativeValidation: false
+AccountsTemplates.addField
+  _id: 'terms'
+  type: 'checkbox'
+  template: "termsCheckbox"
+  errStr: "You must agree to the Terms and Conditions"
+  func: (value) -> !value
+  negativeValidation: false
 
 # TODO: for later ...
 # @setUserLanguage = (userId) ->
@@ -49,14 +49,17 @@ AccountsTemplates.addField
 #     TAPi18n.setLanguage user.profile.language
 #     moment.locale(user.profile.language)
 
+
+@Volunteers = new VolunteersClass("nowhere2018")
+
 addUsersToRoles = (user) ->
-  if userId then Roles.addUsersToRoles userId, 'user'
+  if userId then Roles.addUsersToRoles userId, 'user', Volunteers.eventName
   # this can be useful
   # if Meteor.users.find().count() == 1
   #   Roles.addUsersToRoles userId, 'super-admin'
 
 postSignUpHook = (userId, info) ->
-  if Meteor.isServer then addUsersToRoles userId
+  if Meteor.isServer then addUsersToRoles userId, 'users', Volunteers.eventName
   # if Meteor.isClient then setUserLanguage userId
 
 Accounts.onLogin (conn) ->
@@ -64,13 +67,3 @@ Accounts.onLogin (conn) ->
     Meteor.users.update conn.user._id, $set: lastLogin: new Date
   # if Meteor.isClient
   #   setUserLanguage Meteor.userId()
-
-@Volunteers = new VolunteersClass("nowhere2018")
-
-MeteorProfile = new MeteorProfileClass()
-Meteor.users.attachSchema MeteorProfile.Schemas.User
-
-Meteor.startup () ->
-  if Meteor.isServer
-    require('../imports/fixtures/index')
-    share.runFixtures(Volunteers)
