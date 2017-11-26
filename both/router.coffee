@@ -36,3 +36,13 @@ Router.route '/profile/settings',
 Router.route '/profile/edit',
   name: 'userProfileEdit'
   layoutTemplate: 'userLayout'
+
+Router.route '/sign-out',
+  name: 'atSignOut'
+  onBeforeAction: AccountsTemplates.logout
+
+# manager pages
+
+Router.route '/manager/userform',
+  name: 'managerUserForm'
+  layoutTemplate: 'userLayout'

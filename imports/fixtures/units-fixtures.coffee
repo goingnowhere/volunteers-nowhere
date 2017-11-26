@@ -56,6 +56,7 @@ units =
     }
   ]
 
+# XXX instead of share that is global, it should be an export ...
 share.createUnits = (Volunteers) ->
   if Volunteers.Collections.Division.find().count() == 0
     for doc in units.divisions

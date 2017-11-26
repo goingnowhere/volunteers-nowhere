@@ -1,7 +1,7 @@
 <template name="_header">
   <nav class="navbar navbar-expanded bg-secondary fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="{{pathFor 'home'}}">Volunteers @ Nowhere</a>
+      <a class="navbar-brand" href="{{#unless currentUser}}{{pathFor 'homePage'}}{{else}}{{pathFor 'dashboard'}}{{/unless}}">Volunteers @ Nowhere</a>
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed"
           data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
@@ -28,13 +28,13 @@
                   data-toggle="dropdown" role="button"
                   aria-haspopup="true" aria-expanded="false">Manager Pages<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">Whatever</a>
+                  <li class="{{isActiveRoute 'managerUserForm'}}">
+                    <a href="{{pathFor 'managerUserForm'}}"> Profile Form</a>
                   </li>
                 </ul>
               </li>
             {{/if}}
-            {{#if isInLeadRole }}
+            {{#if isManagerOrLead }}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle"
                   data-toggle="dropdown" role="button"
@@ -51,8 +51,8 @@
                 data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">Welcome {{firstName}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-          		  <li class="{{isActiveRoute 'profileEdit'}}">
-                  <a href="{{pathFor 'profileEdit'}}"> Edit profile</a>
+          		  <li class="{{isActiveRoute 'userProfileEdit'}}">
+                  <a href="{{pathFor 'userProfileEdit'}}"> Edit profile</a>
                 </li>
           		  <li class="{{isActiveRoute 'atChangePwd'}}">
                   <a href="{{pathFor 'atChangePwd'}}"> Change Password</a>
@@ -63,8 +63,8 @@
                 {{#if isImpersonating}}
                   <li><a data-action="unimpersonate">{{_ "Click to unimpersonate"}}</a></li>
                 {{/if}}
-                <li class="{{isActiveRoute 'atChangePwd'}}">
-                  <a href="{{pathFor 'atChangePwd'}}"> Logout</a>
+                <li class="{{isActiveRoute 'atSignOut'}}">
+                  <a href="{{pathFor 'atSignOut'}}"> Logout</a>
                 </li>
               </ul>
             </li>

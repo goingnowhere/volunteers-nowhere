@@ -1,2 +1,6 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+
 Template._header.helpers
-  'isInLeadRole': Volunteers.isManagerOrLead(Meteor.userId())
+  'isManagerOrLead': () -> Volunteers.isManagerOrLead(Meteor.userId())
