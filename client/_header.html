@@ -40,8 +40,8 @@
                   data-toggle="dropdown" role="button"
                   aria-haspopup="true" aria-expanded="false">Leads Pages<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">Whatever</a>
+                  <li class="{{isActiveRoute 'allUsersList'}}">
+                    <a href="{{pathFor 'allUsersList'}}"> Users</a>
                   </li>
                 </ul>
               </li>
@@ -57,8 +57,8 @@
           		  <li class="{{isActiveRoute 'atChangePwd'}}">
                   <a href="{{pathFor 'atChangePwd'}}"> Change Password</a>
                 </li>
-                <li class="{{isActiveRoute 'atChangePwd'}}">
-                  <a href="{{pathFor 'atChangePwd'}}"> Account Settings</a>
+                <li class="{{isActiveRoute 'accountSettings'}}">
+                  <a href="{{pathFor 'accountSettings'}}"> Account Settings</a>
                 </li>
                 {{#if isImpersonating}}
                   <li><a data-action="unimpersonate">{{_ "Click to unimpersonate"}}</a></li>

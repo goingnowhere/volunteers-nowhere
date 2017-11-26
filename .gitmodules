@@ -13,3 +13,6 @@
 [submodule "packages/meteor-autoform-datetimepicker"]
 	path = packages/meteor-autoform-datetimepicker
 	url = git@github.com:abate/meteor-autoform-datetimepicker.git
+[submodule "packages/meteor-user-profiles"]
+	path = packages/meteor-user-profiles
+	url = git@gitlab.com:abate/meteor-user-profiles.git

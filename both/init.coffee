@@ -24,6 +24,23 @@ AccountsTemplates.configureRoute 'resetPwd'
 AccountsTemplates.configureRoute 'forgotPwd'
 AccountsTemplates.configureRoute 'enrollAccount'
 
+AccountsTemplates.addField
+  _id: 'language'
+  type: 'select'
+  displayName: "Language"
+  select: [
+    { text: 'fr', value: 'fr' },
+    { text: 'en', value: 'en' }
+  ]
+
+# AccountsTemplates.addField
+#   _id: 'terms'
+#   type: 'checkbox'
+#   template: "termsCheckbox"
+#   errStr: "You must agree to the Terms and Conditions"
+#   func: (value) -> !value
+#   negativeValidation: false
+
 # TODO: for later ...
 # @setUserLanguage = (userId) ->
 #   user = Meteor.users.findOne(userId)
@@ -49,6 +66,9 @@ Accounts.onLogin (conn) ->
   #   setUserLanguage Meteor.userId()
 
 @Volunteers = new VolunteersClass("nowhere2018")
+
+MeteorProfile = new MeteorProfileClass()
+Meteor.users.attachSchema MeteorProfile.Schemas.User
 
 Meteor.startup () ->
   if Meteor.isServer

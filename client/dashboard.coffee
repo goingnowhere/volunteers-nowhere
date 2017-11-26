@@ -57,6 +57,7 @@ Template.dashboard.onCreated () ->
 #     )
 #
 Template.dashboard.helpers
+  'userId': () -> Meteor.userId()
   'optionsShifts': () ->
     id: "shiftCalendar"
     schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source'
