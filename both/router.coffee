@@ -81,6 +81,14 @@ Router.route '/lead/users',
   name: 'allUsersList'
   controller: LeadController
 
+Router.route '/lead/divisions/',
+  name: 'divisionsList'
+  controller: LeadController
+
 Router.route '/lead/departments/',
   name: 'departmentsList'
+  controller: LeadController
+
+Router.route '/lead/teams/',
+  name: 'teamsList'
   controller: LeadController
