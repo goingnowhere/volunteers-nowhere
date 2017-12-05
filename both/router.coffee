@@ -80,3 +80,7 @@ Router.route '/manager/userform',
 Router.route '/lead/users',
   name: 'allUsersList'
   controller: LeadController
+
+Router.route '/lead/departments/',
+  name: 'departmentsList'
+  controller: LeadController
