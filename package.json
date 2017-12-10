@@ -11,6 +11,7 @@
     "jquery": "^3.2.1",
     "meteor-node-stubs": "~0.2.0",
     "orgchart": "^2.0.9",
+    "scrollspy": "^1.6.0",
     "simpl-schema": "^0.3.2"
   }
 }

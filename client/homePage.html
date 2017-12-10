@@ -1,36 +1,104 @@
 <template name="homePage">
-  <body id="page-top">
-    {{> _header}}
+  <body id="page-top" class="index">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+      <div class="container">
+        <div class="navbar-header page-scroll">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand" href="#page-top">Volunteers@Nowhere</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            <li class="page-scroll">
+              <a href="#portfolio">Organization</a>
+            </li>
+            <li class="page-scroll">
+              <a href="#about">About</a>
+            </li>
+            <li class="page-scroll">
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <!-- Header -->
-    <header class="masthead bg-primary text-white text-center">
+    <header>
       <div class="container">
-        <img class="img-fluid mb-5 d-block mx-auto" src="img/nowhere.png" alt="">
-        <h1 class="text-uppercase mb-0">Co-Create</h1>
-        <hr class="star-light">
-        <h2 class="font-weight-light mb-0">Partecipate - Innovate - Co-Create</h2>
-      </div>
-    </header>
-
-    <!-- About Section -->
-    <section class="bg-primary text-white mb-0" id="about">
-      <div class="container">
-        <h2 class="text-center text-uppercase text-white">About</h2>
-        <hr class="star-light mb-5">
         <div class="row">
-          <div class="col-lg-4 col-lg-offset-2">
-            <p class="lead">Nowhere is an experiment in creative freedom, participation and cash-free community, conceived, built, experienced and returned to nothing by YOU</p>
-          </div>
-          <div class="col-lg-4 col-lg-offset-2">
-            <p class="lead">We need lots of hands in a variety of roles to set up the site, keep things running smoothly during the event, and then pack up when the event is over.  </p>
+          <div class="col-lg-12">
+            <img class="img-responsive" src="img/nowhere.png" alt="">
+            <div class="intro-text">
+              <span class="name">Co-Create Nowhere 2018</span>
+              <hr class="star-light">
+              <span class="skills">Partecipate - Innovate - Co-Create</span>
+            </div>
           </div>
         </div>
         <div class="row">
-          <div class="text-center">
-            <a class="btn btn-default" href="#">
-              <i class="fa fa-sign-in mr-2"></i>
-              Sign-Up Now !
+          <div class="col-lg-8 col-lg-offset-2 text-center">
+            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
+                <i class="fa fa-sign-in"></i> Sign-Up Now !
             </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2>Organization</h2>
+            <hr class="star-primary">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            {{> organization}}
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              {{#each dept in departments}}
+                <div class="col-sm-4 portfolio-item">
+                  <a href="#{{dept.name}}Modal" class="portfolio-link" data-toggle="modal">
+                    <div class="caption">
+                      <div class="caption-content">
+                        <i class="fa fa-search-plus fa-3x"></i>
+                      </div>
+                    </div>
+                    <img src="img/portfolio/cabin.png" class="img-responsive" alt="">
+                  </a>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2>About</h2>
+            <hr class="star-light">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-lg-offset-2">
+            <p>Nowhere is an experiment in creative freedom, participation and cash-free community, conceived, built, experienced and returned to nothing by YOU</p>
+          </div>
+          <div class="col-lg-4">
+            <p>We need lots of hands in a variety of roles to set up the site, keep things running smoothly during the event, and then pack up when the event is over.  </p>
           </div>
         </div>
       </div>
@@ -86,7 +154,7 @@
 
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; Your Website 2017</small>
+        <small>Copyright &copy; Norg 2017</small>
       </div>
     </div>
 
