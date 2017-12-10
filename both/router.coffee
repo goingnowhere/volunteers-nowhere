@@ -94,6 +94,7 @@ Router.route '/manager/userform',
 Router.route '/admin/users',
   name: 'allUsersList'
   controller: LeadController
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.allUsers") ]
 
 # lead pages
 Router.route '/lead/team/:_id',
