@@ -41,15 +41,23 @@ Router.route '/organization',
   name: 'organization'
   controller: AnonymousController
 
-# Router.route '/team',
-#   name: 'teamProfile'
-#   layoutTemplate: 'userLayout'
-#
-# Router.route '/department',
-#   name: 'departmentProfile'
-#   layoutTemplate: 'userLayout'
+Router.route '/team/:_id',
+  name: 'publicTeamView'
+  controller: AnonymousController
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.team") ]
+  data: () ->
+    if this.params && this.params._id && this.ready()
+      Volunteers.Collections.Team.findOne(this.params._id)
 
-# after login (XXX we should use the iron router auth submodule ... )
+Router.route '/department/:_id',
+  name: 'publicDepartmentView'
+  controller: AnonymousController
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.department") ]
+  data: () ->
+    if this.params && this.params._id && this.ready()
+      Volunteers.Collections.Department.findOne(this.params._id)
+
+# after login
 Router.route '/dashboard',
   name: 'dashboard'
   controller: AuthenticatedController
@@ -70,25 +78,39 @@ Router.route '/sign-out',
   name: 'atSignOut'
   onBeforeAction: AccountsTemplates.logout
 
-# manager pages
+# settings / administrative pages pages
+# accessible either to leads / metalead or manager
+
+# manager only
+Router.route '/manager',
+  name: 'managerView'
+  controller: ManagerController
 
 Router.route '/manager/userform',
   name: 'managerUserForm'
   controller: ManagerController
 
-# lead pages
-Router.route '/lead/users',
+# leads / metaleads
+Router.route '/admin/users',
   name: 'allUsersList'
   controller: LeadController
 
-Router.route '/lead/divisions/',
-  name: 'divisionsList'
+# lead pages
+Router.route '/lead/team/:_id',
+  name: 'leadTeamView'
   controller: LeadController
+  # XXX restrict access only to the lead of this team, or the metalead of the dept or manager
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.team") ]
+  data: () ->
+    if this.params && this.params._id && this.ready()
+      Volunteers.Collections.Team.findOne(this.params._id)
 
-Router.route '/lead/departments/',
-  name: 'departmentsList'
+# metalead pages
+Router.route '/metalead/department/:_id',
+  name: 'metaleadDepartmentView'
   controller: LeadController
-
-Router.route '/lead/teams/',
-  name: 'teamsList'
-  controller: LeadController
+  # XXX restrict access only to the metalead of the dept or manager
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.department") ]
+  data: () ->
+    if this.params && this.params._id && this.ready()
+      Volunteers.Collections.Department.findOne(this.params._id)

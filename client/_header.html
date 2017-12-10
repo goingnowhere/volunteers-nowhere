@@ -1,16 +1,11 @@
 <template name="_header">
-  <nav class="navbar navbar-expanded bg-secondary fixed-top" id="mainNav">
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
     <div class="container">
-      <a class="navbar-brand" href="{{#unless currentUser}}{{pathFor 'homePage'}}{{else}}{{pathFor 'dashboard'}}{{/unless}}">Volunteers @ Nowhere</a>
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-          aria-expanded="false">
-          <span class="sr-only">{{_ "toggle_navigation"}}</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand" href="{{#unless currentUser}}{{pathFor 'homePage'}}{{else}}{{pathFor 'dashboard'}}{{/unless}}">Volunteers @ Nowhere</a>
       </div>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -18,18 +13,24 @@
           <li class="nav-item">
             <a class="nav-link rounded" href="{{pathFor 'signups'}}">Signups</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link rounded" href="{{pathFor 'organization'}}">NOrg</a>
-          </li>
+          </li> -->
           {{#if currentUser}}
             {{#if isManager }}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle"
                   data-toggle="dropdown" role="button"
-                  aria-haspopup="true" aria-expanded="false">Manager Pages<span class="caret"></span></a>
+                  aria-haspopup="true" aria-expanded="false">Manager <span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                  <li class="{{isActiveRoute 'managerView'}}">
+                    <a href="{{pathFor 'managerView'}}">Dashboard</a>
+                  </li>
+                  <li class="{{isActiveRoute 'allUsersList'}}">
+                    <a href="{{pathFor 'allUsersList'}}">All Users</a>
+                  </li>
                   <li class="{{isActiveRoute 'managerUserForm'}}">
-                    <a href="{{pathFor 'managerUserForm'}}"> Profile Form</a>
+                    <a href="{{pathFor 'managerUserForm'}}">Profile Form</a>
                   </li>
                 </ul>
               </li>
@@ -38,20 +39,27 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle"
                   data-toggle="dropdown" role="button"
-                  aria-haspopup="true" aria-expanded="false">Leads Pages<span class="caret"></span></a>
+                  aria-haspopup="true" aria-expanded="false">MetaLead <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li class="{{isActiveRoute 'allUsersList'}}">
-                    <a href="{{pathFor 'allUsersList'}}"> Users</a>
-                  </li>
-                  <li class="{{isActiveRoute 'divisionsList'}}">
-                    <a href="{{pathFor 'divisionsList'}}">Divisions</a>
-                  </li>
-                  <li class="{{isActiveRoute 'departmentsList'}}">
-                    <a href="{{pathFor 'departmentsList'}}">Departments</a>
-                  </li>
-                  <li class="{{isActiveRoute 'teamsList'}}">
-                    <a href="{{pathFor 'teamsList'}}">Teams</a>
-                  </li>
+                  {{#each dept in departments }}
+                    <li class="nav-item">
+                      <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}" >{{dept.name}}</a>
+                    </li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/if}}
+            {{#if isManagerOrLead }}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                  data-toggle="dropdown" role="button"
+                  aria-haspopup="true" aria-expanded="false">Lead <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {{#each team in teams }}
+                    <li class="nav-item">
+                      <a href="{{pathFor 'leadTeamView' _id=team._id }}" >{{team.name}}</a>
+                    </li>
+                  {{/each}}
                 </ul>
               </li>
             {{/if}}
@@ -61,19 +69,19 @@
                 aria-haspopup="true" aria-expanded="false">Welcome {{firstName}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
           		  <li class="{{isActiveRoute 'userProfileEdit'}}">
-                  <a href="{{pathFor 'userProfileEdit'}}"> Edit profile</a>
+                  <a href="{{pathFor 'userProfileEdit'}}">Edit profile</a>
                 </li>
           		  <li class="{{isActiveRoute 'atChangePwd'}}">
-                  <a href="{{pathFor 'atChangePwd'}}"> Change Password</a>
+                  <a href="{{pathFor 'atChangePwd'}}">Change Password</a>
                 </li>
                 <li class="{{isActiveRoute 'accountSettings'}}">
-                  <a href="{{pathFor 'accountSettings'}}"> Account Settings</a>
+                  <a href="{{pathFor 'accountSettings'}}">Account Settings</a>
                 </li>
                 {{#if isImpersonating}}
                   <li><a data-action="unimpersonate">{{_ "Click to unimpersonate"}}</a></li>
                 {{/if}}
                 <li class="{{isActiveRoute 'atSignOut'}}">
-                  <a href="{{pathFor 'atSignOut'}}"> Logout</a>
+                  <a href="{{pathFor 'atSignOut'}}">Logout</a>
                 </li>
               </ul>
             </li>

@@ -1,0 +1,82 @@
+<template name="publicTeamView">
+  <h1>{{ name }}</h1>
+  {{#if canEditTeam}}
+    <a href="{{pathFor 'leadTeamView' _id=_id}}">{{ fa "pencil-square" }}</a>
+  {{/if}}
+
+  <p>{{description}}</p>
+
+  <h3>Shifts and Tasks</h3>
+  {{> volunteerShiftsForm }}
+</template>
+
+<template name="publicDepartmentView">
+  <h1>{{ name }}</h1>
+  {{#if canEditTeam}}
+    <a href="{{pathFor 'metaleadDepartmentView' _id=_id}}">{{ fa "pencil-square" }}</a>
+  {{/if}}
+
+  <p>{{description}}</p>
+
+  <h3>Teams Within this Department</h3>
+  {{#each team in teams}}
+    {{team.name}}
+  {{/each}}
+
+  <h3>We need your help</h3>
+  {{> volunteerShiftsForm }}
+</template>
+
+<template name="leadTeamView">
+  <h2>lead dashboard for team {{ name }}
+    <button type="button" class="btn btn-default btn-sm" data-action="settings">
+      {{fa "wrench"}} Team Settings
+    </button>
+  </h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        {{#markdown}}
+        Collect and show all aggregated data regarding this team, including:
+
+        - total number of shift to be covered
+        - total number of volunteers signed up
+        - nice graph showing the rate of signup over time
+        - pending requests
+        - completition rate
+        {{/markdown}}
+      </div>
+      <div class="col-md-6">
+        {{> fullcalendar }}
+      </div>
+    </div>
+  </div>
+
+
+</template>
+
+<template name="metaleadDepartmentView">
+  <h2>Meta-lead dashboard for {{ name }}
+    <button type="button" class="btn btn-default btn-sm" data-action="settings">
+      {{fa "wrench"}} Department Settings
+    </button>
+  </h2>
+
+  {{#markdown}}
+  Collect and show all aggregated data regarding this department, including:
+
+  - total number of teams
+  - total number of leads
+  - highlight teams that do not have a lead
+  - highlight teams with a low completition rate
+  - highlight teams with pending requests
+  - show leads activity
+  - total number of volunteers signed up in this dept
+  - nice graph showing the rate of signup over time
+  - completition rate for the whole dept
+  - a calendal at this level is useless. too much data to display
+  {{/markdown}}
+
+
+</template>
