@@ -1,25 +1,33 @@
 units =
   divisions: [
     {
-      name: 'SLaP'
-      description: ''
-      policy: 'public'
-      parentId: 'TopEntity'
-    }
-    {
-      name: 'Volunteers'
-      description: ''
-      policy: 'public'
-      parentId: 'TopEntity'
-    }
-    {
-      name: 'BDSM'
+      name: 'NOrg 2018'
       description: ''
       policy: 'public'
       parentId: 'TopEntity'
     }
   ]
   departments: [
+    {
+      name: 'SLaP'
+      description: ''
+      policy: 'public'
+      parent: 'NOrg 2018'
+    }
+    {
+      name: 'Volunteers'
+      description: ''
+      policy: 'public'
+      parent: 'NOrg 2018'
+    }
+    {
+      name: 'BDSM'
+      description: ''
+      policy: 'public'
+      parent: 'NOrg 2018'
+    }
+  ]
+  teams: [
     {
       name: 'Power'
       parent: "SLaP"
@@ -37,22 +45,6 @@ units =
       parent: "Volunteers"
       description: ''
       policy: 'public'
-    }
-  ]
-  teams: [
-    {
-      name: 'Werkhaus Build'
-      parent: "Build"
-      description: ''
-      policy: 'public'
-      location: 'Werkhaus'
-    }
-    {
-      name: 'MoN Build'
-      parent: "Build"
-      description: ''
-      policy: 'public'
-      location: 'Mon'
     }
   ]
 
