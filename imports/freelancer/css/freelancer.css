@@ -125,7 +125,7 @@ header .intro-text .skills {
 .navbar-custom .navbar-nav {
   letter-spacing: 1px;
 }
-.navbar-custom .navbar-nav li a {
+.navbar-custom .navbar-nav > li > a {
   color: white;
 }
 .navbar-custom .navbar-nav li a:hover {
