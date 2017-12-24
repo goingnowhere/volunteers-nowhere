@@ -14,4 +14,7 @@ Template._header.helpers
   'teams': () -> Volunteers.Collections.Team.find()
   'isManagerOrLead': () -> Volunteers.isManagerOrLead(Meteor.userId())
   'isManager': () -> Volunteers.isManager(Meteor.userId())
-  'isNoInfo': () -> Volunteers.isManager(Meteor.userId())
+  'isNoInfo': () ->
+    noInfo = Volunteers.Collections.Team.findOne({name: 'NoInfo'})
+    if noInfo?
+      Volunteers.isManagerOrLead(Meteor.userId(),noInfo._id)

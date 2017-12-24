@@ -1,7 +1,7 @@
 Template.dashboard.onCreated () ->
   template = this
   template.autorun () ->
-    template.sub = template.subscribe("test.allDuties.byUser")
+    template.sub = template.subscribe("test.Volunteers.allDuties.byUser")
 
 # Template.dashboard.onRendered () ->
   # this.autorun () ->

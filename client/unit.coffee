@@ -22,6 +22,9 @@ Template.leadTeamView.events
   'click [data-action="settings"]': (event,template) ->
     team = Volunteers.Collections.Team.findOne(template.data._id)
     ModalShowWithTemplate("teamEdit",team)
+  'click [data-action="applications"]': (event,template) ->
+    unit = Volunteers.Collections.Team.findOne(template.data._id)
+    ModalShowWithTemplate("teamSignupsList",{unit: unit})
 
 Template.metaleadDepartmentView.onCreated () ->
   template = this
@@ -32,3 +35,6 @@ Template.metaleadDepartmentView.events
   'click [data-action="settings"]': (event,template) ->
     dept = Volunteers.Collections.Department.findOne(template.data._id)
     ModalShowWithTemplate("departmentEdit",dept)
+  'click [data-action="applications"]': (event,template) ->
+    unit = Volunteers.Collections.Department.findOne(template.data._id)
+    ModalShowWithTemplate("teamSignupsList",{unit: unit})

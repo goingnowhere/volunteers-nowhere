@@ -41,7 +41,7 @@ units =
       policy: 'public'
     }
     {
-      name: 'DVS'
+      name: 'NoInfo'
       parent: "Volunteers"
       description: ''
       policy: 'public'
