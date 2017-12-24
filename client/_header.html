@@ -36,6 +36,24 @@
                 </ul>
               </li>
             {{/if}}
+            {{#if isNoInfo }}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                  data-toggle="dropdown" role="button"
+                  aria-haspopup="true" aria-expanded="false">NoInfo <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li class="{{isActiveRoute 'noInfoDashboard'}}">
+                    <a href="{{pathFor 'noInfoDashboard'}}">Dashboard</a>
+                  </li>
+                  <li class="{{isActiveRoute 'noInfoNewUser'}}">
+                    <a href="{{pathFor 'noInfoDashboard'}}">New User</a>
+                  </li>
+                  <li class="{{isActiveRoute 'noInfoAllUsers'}}">
+                    <a href="{{pathFor 'noInfoAllUsers'}}">All Users</a>
+                  </li>
+                </ul>
+              </li>
+            {{/if}}
             {{#if isManagerOrLead }}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle"

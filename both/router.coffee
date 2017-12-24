@@ -115,3 +115,20 @@ Router.route '/metalead/department/:_id',
   data: () ->
     if this.params && this.params._id && this.ready()
       Volunteers.Collections.Department.findOne(this.params._id)
+
+# noInfo pages
+Router.route '/noinfo',
+  name: 'noInfoDashboard'
+  controller: LeadController
+
+Router.route '/noinfo/newuser',
+  name: 'noInfoNewUser'
+  controller: LeadController
+
+Router.route '/noinfo/userList',
+  name: 'noInfoAllUsers'
+  # XXX for the moment, but this should be a restricted version without
+  # manager or lead annotations or restricted information
+  template: 'allUsersList'
+  controller: LeadController
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.allUsers") ]
