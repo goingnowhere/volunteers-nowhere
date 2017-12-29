@@ -16,7 +16,13 @@ Template.publicDepartmentView.helpers
 Template.leadTeamView.onCreated () ->
   template = this
   teamId = template.data._id
-  template.subscribe("#{Volunteers.eventName}.Volunteers.team",teamId)
+  template.subscribe("#{Volunteers.eventName}.Volunteers.allDuties.byTeam",teamId)
+  template.stats = Volunteers.teamStats(teamId)
+
+Template.leadTeamView.helpers
+  'shiftRate': () -> Template.instance().stats.shiftRate()
+  'volunteerNumber': () -> Template.instance().stats.volunteerNumber()
+  'pendingRequests': () -> Template.instance().stats.pendingRequests.length
 
 Template.leadTeamView.events
   'click [data-action="settings"]': (event,template) ->
