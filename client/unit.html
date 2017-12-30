@@ -28,29 +28,26 @@
 </template>
 
 <template name="leadTeamView">
-  <h2>lead dashboard for team {{ name }}
+  <h2>{{ name }}</h2>
     <button type="button" class="btn btn-default btn-sm" data-action="settings">
       {{fa "wrench"}} Team Settings
     </button>
     <button type="button" class="btn btn-default btn-sm" data-action="applications">
       {{fa "users"}} Applications
     </button>
-  </h2>
 
   <div class="container">
     <div class="row">
       <div class="col-md-6">
         {{#markdown}}
-        Collect and show all aggregated data regarding this team, including:
-
-        - shifts needed / shifts signups: {{shiftRate.needed}} / {{shiftRate.signups}}
-        - nice graph showing the rate of signup over time
+        - shifts needed / shifts signups: {{shiftRate.needed}} / {{shiftRate.confirmed}}
         - pending requests: {{pendingRequests}}
         - volunteers number : {{volunteerNumber}}
+        - nice graph showing the rate of signup over time
         {{/markdown}}
       </div>
       <div class="col-md-6">
-        {{> fullcalendar }}
+        {{> teamShiftsTable _id=_id date=currentDay }}
       </div>
     </div>
   </div>

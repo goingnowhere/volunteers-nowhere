@@ -15,14 +15,26 @@ Template.publicDepartmentView.helpers
 
 Template.leadTeamView.onCreated () ->
   template = this
-  teamId = template.data._id
-  template.subscribe("#{Volunteers.eventName}.Volunteers.allDuties.byTeam",teamId)
-  template.stats = Volunteers.teamStats(teamId)
+  template.teamId = template.data._id
+  template.sub = template.subscribe("#{Volunteers.eventName}.Volunteers.allDuties.byTeam",template.teamId)
+  template.stats = Volunteers.teamStats(template.teamId)
+  template.currentDay = new ReactiveVar(Date())
+  template.autorun () ->
+    if template.sub.ready()
+      teamShifts = Volunteers.Collections.TeamShifts.find(
+        {parentId: template.teamId},
+        {sort: { start: -1 }, limit: 1}).fetch()
+      currentDay =
+        if teamShifts.length >= 1
+          moment(teamShifts[0].start).format('MMMM Do YYYY')
+      template.currentDay.set(currentDay)
 
 Template.leadTeamView.helpers
   'shiftRate': () -> Template.instance().stats.shiftRate()
   'volunteerNumber': () -> Template.instance().stats.volunteerNumber()
   'pendingRequests': () -> Template.instance().stats.pendingRequests.length
+  'team': () -> Volunteers.Collections.Team.findOne(Template.instance().teamId)
+  'currentDay': () -> Template.instance().currentDay.get()
 
 Template.leadTeamView.events
   'click [data-action="settings"]': (event,template) ->
