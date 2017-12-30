@@ -3,13 +3,13 @@ abate:autoform-datetimepicker@1.0.8
 abate:formbuilder@0.0.1
 abate:meteor-user-profiles@0.0.1
 abate:volunteers@0.0.1
-accounts-base@1.4.0
+accounts-base@1.4.1
 accounts-password@1.5.0
 accounts-ui@1.2.0
 accounts-ui-unstyled@1.3.0
 aldeed:autoform@6.2.0
 aldeed:autoform-select2@3.0.1
-aldeed:collection2-core@2.0.4
+aldeed:collection2-core@2.1.0
 aldeed:template-extension@4.1.0
 allow-deny@1.1.0
 anti:i18n@0.4.3
@@ -77,9 +77,9 @@ minifier-js@2.2.2
 minimongo@1.4.3
 mobile-experience@1.0.5
 mobile-status-bar@1.0.14
-modules@0.11.0
+modules@0.11.2
 modules-runtime@0.9.1
-momentjs:moment@2.19.3
+momentjs:moment@2.20.1
 mongo@1.3.1
 mongo-dev-server@1.1.0
 mongo-id@1.0.6
@@ -91,7 +91,7 @@ observe-sequence@1.0.16
 ordered-dict@1.0.9
 ostrio:autoform-files@2.0.4
 ostrio:cookies@2.2.4
-ostrio:files@1.9.3
+ostrio:files@1.9.5
 peppelg:bootstrap-3-modal@1.0.4
 percolate:migrations@1.0.2
 piemonkey:roles@2.0.0
