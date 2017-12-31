@@ -12,9 +12,14 @@ Template._header.helpers
 # XXX : restrict only to those depts and teams leaded by the user, or display all for manager
   'departments': () -> Volunteers.Collections.Department.find()
   'teams': () -> Volunteers.Collections.Team.find()
-  'isManagerOrLead': () -> Volunteers.isManagerOrLead(Meteor.userId())
-  'isManager': () -> Volunteers.isManager(Meteor.userId())
+  'isManagerOrLead': () ->
+    teams = Volunteers.Collections.Team.find().map((t) -> t._id)
+    Volunteers.isManagerOrLead(Meteor.userId(),teams)
+  'isManagerOrMetaLead': () ->
+    departments = Volunteers.Collections.Department.find().map((t) -> t._id)
+    Volunteers.isManagerOrLead(Meteor.userId(),departments)
+  'isManager': () -> Volunteers.isManager()
   'isNoInfo': () ->
     noInfo = Volunteers.Collections.Team.findOne({name: 'NoInfo'})
     if noInfo?
-      Volunteers.isManagerOrLead(Meteor.userId(),noInfo._id)
+      Volunteers.isManagerOrLead(Meteor.userId(),[noInfo._id])

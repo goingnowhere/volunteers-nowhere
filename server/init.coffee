@@ -16,6 +16,11 @@ Meteor.startup ->
       password: 'apple1'
       roles: ['admin']
     },
+    {
+      email: 'normal@example.com',
+      password: 'apple1'
+      roles: ['user']
+    },
   ]
 
   _.each defaultUsers, (options) ->

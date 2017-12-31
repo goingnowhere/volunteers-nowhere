@@ -11,7 +11,7 @@ Template.publicDepartmentView.helpers
     Volunteers.Collections.Team.find({parentId: template.departmentId})
   canEditTeam: () =>
     template = Template.instance()
-    Volunteers.isManagerOrLead(Meteor.userId(),template.departmentId)
+    Volunteers.isManagerOrLead(Meteor.userId(),[template.departmentId])
 
 Template.leadTeamView.onCreated () ->
   template = this
@@ -41,8 +41,8 @@ Template.leadTeamView.events
     team = Volunteers.Collections.Team.findOne(template.data._id)
     ModalShowWithTemplate("teamEdit",team)
   'click [data-action="applications"]': (event,template) ->
-    unit = Volunteers.Collections.Team.findOne(template.data._id)
-    ModalShowWithTemplate("teamSignupsList",{unit: unit})
+    team = Volunteers.Collections.Team.findOne(template.data._id)
+    ModalShowWithTemplate("teamSignupsList",team)
 
 Template.metaleadDepartmentView.onCreated () ->
   template = this
@@ -54,5 +54,5 @@ Template.metaleadDepartmentView.events
     dept = Volunteers.Collections.Department.findOne(template.data._id)
     ModalShowWithTemplate("departmentEdit",dept)
   'click [data-action="applications"]': (event,template) ->
-    unit = Volunteers.Collections.Department.findOne(template.data._id)
-    ModalShowWithTemplate("teamSignupsList",{unit: unit})
+    dept = Volunteers.Collections.Department.findOne(template.data._id)
+    ModalShowWithTemplate("teamSignupsList",dept)
