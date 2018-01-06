@@ -35,6 +35,7 @@ Router.route '/',
 
 Router.route '/signups',
   name: 'signups'
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.allDuties") ]
   controller: AnonymousController
 
 Router.route '/organization',
@@ -101,7 +102,9 @@ Router.route '/lead/team/:_id',
   name: 'leadTeamView'
   controller: LeadController
   # XXX restrict access only to the lead of this team, or the metalead of the dept or manager
-  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.team") ]
+  # XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
+  # there is a better way to do it
+  waitOn: () -> [ Meteor.subscribe("#{Volunteers.eventName}.Volunteers.allDuties.byTeam", this.params._id) ]
   data: () ->
     if this.params && this.params._id && this.ready()
       Volunteers.Collections.Team.findOne(this.params._id)
