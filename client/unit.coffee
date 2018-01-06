@@ -1,3 +1,4 @@
+import { Volunteers } from '/both/init'
 
 Template.publicDepartmentView.onCreated () ->
   template = this

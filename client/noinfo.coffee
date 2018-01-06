@@ -1,3 +1,5 @@
+import { Volunteers } from '/both/init'
+
 Template.noInfoDashboard.onCreated () ->
   template = this
   template.subscribe("test.Volunteers.team")

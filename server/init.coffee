@@ -1,3 +1,5 @@
+import { Volunteers } from '/both/init'
+
 Meteor.startup ->
   # console.log "startup #{Volunteers.eventName}"
   allRoles = ['admin','manager','user']

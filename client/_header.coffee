@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import '../imports/freelancer/js/freelancer.js';
 import '../imports/freelancer/css/freelancer.css';
+import { Volunteers } from '/both/init'
 
 Template._header.onCreated () ->
   template = this

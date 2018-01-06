@@ -1,5 +1,6 @@
 import OrgChart from 'orgchart'
 import 'orgchart/src/css/jquery.orgchart.css'
+import { Volunteers } from '/both/init'
 
 list_to_tree = (list) ->
   map = {}
