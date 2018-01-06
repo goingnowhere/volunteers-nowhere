@@ -4,7 +4,7 @@ require './duties-fixtures'
 require './shifts-fixtures'
 import createForm from './profile-form'
 
-share.runFixtures = (Volunteers) ->
+module.exports = runFixtures = (Volunteers) ->
   # XXX this should be something else. This check is a bit dangerous
   shouldRun = Volunteers.Collections.Team.find().count() == 0
   if shouldRun
