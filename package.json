@@ -2,7 +2,8 @@
   "name": "contentTest",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "lint": "eslint ."
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
@@ -13,6 +14,14 @@
     "meteor-node-stubs": "~0.2.0",
     "orgchart": "^2.0.12",
     "scrollspy": "^1.6.0",
-    "simpl-schema": "^0.3.2"
+    "simpl-schema": "^0.3.2",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-meteor": "^4.1.4"
   }
 }
