@@ -1,0 +1,21 @@
+<template name="managerView">
+  <div class="row">
+    <div class="col-md-2">
+      {{> managerInfo }}
+    </div>
+    <div class="col-md-5">
+      <h3> XX teams </h3>
+      {{> teamsList}}
+      <h3> XX departments </h3>
+      {{> departmentsList }}
+    </div>
+    <div class="col-md-5">
+      <h3> XX urgent shifts today </h3>
+      {{> allRequests }}
+    </div>
+  </div>
+</template>
+
+<template name="managerUserForm">
+  {{> volunteerFormBuilder }}
+</template>

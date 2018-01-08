@@ -1,0 +1,87 @@
+<template name="userDashboard">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <h4 >{{_ "welcome"}} {{ getUserName userId }}</h4>
+        <h5 class="mb-2 text-muted">{{_ "responsability"}} </h5>
+        <ul>
+          {{#if isManager }}<li><h5 class="mb-2 text-muted">{{_ "role"}}: </h5>Manager</li>{{/if}}
+          {{#if isNoInfo }}<li><h5 class="mb-2 text-muted">{{_ "noInfo"}}: </h5>Member</li>{{/if}}
+          {{#each team in leads}}
+            <li>
+              <h5 class="mb-2 text-muted">{{_ "lead"}}:</h5>
+              <a href="{{pathFor 'leadTeamView' _id=team._id }}">{{team.name}}</a>
+            </li>
+          {{/each}}
+          {{#each dept in metaleads}}
+            <li>
+              <h5 class="mb-2 text-muted">{{_ "metalead"}}: </h5>
+              <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}">{{dept.name}}</a>
+            </li>
+          {{/each}}
+        </ul>
+        <h5 class="mb-2 text-muted">{{_ "contact_information" }}</h5>
+        {{ getUserEmail userId }}
+        <h5 class="mb-2 text-muted">{{_ "upcoming_missions"}}</h5>
+        countdown
+        <h5 class="mb-2 text-muted">{{_ "ongoing_missions"}}</h5>
+        XX
+        <h5 class="mb-2 text-muted">{{_ "arrival_date"}}</h5>
+        XX/XX/XXXX
+        <br/>
+        <button type="button" class="btn btn-default btn-sm" data-action="settings">
+          {{_ "edit_user_info" }}
+        </button>
+      </div>
+      <div class="col-md-5">
+        <h2>{{_ "booked_missions" }}</h2>
+        {{> bookedTable }}
+      </div>
+      <div class="col-md-5">
+        <h2>{{_ "shift_need_help"}}</h2>
+        <!-- this class (should) add a scrollbar -->
+        <!-- <div class="signupsList"> -->
+          {{> signupsList }}
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- shifts & task the user has signed up for -->
+<template name="filterstest">
+    <h3>{total nb of shifts+tasks} Missions</h3>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle"
+        data-toggle="dropdown" role="button"
+        aria-haspopup="true" aria-expanded="false">
+        <p class="button">Filter shifts<span class="caret"></span></p>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="{{isActiveRoute 'managerView'}}">
+          <a href="{{pathFor 'managerView'}}">each Team names</a>
+        </li>
+        <li class="{{isActiveRoute 'allUsersList'}}">
+          <a href="{{pathFor 'allUsersList'}}">each Day</a>
+        </li>
+        <li class="{{isActiveRoute 'allUsersList'}}">
+          <a href="{{pathFor 'allUsersList'}}">Tasks</a>
+        </li>
+        <li class="{{isActiveRoute 'allUsersList'}}">
+          <a href="{{pathFor 'allUsersList'}}">Shifts</a>
+        </li>
+      </ul>
+    </li>
+
+    Shifts + tasks
+    separators
+</template>
+
+<!-- the shifts & tasks that could fit to the user -->
+<template name="matchItems">
+    identical to the list on top, exept with different content
+</template>
+
+<template name="accountSettings">
+  {{> userProfile }}
+</template>

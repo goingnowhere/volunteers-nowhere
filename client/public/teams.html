@@ -1,0 +1,19 @@
+<template name="publicTeamView">
+  <div class="container">
+    <div class="row">
+      <div class="card">
+        <div class="col-md-3">
+          <h2>{{ name }}</h2>
+          leads ...
+        </div>
+        <div class="col">
+          <p>{{description}}</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Shifts and Tasks</h3>
+      {{> volunteerShiftsList }}
+    </div>
+  </div>
+</template>

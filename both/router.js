@@ -41,7 +41,7 @@ Router.route('/', {
 
 Router.route('/signups', {
   name: 'signups',
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties`)],
+  // waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties`)],
   controller: AnonymousController,
 })
 
@@ -53,8 +53,13 @@ Router.route('/organization', {
 Router.route('/team/:_id', {
   name: 'publicTeamView',
   controller: AnonymousController,
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`)],
-  data() {
+  waitOn: function () {
+    if (this.params && this.params._id) {
+      sel = {_id: this.params._id}
+      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`,sel)]
+    }
+  },
+  data: function () {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Team.findOne(this.params._id)
     }
@@ -65,8 +70,15 @@ Router.route('/team/:_id', {
 Router.route('/department/:_id', {
   name: 'publicDepartmentView',
   controller: AnonymousController,
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`)],
-  data() {
+  waitOn: function () {
+    if (this.params && this.params._id) {
+      sel = {_id: this.params._id}
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`,sel)
+      ]
+    }
+  },
+  data: function () {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Department.findOne(this.params._id)
     }
@@ -76,7 +88,7 @@ Router.route('/department/:_id', {
 
 // after login
 Router.route('/dashboard', {
-  name: 'dashboard',
+  name: 'userDashboard',
   controller: AuthenticatedController,
 })
 
@@ -118,18 +130,37 @@ Router.route('/manager/userform', {
 Router.route('/admin/users', {
   name: 'allUsersList',
   controller: LeadController,
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)],
+  waitOn: function () {
+    return [ Meteor.subscribe(`${Volunteers.eventName}.allUsers`) ]
+  },
 })
 
 // lead pages
+Router.route('/lead', {
+  name: 'leadDashboard',
+  controller: LeadController,
+  // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
+  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
+  // there is a better way to do it
+  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
+})
+
 Router.route('/lead/team/:_id', {
   name: 'leadTeamView',
   controller: LeadController,
   // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
   // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
   // there is a better way to do it
-  waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-  data() {
+  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
+  waitOn: function () {
+    if (this.params && this.params._id) {
+      sel = {_id: this.params._id}
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`,sel)
+      ]
+    }
+  },
+  data: function () {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Team.findOne(this.params._id)
     }
@@ -138,12 +169,28 @@ Router.route('/lead/team/:_id', {
 })
 
 // metalead pages
+Router.route('/metalead', {
+  name: 'metaleadDashboard',
+  controller: LeadController,
+  // XXX restrict access only to the metalead of this team, or manager
+  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
+  // there is a better way to do it
+  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
+})
+
 Router.route('/metalead/department/:_id', {
   name: 'metaleadDepartmentView',
   controller: LeadController,
   // XXX restrict access only to the metalead of the dept or manager
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`)],
-  data() {
+  waitOn: function () {
+    if (this.params && this.params._id) {
+      sel = {_id: this.params._id}
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`,sel)
+      ]
+    }
+  },
+  data: function () {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Department.findOne(this.params._id)
     }
@@ -168,5 +215,7 @@ Router.route('/noinfo/userList', {
   // manager or lead annotations or restricted information
   template: 'allUsersList',
   controller: LeadController,
-  waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)],
+  waitOn: function () {
+    return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
+  },
 })

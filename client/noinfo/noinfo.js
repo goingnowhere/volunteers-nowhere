@@ -1,17 +1,16 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { $ } from 'meteor/jquery'
-import { Volunteers } from '../both/init'
+import { Volunteers } from '../../both/init'
 
 let template
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   template = this
-  template.subscribe('test.Volunteers.team')
-  template.subscribe('test.Volunteers.department')
-
+  template.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
   template.currentDay = new ReactiveVar()
   template.searchQuery = new ReactiveVar({})
+  // template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byDepartment`, departmentId)
 })
 
 Template.noInfoDashboard.helpers({

@@ -1,0 +1,64 @@
+<template name="noInfoDashboard">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <h2>NoInfo</h2>
+        <h5 class="mb-2 text-muted">{{_ "needs_of_the_day"}}:</h5>
+        XX/XX>
+        <h5 class="mb-2 text-muted">{{_ "needs_of_the_week"}} :</h5>
+        XX/XX
+        <h5 class="mb-2 text-muted">{{_ "urgent_shifts"}}</h5>
+        XX/XX
+        <!-- <button type="button" class="btn btn-default btn-sm" data-action="settings">
+          Create Shift
+        </button> -->
+        <!-- <button type="button" class="btn btn-default btn-sm" data-action="settings">
+          See requests
+        </button> -->
+      </div>
+      <div class="col">
+        <h3> {{_ "urgent_shifts_today"}} </h3>
+        filters : team / urgent / time of day
+        {{> volunteerShiftsList }}
+        <!-- todo - searchQuery=searchQuery present day }} -->
+      </div>
+      <div class="col">
+        <h3> {{_ "urgent_shifts_week"}} </h3>
+        filters : day / team / urgent / time of day
+        {{> volunteerShiftsList}}
+        <!-- todo - display only the shifts/tasks with empty spots -->
+      </div>
+
+      <!--<div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <h3> Departments </h3>
+              <ul>
+                {{#each dept in (allDepartments currentDay)}}
+                  <li><a href="#" data-action="deptSwitch" data-id="{{dept._id}}">{{dept.name}}</a></li>
+                {{/each}}
+              </ul>
+              <h3> Teams </h3>
+              <ul>
+                {{#each team in (allTeams currentDay)}}
+                  <li><a href="#" data-action="teamSwitch" data-id="{{team._id}}">{{team.name}}</a></li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h3> Day </h3>
+            {{allShifts.teams.[0]}}
+            {{> volunteerShiftsForm searchQuery=searchQuery enroll="true" }}
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </div>
+</template>
+
+<template name="noInfoNewUser">
+  <h1> NoInfo </h1>
+  {{> adminEnrollAccount}}
+</template>

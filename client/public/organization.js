@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating'
 import 'orgchart'
 import 'orgchart/src/css/jquery.orgchart.css'
-import { Volunteers } from '../both/init'
+import { Volunteers } from '../../both/init'
 
 const listToTree = function(list) {
   const map = {}

@@ -1,6 +1,7 @@
 import { createUnits } from './units-fixtures'
 import './duties-fixtures'
 import { createShifts } from './shifts-fixtures'
+import { createLeads } from './leads-fixtures'
 import { createForm } from './profile-form'
 
 export const runFixtures = (Volunteers) => {
@@ -10,6 +11,7 @@ export const runFixtures = (Volunteers) => {
     console.log('Run fixtures')
     createUnits(Volunteers)
     createShifts(Volunteers)
+    createLeads(Volunteers)
     createForm(Volunteers)
   }
 }

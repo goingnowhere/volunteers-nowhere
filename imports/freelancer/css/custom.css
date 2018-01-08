@@ -1,0 +1,45 @@
+@font-face {
+    font-family: BebusNeueBold;
+    src: url("/fonts/bebasneue.ttf");
+}
+
+/* responsive typography */
+html {
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 14px;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 28px;
+  }
+}
+
+/*  XXX this is temporary. There must be a better way of doing this */
+section {
+  padding-top: 80px !important;
+}
+
+/* XXX this should add a scrollbar for the shiftList */
+/* .shiftList {
+    flex: 1 1 0;
+    display: flex;
+}
+.shiftList .container-fluid {
+    display: flex;
+}
+.col-6 {
+    overflow-y: auto;
+} */

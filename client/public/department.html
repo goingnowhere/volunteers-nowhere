@@ -1,0 +1,21 @@
+<template name="publicDepartmentView">
+  <div class="container">
+    <div class="row">
+      <div class="card">
+        <h1>{{ name }}</h1>
+
+        <p>{{description}}</p>
+
+        <h3>Teams Within this Department</h3>
+        {{#each team in teams}}
+          {{team.name}}
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>We need your help</h3>
+      {{> volunteerShiftsList }}
+    </div>
+  </div>
+  </template>

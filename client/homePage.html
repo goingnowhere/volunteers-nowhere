@@ -1,12 +1,12 @@
 <template name="homePage">
   <body id="page-top" class="index">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-      <div class="container">
+      <div class="container navPadding">
         <div class="navbar-header page-scroll">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
           </button>
-          <a class="navbar-brand" href="{{#unless currentUser}}#page-top{{else}}{{pathFor 'dashboard'}}{{/unless}}">Volunteers @ Nowhere</a>
+          <a class="navbar-brand" href="{{#unless currentUser}}#page-top{{else}}{{pathFor 'userDashboard'}}{{/unless}}">My Dashboard</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -36,15 +36,20 @@
             <img class="img-responsive" src="img/nowhere.png" alt="">
             <div class="intro-text">
               <span class="name">Co-Create Nowhere 2018</span>
-              <hr class="star-light">
-              <span class="skills">Partecipate - Innovate - Co-Create</span>
+              <span class="skills">A participative festival of 1week + for Thousands of nobodies just like you</span>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 text-center">
             <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
-                <i class="fa fa-sign-in"></i> Sign-Up Now !
+                Sign-Up
+            </a>
+            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
+                Log-in
+            </a>
+            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
+                Explore
             </a>
           </div>
         </div>
