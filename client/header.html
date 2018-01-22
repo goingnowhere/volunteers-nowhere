@@ -10,19 +10,19 @@
 
         {{#if currentUser}}
           <li class="nav-item">
-            <a class="nav-link" href="{{pathFor 'userDashboard'}}">{{_ "my_dashboard"}}</a>
+            <a class="nav-link" href="{{pathFor 'userDashboard'}}">{{__ "my_dashboard"}}</a>
           </li>
           {{#if isManager }}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown1" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                  {{_ "manager"}}
+                  {{__ "manager"}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <a class="dropdown-item" href="{{pathFor 'managerView'}}">{{_ "dashboard"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'allUsersList'}}">{{_ "all_users"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'managerUserForm'}}">{{_ "profile_form"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'managerView'}}">{{__ "dashboard"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'allUsersList'}}">{{__ "all_users"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'managerUserForm'}}">{{__ "profile_form"}}</a>
               </div>
             </li>
           {{/if}}
@@ -31,12 +31,12 @@
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown2" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                  {{_ "noinfo"}}
+                  {{__ "noinfo"}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <a class="dropdown-item" href="{{pathFor 'noInfoDashboard'}}">{{_ "dashboard"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'noInfoNewUser'}}">{{_ "new_user"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'noInfoAllUsers'}}">{{_ "all_users"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'noInfoDashboard'}}">{{__ "dashboard"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'noInfoNewUser'}}">{{__ "new_user"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'noInfoAllUsers'}}">{{__ "all_users"}}</a>
               </div>
             </li>
           {{/if}}
@@ -45,10 +45,10 @@
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown3" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                  {{_ "metalead"}}
+                  {{__ "metalead"}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <!-- <a class="dropdown-item" href="{{pathFor 'metaleadDashboard'}}">{{_ "dashboard"}}</a> -->
+                <!-- <a class="dropdown-item" href="{{pathFor 'metaleadDashboard'}}">{{__ "dashboard"}}</a> -->
                 {{#each dept in departments }}
                   <a class="dropdown-item" href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}" >{{dept.name}}</a>
                 {{/each}}
@@ -60,10 +60,10 @@
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown4" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                  {{_ "lead"}}
+                  {{__ "lead"}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <!-- <a class="dropdown-item" href="{{pathFor 'leadDashboard'}}">{{_ "dashboard"}}</a> -->
+                <!-- <a class="dropdown-item" href="{{pathFor 'leadDashboard'}}">{{__ "dashboard"}}</a> -->
                 {{#each team in teams }}
                   <a class="dropdown-item" href="{{pathFor 'leadTeamView' _id=team._id }}" >{{team.name}}</a>
                 {{/each}}
@@ -74,16 +74,16 @@
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown5" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                  {{_ "welcome"}} {{firstName}}
+                  {{__ "welcome"}} {{firstName}}
               </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-              <a class="dropdown-item" href="{{pathFor 'userProfileEdit'}}">{{_ "edit_profile"}}</a>
-              <a class="dropdown-item" href="{{pathFor 'atChangePwd'}}">{{_ "change_password"}}</a>
-              <a class="dropdown-item" href="{{pathFor 'accountSettings'}}">{{_ "account_settings"}}</a>
+              <a class="dropdown-item" href="{{pathFor 'userProfileEdit'}}">{{__ "edit_profile"}}</a>
+              <a class="dropdown-item" href="{{pathFor 'atChangePwd'}}">{{__ "change_password"}}</a>
+              <a class="dropdown-item" href="{{pathFor 'accountSettings'}}">{{__ "account_settings"}}</a>
               {{#if isImpersonating}}
-                <a class="dropdown-item" data-action="unimpersonate">{{_ "impersonate"}}</a>
+                <a class="dropdown-item" data-action="unimpersonate">{{__ "impersonate"}}</a>
               {{/if}}
-                <a class="dropdown-item" href="{{pathFor 'atSignOut'}}">{{_ "logout"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'atSignOut'}}">{{__ "logout"}}</a>
             </div>
           </li>
         {{else}}

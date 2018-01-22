@@ -3,30 +3,30 @@
     <div class="row">
       <div class="col-md-2">
         <h3>{{ name }}</h3>
-        <h5 class="mb-2 text-muted">{{_ "leads"}}</h5>
+        <h5 class="mb-2 text-muted">{{__ "leads"}}</h5>
         <ul>
           {{#each lead in leadsDept}}
             <li>{{getUserName lead.userId}}</li>
           {{/each}}
         </ul>
-        <h5 class="mb-2 text-muted">{{_ "information"}}</h5>
+        <h5 class="mb-2 text-muted">{{__ "information"}}</h5>
         <ul>
-          <li>{{_ "teams"}}: {{ teamsNumber }}</li>
-          <li>{{_ "leads"}}: {{allLeads.wanted}}/{{allLeads.covered}}</li>
-          <li>{{_ "shifts"}}: {{shiftsDept.wanted}}/{{shiftsDept.covered}}</li>
-          <li>{{_ "volunteer"}}: xxx</li>
+          <li>{{__ "teams"}}: {{teamsNumber}}</li>
+          <li>{{__ "leads"}}: {{allLeads.wanted}}/{{allLeads.covered}}</li>
+          <li>{{__ "shifts"}}: {{shiftsDept.wanted}}/{{shiftsDept.covered}}</li>
+          <li>{{__ "volunteer"}}: xxx</li>
         </ul>
         <button type="button" class="btn btn-default btn-sm" data-action="add_team">
-          {{fa "wrench"}} {{_ "add_team" }}
+          {{fa "wrench"}} {{__ "add_team" }}
         </button>
       </div>
       <div class="col-md-5">
-        <h3>{{_ "all_teams"}}</h3>
+        <h3>{{__ "all_teams"}}</h3>
         <table class="table">
           <thead>
-            <th>{{_ "name"}}</th>
-            <th>{{_ "leads"}}</th>
-            <th>{{_ "wanted/covered"}}</th>
+            <th>{{__ "name"}}</th>
+            <th>{{__ "leads"}}</th>
+            <th>{{__ "wanted/covered"}}</th>
             <th></th>
           </thead>
           {{#each team in allTeams}}
@@ -46,11 +46,11 @@
                   </button>
                   <ul class="dropdown-menu">
                     <li class="dropdown-item"><a href="#" data-action="edit_team" data-id="{{team._id}}">
-                      {{fa "pencil-square-o"}} {{_ "edit"}}</a></li>
+                      {{fa "pencil-square-o"}} {{__ "edit"}}</a></li>
                     <li class="dropdown-item"><a href="#" data-action="delete_team" data-id="{{team._id}}">
-                      {{fa "trash-o"}} {{_ "remove"}}</a></li>
+                      {{fa "trash-o"}} {{__ "remove"}}</a></li>
                     <li class="dropdown-item"><a href="#" data-action="enroll_lead" data-id="{{team._id}}">
-                      {{fa "user"}} {{_ "enroll_lead"}}</a></li>
+                      {{fa "user"}} {{__ "enroll_lead"}}</a></li>
                   </ul>
                 </div>
               </td>
@@ -69,7 +69,7 @@
         {{/markdown}} -->
       </div>
       <div class="col-md-5">
-        <h3>{{_ "pending_requests"}}</h3>
+        <h3>{{__ "pending_requests"}}</h3>
         {{> departmentSignupsList }}
       </div>
     </div>

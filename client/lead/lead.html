@@ -3,30 +3,30 @@
     <div class="row">
       <div class="col-md-2">
         <h2>{{ name }}</h2>
-        <h5 class="mb-2 text-muted">{{_ "leads"}}</h5>
+        <h5 class="mb-2 text-muted">{{__ "leads"}}</h5>
         <ul>
           {{#each lead in allLeads}}
             <li>{{getUserName lead.userId}}</li>
           {{/each}}
         </ul>
-        <h5 class="mb-2 text-muted">{{_ "information"}}</h5>
+        <h5 class="mb-2 text-muted">{{__ "information"}}</h5>
         <ul>
-          <li>{{_ "shifts"}}: {{shiftRate.needed}} </li>
-          <li>{{_ "shifts_confirmed"}}: {{shiftRate.confirmed}} </li>
-          <li>{{_ "volunteers"}}: {{volunteerNumber}} </li>
+          <li>{{__ "shifts"}}: {{shiftRate.needed}} </li>
+          <li>{{__ "shifts_confirmed"}}: {{shiftRate.confirmed}} </li>
+          <li>{{__ "volunteers"}}: {{volunteerNumber}} </li>
         </ul>
         <button type="button" class="btn btn-default btn-sm" data-action="team_settings">
-          {{fa "wrench"}} {{_ "team_settings"}}
+          {{fa "wrench"}} {{__ "team_settings"}}
         </button>
         <button type="button" class="btn btn-default btn-sm" data-id="_id" data-action="add_shift">
-          {{fa "wrench"}} {{_ "add_shift"}}
+          {{fa "wrench"}} {{__ "add_shift"}}
         </button>
         <button type="button" class="btn btn-default btn-sm" data-id="_id" data-action="add_task">
-          {{fa "wrench"}} {{_ "add_task"}}
+          {{fa "wrench"}} {{__ "add_task"}}
         </button>
       </div>
       <div class="col-md-5">
-        <h2>{{_ "all_shifts" }}</h2>
+        <h2>{{__ "all_shifts" }}</h2>
         {{> teamShiftsTable _id=_id date=currentDay }}
       </div>
       <div class="col-md-5">

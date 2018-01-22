@@ -1,0 +1,17 @@
+{
+  "booked_missions": "Booked Missions",
+  "name": "Name",
+  "pending_requests": "Pending Requests",
+  "all_shifts": "All Shifts",
+  "team_settings": "Team Settings",
+  "add_team": "New Team",
+  "add_task": "New Task",
+  "my_dashboard": "My Dashboard",
+  "welcome": "Welcome",
+  "shift_need_help": "Shifts Need Help",
+  "contact_information": "Contact",
+  "arrival_date": "Arrival Date",
+  "responsability": "Responsibility",
+  "role": "Role"
+
+}

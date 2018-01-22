@@ -2,6 +2,7 @@
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
+import i18n from 'meteor/universe:i18n'
 
 AccountsTemplates.configure({
   defaultLayout: 'userLayout',
@@ -55,10 +56,12 @@ AccountsTemplates.addField({
 //   const user = Meteor.users.findOne(userId)
 //   if (user) {
 //     T9n.setLanguage(user.profile.language)
-//     TAPi18n.setLanguage(user.profile.language)
+//     i18n.setLocale(user.profile.language)
 //     moment.locale(user.profile.language)
 //   }
 // }
+
+i18n.setLocale('en-US')
 
 export const Volunteers = new VolunteersClass('nowhere2018')
 
