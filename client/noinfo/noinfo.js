@@ -6,7 +6,7 @@ import { Volunteers } from '../../both/init'
 let template
 
 Template.noInfoDashboard.onCreated(function onCreated() {
-  template = this
+  const template = this
   template.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
   template.currentDay = new ReactiveVar()
   template.searchQuery = new ReactiveVar({})

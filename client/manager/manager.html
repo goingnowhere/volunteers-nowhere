@@ -1,21 +1,37 @@
 <template name="managerView">
-  <div class="row">
-    <div class="col-md-2">
-      {{> managerInfo }}
-    </div>
-    <div class="col-md-5">
-      <h3> XX teams </h3>
-      {{> teamsList}}
-      <h3> XX departments </h3>
-      {{> departmentsList }}
-    </div>
-    <div class="col-md-5">
-      <h3> XX urgent shifts today </h3>
-      {{> allRequests }}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <h2>{{__ "manager"}}</h2>
+        <h5 class="mb-2 text-muted">{{__ "leads"}}</h5>
+        occupied/total
+        <h5 class="mb-2 text-muted">{{__ "metalead"}}</h5>
+        occupied/total
+        <h5 class="mb-2 text-muted">{{__ "shifts_and_tasks"}}</h5>
+        booked/total
+        <button type="button" class="btn btn-default btn-sm" data-action="settings">
+          {{__ "event_settings" }}
+        </button>
+        <button type="button" class="btn btn-default btn-sm" data-action="settings">
+          {{__ "add_department" }}
+        </button>
+      </div>
+      <div class="col-md-5">
+        <h3>{{__ "departments"}}</h3>
+        <!-- {{> departmentsList }} -->
+        <h3>{{__ "teams"}}</h3>
+        <!-- {{> teamsList}} -->
+      </div>
+      <div class="col-md-5">
+        <h3>{{__ "all_requests"}}</h3>
+      </div>
     </div>
   </div>
 </template>
 
 <template name="managerUserForm">
   {{> volunteerFormBuilder }}
+</template>
+
+<template name="managerEventSettings">
 </template>

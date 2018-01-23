@@ -2,13 +2,14 @@ import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
+import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
 
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id
   template.stats = Volunteers.teamStats(template.teamId)
-  template.currentDay = new ReactiveVar(Date())
+  template.currentDay = new ReactiveVar(moment())
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
@@ -29,17 +30,32 @@ Template.leadTeamView.helpers({
   volunteerNumber: () => Template.instance().stats.volunteerNumber(),
   pendingRequests: () => Template.instance().stats.pendingRequests.length,
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
-  allLeads: () => Volunteers.Collections.LeadSignups.find({parentId: Template.instance().teamId}),
-  currentDay: () => Template.instance().currentDay.get(),
+  allLeads: () =>
+    Volunteers.Collections.LeadSignups.find({parentId: Template.instance().teamId}),
+  currentDay: () => { Template.instance().currentDay.get() },
+  updateCurrentDay: () => {
+    var cd = Template.instance().currentDay
+    return ((day) => { cd.set(day)})
+  }
 })
 
 Template.leadTeamView.events({
-  'click [data-action="settings"]': (event, templateInstance) => {
+  'click [data-action="team_settings"]': (event, templateInstance) => {
     const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
     AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
   },
-  'click [data-action="applications"]': (event, templateInstance) => {
+  'click [data-action="add_shift"]': (event, templateInstance) => {
     const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
-    AutoFormComponents.ModalShowWithTemplate('teamSignupsList', team)
+    AutoFormComponents.ModalShowWithTemplate('addShift', team)
   },
+  'click [data-action="add_task"]': (event, templateInstance) => {
+    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+    AutoFormComponents.ModalShowWithTemplate('addTask', team)
+  },
+})
+
+AutoForm.addHooks(['UpdateTeamFormId','InsertTeamFormId'],{
+  'onSuccess': (formType, result) => {
+    console.log("modal close");
+  }
 })

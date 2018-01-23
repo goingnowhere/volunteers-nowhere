@@ -35,16 +35,16 @@ dburles:collection-helpers
 fortawesome:fontawesome
 
 natestrauser:connection-banner
-juliancwirko:s-alert
+
 percolate:migrations
 sacha:spin
 
 abate:volunteers
 piemonkey:roles
 
-rzymek:fullcalendar
 abate:meteor-user-profiles
 markdown@1.0.12
+
 themeteorchef:bert
 universe:i18n
 universe:i18n-blaze

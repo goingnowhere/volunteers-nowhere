@@ -6,12 +6,19 @@
   "team_settings": "Team Settings",
   "add_team": "New Team",
   "add_task": "New Task",
+  "add_shift": "New Shift",
   "my_dashboard": "My Dashboard",
   "welcome": "Welcome",
   "shift_need_help": "Shifts Need Help",
   "contact_information": "Contact",
   "arrival_date": "Arrival Date",
   "responsability": "Responsibility",
-  "role": "Role"
+  "role": "Role",
+  "applications": "Applications",
+  "urgent_shifts_today": "Urgent Shifts Today",
+  "urgent_shifts_week": "Urgent Shifts this Week",
+  "needs_of_the_day": "Help Needed Today",
+  "needs_of_the_week": "Help Needed this Week",
+  "urgent_shifts": "Urgent Shifts"
 
 }
