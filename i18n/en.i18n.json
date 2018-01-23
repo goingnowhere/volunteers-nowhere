@@ -5,6 +5,7 @@
   "all_shifts": "All Shifts",
   "team_settings": "Team Settings",
   "add_team": "New Team",
+  "add_department": "New Department",
   "add_task": "New Task",
   "add_shift": "New Shift",
   "my_dashboard": "My Dashboard",
@@ -19,6 +20,9 @@
   "urgent_shifts_week": "Urgent Shifts this Week",
   "needs_of_the_day": "Help Needed Today",
   "needs_of_the_week": "Help Needed this Week",
-  "urgent_shifts": "Urgent Shifts"
+  "urgent_shifts": "Urgent Shifts",
+  "all_teams": "All Teams",
+  "enroll_lead": "Enroll Lead",
+  "event_settings": "Event Settings"
 
 }

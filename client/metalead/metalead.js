@@ -87,6 +87,7 @@ Template.metaleadDepartmentView.helpers({
     return Volunteers.Collections.Team.find({parentId: deptId})
   },
   leadsTeam: (team) => {
-    return Volunteers.Collections.LeadSignups.find({status: "confirmed", parentId: team._id})
+    return Volunteers.Collections.LeadSignups.find(
+      {status: "confirmed", parentId: team._id}).fetch()
   },
 })

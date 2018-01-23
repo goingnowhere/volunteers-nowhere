@@ -7,7 +7,7 @@
         occupied/total
         <h5 class="mb-2 text-muted">{{__ "metalead"}}</h5>
         occupied/total
-        <h5 class="mb-2 text-muted">{{__ "shifts_and_tasks"}}</h5>
+        <h5 class="mb-2 text-muted">{{__ "shifts"}}</h5>
         booked/total
         <button type="button" class="btn btn-default btn-sm" data-action="settings">
           {{__ "event_settings" }}
@@ -24,6 +24,7 @@
       </div>
       <div class="col-md-5">
         <h3>{{__ "all_requests"}}</h3>
+        {{> managerSignupsList }}
       </div>
     </div>
   </div>
