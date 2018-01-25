@@ -66,9 +66,6 @@ i18n.setLocale('en-US')
 export const Volunteers = new VolunteersClass('nowhere2018')
 
 const addUsersToRoles = (userId) => {
-  if (userId) {
-    Roles.addUsersToRoles(userId, 'user', Volunteers.eventName)
-  }
   // this can be useful
   // if (Meteor.users.find().count() === 1) {
   //   Roles.addUsersToRoles(userId, 'super-admin')
@@ -77,7 +74,7 @@ const addUsersToRoles = (userId) => {
 
 const postSignUpHook = (userId) => { // eslint-disable-line no-unused-vars
   if (Meteor.isServer) {
-    addUsersToRoles(userId, 'users', Volunteers.eventName)
+    Roles.addUsersToRoles(userId, 'user', Volunteers.eventName)
   }
   // if (Meteor.isClient) {
   //   this.setUserLanguage(userId)

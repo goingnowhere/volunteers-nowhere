@@ -1,12 +1,14 @@
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
+import { MeteorProfile } from '../../both/users'
 
 Template.userDashboard.onCreated(function onCreated() {
   const template = this
   userId = Meteor.userId()
-  Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`,userId)
-  Meteor.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`,userId)
-  Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`,userId)
+  template.subscribe('meteor-user-profiles.ProfilePictures',userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`,userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`,userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`,userId)
 })
 
 Template.userDashboard.helpers({
@@ -38,6 +40,6 @@ Template.userDashboard.helpers({
 
 Template.userDashboard.events({
   'click [data-action="settings"]': (event, templateInstance) => {
-    AutoFormComponents.ModalShowWithTemplate('addVolunteerForm')
+    Router.go('volunteerForm')
   },
 })

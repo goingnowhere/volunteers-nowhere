@@ -77,9 +77,9 @@
                   {{__ "welcome"}} {{firstName}}
               </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-              <a class="dropdown-item" href="{{pathFor 'userProfileEdit'}}">{{__ "edit_profile"}}</a>
+              <a class="dropdown-item" href="{{pathFor 'volunteerForm'}}">{{__ "volunteer_form"}}</a>
               <a class="dropdown-item" href="{{pathFor 'atChangePwd'}}">{{__ "change_password"}}</a>
-              <a class="dropdown-item" href="{{pathFor 'accountSettings'}}">{{__ "account_settings"}}</a>
+              <a class="dropdown-item" href="{{pathFor 'accountSettings'}}">{{__ "user_details"}}</a>
               {{#if isImpersonating}}
                 <a class="dropdown-item" data-action="unimpersonate">{{__ "impersonate"}}</a>
               {{/if}}

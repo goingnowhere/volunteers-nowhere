@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2">
-        <h4 >{{__ "welcome"}} {{ getUserName userId }}</h4>
+        <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
+        <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
         <h5 class="mb-2 text-muted">{{__ "responsability"}} </h5>
         <ul>
           {{#if isManager }}<li><h5 class="mb-2 text-muted">{{__ "role"}}: </h5>Manager</li>{{/if}}
@@ -48,6 +49,27 @@
   </div>
 </template>
 
+<template name="volunteerForm">
+  <div class="container">
+    <h2>{{__ "volunteer_form"}}</h2>
+    {{> addVolunteerForm }}
+  </div>
+</template>
+
+<template name="accountSettings">
+  <div class="container">
+    <h2>{{__ "user_details"}}</h2>
+    {{> userProfile }}
+  </div>
+</template>
+
+<template name="volunteerFormDisplay">
+  <div class="container">
+    <h2>{{__ "volunteer_form"}}</h2>
+    {{> formBuilderDisplay }}
+  </div>
+</template>
+
 <!-- shifts & task the user has signed up for -->
 <template name="filterstest">
     <h3>{total nb of shifts+tasks} Missions</h3>
@@ -80,8 +102,4 @@
 <!-- the shifts & tasks that could fit to the user -->
 <template name="matchItems">
     identical to the list on top, exept with different content
-</template>
-
-<template name="accountSettings">
-  {{> userProfile }}
 </template>

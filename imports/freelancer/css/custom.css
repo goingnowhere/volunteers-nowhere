@@ -32,6 +32,11 @@ section {
   padding-top: 80px !important;
 }
 
+.header-avatar {
+  width: 48px;
+  height: :48px;
+}
+
 /* XXX this should add a scrollbar for the shiftList */
 /* .shiftList {
     flex: 1 1 0;

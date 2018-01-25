@@ -41,10 +41,10 @@ export const createLeads = (Volunteers) => {
       })
     })
 
-    departments.forEach((team) => {
-      departmentLeads[team].forEach((doc) => {
+    departments.forEach((deptName) => {
+      departmentLeads[deptName].forEach((doc) => {
         console.log(`creating fixture for Lead ${doc.title}`)
-        const parentId = Volunteers.Collections.Department.findOne({ name: team })._id
+        const parentId = Volunteers.Collections.Department.findOne({ name: deptName })._id
         Volunteers.Collections.Lead.insert({
           ...doc,
           parentId,

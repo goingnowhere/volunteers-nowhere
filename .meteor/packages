@@ -9,7 +9,6 @@ mobile-experience@1.0.5       # Packages for a great mobile UX
 mongo@1.3.1                   # The database Meteor supports right now
 blaze-html-templates@1.0.4 # Compile .html files into Meteor Blaze views
 reactive-var@1.0.11            # Reactive variable for tracker
-#@1.11.10                  # Helpful client-side library
 tracker@1.1.3                 # Meteor's client-side reactive programming library
 
 standard-minifier-css@1.3.5   # CSS minifier run for production mode
@@ -22,15 +21,16 @@ iron:router
 zimme:active-route
 zimme:iron-router-auth
 
-accounts-ui@1.2.0
-accounts-password@1.5.0
+accounts-ui #@1.2.0
+accounts-password #@1.5.0
+accounts-base #@1.4.0
+
 useraccounts:bootstrap
 useraccounts:iron-routing
-accounts-base@1.4.0
 
 momentjs:moment
-dynamic-import@0.2.0
-session@1.1.7
+dynamic-import
+session
 dburles:collection-helpers
 fortawesome:fontawesome
 
@@ -48,3 +48,6 @@ markdown@1.0.12
 themeteorchef:bert
 universe:i18n
 universe:i18n-blaze
+
+#ostrio:autoform-files
+#ostrio:files

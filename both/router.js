@@ -93,17 +93,17 @@ Router.route('/dashboard', {
 })
 
 Router.route('/profile', {
-  name: 'userProfile',
+  name: 'volunteerForm',
+  controller: AuthenticatedController,
+})
+
+Router.route('/profile/display', {
+  name: 'volunteerFormDisplay',
   controller: AuthenticatedController,
 })
 
 Router.route('/profile/settings', {
   name: 'accountSettings',
-  controller: AuthenticatedController,
-})
-
-Router.route('/profile/edit', {
-  name: 'userProfileEdit',
   controller: AuthenticatedController,
 })
 

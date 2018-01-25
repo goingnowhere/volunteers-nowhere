@@ -1,7 +1,6 @@
-import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
-import SimpleSchema from 'simpl-schema'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
-
+import SimpleSchema from 'simpl-schema'
+import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
 
@@ -67,7 +66,8 @@ Schemas.User = new SimpleSchema({
   },
 })
 
-const MeteorProfile = new MeteorProfileClass(Schemas.User)
+// this is exported to handle the publication of the ProfilePictures
+export const MeteorProfile = new MeteorProfileClass(Schemas.User)
 const userSchema = Schemas.User.extend({
   profile: {
     type: MeteorProfile.Schemas.Profile,

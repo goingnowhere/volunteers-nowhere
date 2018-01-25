@@ -23,6 +23,19 @@
   "urgent_shifts": "Urgent Shifts",
   "all_teams": "All Teams",
   "enroll_lead": "Enroll Lead",
-  "event_settings": "Event Settings"
-
+  "event_settings": "Event Settings",
+  "pending_lead_requests": "Lead Requests",
+  "pending_metalead_requests": "MetaLead Requests",
+  "edit_user_info": "Edit Form",
+  "volunteer_form": "Volunteer Form",
+  "user_details": "User Details",
+  "change_password": "Change Password",
+  "logout": "Logout",
+  "lead": "Lead",
+  "metalead": "MetaLead",
+  "manager": "Manager",
+  "dashboard": "Dashboard",
+  "new_user": "New User",
+  "all_users": "All Users",
+  "profile_form": "Profile Form (edit)"
 }
