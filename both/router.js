@@ -13,24 +13,22 @@ Router.plugin('auth', {
 Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' })
 
 const BaseController = RouteController.extend({
+  fastRender: true,
   loadingTemplate: 'loadingTemplate',
 })
 
 const AnonymousController = BaseController.extend({
-  layoutTemplate: 'userLayout',
+  // layoutTemplate: 'userLayout',
 })
 
 const AuthenticatedController = AnonymousController.extend({
-  fastRender: true,
-  onBeforeAction: ['authenticate'],
+  layoutTemplate: 'userLayout',
 })
 
 const LeadController = AuthenticatedController.extend({
-  onBeforeAction: ['authenticate'],
 })
 
 const ManagerController = AuthenticatedController.extend({
-  onBeforeAction: ['authenticate'],
 })
 
 // public pages
@@ -41,7 +39,6 @@ Router.route('/', {
 
 Router.route('/signups', {
   name: 'signups',
-  // waitOn: () => [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties`)],
   controller: AnonymousController,
 })
 
@@ -90,6 +87,24 @@ Router.route('/department/:_id', {
 Router.route('/dashboard', {
   name: 'userDashboard',
   controller: AuthenticatedController,
+  onBeforeAction: function () {
+    var user = Meteor.user();
+    if (user) {
+      if (Volunteers.Collections.VolunteerForm.findOne({userId:user._id})) {
+        this.next()
+      } else {
+        this.redirect('/profile')
+      }
+    } else {
+      this.redirect('atSignIn')
+    }
+  },
+  waitOn: function () {
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`),
+      // Meteor.subscribe(`meteor-user-profiles.ProfilePictures`)
+    ]
+  }
 })
 
 Router.route('/profile', {

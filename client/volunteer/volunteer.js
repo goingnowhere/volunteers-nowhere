@@ -1,6 +1,7 @@
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
 import { MeteorProfile } from '../../both/users'
+import { AutoForm } from 'meteor/aldeed:autoform'
 
 Template.userDashboard.onCreated(function onCreated() {
   const template = this
@@ -42,4 +43,14 @@ Template.userDashboard.events({
   'click [data-action="settings"]': (event, templateInstance) => {
     Router.go('volunteerForm')
   },
+})
+
+AutoForm.addHooks([
+  'InsertUsersFormId',
+  'UpdateUsersFormId',
+  'InsertVolunteerFormFormId',
+  'UpdateVolunteerFormFormId'], {
+  onSuccess: function (formType, result) {
+    Router.go('/dashboard')
+  }
 })

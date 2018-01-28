@@ -1,34 +1,27 @@
 <template name="userDashboard">
+{{#if Template.subscriptionsReady }}
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2">
         <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
         <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
-        <h5 class="mb-2 text-muted">{{__ "responsability"}} </h5>
-        <ul>
-          {{#if isManager }}<li><h5 class="mb-2 text-muted">{{__ "role"}}: </h5>Manager</li>{{/if}}
-          {{#if isNoInfo }}<li><h5 class="mb-2 text-muted">{{__ "noInfo"}}: </h5>Member</li>{{/if}}
+        <h5 class="mb-2 text-muted">{{__ "responsabilities"}} </h5>
+        <ul class="list-unstyled">
+          {{#if isManager }}<li><span class="mb-2 text-muted">{{__ "role"}}: </span>Manager</li>{{/if}}
+          {{#if isNoInfo }}<li><span class="mb-2 text-muted">{{__ "noInfo"}}: </span>Member</li>{{/if}}
           {{#each team in leads}}
             <li>
-              <h5 class="mb-2 text-muted">{{__ "lead"}}:</h5>
+              <span class="mb-2 text-muted">{{__ "lead"}}:</span>
               <a href="{{pathFor 'leadTeamView' _id=team._id }}">{{team.name}}</a>
             </li>
           {{/each}}
           {{#each dept in metaleads}}
             <li>
-              <h5 class="mb-2 text-muted">{{__ "metalead"}}: </h5>
+              <span class="mb-2 text-muted">{{__ "metalead"}}: </span>
               <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}">{{dept.name}}</a>
             </li>
           {{/each}}
         </ul>
-        <!-- <h5 class="mb-2 text-muted">{{__ "contact_information" }}</h5>
-        {{ getUserEmail userId }}
-        <h5 class="mb-2 text-muted">{{__ "upcoming_missions"}}</h5>
-        countdown
-        <h5 class="mb-2 text-muted">{{__ "ongoing_missions"}}</h5>
-        XX -->
-        <h5 class="mb-2 text-muted">{{__ "arrival_date"}}</h5>
-        XX/XX/XXXX
         <br/>
         <button type="button" class="btn btn-default btn-sm" data-action="settings">
           {{__ "edit_user_info" }}
@@ -47,6 +40,7 @@
       </div>
     </div>
   </div>
+{{/if}}
 </template>
 
 <template name="volunteerForm">

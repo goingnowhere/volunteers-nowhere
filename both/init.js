@@ -3,6 +3,10 @@ import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
 import i18n from 'meteor/universe:i18n'
+import './users'
+
+// volunteers module global
+export const Volunteers = new VolunteersClass('nowhere2018')
 
 AccountsTemplates.configure({
   defaultLayout: 'userLayout',
@@ -25,6 +29,7 @@ AccountsTemplates.configure({
 // } else {
 //   AccountsTemplates.configure({forbidClientAccountCreation: true})
 // }
+
 
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
 AccountsTemplates.configureRoute('changePwd', { redirect: '/dashboard' })
@@ -63,7 +68,6 @@ AccountsTemplates.addField({
 
 i18n.setLocale('en-US')
 
-export const Volunteers = new VolunteersClass('nowhere2018')
 
 const addUsersToRoles = (userId) => {
   // this can be useful
