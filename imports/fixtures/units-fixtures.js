@@ -35,21 +35,26 @@ const units = {
       parent: 'SLaP',
       description: '',
       policy: 'public',
+      skills: ["electricity"],
+      quirks: ["working under the sun"]
     },
     {
       name: 'Build',
       parent: 'BDSM',
       description: '',
       policy: 'public',
+      skills: ["screws", "ropes"],
+      quirks: ["6am wakeup"]
     },
     {
       name: 'NoInfo',
       parent: 'Volunteers',
       description: '',
       policy: 'public',
+      skills: ["helpdesk"]
     },
   ],
-}
+};
 
 export const createUnits = (Volunteers) => {
   if (Volunteers.Collections.Division.find().count() === 0) {
