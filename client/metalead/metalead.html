@@ -14,7 +14,7 @@
           <li>{{__ "teams"}}: {{teamsNumber}}</li>
           <li>{{__ "leads"}}: {{allLeads.wanted}}/{{allLeads.covered}}</li>
           <li>{{__ "shifts"}}: {{shiftsDept.wanted}}/{{shiftsDept.covered}}</li>
-          <li>{{__ "volunteer"}}: xxx</li>
+          <li>{{__ "volunteer"}}: {{$len allVolunteers}}</li>
         </ul>
         <button type="button" class="btn btn-default btn-sm" data-action="add_team">
           {{fa "wrench"}} {{__ "add_team" }}
@@ -32,7 +32,22 @@
           {{#each team in allTeams}}
             <tr class="{{#if $eq ($len (leadsTeam team)) 0 }}bg-warning{{/if}}">
               <td><a href="{{pathFor "leadTeamView" _id=team._id}}"> {{team.name}}</a></td>
-              <td>{{#each lead in (leadsTeam team)}}{{getUserName lead.userId}}{{/each}}</td>
+              <td>
+                <small>
+                  <ul class="list-unstyled">
+                  {{#each lead in (leadsTeam team)}}
+                    <li>
+                      {{lead.title}}:
+                        {{#if lead.userId}}
+                          {{getUserName lead.userId}}
+                        {{else}}
+                          <span class="text-warning">{{__ "vacant"}}</span>
+                        {{/if}}
+                    </li>
+                  {{/each}}
+                  </ul>
+                </small>
+              </td>
               <td><span class="badge badge-pill badge-primary">
                 {{#let s = (shiftsTeam team._id)}}
                   {{s.wanted}}/{{s.covered}}

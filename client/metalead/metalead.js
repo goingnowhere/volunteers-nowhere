@@ -86,8 +86,24 @@ Template.metaleadDepartmentView.helpers({
     const deptId = Template.instance().departmentId;
     return Volunteers.Collections.Team.find({parentId: deptId})
   },
+  allVolunteers: () => {
+    const deptId = Template.instance().departmentId;
+    l = Volunteers.Collections.Team.find({parentId: deptId}).map((team) => {
+        userList = Volunteers.Collections.ShiftSignups.find(
+            {parentId: team._id, status: "confirmed"}).map((s) => {
+              return s.userId
+            })
+        if (userList) { return userList } else { return [] }
+    })
+    return _.chain(l).flatten().uniq().value()
+  },
   leadsTeam: (team) => {
-    return Volunteers.Collections.LeadSignups.find(
-      {status: "confirmed", parentId: team._id}).fetch()
+    l = Volunteers.Collections.Lead.find({parentId: team._id}).map((lead) => {
+      console.log(Volunteers.Collections.LeadSignups.find().fetch());
+      s = Volunteers.Collections.LeadSignups.findOne(
+        {status: "confirmed", shiftId: lead._id})
+      if (s) { return _.extend(s,lead) } else { return _.extend(lead,{ userId: null })}
+    })
+    if (l) { return l } else { return []}
   },
 })
