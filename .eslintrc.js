@@ -5,6 +5,7 @@ module.exports = {
   },
   plugins: [
     'meteor',
+    'underscore',
   ],
   extends: [
     'airbnb-base',
@@ -18,6 +19,7 @@ module.exports = {
   },
   globals: {
     Meteor: true,
+    "_": false
   },
   rules: {
     semi: ['error', 'never'],
