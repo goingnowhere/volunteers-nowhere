@@ -68,7 +68,6 @@ AccountsTemplates.addField({
 
 i18n.setLocale('en-US')
 
-
 const addUsersToRoles = (userId) => {
   // this can be useful
   // if (Meteor.users.find().count() === 1) {

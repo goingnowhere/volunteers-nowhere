@@ -4,7 +4,11 @@
     <div class="row">
       <div class="col-md-2">
         <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
-        <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
+        {{#if currentUser.profile.picture}}
+          <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
+        {{else}}
+          <img src="img/mr_nobody.jpg" class="rounded-circle header-avatar">
+        {{/if}}
         <h5 class="mb-2 text-muted">{{__ "responsabilities"}} </h5>
         <ul class="list-unstyled">
           {{#if isManager }}<li><span class="mb-2 text-muted">{{__ "role"}}: </span>Manager</li>{{/if}}
@@ -57,12 +61,26 @@
   </div>
 </template>
 
-<template name="volunteerFormDisplay">
+<!-- <template name="volunteerFormDisplay">
   <div class="container">
-    <h2>{{__ "volunteer_form"}}</h2>
-    {{> formBuilderDisplay }}
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">{{__ "volunteer_profile"}}</h3></div>
+      <img src="{{imageFileLink user.profile.picture}}" class="rounded-circle header-avatar">
+      <div class="card-text">
+        <ul class="list-unstyled">
+          <li>
+            <strong>{{__ "full_name"}}</strong>: {{ getUserName user._id }}
+            {{#if user.verified}}<span class="text-success">{{fa "check"}}</span>{{/if}}
+          </li>
+          <li><strong>{{__ "last_login"}}</strong>: {{formatDateTime user.lastLogin}}</li>
+        </ul>
+      </div>
+      <div class="card-body">
+        {{> formBuilderDisplay }}
+      </div>
+    </div>
   </div>
-</template>
+</template> -->
 
 <!-- shifts & task the user has signed up for -->
 <template name="filterstest">

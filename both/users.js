@@ -1,6 +1,7 @@
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import SimpleSchema from 'simpl-schema'
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
+
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
 
@@ -26,7 +27,7 @@ Schemas.User = new SimpleSchema({
     type: Date,
     optional: true,
     autoValue() {
-      if (this.isInsert) return new Date()
+      if (this.isInsert) { return new Date() }
       return this.unset()
     },
   },

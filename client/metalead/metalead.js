@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating'
-import { ReactiveVar } from 'meteor/reactive-var'
-import { moment } from 'meteor/momentjs:moment'
+// import { ReactiveVar } from 'meteor/reactive-var'
+// import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
 
@@ -13,97 +13,81 @@ Template.metaleadDepartmentView.onCreated(function onCreated() {
 })
 
 Template.metaleadDepartmentView.events({
-  'click [data-action="add_team"]': (event, template) => {
-    const deptId = template.departmentId
-    AutoFormComponents.ModalShowWithTemplate('addTeam', {departmentId: deptId})
+  'click [data-action="add_team"]': (event, templateInstance) => {
+    const deptId = templateInstance.departmentId
+    AutoFormComponents.ModalShowWithTemplate('addTeam', { departmentId: deptId })
   },
-  'click [data-action="edit_team"]': (event, template) => {
-    const teamId = $(event.target).data('id')
+  'click [data-action="edit_team"]': (event, templateInstance) => {
+    const teamId = templateInstance.$(event.target).data('id')
     const team = Volunteers.Collections.Team.findOne(teamId)
     AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
   },
-  'click [data-action="delete_team"]': (event, template) => {
-    const teamId = $(event.target).data('id')
+  'click [data-action="delete_team"]': (event, templateInstance) => {
+    const teamId = templateInstance.$(event.target).data('id')
     // Meteor.call("remove");
   },
-  'click [data-action="enroll_lead"]': (event, template) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+  'click [data-action="enroll_lead"]': (event, templateInstance) => {
+    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
     // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
   },
-  'click [data-action="applications"]': (event, template) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+  'click [data-action="applications"]': (event, templateInstance) => {
+    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
     AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
   },
 })
 
 Template.metaleadDepartmentView.helpers({
-  leadsDept: () => {
-    return Volunteers.Collections.LeadSignups.find(
-      {status: "confirmed", parentId: Template.instance().departmentId})
-  },
+  leadsDept: () => Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: Template.instance().departmentId }),
   teamsNumber: () => {
-    const deptId = Template.instance().departmentId;
-    return Volunteers.Collections.Team.find({parentId: deptId}).count()
+    const deptId = Template.instance().departmentId
+    return Volunteers.Collections.Team.find({ parentId: deptId }).count()
   },
   shiftsDept: () => {
-    const deptId = Template.instance().departmentId;
+    const deptId = Template.instance().departmentId
     // XXX: this helper runs more then once. I think it's a problem with the subscription
     // getting ready ...
-    l = Volunteers.Collections.Team.find({parentId: deptId}).map((team) => {
-      wanted = Volunteers.Collections.TeamShifts.find({parentId: team._id}).count()
-      covered = Volunteers.Collections.ShiftSignups.find(
-        {parentId: team._id, status: "confirmed"}).count()
-      return { wanted: wanted, covered: covered }
+    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
+      const wanted = Volunteers.Collections.TeamShifts.find({ parentId: team._id }).count()
+      const covered = Volunteers.Collections.ShiftSignups.find({ parentId: team._id, status: 'confirmed' }).count()
+      return { wanted, covered }
     })
-    return _.reduce(l,function (s,acc) {
-        return {
-          wanted: s.wanted + acc.wanted,
-          covered: s.covered + acc.covered
-        }
-      }, {wanted: 0, covered: 0}
-    )
+    return _.reduce(l, (s, acc) => ({
+      wanted: s.wanted + acc.wanted,
+      covered: s.covered + acc.covered,
+    }), { wanted: 0, covered: 0 })
   },
   allLeads: () => {
-    const deptId = Template.instance().departmentId;
+    const deptId = Template.instance().departmentId
     // XXX: this helper runs more then once. I think it's a problem with the subscription
     // getting ready ...
-    l = Volunteers.Collections.Team.find({parentId: deptId}).map((team) => {
-      wanted = Volunteers.Collections.Lead.find({parentId: team._id}).count()
-      covered = Volunteers.Collections.LeadSignups.find(
-        {parentId: team._id, status: "confirmed"}).count()
-      return { wanted: wanted, covered: covered }
+    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
+      const wanted = Volunteers.Collections.Lead.find({ parentId: team._id }).count()
+      const covered = Volunteers.Collections.LeadSignups.find({ parentId: team._id, status: 'confirmed' }).count()
+      return { wanted, covered }
     })
-    return _.reduce(l,function (s,acc) {
-        return {
-          wanted: s.wanted + acc.wanted,
-          covered: s.covered + acc.covered
-        }
-      }, {wanted: 0, covered: 0}
-    )
+    return _.reduce(l, (s, acc) => ({
+      wanted: s.wanted + acc.wanted,
+      covered: s.covered + acc.covered,
+    }), { wanted: 0, covered: 0 })
   },
-  shiftsTeam: (teamId) => {return {wanted: 0, covered: 0}},
+  shiftsTeam: teamId => ({ wanted: 0, covered: 0 }),
   allTeams: () => {
-    const deptId = Template.instance().departmentId;
-    return Volunteers.Collections.Team.find({parentId: deptId})
+    const deptId = Template.instance().departmentId
+    return Volunteers.Collections.Team.find({ parentId: deptId })
   },
   allVolunteers: () => {
-    const deptId = Template.instance().departmentId;
-    l = Volunteers.Collections.Team.find({parentId: deptId}).map((team) => {
-        userList = Volunteers.Collections.ShiftSignups.find(
-            {parentId: team._id, status: "confirmed"}).map((s) => {
-              return s.userId
-            })
-        if (userList) { return userList } else { return [] }
+    const deptId = Template.instance().departmentId
+    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
+      const userList = Volunteers.Collections.ShiftSignups.find({ parentId: team._id, status: 'confirmed' }).map(s => s.userId)
+      if (userList) { return userList } return []
     })
     return _.chain(l).flatten().uniq().value()
   },
   leadsTeam: (team) => {
-    l = Volunteers.Collections.Lead.find({parentId: team._id}).map((lead) => {
-      console.log(Volunteers.Collections.LeadSignups.find().fetch());
-      s = Volunteers.Collections.LeadSignups.findOne(
-        {status: "confirmed", shiftId: lead._id})
-      if (s) { return _.extend(s,lead) } else { return _.extend(lead,{ userId: null })}
+    const l = Volunteers.Collections.Lead.find({ parentId: team._id }).map((lead) => {
+      const s = Volunteers.Collections.LeadSignups.findOne({ status: 'confirmed', shiftId: lead._id })
+      if (s) { return _.extend(s, lead) } return _.extend(lead, { userId: null })
     })
-    if (l) { return l } else { return []}
+    if (l) { return l } return []
   },
 })

@@ -9,8 +9,8 @@ Template.header.onCreated(function onCreated() {
 
 Template.header.helpers({
 // XXX : restrict only to those depts and teams leaded by the user, or display all for manager
-  departments: () => { return Volunteers.Collections.Department.find() },
-  teams: () => { return Volunteers.Collections.Team.find() },
+  departments: () => Volunteers.Collections.Department.find(),
+  teams: () => Volunteers.Collections.Team.find(),
   isManagerOrLead: () => {
     const teams = Volunteers.Collections.Team.find().map(t => t._id)
     return Volunteers.isManagerOrLead(Meteor.userId(), teams)
@@ -19,7 +19,7 @@ Template.header.helpers({
     const departments = Volunteers.Collections.Department.find().map(t => t._id)
     return Volunteers.isManagerOrLead(Meteor.userId(), departments)
   },
-  isManager: () => { return Volunteers.isManager() },
+  isManager: () => Volunteers.isManager(),
   isNoInfo: () => {
     const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
     return (noInfo != null) && Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])

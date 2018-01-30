@@ -51,3 +51,4 @@ universe:i18n-blaze
 
 #ostrio:autoform-files
 #ostrio:files
+meteortesting:mocha

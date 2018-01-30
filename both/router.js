@@ -10,6 +10,7 @@ Router.plugin('auth', {
     'atSignIn', 'atSignUp', 'changePwd', 'resetPwd', 'forgotPwd', 'enrollAccount',
     'homePage', 'signups', 'organization'],
 })
+
 Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' })
 
 const BaseController = RouteController.extend({
@@ -50,13 +51,14 @@ Router.route('/organization', {
 Router.route('/team/:_id', {
   name: 'publicTeamView',
   controller: AnonymousController,
-  waitOn: function () {
+  waitOn() {
     if (this.params && this.params._id) {
-      sel = {_id: this.params._id}
-      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`,sel)]
+      const sel = { _id: this.params._id }
+      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel)]
     }
+    return null
   },
-  data: function () {
+  data() {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Team.findOne(this.params._id)
     }
@@ -67,15 +69,16 @@ Router.route('/team/:_id', {
 Router.route('/department/:_id', {
   name: 'publicDepartmentView',
   controller: AnonymousController,
-  waitOn: function () {
+  waitOn() {
     if (this.params && this.params._id) {
-      sel = {_id: this.params._id}
+      const sel = { _id: this.params._id }
       return [
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`,sel)
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, sel),
       ]
     }
+    return null
   },
-  data: function () {
+  data() {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Department.findOne(this.params._id)
     }
@@ -87,10 +90,10 @@ Router.route('/department/:_id', {
 Router.route('/dashboard', {
   name: 'userDashboard',
   controller: AuthenticatedController,
-  onBeforeAction: function () {
-    var user = Meteor.user();
+  onBeforeAction() {
+    const user = Meteor.user()
     if (user) {
-      if (Volunteers.Collections.VolunteerForm.findOne({userId:user._id})) {
+      if (Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })) {
         this.next()
       } else {
         this.redirect('/profile')
@@ -99,12 +102,12 @@ Router.route('/dashboard', {
       this.redirect('atSignIn')
     }
   },
-  waitOn: function () {
+  waitOn() {
     return [
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`),
-      // Meteor.subscribe(`meteor-user-profiles.ProfilePictures`)
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
+      Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
     ]
-  }
+  },
 })
 
 Router.route('/profile', {
@@ -112,10 +115,6 @@ Router.route('/profile', {
   controller: AuthenticatedController,
 })
 
-Router.route('/profile/display', {
-  name: 'volunteerFormDisplay',
-  controller: AuthenticatedController,
-})
 
 Router.route('/profile/settings', {
   name: 'accountSettings',
@@ -136,6 +135,7 @@ Router.route('/manager', {
   controller: ManagerController,
 })
 
+// Dynamic form template
 Router.route('/manager/userform', {
   name: 'managerUserForm',
   controller: ManagerController,
@@ -145,8 +145,8 @@ Router.route('/manager/userform', {
 Router.route('/admin/users', {
   name: 'allUsersList',
   controller: LeadController,
-  waitOn: function () {
-    return [ Meteor.subscribe(`${Volunteers.eventName}.allUsers`) ]
+  waitOn() {
+    return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
   },
 })
 
@@ -167,15 +167,16 @@ Router.route('/lead/team/:_id', {
   // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
   // there is a better way to do it
   // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-  waitOn: function () {
+  waitOn() {
     if (this.params && this.params._id) {
-      sel = {_id: this.params._id}
+      const sel = { _id: this.params._id }
       return [
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`,sel)
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel),
       ]
     }
+    return null
   },
-  data: function () {
+  data() {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Team.findOne(this.params._id)
     }
@@ -197,15 +198,16 @@ Router.route('/metalead/department/:_id', {
   name: 'metaleadDepartmentView',
   controller: LeadController,
   // XXX restrict access only to the metalead of the dept or manager
-  waitOn: function () {
+  waitOn() {
     if (this.params && this.params._id) {
-      sel = {_id: this.params._id}
+      const sel = { _id: this.params._id }
       return [
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`,sel)
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, sel),
       ]
     }
+    return null
   },
-  data: function () {
+  data() {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Department.findOne(this.params._id)
     }
@@ -230,7 +232,31 @@ Router.route('/noinfo/userList', {
   // manager or lead annotations or restricted information
   template: 'allUsersList',
   controller: LeadController,
-  waitOn: function () {
-    return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
+  data() { return { profileTemplate: 'noInfoUser' } },
+  waitOn() {
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.allUsers`),
+    ]
   },
 })
+
+// Router.route('/noinfo/user/:_id', {
+//   name: 'volunteerFormDisplay',
+//   controller: AuthenticatedController,
+//   data: function() {
+//     if (this.params && this.params._id && this.ready()) {
+//       var user = this.params._id;
+//       form = Volunteers.Collections.VolunteerForm.findOne({userId:user._id});
+//       return { formName: "VolunteerForm", form: form, user: user};
+//     }
+//   },
+//   waitOn: function () {
+//     if (this.params && this.params._id) {
+//       var user = this.params._id;
+//       return [
+//         Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`,{userId: userId}),
+//         Meteor.subscribe(`meteor-user-profiles.ProfilePictures`,userId)
+//       ];
+//     }
+//   }
+// });

@@ -1,6 +1,6 @@
-import { Template } from 'meteor/templating'
+// import { Template } from 'meteor/templating'
 import 'jquery'
-// import 'popper.js'
+import 'popper.js'
 // import 'scrollspy'
 // import 'magnific-popup'
 import 'bootstrap'

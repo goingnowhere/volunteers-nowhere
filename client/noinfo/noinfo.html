@@ -57,3 +57,11 @@
   <h1> NoInfo </h1>
   {{> adminEnrollAccount}}
 </template>
+
+<template name="noInfoUser">
+{{#if Template.subscriptionsReady}}
+  {{#allUsersProfile}}
+    {{> formBuilderDisplay userform }}
+  {{/allUsersProfile}}
+{{/if}}
+</template>

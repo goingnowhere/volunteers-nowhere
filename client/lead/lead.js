@@ -31,12 +31,12 @@ Template.leadTeamView.helpers({
   pendingRequests: () => Template.instance().stats.pendingRequests.length,
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
   allLeads: () =>
-    Volunteers.Collections.LeadSignups.find({parentId: Template.instance().teamId}),
+    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId }),
   currentDay: () => { Template.instance().currentDay.get() },
   updateCurrentDay: () => {
-    var cd = Template.instance().currentDay
-    return ((day) => { cd.set(day)})
-  }
+    const cd = Template.instance().currentDay
+    return (day => cd.set(day))
+  },
 })
 
 Template.leadTeamView.events({
@@ -54,8 +54,8 @@ Template.leadTeamView.events({
   },
 })
 
-AutoForm.addHooks(['UpdateTeamFormId','InsertTeamFormId'],{
-  'onSuccess': (formType, result) => {
-    console.log("modal close");
-  }
+AutoForm.addHooks(['UpdateTeamFormId', 'InsertTeamFormId'], {
+  onSuccess: (formType, result) => {
+    console.log('modal close')
+  },
 })
