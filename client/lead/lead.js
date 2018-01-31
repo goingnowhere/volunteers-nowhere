@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { Modal } from 'meteor/peppelg:bootstrap-3-modal'
 import { Volunteers } from '../../both/init'
 
 Template.leadTeamView.onCreated(function onCreated() {
@@ -31,7 +32,7 @@ Template.leadTeamView.helpers({
   pendingRequests: () => Template.instance().stats.pendingRequests.length,
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
   allLeads: () =>
-    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId }),
+    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
   currentDay: () => { Template.instance().currentDay.get() },
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
@@ -54,8 +55,12 @@ Template.leadTeamView.events({
   },
 })
 
-AutoForm.addHooks(['UpdateTeamFormId', 'InsertTeamFormId'], {
+AutoForm.addHooks([
+  'UpdateTeamShiftsFormId', 'InsertTeamShiftsFormId',
+  'UpdateTeamTasksFormId', 'InsertTeamTasksFormId',
+  'UpdateTeamFormId', 'InsertTeamFormId',
+], {
   onSuccess: (formType, result) => {
-    console.log('modal close')
+    Modal.hide()
   },
 })

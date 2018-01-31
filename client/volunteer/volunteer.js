@@ -17,7 +17,7 @@ Template.userDashboard.onCreated(function onCreated() {
 Template.userDashboard.helpers({
   userId: () => Meteor.userId(),
   leads: () => {
-    const sl = Volunteers.Collections.LeadSignups.find({ userId: Meteor.userId() }).fetch()
+    const sl = Volunteers.Collections.LeadSignups.find({ userId: Meteor.userId(), status: 'confirmed' }).fetch()
     const l = sl.reduce((acc, s) => {
       const t = Volunteers.Collections.Team.findOne(s.parentId)
       if (t) { acc.push(t) }
