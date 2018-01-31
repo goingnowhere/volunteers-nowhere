@@ -19,7 +19,7 @@ const BaseController = RouteController.extend({
 })
 
 const AnonymousController = BaseController.extend({
-  // layoutTemplate: 'userLayout',
+  layoutTemplate: 'homeLayout',
 })
 
 const AuthenticatedController = AnonymousController.extend({

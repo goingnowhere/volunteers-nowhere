@@ -1,27 +1,28 @@
-<template name="homePage">
-  <body id="page-top" class="index">
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-      <div class="container navPadding">
-        <div class="navbar-header page-scroll">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-          </button>
-          <a class="navbar-brand" href="{{#unless currentUser}}#page-top{{else}}{{pathFor 'userDashboard'}}{{/unless}}">My Dashboard</a>
-        </div>
+<template name="homeLayout">
+  {{> connectionBanner}}
+  {{> yield}}
+</template>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="hidden">
-              <a href="#page-top"></a>
+<template name="homePage">
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Nowhere 2018</a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Organization</a>
             </li>
-            <li class="page-scroll">
-              <a href="#portfolio">Organization</a>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
             </li>
-            <li class="page-scroll">
-              <a href="#about">About</a>
-            </li>
-            <li class="page-scroll">
-              <a href="#contact">Contact</a>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -29,45 +30,36 @@
     </nav>
 
     <!-- Header -->
-    <header>
+    <header class="masthead bg-primary text-white text-center">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <img class="img-responsive" src="img/nowhere.png" alt="">
-            <div class="intro-text">
-              <span class="name">Co-Create Nowhere 2018</span>
-              <span class="skills">A participative festival of 1week + for Thousands of nobodies just like you</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-8 col-lg-offset-2 text-center">
-            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
-                Sign-Up
-            </a>
-            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
-                Log-in
-            </a>
-            <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
-                Explore
-            </a>
-          </div>
+        <img class="img-fluid mb-5 d-block mx-auto" src="img/nowhere.png" alt="">
+        <h1 class="text-uppercase mb-0">Co-Create Nowhere 2018</h1>
+        <hr class="star-light">
+        <h2 class="font-weight-light mb-0">A participative festival for thousands of nobodies just like you</h2>
+        <div class="text-center mt-4">
+          <a class="btn btn-xl btn-outline-light" href="{{pathFor 'atSignIn'}}">
+            <i class="fa fa-download mr-2"></i>
+            Login Now
+          </a>
         </div>
       </div>
     </header>
 
+    <!-- <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
+        Sign-Up
+    </a>
+    <a href="{{pathFor 'atSignIn'}}" class="btn btn-lg btn-outline">
+        Log-in
+    </a> -->
+
     <!-- Portfolio Grid Section -->
-    <section id="portfolio">
+    <section class="portfolio" id="portfolio">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2>Organization</h2>
-            <hr class="star-primary">
-          </div>
-        </div>
+        <h2 class="text-center text-uppercase text-secondary mb-0">Organization</h2>
+        <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-md-5">
-            {{> organization}}
+            {{> organization }}
           </div>
           <div class="col-md-5">
             <div class="row">
@@ -79,7 +71,7 @@
                         <i class="fa fa-search-plus fa-3x"></i>
                       </div>
                     </div>
-                    <img src="img/portfolio/cabin.png" class="img-responsive" alt="">
+                    <!-- <img src="img/portfolio/cabin.png" class="img-responsive" alt=""> -->
                   </a>
                 </div>
               {{/each}}
@@ -89,27 +81,25 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="success" id="about">
+    <section class="bg-primary text-white mb-0" id="about">
       <div class="container">
+        <h2 class="text-center text-uppercase text-white">About</h2>
+        <hr class="star-light mb-5">
         <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2>About</h2>
-            <hr class="star-light">
+          <div class="col-lg-4 ml-auto">
+            <p class="lead">
+              Nowhere is an experiment in creative freedom, participation and cash-free community, conceived, built, experienced and returned to nothing by YOU
+            </p>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-lg-offset-2">
-            <p>Nowhere is an experiment in creative freedom, participation and cash-free community, conceived, built, experienced and returned to nothing by YOU</p>
-          </div>
-          <div class="col-lg-4">
-            <p>We need lots of hands in a variety of roles to set up the site, keep things running smoothly during the event, and then pack up when the event is over.  </p>
+          <div class="col-lg-4 mr-auto">
+            <p class="lead">
+              We need lots of hands in a variety of roles to set up the site, keep things running smoothly during the event, and then pack up when the event is over.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer text-center">
       <div class="container">
         <div class="row">
@@ -149,8 +139,8 @@
             </ul>
           </div>
           <div class="col-md-4">
-            <h4 class="text-uppercase mb-4">About Volunteer</h4>
-            <p class="lead mb-0">Made with Love for you to enjoy
+            <h4 class="text-uppercase mb-4">About this website</h4>
+            <p class="lead mb-0">Made with love
               <a href="https://gitlab.com/abate/volunteers-nowhere">See the Code</a>.</p>
           </div>
         </div>
@@ -159,7 +149,7 @@
 
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; Norg 2017</small>
+        <small>Copyright &copy; Nowhere 2018</small>
       </div>
     </div>
 
@@ -170,9 +160,6 @@
       </a>
     </div>
 
-    <!-- Custom scripts for this template -->
-    <!-- XXX It does not work . This is a template for bootstrap 4, but we use bs3-->
-    <!-- <script src="js/freelancer.js"></script> -->
   </body>
 
 </template>

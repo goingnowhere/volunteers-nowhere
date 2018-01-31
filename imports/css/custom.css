@@ -6,30 +6,25 @@
 /* responsive typography */
 html {
   font-family: 'BebasNeueBold', sans-serif;
-  font-size: 14px;
+  /* font-size: 14px; */
 }
 
 @include media-breakpoint-up(sm) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
 @include media-breakpoint-up(md) {
   html {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
 @include media-breakpoint-up(lg) {
   html {
-    font-size: 28px;
+    font-size: 24px;
   }
-}
-
-/*  XXX this is temporary. There must be a better way of doing this */
-section {
-  padding-top: 80px !important;
 }
 
 .header-avatar {
