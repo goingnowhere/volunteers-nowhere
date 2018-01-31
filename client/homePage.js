@@ -6,5 +6,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'magnific-popup'
 import 'magnific-popup/dist/magnific-popup.css'
 import '../imports/freelancer/css/freelancer.css'
+// For some reason custom.css isn't picked up if after js/freelancer - Rich
+import '../imports/css/custom.css'
 import '../imports/freelancer/js/freelancer'
-// import '../imports/css/custom.css'
