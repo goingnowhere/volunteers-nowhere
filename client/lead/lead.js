@@ -26,6 +26,10 @@ Template.leadTeamView.onCreated(function onCreated() {
   })
 })
 
+Template.leadTeamView.onRendered(() => {
+  this.$('[data-toggle="tooltip"]').tooltip()
+})
+
 Template.leadTeamView.helpers({
   shiftRate: () => Template.instance().stats.shiftRate(),
   volunteerNumber: () => Template.instance().stats.volunteerNumber(),

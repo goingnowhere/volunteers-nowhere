@@ -4,10 +4,14 @@ import { Volunteers } from '../../both/init'
 
 Template.managerView.onCreated(function onCreated() {
   const template = this
-  template.divisionId = Volunteers.Collections.findOne({ name: 'NOrg 2018' })
+  template.divisionId = Volunteers.Collections.Division.findOne({ name: 'NOrg 2018' })
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.Manager`)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.Manager`)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.Manager`)
+})
+
+Template.managerView.onRendered(() => {
+  this.$('[data-toggle="tooltip"]').tooltip()
 })
 
 Template.managerView.events({
@@ -25,11 +29,11 @@ Template.managerView.events({
     // Meteor.call("remove");
   },
   'click [data-action="enroll_lead"]': (event, templateInstance) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
     // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
   },
   'click [data-action="applications"]': (event, templateInstance) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
     AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
   },
 })
