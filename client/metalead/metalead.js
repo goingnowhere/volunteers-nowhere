@@ -1,6 +1,4 @@
 import { Template } from 'meteor/templating'
-// import { ReactiveVar } from 'meteor/reactive-var'
-// import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
 
@@ -10,6 +8,10 @@ Template.metaleadDepartmentView.onCreated(function onCreated() {
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byDepartment`, template.departmentId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byDepartment`, template.departmentId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byDepartment`, template.departmentId)
+})
+
+Template.metaleadDepartmentView.onRendered(() => {
+  this.$('[data-toggle="tooltip"]').tooltip()
 })
 
 Template.metaleadDepartmentView.events({

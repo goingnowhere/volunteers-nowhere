@@ -11,8 +11,16 @@
         </ul>
         <h5 class="mb-2 text-muted">{{__ "information"}}</h5>
         <ul>
-          <li>{{__ "shifts"}}: {{shiftRate.needed}}/{{shiftRate.confirmed}} </li>
-          <li>{{__ "volunteers"}}: {{volunteerNumber}} </li>
+          <li>
+            <div data-toggle="tooltip" data-placement="top" title="{{__ "wanted_covered_confirmed"}}">
+              {{__ "shifts"}}: {{shiftRate.needed}}/{{shiftRate.confirmed}}
+            </div>
+          </li>
+          <li>
+            <div data-toggle="tooltip" data-placement="top" title="{{__ "total_number_of_volunteers"}}">
+              {{__ "volunteers"}}: {{volunteerNumber}}
+            </div>
+          </li>
         </ul>
         <button type="button" class="btn btn-default btn-sm" data-action="team_settings">
           {{fa "wrench"}} {{__ "team_settings"}}
