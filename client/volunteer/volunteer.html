@@ -1,7 +1,7 @@
 <template name="userDashboard">
 {{#if Template.subscriptionsReady }}
   <div class="container-fluid">
-    <div class="row">
+    <div class="row dash_pad">
       <div class="col-md-2">
         <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
         {{#if currentUser.profile.picture}}
@@ -31,12 +31,10 @@
           {{__ "edit_user_info" }}
         </button>
       </div>
-
-      <div class="col-md-5">
+      <div class="col-md-5 bg-primary">
         <h2>{{__ "booked_missions" }}</h2>
         {{> bookedTable }}
       </div>
-      
       <div class="col-md-5">
         <h2>{{__ "shift_need_help"}}</h2>
         <!-- this class (should) add a scrollbar -->
