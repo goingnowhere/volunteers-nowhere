@@ -3,29 +3,34 @@
     src: url("/fonts/bebasneue.ttf");
 }
 
-/* responsive typography */
-html {
-  font-family: 'BebasNeueBold', sans-serif;
-  /* font-size: 14px; */
+/* navbar */
+.navbar {
+    height: 60px !important;
+    padding: 0px !important;
 }
 
 @include media-breakpoint-up(sm) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@include media-breakpoint-up(md) {
   html {
     font-size: 16px;
   }
 }
 
-@include media-breakpoint-up(lg) {
+@include media-breakpoint-up(md) {
   html {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 28px;
+  }
+}
+
+section {
+  padding-top: 71px !important;
+}
+
 
 .header-avatar {
   width: 48px;
