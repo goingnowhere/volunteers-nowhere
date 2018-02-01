@@ -3,7 +3,7 @@
     src: url("/fonts/bebasneue.ttf");
 }
 
-body {
+body, h1 {
   font-family: 'BebasNeueBold', sans-serif;
 }
 
@@ -289,13 +289,14 @@ a:focus, a:hover, a:active {
 }
 
 .btn-primary {
-  background-color: #18BC9C;
-  border-color: #18BC9C;
+  background-color: #00aedcff;
+  border-width: 0px;
+  border-radius: 0px;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-  background-color: #128f76;
-  border-color: #128f76;
+  background-color: #00aedcff;
+  color: #FFE701;
 }
 
 .btn-secondary {
