@@ -34,6 +34,7 @@ export const createLeads = (Volunteers) => {
       teamLeads[team].forEach((doc) => {
         console.log(`creating fixture for Lead ${doc.title}`)
         const parentId = Volunteers.Collections.Team.findOne({ name: team })._id
+        doc.reserved = 0
         Volunteers.Collections.Lead.insert({
           ...doc,
           parentId,
@@ -45,6 +46,7 @@ export const createLeads = (Volunteers) => {
       departmentLeads[deptName].forEach((doc) => {
         console.log(`creating fixture for Lead ${doc.title}`)
         const parentId = Volunteers.Collections.Department.findOne({ name: deptName })._id
+        doc.reserved = 0
         Volunteers.Collections.Lead.insert({
           ...doc,
           parentId,

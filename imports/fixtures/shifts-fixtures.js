@@ -31,6 +31,7 @@ export const createShifts = (Volunteers) => {
       shifts[team].forEach((doc) => {
         console.log(`creating fixture for ${doc.title}`)
         const parentId = Volunteers.Collections.Team.findOne({ name: team })._id
+        doc.reserved = 0
         Volunteers.Collections.TeamShifts.insert({
           ...doc,
           parentId,
