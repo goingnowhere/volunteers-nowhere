@@ -260,11 +260,11 @@ form .row:first-child .floating-label-form-group {
   background-color: #1a252f;
 }
 
-a {
+.navbar a {
   color: #18BC9C;
 }
 
-a:focus, a:hover, a:active {
+.navbar a:focus, .navbar a:hover, .navbar a:active {
   color: #128f76;
 }
 
