@@ -3,11 +3,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2">
-        <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
         {{#if currentUser.profile.picture}}
+          <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
           <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
         {{else}}
+          <h4>{{__ "welcome"}} Nobody</h4>
           <img src="img/mr_nobody.jpg" class="rounded-circle header-avatar">
+          <a href="{{pathFor 'accountSettings'}}">{{__ "update_profile"}}</a>
         {{/if}}
         <h5 class="mb-2 text-muted">{{__ "responsabilities"}} </h5>
         <ul class="list-unstyled">
@@ -36,7 +38,7 @@
         <h2>{{__ "booked_missions" }}</h2>
         {{> bookedTable }}
       </div>
-      
+
       <div class="col-md-5">
         <h2>{{__ "shift_need_help"}}</h2>
         <!-- this class (should) add a scrollbar -->
