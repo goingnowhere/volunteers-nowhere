@@ -51,11 +51,11 @@ Template.leadTeamView.events({
   },
   'click [data-action="add_shift"]': (event, templateInstance) => {
     const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addShift', team)
+    AutoFormComponents.ModalShowWithTemplate('addShift', { team })
   },
   'click [data-action="add_task"]': (event, templateInstance) => {
     const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addTask', team)
+    AutoFormComponents.ModalShowWithTemplate('addTask', { team })
   },
 })
 
