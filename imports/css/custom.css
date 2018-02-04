@@ -11,11 +11,11 @@
 
 /* content displays below nav-bar */
 .dash-padding {
-  padding: 60px 0px 0px 0px;
+  padding: 60px 20px 0px 20px;
 }
 
 /* columns have appropriate top-padding in dashboards */
-.dash_pad .col-md-2, .dash_pad .col-md-5 {
+.dash-col-padding .col-md-2, .dash-col-padding .col-md-5 {
   padding-top: 25px;
 }
 @media (min-width: 992px) {

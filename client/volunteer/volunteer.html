@@ -1,7 +1,7 @@
 <template name="userDashboard">
 {{#if Template.subscriptionsReady }}
   <div class="container-fluid dash-padding">
-    <div class="row dash_pad">
+    <div class="row dash-col-padding">
       <div class="col-md-2">
         {{#if currentUser.profile.picture}}
           <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
