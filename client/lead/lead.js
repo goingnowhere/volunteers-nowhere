@@ -13,6 +13,7 @@ Template.leadTeamView.onCreated(function onCreated() {
   template.currentDay = new ReactiveVar(moment())
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byTeam`, template.teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
   return template.autorun(() => {
     const teamShifts = Volunteers.Collections.TeamShifts.find(
@@ -57,14 +58,19 @@ Template.leadTeamView.events({
     const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
     AutoFormComponents.ModalShowWithTemplate('addTask', { team })
   },
+  'click [data-action="add_project"]': (event, templateInstance) => {
+    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+    AutoFormComponents.ModalShowWithTemplate('addProject', { team })
+  },
 })
 
 AutoForm.addHooks([
   'UpdateTeamShiftsFormId', 'InsertTeamShiftsFormId',
   'UpdateTeamTasksFormId', 'InsertTeamTasksFormId',
+  'UpdateProjectsFormId', 'InsertProjectsFormId',
   'UpdateTeamFormId', 'InsertTeamFormId',
 ], {
-  onSuccess: (formType, result) => {
+  onSuccess: () => {
     Modal.hide()
   },
 })
