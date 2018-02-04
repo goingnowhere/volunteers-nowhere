@@ -5,8 +5,43 @@
 
 /* navbar */
 .navbar {
-    height: 60px !important;
-    padding: 0px !important;
+    height: 60px;
+    padding: 0px;
+}
+
+/* content displays below nav-bar */
+.dash-padding {
+  padding: 60px 0px 0px 0px;
+}
+
+/* columns have appropriate top-padding in dashboards */
+.dash_pad .col-md-2, .dash_pad .col-md-5 {
+  padding-top: 25px;
+}
+@media (min-width: 992px) {
+  .zebra-line .col-md-6, .zebra-line .col-md-2 {
+  width: auto!important;
+  }
+}
+.list_item {
+	height: 85px;
+}
+/*
+.item_info {
+  @include d-flex();
+  @include flex-column();
+  @include align-content-center();
+  @include small-pad();
+  @include justify-content-center();
+}*/
+
+/* zebra-line for list-items */
+.zebra-line:nth-child(odd) {
+    background: #F8F8F8;
+}
+
+.zebra-line:nth-child(even) {
+    background: none;
 }
 
 @include media-breakpoint-up(sm) {
