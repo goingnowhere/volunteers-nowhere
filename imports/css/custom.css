@@ -1,20 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Unica+One');
+
 @font-face {
     font-family: BebusNeueBold;
     src: url("/fonts/bebasneue.ttf");
 }
-/*  Colors */
-.bg-primary {
-  background-color: #ECECEC !important;
+/* FONTS */
+h1, h2, h3 {
+  font-family: 'Unica One' /*'Roboto Condensed'*/;
+}
+h1.home-title {
+  margin-bottom: 25px;
+  font-size: 60px !important;
+}
+h3 {
+  font-size: 18px;
+}
+.navbar h3 {
+  font-size: 22px;
+}
+h4, h5, h6, p {
+  font-family: 'Roboto Condensed';
 }
 
+/*  Colors */
+.bg-primary {
+  background-color: rgba(0, 0, 0, 0.03)!important;
+}
+.bg-tertiary {
+  background-color: rgba(0, 0, 0, 0.1)!important;
+}
 /* navbar */
 .navbar {
     height: 60px;
-    padding: 0px;
+    padding: 0 25px 0px 25px;
 }
 a.dropdown-item {
   color: #00aedcff;
 }
+button.navbar-toggler{
+  background-color: white;
+}
+.navbar-nav {
+  background-color: #00aedcff;
+}
+
 /* content displays below nav-bar */
 .dash-padding {
   padding: 60px 20px 0px 20px;
@@ -25,20 +55,22 @@ a.dropdown-item {
   padding-top: 25px;
 }
 /* list items specifics */
-.list_item {
+.list-item {
 	height: 85px;
+  width: 100%;
 }
 .small-pad {
 	padding: 5px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 992px) {
   .zebra-line .col-md-6, .zebra-line .col-md-2 {
   width: auto!important;
   }
-}
-.list_item {
-	height: 85px;
 }
 /*
 .item_info {
@@ -49,15 +81,22 @@ a.dropdown-item {
   @include justify-content-center();
 }*/
 
-/* zebra-line for list-items */
-.zebra-line:nth-child(odd) {
-    background: #F8F8F8;
+/* zebra-line for list-items - hass background-color & padding */
+.zebra-line, .zebra-line-2 {
+  padding: 0px 15px 0px 15px;
 }
-
+.zebra-line:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.06);
+}
 .zebra-line:nth-child(even) {
     background: none;
 }
-
+.zebra-line-2:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.08);
+}
+.zebra-line-2:nth-child(even) {
+    background: none;
+}
 @include media-breakpoint-up(sm) {
   html {
     font-size: 16px;
@@ -80,7 +119,10 @@ a.dropdown-item {
   width: 48px;
   height: :48px;
 }
-
+/* HELPERS */
+.padding-0 {
+  padding: 0px;
+}
 /* XXX this should add a scrollbar for the shiftList */
 /* .shiftList {
     flex: 1 1 0;
