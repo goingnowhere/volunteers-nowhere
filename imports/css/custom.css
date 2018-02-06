@@ -2,6 +2,10 @@
     font-family: BebusNeueBold;
     src: url("/fonts/bebasneue.ttf");
 }
+/*  Colors */
+.bg-primary {
+  background-color: #ECECEC !important;
+}
 
 /* navbar */
 .navbar {
