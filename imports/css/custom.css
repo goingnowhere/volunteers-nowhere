@@ -8,7 +8,9 @@
     height: 60px;
     padding: 0px;
 }
-
+a.dropdown-item {
+  color: #00aedcff;
+}
 /* content displays below nav-bar */
 .dash-padding {
   padding: 60px 20px 0px 20px;

@@ -46,17 +46,6 @@ hr.star-dark:after {
   color: #2C3E50;
   background-color: white;
 }
-/* to move at custom.css */
-section {
-  padding: 60px 0px 0px 0px;
-}
-.navbar {
-    height: 60px !important;
-    padding: 0px !important;
-}
-.dash_pad .col-md-2, .dash_pad .col-md-5 {
-  padding-top: 25px;
-}
 
 /* section h2 {
   font-size: 2.25rem;
