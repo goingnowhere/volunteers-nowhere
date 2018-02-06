@@ -20,6 +20,14 @@ a.dropdown-item {
 .dash-col-padding .col-md-2, .dash-col-padding .col-md-5 {
   padding-top: 25px;
 }
+/* list items specifics */
+.list_item {
+	height: 85px;
+}
+.small-pad {
+	padding: 5px !important;
+}
+
 @media (min-width: 992px) {
   .zebra-line .col-md-6, .zebra-line .col-md-2 {
   width: auto!important;
