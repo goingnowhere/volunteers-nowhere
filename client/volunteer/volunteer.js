@@ -11,6 +11,7 @@ Template.userDashboard.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
 })
 
@@ -42,7 +43,7 @@ Template.userDashboard.helpers({
 })
 
 Template.userDashboard.events({
-  'click [data-action="settings"]': (event, templateInstance) => {
+  'click [data-action="settings"]': () => {
     Router.go('volunteerForm')
   },
 })
@@ -52,7 +53,7 @@ AutoForm.addHooks([
   'UpdateUsersFormId',
   'InsertVolunteerFormFormId',
   'UpdateVolunteerFormFormId'], {
-  onSuccess(formType, result) {
+  onSuccess() {
     Router.go('/dashboard')
   },
 })
