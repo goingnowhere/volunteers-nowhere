@@ -1,0 +1,242 @@
+[
+  {
+    "start": 1499076000000,
+    "end": 1499090400000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts.",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499076000000,
+    "end": 1499104800000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499090400000,
+    "end": 1499104800000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts.",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499162400000,
+    "end": 1499176800000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499162400000,
+    "end": 1499191200000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499176800000,
+    "end": 1499191200000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499248800000,
+    "end": 1499263200000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499248800000,
+    "end": 1499277600000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499263200000,
+    "end": 1499277600000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499335200000,
+    "end": 1499349600000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499335200000,
+    "end": 1499364000000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499349600000,
+    "end": 1499364000000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499421600000,
+    "end": 1499436000000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499421600000,
+    "end": 1499450400000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499436000000,
+    "end": 1499450400000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499508000000,
+    "end": 1499522400000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499508000000,
+    "end": 1499536800000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499522400000,
+    "end": 1499536800000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499594400000,
+    "end": 1499608800000,
+    "title": "NoInfo Crew",
+    "description": " This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts. ",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499594400000,
+    "end": 1499623200000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499608800000,
+    "end": 1499623200000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts.",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499680800000,
+    "end": 1499695200000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts.",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499680800000,
+    "end": 1499709600000,
+    "title": "NoInfo Shift Lead",
+    "description": "Volunteer training at shift hand overs, staying up to date with volunteer and participant needs and questions, supervising volunteer recruitment as well as Lost and Found,  and communicating to the lead and co-lead",
+    "department": "Volunteers",
+    "role": "NoInfo Manager",
+    "team": "NoInfo",
+    "location": null
+  },
+  {
+    "start": 1499695200000,
+    "end": 1499709600000,
+    "title": "NoInfo Crew",
+    "description": "This is a 4 hour shift. Collection of information, help participant needs and questions, checking and filling the boards. Helping recruiting new volunteers. Help with Lost and Found. Communication with General Manager, Lead and Co-Lead. There is a minimum of 2 shifts.",
+    "department": "Volunteers",
+    "role": "NoInfo crew",
+    "team": "NoInfo",
+    "location": null
+  }
+]

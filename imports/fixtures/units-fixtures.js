@@ -11,7 +11,7 @@ const units = {
   ],
   departments: [
     {
-      name: 'SLaP',
+      name: 'SLAP',
       description: '',
       policy: 'public',
       parent: 'NOrg 2018',
@@ -28,33 +28,45 @@ const units = {
       policy: 'public',
       parent: 'NOrg 2018',
     },
+    {
+      name: 'Participants Wellness',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
+    {
+      name: 'Production',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
+    {
+      name: 'City Planning',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
+    {
+      name: 'Creativity',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
+    {
+      name: 'GG&P',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
+    {
+      name: 'Malfare',
+      description: '',
+      policy: 'public',
+      parent: 'NOrg 2018',
+    },
   ],
-  teams: [
-    {
-      name: 'Power',
-      parent: 'SLaP',
-      description: '',
-      policy: 'public',
-      skills: ["electricity"],
-      quirks: ["working under the sun"]
-    },
-    {
-      name: 'Build',
-      parent: 'BDSM',
-      description: '',
-      policy: 'public',
-      skills: ["screws", "ropes"],
-      quirks: ["6am wakeup"]
-    },
-    {
-      name: 'NoInfo',
-      parent: 'Volunteers',
-      description: '',
-      policy: 'public',
-      skills: ["helpdesk"]
-    },
-  ],
-};
+}
+units.teams = JSON.parse(Assets.getText('nowhere2018/nowhere-teams.json'))
 
 export const createUnits = (Volunteers) => {
   if (Volunteers.Collections.Division.find().count() === 0) {
@@ -77,7 +89,7 @@ export const createUnits = (Volunteers) => {
     })
   }
   if (Volunteers.Collections.Team.find().count() === 0) {
-    units.teams.forEach((doc) => {
+    units.teams.team.forEach((doc) => {
       console.log(`creating fixture for ${doc.name}`)
       const parentId = Volunteers.Collections.Department.findOne({ name: doc.parent })._id
       const id = Volunteers.Collections.Team.insert({

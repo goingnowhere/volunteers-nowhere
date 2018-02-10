@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 
-const teams = ['Power', 'Build', 'NoInfo']
+const teams = ['Power', 'Build Crew', 'NoInfo']
 const teamLeads = {
   Power: [
     { title: 'Power Lead', priority: 'essential', policy: 'requireApproval' },
@@ -9,14 +9,14 @@ const teamLeads = {
   NoInfo: [
     { title: 'Lead', priority: 'essential', policy: 'requireApproval' },
   ],
-  Build: [
+  'Build Crew': [
     { title: 'Lead', priority: 'essential', policy: 'requireApproval' },
   ],
 }
 
-const departments = ['SLaP', 'Volunteers', 'BDSM']
+const departments = ['SLAP', 'Volunteers', 'BDSM']
 const departmentLeads = {
-  SLaP: [
+  SLAP: [
     { title: 'MetaLead', priority: 'essential', policy: 'requireApproval' },
     { title: 'Co-MetaLead', priority: 'important', policy: 'requireApproval' },
   ],
