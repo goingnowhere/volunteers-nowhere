@@ -113,6 +113,11 @@ Router.route('/dashboard', {
 Router.route('/profile', {
   name: 'volunteerForm',
   controller: AuthenticatedController,
+  waitOn() {
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
+    ]
+  },
 })
 
 

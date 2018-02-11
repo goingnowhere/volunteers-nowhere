@@ -43,7 +43,7 @@ Template.userDashboard.helpers({
 })
 
 Template.userDashboard.events({
-  'click [data-action="settings"]': () => {
+  'click [data-action="edit_form"]': () => {
     Router.go('volunteerForm')
   },
 })
