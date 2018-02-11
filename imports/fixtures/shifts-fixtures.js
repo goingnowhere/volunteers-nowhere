@@ -9,8 +9,8 @@ export const createShifts = (Volunteers) => {
         shifts.forEach((doc) => {
           console.log(`creating fixture for ${doc.title}`)
           const parentId = team._id
-          doc.start = Date(doc.start)
-          doc.end = Date(doc.end)
+          doc.start = new Date(doc.start)
+          doc.end = new Date(doc.end)
           doc.min = 5
           doc.max = 5
           doc.reserved = 0
