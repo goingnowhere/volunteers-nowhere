@@ -1,8 +1,8 @@
 <template name="userDashboard">
 {{#if Template.subscriptionsReady }}
   <div class="container-fluid">
-    <div class="row p-t-25">
-      <div class="col-md-2">
+    <div class="row">
+      <div class="col-sm-6 col-md-2 pr-1">
         {{#if currentUser.profile.picture}}
           <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
           <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
@@ -33,19 +33,77 @@
           {{__ "edit_user_info" }}
         </button>
       </div>
-
-      <div class="col-md-5">
-        <h2>{{__ "booked_missions" }}</h2>
-        {{> bookedTable }}
-      </div>
-
-      <div class="col-md-5">
-        <h2>{{__ "shift_need_help"}}</h2>
-        {{> signupsList }}
-      </div>
+      {{#if bookedMissions }}
+        <div class="col-md-5 pl-1 pr-1">
+          <h2>{{__ "booked_missions" }}</h2>
+          {{> bookedTable }}
+        </div>
+        <div class="col-md-5 pl-1">
+          <h2>{{__ "shift_need_help"}}</h2>
+          {{> signupsListTabs bookedMissions="true" }}
+        </div>
+      {{else}}
+        <div class="col-sm-6 col-md-10 pl-1">
+          {{> signupsListTabs }}
+        </div>
+      {{/if}}
     </div>
   </div>
 {{/if}}
+</template>
+
+<template name="signupsListTabs">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" href="#specials" role="tab" data-toggle="tab">
+        <span class="text-danger">{{fa "fire"}} {{__ "specials_of_the_day"}} {{fa "fire"}}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#menus" role="tab" data-toggle="tab">
+        <span class="text-warning">{{fa "bars"}} {{__ "menus"}}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#alacarte" role="tab" data-toggle="tab">
+        <span class="text-info">{{fa "globe"}} {{__ "alacarte"}}</span>
+    </a>
+    </li>
+  </ul>
+  <!-- Specials -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="specials">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="{{#if bookedMissions}}col-md-12{{else}}col pr-1{{/if}}">
+            <h2>{{__ "important_shifts"}}</h2>
+            {{> signupsList searchQuery=(searchQuerySpecials 'shift') }}
+          </div>
+          <div class="{{#if bookedMissions}}col-md-12{{else}}col pl-1{{/if}}">
+            <h2>{{__ "lead_positions"}}</h2>
+            {{> signupsList searchQuery=(searchQuerySpecials 'lead') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menus -->
+    <div role="tabpanel" class="tab-pane fade" id="menus">
+      <div class="container-fluid">
+        <div class="row">
+          {{#each team in teamSelection }}
+            <div class="{{#if bookedMissions}}col-md-12{{else}}col-md-6 pr-1{{/if}}">
+              <h4>{{ team.name }}</h4>
+              {{> signupsList searchQuery=(searchQueryMenus team._id) }}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <!-- A la Carte -->
+    <div role="tabpanel" class="tab-pane fade" id="alacarte">
+      {{> signupsList searchQuery=searchQueryAlaCarte }}
+    </div>
+  </div>
 </template>
 
 <template name="volunteerForm">

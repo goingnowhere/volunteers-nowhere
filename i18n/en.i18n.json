@@ -40,5 +40,11 @@
   "new_user": "New User",
   "all_users": "All Users",
   "profile_form": "Profile Form (edit)",
-  "add_picture": "Add Picture"
+  "add_picture": "Add Picture",
+  "specials_of_the_day": "House's Specials",
+  "menus": "Menus",
+  "alacarte": "A la Carte",
+  "important_shifts": "Important Shifts",
+  "lead_positions": "Lead Positions"
+
 }

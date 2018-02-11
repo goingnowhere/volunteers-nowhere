@@ -1,5 +1,6 @@
 import { Router, RouteController } from 'meteor/iron:router'
 import { AccountsTemplates } from 'meteor/useraccounts:core'
+import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from './init'
 
 Router.plugin('auth', {
@@ -36,11 +37,6 @@ const ManagerController = AuthenticatedController.extend({
 Router.route('/', {
   name: 'homePage',
   controller: BaseController,
-})
-
-Router.route('/signups', {
-  name: 'signups',
-  controller: AnonymousController,
 })
 
 Router.route('/organization', {
@@ -120,7 +116,6 @@ Router.route('/profile', {
   },
 })
 
-
 Router.route('/profile/settings', {
   name: 'accountSettings',
   controller: AuthenticatedController,
@@ -130,6 +125,45 @@ Router.route('/sign-out', {
   name: 'atSignOut',
   onBeforeAction: AccountsTemplates.logout,
 })
+
+// XXX: Unused for the moment
+// Router.route('/signups', {
+//   name: 'signupsAll',
+//   controller: AuthenticatedController,
+// })
+//
+// Router.route('/signups/leads', {
+//   name: 'signupsLeads',
+//   template: 'signupsList',
+//   controller: AuthenticatedController,
+//   data: () => ({
+//     searchQuery: new ReactiveVar({ limit: 4, duties: ['lead'] }),
+//   }),
+// })
+//
+// Router.route('/signups/shifts', {
+//   name: 'signupsShifts',
+//   template: 'signupsList',
+//   controller: AuthenticatedController,
+//   data: () => ({
+//     searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'] }),
+//   }),
+// })
+//
+// Router.route('/signups/shifts/:_id', {
+//   name: 'signupsShiftTeam',
+//   template: 'signupsList',
+//   controller: AuthenticatedController,
+//   data() {
+//     if (this.params && this.params._id) {
+//       const teamId = this.params._id
+//       return {
+//         searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'], teams: [teamId] }),
+//       }
+//     }
+//     return null
+//   },
+// })
 
 // settings / administrative pages pages
 // accessible either to leads / metalead or manager
