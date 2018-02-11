@@ -59,6 +59,9 @@ button.navbar-toggler{
 	height: 85px;
   width: 100%;
 }
+.list-item .btn {
+  width: 100%;
+}
 .small-pad {
 	padding: 5px !important;
   display: flex;
