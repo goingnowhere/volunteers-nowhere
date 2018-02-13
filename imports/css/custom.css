@@ -1,105 +1,57 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Unica+One');
 
-@font-face {
-    font-family: BebusNeueBold;
-    src: url("/fonts/bebasneue.ttf");
-}
 /* FONTS */
 h1, h2, h3 {
   font-family: 'Unica One' /*'Roboto Condensed'*/;
 }
-h1.home-title {
-  margin-bottom: 25px;
-  font-size: 60px !important;
-}
-h3 {
-  font-size: 18px;
-}
-.navbar h3 {
-  font-size: 22px;
-}
+
 h4, h5, h6, p {
   font-family: 'Roboto Condensed';
 }
 
-/*  Colors */
-.bg-primary {
-  background-color: rgba(0, 0, 0, 0.03)!important;
+h1.home-title {
+  margin-bottom: 25px;
+  font-size: 60px !important;
 }
-.bg-tertiary {
-  background-color: rgba(0, 0, 0, 0.1)!important;
-}
+
 /* navbar */
 .navbar {
     height: 60px;
     padding: 0 25px 0px 25px;
 }
-a.dropdown-item {
-  color: #00aedcff;
-}
-button.navbar-toggler{
-  background-color: white;
-}
-.navbar-nav {
-  background-color: #00aedcff;
+
+/* this color here cannot be set in main.scss */
+.navbar a {
+  color: white;
+  font-size: 22px;
 }
 
-/* content displays below nav-bar */
-.dash-padding {
-  padding: 60px 20px 0px 20px;
+.navbar a.dropdown-item {
+  color: black;
+  font-size: 18px;
 }
 
-/* columns have appropriate top-padding in dashboards */
-.dash-col-padding .col-md-2, .dash-col-padding .col-md-5 {
-  padding-top: 25px;
-}
-/* list items specifics */
-.list-item {
-	height: 85px;
+#user-top { padding-top: 70px; }
+
+/* for all btns : apply, join, bail */
+.btn-action {
   width: 100%;
 }
-.list-item .btn {
-  width: 100%;
-}
-.small-pad {
-	padding: 5px !important;
+
+/* apply to all col classes. No need to modify the template */
+.signupsList div[class^="col-"], .signupsList div[class*=" col-"],
+.bookedTable div[class^="col-"], .bookedTable div[class*=" col-"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-@media (min-width: 992px) {
-  .zebra-line .col-md-6, .zebra-line .col-md-2 {
-  width: auto!important;
-  }
+.signupsListItem:nth-child(odd), .bookedTableItem:nth-child(odd) {
+    background: lightgray;
 }
-/*
-.item_info {
-  @include d-flex();
-  @include flex-column();
-  @include align-content-center();
-  @include small-pad();
-  @include justify-content-center();
-}*/
 
-/* zebra-line for list-items - hass background-color & padding */
-.zebra-line, .zebra-line-2 {
-  padding: 0px 15px 0px 15px;
-}
-.zebra-line:nth-child(odd) {
-    background: rgba(0, 0, 0, 0.06);
-}
-.zebra-line:nth-child(even) {
-    background: none;
-}
-.zebra-line-2:nth-child(odd) {
-    background: rgba(0, 0, 0, 0.08);
-}
-.zebra-line-2:nth-child(even) {
-    background: none;
-}
 @include media-breakpoint-up(sm) {
   html {
     font-size: 16px;
@@ -122,18 +74,3 @@ button.navbar-toggler{
   width: 48px;
   height: :48px;
 }
-/* HELPERS */
-.padding-0 {
-  padding: 0px;
-}
-/* XXX this should add a scrollbar for the shiftList */
-/* .shiftList {
-    flex: 1 1 0;
-    display: flex;
-}
-.shiftList .container-fluid {
-    display: flex;
-}
-.col-6 {
-    overflow-y: auto;
-} */

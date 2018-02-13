@@ -1,6 +1,8 @@
 <template name="header">
-  <nav class="navbar navbar-expand-md bg-secondary fixed-top text-uppercase text-secondary" id="userNav">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-md bg-primary fixed-top text-uppercase" id="userNav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{{pathFor 'homePage'}}">
@@ -10,10 +12,10 @@
       <ul class="navbar-nav mr-auto">
         {{#if currentUser}}
           <li class="nav-item">
-            <h3><a class="nav-link" href="{{pathFor 'userDashboard'}}">{{__ "my_dashboard"}}</a></h3>
+            <a class="nav-link" href="{{pathFor 'userDashboard'}}">{{__ "my_dashboard"}}</a>
           </li>
           {{#if isManager }}
-            <li class="nav-item dropdown"><h3>
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown1" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -23,11 +25,11 @@
                 <a class="dropdown-item" href="{{pathFor 'managerView'}}">{{__ "dashboard"}}</a>
                 <a class="dropdown-item" href="{{pathFor 'allUsersList'}}">{{__ "all_users"}}</a>
                 <a class="dropdown-item" href="{{pathFor 'managerUserForm'}}">{{__ "profile_form"}}</a>
-              </div></h3>
+              </div>
             </li>
           {{/if}}
           {{#if isNoInfo }}
-            <li class="nav-item dropdown"><h3>
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown2" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -38,10 +40,10 @@
                 <a class="dropdown-item" href="{{pathFor 'noInfoNewUser'}}">{{__ "new_user"}}</a>
                 <a class="dropdown-item" href="{{pathFor 'noInfoAllUsers'}}">{{__ "all_users"}}</a>
               </div>
-            </h3></li>
+          </li>
           {{/if}}
           {{#if isManagerOrMetaLead }}
-            <li class="nav-item dropdown"><h3>
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown3" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -53,10 +55,10 @@
                   <a class="dropdown-item" href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}" >{{dept.name}}</a>
                 {{/each}}
               </div>
-            </h3></li>
+            </li>
           {{/if}}
           {{#if isManagerOrLead }}
-            <li class="nav-item dropdown"><h3>
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
                 id="navbarDropdown4" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -68,14 +70,14 @@
                   <a class="dropdown-item" href="{{pathFor 'leadTeamView' _id=team._id }}" >{{team.name}}</a>
                 {{/each}}
               </div>
-            </h3></li>
+            </li>
           {{/if}}
-          <li class="nav-item dropdown"><h3>
-              <a class="nav-link dropdown-toggle" href="#"
-                id="navbarDropdown5" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                  {{__ "welcome"}} {{firstName}}
-              </a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+              id="navbarDropdown5" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+                {{__ "welcome"}} {{firstName}}
+            </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
               <a class="dropdown-item" href="{{pathFor 'volunteerForm'}}">{{__ "volunteer_form"}}</a>
               <a class="dropdown-item" href="{{pathFor 'atChangePwd'}}">{{__ "change_password"}}</a>
@@ -85,7 +87,7 @@
               {{/if}}
                 <a class="dropdown-item" href="{{pathFor 'atSignOut'}}">{{__ "logout"}}</a>
             </div>
-          </h3></li>
+          </li>
         {{else}}
     		  {{> atNavButton}}
         {{/if}}

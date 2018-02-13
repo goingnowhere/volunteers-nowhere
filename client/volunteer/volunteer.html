@@ -1,8 +1,8 @@
 <template name="userDashboard">
 {{#if Template.subscriptionsReady }}
-  <div class="container-fluid dash-padding">
-    <div class="row dash-col-padding">
-      <div class="col-md-2 bg-tertiary">
+  <div class="container-fluid">
+    <div class="row p-t-25">
+      <div class="col-md-2">
         {{#if currentUser.profile.picture}}
           <h4>{{__ "welcome"}} {{ getUserName userId }}</h4>
           <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
@@ -34,17 +34,14 @@
         </button>
       </div>
 
-      <div class="col-md-5 bg-primary">
+      <div class="col-md-5">
         <h2>{{__ "booked_missions" }}</h2>
         {{> bookedTable }}
       </div>
 
       <div class="col-md-5">
         <h2>{{__ "shift_need_help"}}</h2>
-        <!-- this class (should) add a scrollbar -->
-        <!-- <div class="signupsList"> -->
-          {{> signupsList }}
-        <!-- </div> -->
+        {{> signupsList }}
       </div>
     </div>
   </div>
