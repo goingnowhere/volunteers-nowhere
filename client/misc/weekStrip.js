@@ -5,47 +5,66 @@ import $ from 'jquery'
 
 Template.weekstrip.onCreated(function onCreated() {
   const template = this
-  template.day = new ReactiveVar(moment())
+  template.day = new ReactiveVar()
   template.callback = () => {}
   template.autorun(() => {
-    const data = Template.currentData()
-    if (data) {
-      if (data.day) {
-        template.day.set(moment(data.day))
-      }
-      if (data.callback) {
-        template.callback = data.callback
-      }
+    const { day, shownDay = day, callback } = Template.currentData()
+    if (day) {
+      template.day.set(moment(day))
     }
-    template.weekNumber = new ReactiveVar(template.day.get().week())
+    if (shownDay && !template.weekManuallySet) {
+      const sdClone = moment(shownDay)
+      template.weekNumber = new ReactiveVar(sdClone.week())
+      template.year = new ReactiveVar(sdClone.year())
+    }
+    if (callback) {
+      template.callback = callback
+    }
   })
 })
 
+const isCurrentDay = date => Template.instance().day.get() && Template.instance().day.get().isSame(date, 'day')
+
 Template.weekstrip.helpers({
   week: () => {
-    const start = moment().week(Template.instance().weekNumber.get()).weekday(0).startOf('day')
+    const { weekNumber, year } = Template.instance()
+    const start = moment()
+      .week(weekNumber.get())
+      .year(year.get())
+      .weekday(0)
+      .startOf('day')
     return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
   },
   displayDay: date => date.format('ddd Do'),
   displayMonth: date => date.format('MMM'),
-  isoDate: date => date.toISOString(),
-  isCurrentDay: date => Template.instance().day.get().isSame(date, 'day'),
+  isCurrentDay,
 })
 
 Template.weekstrip.events({
   'click [data-action="prev"]': (event, template) => {
     event.preventDefault()
+    template.weekManuallySet = true
     template.weekNumber.set(template.weekNumber.get() - 1)
   },
   'click [data-action="select"]': (event, template) => {
     event.preventDefault()
     const dayOfWeek = $(event.currentTarget).data('day')
-    const day = moment().week(template.weekNumber.get()).weekday(dayOfWeek).startOf('day')
-    template.callback(day.clone())
-    template.day.set(day)
+    const day = moment()
+      .week(template.weekNumber.get())
+      .year(template.year.get())
+      .weekday(dayOfWeek)
+      .startOf('day')
+    if (isCurrentDay(day)) {
+      template.callback()
+      template.day.set()
+    } else {
+      template.callback(day.clone())
+      template.day.set(day)
+    }
   },
   'click [data-action="next"]': (event, template) => {
     event.preventDefault()
+    template.weekManuallySet = true
     template.weekNumber.set(template.weekNumber.get() + 1)
   },
 })

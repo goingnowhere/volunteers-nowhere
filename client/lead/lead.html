@@ -37,7 +37,7 @@
       </div>
       <div class="col-md-5">
         <h2>{{__ "all_shifts" }}</h2>
-        {{> weekstrip day=currentDay callback=updateCurrentDay }}
+        {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
         {{> teamShiftsTable _id=_id date=currentDay }}
       </div>
       <div class="col-md-5">

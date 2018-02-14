@@ -10,19 +10,21 @@ Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id
   template.stats = Volunteers.teamStats(template.teamId)
-  template.currentDay = new ReactiveVar(moment())
+  template.currentDay = new ReactiveVar()
+  template.shownDay = new ReactiveVar(moment())
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byTeam`, template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
   return template.autorun(() => {
-    const teamShifts = Volunteers.Collections.TeamShifts.find(
-      { parentId: template.teamId },
-      { sort: { start: -1 }, limit: 1 },
-    ).fetch()
-    if (teamShifts.length >= 1) {
-      const currentDay = moment(teamShifts[0].start)
-      template.currentDay.set(currentDay)
+    if (template.subscriptionsReady()) {
+      const lastShift = Volunteers.Collections.TeamShifts.findOne(
+        { parentId: template.teamId },
+        { sort: { start: -1 }, limit: 1, reactive: false },
+      )
+      if (lastShift) {
+        template.shownDay.set(moment(lastShift.start))
+      }
     }
   })
 })
@@ -39,6 +41,7 @@ Template.leadTeamView.helpers({
   allLeads: () =>
     Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
   currentDay: () => Template.instance().currentDay.get(),
+  shownDay: () => Template.instance().shownDay.get(),
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
     return (day => cd.set(day))
