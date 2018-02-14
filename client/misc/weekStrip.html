@@ -5,31 +5,25 @@
 <template name="weekstrip">
   <nav>
     <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" data-action="prev" data-week="{{weeknumberPrev}}">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
       {{#each day in week}}
-        {{#if $eq @index 0 }}
         <li class="page-item">
-          <a class="page-link" data-action="prev" data-week="{{weeknumberPrev}}">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        {{/if}}
-        {{#if $and ($neq @index 0) ($neq @index 8)}}
-        <li class="page-item">
-          <a class="page-link" data-action="select" data-day="{{isoDate day}}">
+          <a class="page-link {{#if isCurrentDay day}}bg-info{{/if}}" data-action="select" data-day="{{@index}}">
             {{displayDay day}} <small>{{displayMonth day}}</small>
           </a>
         </li>
-        {{/if}}
-        {{#if $eq @index 8}}
-        <li class="page-item">
-          <a class="page-link" data-action="next" data-week="{{weeknumberNext}}">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-        {{/if}}
       {{/each}}
+      <li class="page-item">
+        <a class="page-link" data-action="next" data-week="{{weeknumberNext}}">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </template>

@@ -1,8 +1,12 @@
+import { Template } from 'meteor/templating'
+import { ReactiveVar } from 'meteor/reactive-var'
+import { moment } from 'meteor/momentjs:moment'
+import $ from 'jquery'
 
 Template.weekstrip.onCreated(function onCreated() {
   const template = this
   template.day = new ReactiveVar(moment())
-  template.callback = (day) => { console.log(day); }
+  template.callback = () => {}
   if (template.data) {
     if (template.data.day) {
       template.day.set(moment(template.data.date))
@@ -11,37 +15,34 @@ Template.weekstrip.onCreated(function onCreated() {
       template.callback = template.data.callback
     }
   }
-});
+  template.weekNumber = new ReactiveVar(template.day.get().week())
+})
 
 Template.weekstrip.helpers({
-  'weeknumberPrev': () => { return (Template.instance().day.get().week() - 1) },
-  'weeknumberNext': () => { return (Template.instance().day.get().week() + 1) },
-  'week': () => {
-    weeknumber = Template.instance().day.get().week();
-    start = moment().day("Monday").week(weeknumber)
-    l = [...Array(9).keys()].map((i) => { return start.clone().add(i-2,'days'); });
-    return l
+  week: () => {
+    const start = moment().week(Template.instance().weekNumber.get()).weekday(0).startOf('day')
+    return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
   },
-  'displayDay': (date) => { return date.format("ddd Do") },
-  'displayMonth': (date) => { return date.format("MMM") },
-  'isoDate': (date) => { return date.toISOString() }
+  displayDay: date => date.format('ddd Do'),
+  displayMonth: date => date.format('MMM'),
+  isoDate: date => date.toISOString(),
+  isCurrentDay: date => Template.instance().day.get().isSame(date, 'day'),
 })
 
 Template.weekstrip.events({
   'click [data-action="prev"]': (event, template) => {
-    event.preventDefault();
-    const day = $(event.target).data('week');
-    console.log(day);
-    template.day.set(moment(day))
+    event.preventDefault()
+    template.weekNumber.set(template.weekNumber.get() - 1)
   },
   'click [data-action="select"]': (event, template) => {
-    event.preventDefault();
-    const day = $(event.target).data('day');
-    template.callback(moment(day))
+    event.preventDefault()
+    const dayOfWeek = $(event.currentTarget).data('day')
+    const day = moment().week(template.weekNumber.get()).weekday(dayOfWeek).startOf('day')
+    template.callback(day.clone())
+    template.day.set(day)
   },
   'click [data-action="next"]': (event, template) => {
-    event.preventDefault();
-    const day = $(event.target).data('week')
-    template.day.set(moment(day))
+    event.preventDefault()
+    template.weekNumber.set(template.weekNumber.get() + 1)
   },
 })

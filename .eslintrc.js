@@ -38,5 +38,8 @@ module.exports = {
         'meteor',
       ],
     }],
+    'meteor/eventmap-params': ['error', {
+      "templateInstanceParamName": "template",
+    }],
   },
 }
