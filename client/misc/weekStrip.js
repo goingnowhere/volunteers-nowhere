@@ -7,15 +7,18 @@ Template.weekstrip.onCreated(function onCreated() {
   const template = this
   template.day = new ReactiveVar(moment())
   template.callback = () => {}
-  if (template.data) {
-    if (template.data.day) {
-      template.day.set(moment(template.data.date))
+  template.autorun(() => {
+    const data = Template.currentData()
+    if (data) {
+      if (data.day) {
+        template.day.set(moment(data.day))
+      }
+      if (data.callback) {
+        template.callback = data.callback
+      }
     }
-    if (template.data.callback) {
-      template.callback = template.data.callback
-    }
-  }
-  template.weekNumber = new ReactiveVar(template.day.get().week())
+    template.weekNumber = new ReactiveVar(template.day.get().week())
+  })
 })
 
 Template.weekstrip.helpers({

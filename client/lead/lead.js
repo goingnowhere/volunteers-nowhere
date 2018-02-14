@@ -20,10 +20,10 @@ Template.leadTeamView.onCreated(function onCreated() {
       { parentId: template.teamId },
       { sort: { start: -1 }, limit: 1 },
     ).fetch()
-    const currentDay =
-      teamShifts.length >= 1 &&
-        moment(teamShifts[0].start).format('MMMM Do YYYY')
-    template.currentDay.set(currentDay)
+    if (teamShifts.length >= 1) {
+      const currentDay = moment(teamShifts[0].start)
+      template.currentDay.set(currentDay)
+    }
   })
 })
 
@@ -38,7 +38,7 @@ Template.leadTeamView.helpers({
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
   allLeads: () =>
     Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
-  currentDay: () => { Template.instance().currentDay.get() },
+  currentDay: () => Template.instance().currentDay.get(),
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
     return (day => cd.set(day))
@@ -46,20 +46,20 @@ Template.leadTeamView.helpers({
 })
 
 Template.leadTeamView.events({
-  'click [data-action="team_settings"]': (event, templateInstance) => {
-    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+  'click [data-action="team_settings"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
   },
-  'click [data-action="add_shift"]': (event, templateInstance) => {
-    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+  'click [data-action="add_shift"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('addShift', { team })
   },
-  'click [data-action="add_task"]': (event, templateInstance) => {
-    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+  'click [data-action="add_task"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('addTask', { team })
   },
-  'click [data-action="add_project"]': (event, templateInstance) => {
-    const team = Volunteers.Collections.Team.findOne(templateInstance.data._id)
+  'click [data-action="add_project"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('addProject', { team })
   },
 })
