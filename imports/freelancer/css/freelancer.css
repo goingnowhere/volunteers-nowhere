@@ -32,6 +32,11 @@ section.home {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(24, 188, 156)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
+h1.home-title {
+  margin-bottom: 25px;
+  font-size: 60px !important;
+}
+
 header.masthead {
   padding-top: calc(6rem + 72px);
   padding-bottom: 6rem;
@@ -105,13 +110,4 @@ header.masthead h2 {
 
 .copyright {
   background-color: #1a252f;
-}
-
-.btn {
-  border-width: 2px;
-}
-
-.btn-primary {
-  border-width: 0px;
-  border-radius: 0px;
 }
