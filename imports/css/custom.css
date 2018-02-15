@@ -56,6 +56,11 @@ h4, h5, h6, p {
   align-items: center;
 }
 
+.signupsListItem , .bookedTableItem {
+  padding-bottom: 2px;
+  margin-bottom: 10px;
+}
+
 .signupsListItem:nth-child(odd), .bookedTableItem:nth-child(odd) {
     background: whitesmoke;
 }
