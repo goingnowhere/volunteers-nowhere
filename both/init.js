@@ -3,6 +3,7 @@ import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
 import i18n from 'meteor/universe:i18n'
+import { moment } from 'meteor/momentjs:moment'
 import './users'
 
 // volunteers module global
@@ -56,6 +57,12 @@ AccountsTemplates.addField({
   negativeValidation: false,
 })
 
+// For some reason the default en locale has the wrong first day of the week
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+})
 // TODO: for later ...
 // this.setUserLanguage = (userId) => {
 //   const user = Meteor.users.findOne(userId)
