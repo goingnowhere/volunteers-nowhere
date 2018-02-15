@@ -115,7 +115,10 @@
         {
             "name": "La Cantina",
             "parent": "Volunteers",
-            "description": "The mission of this team is to prepare breakfast, lunch and dinner for all the\nvolunteers working out there in the dust! We work both during Set up and\nstrike, where in the down time you\u2019ll be helping the crew with various other\ntasks, than event time in shorter shifts.\n"
+            "description": "The mission of this team is to prepare breakfast, lunch and dinner for all the\nvolunteers working out there in the dust! We work both during Set up and\nstrike, where in the down time you\u2019ll be helping the crew with various other\ntasks, than event time in shorter shifts.\n",
+            "location": "cantina",
+            "quirks": ["intense work"],
+            "skills": ["you like cooking", "don't break under stress"]
         },
         {
             "name": "Grumpy Katz Gate Krew",
