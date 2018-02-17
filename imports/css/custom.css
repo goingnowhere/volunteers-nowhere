@@ -5,9 +5,33 @@
 h1, h2, h3 {
   font-family: 'Unica One' /*'Roboto Condensed'*/;
 }
-
+h2 {
+  font-weight: 100;
+}
+h2.header {
+  font-size: 1.5rem;
+  opacity: 0.6;
+  color: #3944e8;
+}
 h4, h5, h6, p {
   font-family: 'Roboto Condensed';
+}
+h5 {
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+p.card-text {
+  font-weight: 200;
+  letter-spacing: 0.5px;
+}
+
+.dark-text {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.bg-grey{
+  background-color: #bdaaa4; /*(dustgrey)*/
+  color: white;
 }
 
 /* navbar */
@@ -18,7 +42,10 @@ h4, h5, h6, p {
 /* this color here cannot be set in main.scss */
 .navbar a {
   color: white;
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 200;
+  font-family: 'Roboto Condensed';
+  letter-spacing: 1.5px;
 }
 
 .navbar a.dropdown-item {
@@ -45,7 +72,15 @@ h4, h5, h6, p {
   border-width: 2px;
   border-width: 0px;
   border-radius: 0px;
+  font-size: 16px;
+  font-weight: 200;
+  font-family: 'Roboto Condensed';
+  letter-spacing: 1.5px;
 }
+/* for buttons in the left menus */
+
+/* TODO: mettre une classe pour que je puisse changer couleur, supprimer les border-radius
+et injecter la typo */
 
 /* apply to all col classes. No need to modify the template */
 .signupsList div[class^="col-"], .signupsList div[class*=" col-"],
@@ -57,12 +92,16 @@ h4, h5, h6, p {
 }
 
 .signupsListItem , .bookedTableItem {
-  padding-bottom: 2px;
-  margin-bottom: 10px;
+  padding: 15px 10px 15px 10px;
+  margin: 10px 0px;
+  background: rgba(189, 170, 164, 0.5);
 }
-
+.bookedTableItem {
+  margin-left: 5px;
+}
 .signupsListItem:nth-child(odd), .bookedTableItem:nth-child(odd) {
-    background: whitesmoke;
+    color: rgba(0, 0, 0, 0.8)!important;
+    background: rgba(189, 170, 164, 0.4);
 }
 
 @include media-breakpoint-up(sm) {
