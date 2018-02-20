@@ -13,6 +13,12 @@ h2.header {
   opacity: 0.6;
   color: #3944e8;
 }
+
+/* padding fix on list section titles */
+.sub-user-top h2.header {
+  line-height: normal;
+}
+
 h4, h5, h6, p {
   font-family: 'Roboto Condensed';
 }
@@ -64,18 +70,29 @@ p.card-text {
   border-radius: 0; /* avoid curved divisor corner */
 }
 
-#user-top { padding-top: 70px; }
+/* padding classes for list cols and tabed list cols */
+.user-top { padding-top: 70px; }
+.sub-user-top { padding-top: 7px;}
 
 /* for all btns : apply, join, bail */
 .btn-action {
   width: 100%;
-  border-width: 2px;
   border-width: 0px;
   border-radius: 0px;
   font-size: 16px;
   font-weight: 200;
   font-family: 'Roboto Condensed';
   letter-spacing: 1.5px;
+}
+
+/* for buttons in the left pannel */
+.btn-default {
+  border-radius: 0px;
+  font-size: 16px;
+  font-weight: 200;
+  font-family: 'Roboto Condensed';
+  letter-spacing: 1.5px;
+  margin: 4px 0px;
 }
 /* for buttons in the left menus */
 
@@ -87,7 +104,7 @@ et injecter la typo */
 .bookedTable div[class^="col-"], .bookedTable div[class*=" col-"] {
   /* display: flex; */
   /* flex-direction: column; */
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
 

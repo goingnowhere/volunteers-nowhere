@@ -1,15 +1,15 @@
 <template name="metaleadDepartmentView">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2 bg-grey user-top">
         <h3>{{ name }}</h3>
-        <h5 class="mb-2 text-muted">{{__ "leads"}}</h5>
+        <h5 class="mb-2 dark-text">{{__ "leads"}}</h5>
         <ul>
           {{#each lead in leadsDept}}
             <li>{{getUserName lead.userId}}</li>
           {{/each}}
         </ul>
-        <h5 class="mb-2 text-muted">{{__ "information"}}</h5>
+        <h5 class="mb-2 dark-text">{{__ "information"}}</h5>
         <ul>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ "total_number_of_teams"}}">
@@ -36,8 +36,8 @@
           {{fa "wrench"}} {{__ "add_team" }}
         </button>
       </div>
-      <div class="col-md-5">
-        <h3>{{__ "all_teams"}}</h3>
+      <div class="col-md-5 user-top">
+        <h2 class="header">{{__ "all_teams"}}</h2>
         <table class="table">
           <thead>
             <th>{{__ "name"}}</th>
@@ -99,8 +99,8 @@
         - completition rate for the whole dept
         {{/markdown}} -->
       </div>
-      <div class="col-md-5">
-        <h3>{{__ "pending_lead_requests"}}</h3>
+      <div class="col-md-5 user-top">
+        <h2 class="header">{{__ "pending_lead_requests"}}</h2>
         {{> departmentSignupsList }}
       </div>
     </div>

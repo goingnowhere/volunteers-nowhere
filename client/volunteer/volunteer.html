@@ -2,7 +2,7 @@
 {{#if Template.subscriptionsReady }}
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-6 col-md-2 pr-1 bg-grey">
+      <div class="col-sm-6 col-md-2 pr-1 bg-grey user-top">
         {{#if currentUser.profile.picture}}
           <h3>{{__ "welcome"}} {{ getUserName userId }}</h3>
           <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
@@ -34,16 +34,16 @@
         </button>
       </div>
       {{#if bookedMissions }}
-        <div class="col-md-5 pl-1 pr-1">
+        <div class="col-md-5 pl-1 pr-1 user-top">
           <h2 class="header">{{__ "booked_missions" }}</h2>
           {{> bookedTable }}
         </div>
-        <div class="col-md-5 pl-1">
+        <div class="col-md-5 pl-1 user-top">
           <h2 class="header">{{__ "shift_need_help"}}</h2>
           {{> signupsListTabs bookedMissions="true" }}
         </div>
       {{else}}
-        <div class="col-sm-6 col-md-10 pl-1">
+        <div class="col-sm-6 col-md-10 pl-1 user-top">
           {{> signupsListTabs }}
         </div>
       {{/if}}
@@ -74,13 +74,13 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="specials">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row sub-user-top">
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pr-1{{/if}}">
-            <h2>{{__ "important_shifts"}}</h2>
+            <h2 class="header">{{__ "important_shifts"}}</h2>
             {{> signupsList searchQuery=(searchQuerySpecials 'shift') }}
           </div>
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pl-1{{/if}}">
-            <h2>{{__ "lead_positions"}}</h2>
+            <h2 class="header">{{__ "lead_positions"}}</h2>
             {{> signupsList searchQuery=(searchQuerySpecials 'lead') }}
           </div>
         </div>
@@ -89,10 +89,10 @@
     <!-- Menus -->
     <div role="tabpanel" class="tab-pane fade" id="menus">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row sub-user-top">
           {{#each team in teamSelection }}
             <div class="{{#if bookedMissions}}col-md-12{{else}}col-md-6 pr-1{{/if}}">
-              <h4>{{ team.name }}</h4>
+              <h2 class="header">{{ team.name }}</h2>
               {{> signupsList searchQuery=(searchQueryMenus team._id) }}
             </div>
           {{/each}}

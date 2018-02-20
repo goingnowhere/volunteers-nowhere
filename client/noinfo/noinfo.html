@@ -1,24 +1,24 @@
 <template name="noInfoDashboard">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2">
-        <h2>NoInfo</h2>
-        <h5 class="mb-2 text-muted">{{__ "needs_of_the_day"}}:</h5>
+      <div class="col-md-2 bg-grey user-top">
+        <h3>NoInfo</h3>
+        <h5 class="mb-2 dark-text">{{__ "needs_of_the_day"}}:</h5>
         XX/XX>
-        <h5 class="mb-2 text-muted">{{__ "needs_of_the_week"}}:</h5>
+        <h5 class="mb-2 dark-text">{{__ "needs_of_the_week"}}:</h5>
         XX/XX
-        <h5 class="mb-2 text-muted">{{__ "urgent_shifts"}}:</h5>
+        <h5 class="mb-2 dark-text">{{__ "urgent_shifts"}}:</h5>
         XX/XX
       </div>
-      <div class="col">
-        <h3> {{__ "urgent_shifts_today"}} </h3>
+      <div class="col user-top">
+        <h2 class="header"> {{__ "urgent_shifts_today"}} </h2>
         filters : team / urgent / time of day
         <!-- {{> weekstrip day=currentDay callback=updateCurrentDay }} -->
         <!-- {{> volunteerShiftsList }} -->
         <!-- todo - searchQuery=searchQuery present day }} -->
       </div>
-      <div class="col">
-        <h3> {{__ "urgent_shifts_week"}} </h3>
+      <div class="col user-top">
+        <h2 class="header"> {{__ "urgent_shifts_week"}} </h2>
         filters : day / team / urgent / time of day
         <!-- {{> volunteerShiftsList}} -->
         <!-- todo - display only the shifts/tasks with empty spots -->
