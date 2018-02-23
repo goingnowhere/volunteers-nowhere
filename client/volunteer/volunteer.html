@@ -108,15 +108,19 @@
 
 <template name="volunteerForm">
   <div class="container">
-    <h2>{{__ "volunteer_form"}}</h2>
-    {{> addVolunteerForm }}
+    <div class="user-top">
+      <h2>{{__ "volunteer_form"}}</h2>
+      {{> addVolunteerForm }}
+    </div>
   </div>
 </template>
 
 <template name="accountSettings">
   <div class="container">
-    <h2>{{__ "user_details"}}</h2>
-    {{> userProfile }}
+    <div class="user-top">
+      <h2>{{__ "user_details"}}</h2>
+      {{> userProfile }}
+    </div>
   </div>
 </template>
 
