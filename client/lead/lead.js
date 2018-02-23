@@ -10,6 +10,44 @@ Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id
   template.stats = Volunteers.teamStats(template.teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
+})
+
+Template.leadTeamView.onRendered(() => {
+  this.$('[data-toggle="tooltip"]').tooltip()
+})
+
+Template.leadTeamView.helpers({
+  shiftRate: () => Template.instance().stats.shiftRate(),
+  volunteerNumber: () => Template.instance().stats.volunteerNumber(),
+  pendingRequests: () => Template.instance().stats.pendingRequests().length,
+  team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
+  allLeads: () =>
+    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
+})
+
+Template.leadTeamView.events({
+  'click [data-action="team_settings"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
+    AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
+  },
+  'click [data-action="add_shift"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
+    AutoFormComponents.ModalShowWithTemplate('addShift', { team })
+  },
+  'click [data-action="add_task"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
+    AutoFormComponents.ModalShowWithTemplate('addTask', { team })
+  },
+  'click [data-action="add_project"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
+    AutoFormComponents.ModalShowWithTemplate('addProject', { team })
+  },
+})
+
+Template.leadTeamTabs.onCreated(function onCreated() {
+  const template = this
+  template.teamId = template.data._id
   template.currentDay = new ReactiveVar()
   template.shownDay = new ReactiveVar(moment())
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byTeam`, template.teamId)
@@ -29,41 +67,12 @@ Template.leadTeamView.onCreated(function onCreated() {
   })
 })
 
-Template.leadTeamView.onRendered(() => {
-  this.$('[data-toggle="tooltip"]').tooltip()
-})
-
-Template.leadTeamView.helpers({
-  shiftRate: () => Template.instance().stats.shiftRate(),
-  volunteerNumber: () => Template.instance().stats.volunteerNumber(),
-  pendingRequests: () => Template.instance().stats.pendingRequests().length,
-  team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
-  allLeads: () =>
-    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
+Template.leadTeamTabs.helpers({
   currentDay: () => Template.instance().currentDay.get(),
   shownDay: () => Template.instance().shownDay.get(),
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
     return (day => cd.set(day))
-  },
-})
-
-Template.leadTeamView.events({
-  'click [data-action="team_settings"]': (event, template) => {
-    const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
-  },
-  'click [data-action="add_shift"]': (event, template) => {
-    const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addShift', { team })
-  },
-  'click [data-action="add_task"]': (event, template) => {
-    const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addTask', { team })
-  },
-  'click [data-action="add_project"]': (event, template) => {
-    const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addProject', { team })
   },
 })
 

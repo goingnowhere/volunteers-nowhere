@@ -40,15 +40,48 @@
           {{fa "wrench"}} {{__ "add_project"}}
         </button>
       </div>
-      <div class="col-md-5">
-        <h2 class="header">{{__ "all_shifts" }}</h2>
-        {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
-        {{> teamShiftsTable _id=_id date=currentDay }}
+      {{#if $eq pendingRequests 0}}
+      <div class="col-sm-6 col-md-10 pl-1 user-top">
+        {{> leadTeamTabs }}
       </div>
-      <div class="col-md-5">
+      {{else}}
+      <div class="col-sm-12 col-md-5 pl-1 pr-1 user-top">
+        {{> leadTeamTabs }}
+      </div>
+      <div class="col-sm-12 col-md-5 pl-1 user-top">
         <h2 class="header">{{__ "applications" }}</h2>
         {{> teamSignupsList }}
       </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="leadTeamTabs">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" href="#shifts" role="tab" data-toggle="tab">
+        <span>{{__ "all_shifts"}}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#projects" role="tab" data-toggle="tab">
+        <span>{{__ "all_projects"}}</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Shifts -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="shifts">
+      <div class="pt-2">
+        {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
+        {{> teamShiftsTable _id=_id date=currentDay }}
+      </div>
+    </div>
+    <!-- Projects -->
+    <div role="tabpanel" class="tab-pane fade" id="projects">
+      {{> teamProjectsTable _id=_id }}
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@
   "name": "Name",
   "pending_requests": "Pending Requests",
   "all_shifts": "All Shifts",
+  "all_projects": "All Projects",
   "team_settings": "Team Settings",
   "add_team": "New Team",
   "add_department": "New Department",
@@ -46,5 +47,4 @@
   "alacarte": "A la Carte",
   "important_shifts": "Important Shifts",
   "lead_positions": "Lead Positions"
-
 }
