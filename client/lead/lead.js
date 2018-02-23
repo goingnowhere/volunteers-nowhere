@@ -36,7 +36,7 @@ Template.leadTeamView.onRendered(() => {
 Template.leadTeamView.helpers({
   shiftRate: () => Template.instance().stats.shiftRate(),
   volunteerNumber: () => Template.instance().stats.volunteerNumber(),
-  pendingRequests: () => Template.instance().stats.pendingRequests.length,
+  pendingRequests: () => Template.instance().stats.pendingRequests().length,
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
   allLeads: () =>
     Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),

@@ -12,7 +12,7 @@ export const createShifts = (Volunteers) => {
           doc.start = new Date(doc.start)
           doc.end = new Date(doc.end)
           doc.min = 5
-          doc.max = 5
+          doc.max = 10
           doc.reserved = 0
           doc.priority = 'normal'
           doc.policy = 'public'
