@@ -15,7 +15,7 @@ h2.header {
 }
 
 /* padding fix on list section titles */
-.sub-user-top h2.header {
+h2.header {
   line-height: normal;
 }
 
@@ -70,10 +70,6 @@ p.card-text {
   border-radius: 0; /* avoid curved divisor corner */
 }
 
-/* padding classes for list cols and tabed list cols */
-.user-top { padding-top: 70px; }
-.sub-user-top { padding-top: 7px;}
-
 /* for all btns : apply, join, bail */
 .btn-action {
   width: 100%;
@@ -117,7 +113,7 @@ et injecter la typo */
   margin-left: 5px;
 }
 .signupsListItem:nth-child(odd), .bookedTableItem:nth-child(odd) {
-    color: rgba(0, 0, 0, 0.8)!important;
+    color: rgba(0, 0, 0, 0.8);
     background: rgba(189, 170, 164, 0.4);
 }
 

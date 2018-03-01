@@ -1,7 +1,7 @@
 <template name="metaleadDepartmentView">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2 bg-grey user-top">
+      <div class="col-md-2 bg-grey">
         <h3>{{ name }}</h3>
         <h5 class="mb-2 dark-text">{{__ "leads"}}</h5>
         <ul>
@@ -36,7 +36,7 @@
           {{fa "wrench"}} {{__ "add_team" }}
         </button>
       </div>
-      <div class="col-md-5 user-top">
+      <div class="col-md-5">
         <h2 class="header">{{__ "all_teams"}}</h2>
         <table class="table">
           <thead>
@@ -99,7 +99,7 @@
         - completition rate for the whole dept
         {{/markdown}} -->
       </div>
-      <div class="col-md-5 user-top">
+      <div class="col-md-5">
         <h2 class="header">{{__ "pending_lead_requests"}}</h2>
         {{> departmentSignupsList }}
       </div>

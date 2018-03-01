@@ -1,7 +1,7 @@
 <template name="managerView">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2 bg-grey user-top">
+      <div class="col-md-2 bg-grey">
         <h3>{{__ "manager"}}</h3>
         <h5 class="mb-2 dark-text">{{__ "leads"}}</h5>
         <div data-toggle="tooltip" data-placement="top" title="{{__ "wanted_covered_confirmed"}}">
@@ -22,13 +22,13 @@
           {{__ "add_department" }}
         </button>
       </div>
-      <div class="col-md-5 user-top">
+      <div class="col-md-5">
         <h2 class="header">{{__ "departments"}}</h2>
         <!-- {{> departmentsList }} -->
         <h2 class="header">{{__ "teams"}}</h2>
         <!-- {{> teamsList}} -->
       </div>
-      <div class="col-md-5 user-top">
+      <div class="col-md-5">
         <h2 class="header">{{__ "pending_metalead_requests"}}</h2>
         {{> managerSignupsList }}
       </div>
