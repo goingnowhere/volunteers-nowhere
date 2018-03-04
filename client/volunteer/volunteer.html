@@ -77,11 +77,11 @@
         <div class="row">
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pr-1{{/if}}">
             <h2 class="header">{{__ "important_shifts"}}</h2>
-            {{> signupsList searchQuery=(searchQuerySpecials 'shift') }}
+            {{> signupsListGroupped searchQuery=(searchQuerySpecials 'shift') }}
           </div>
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pl-1{{/if}}">
             <h2 class="header">{{__ "lead_positions"}}</h2>
-            {{> signupsList searchQuery=(searchQuerySpecials 'lead') }}
+            {{> signupsListGroupped searchQuery=(searchQuerySpecials 'lead') }}
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@
           {{#each team in teamSelection }}
             <div class="{{#if bookedMissions}}col-md-12{{else}}col-md-6 pr-1{{/if}}">
               <h2 class="header">{{ team.name }}</h2>
-              {{> signupsList searchQuery=(searchQueryMenus team._id) }}
+              {{> signupsListGroupped searchQuery=(searchQueryMenus team._id) }}
             </div>
           {{/each}}
         </div>
@@ -101,7 +101,7 @@
     </div>
     <!-- A la Carte -->
     <div role="tabpanel" class="tab-pane fade" id="alacarte">
-      {{> signupsList searchQuery=searchQueryAlaCarte }}
+      {{> signupsListGroupped searchQuery=searchQueryAlaCarte }}
     </div>
   </div>
 </template>

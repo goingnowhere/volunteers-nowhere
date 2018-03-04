@@ -44,8 +44,7 @@ Template.userDashboard.helpers({
     (
       (Volunteers.Collections.ShiftSignups.find({ status: 'confirmed' }).count() > 0) ||
       (Volunteers.Collections.ProjectSignups.find({ status: 'confirmed' }).count() > 0) ||
-      (Volunteers.Collections.TaskSignups.find({ status: 'confirmed' }).count() > 0) ||
-      (Volunteers.Collections.LeadSignups.find({ status: 'confirmed' }).count() > 0)
+      (Volunteers.Collections.TaskSignups.find({ status: 'confirmed' }).count() > 0)
     ),
 })
 
