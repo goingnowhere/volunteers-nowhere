@@ -56,17 +56,17 @@
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" href="#specials" role="tab" data-toggle="tab">
-        <span class="text-danger">{{fa "fire"}} {{__ "specials_of_the_day"}} {{fa "fire"}}</span>
+        <span class="text-danger">{{fa "fire"}} {{__ "important_shifts"}} {{fa "fire"}}</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#menus" role="tab" data-toggle="tab">
-        <span class="text-warning">{{fa "bars"}} {{__ "menus"}}</span>
+        <span class="text-warning">{{fa "bars"}} {{__ "your_preferences"}}</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#alacarte" role="tab" data-toggle="tab">
-        <span class="text-info">{{fa "globe"}} {{__ "alacarte"}}</span>
+        <span class="text-info">{{fa "globe"}} {{__ "build_strike"}}</span>
     </a>
     </li>
   </ul>
@@ -101,7 +101,7 @@
     </div>
     <!-- A la Carte -->
     <div role="tabpanel" class="tab-pane fade" id="alacarte">
-      {{> signupsListGroupped searchQuery=searchQueryAlaCarte }}
+      {{> signupsListGroupped searchQuery=(searchQuerySpecials 'project') }}
     </div>
   </div>
 </template>

@@ -85,8 +85,7 @@ Template.signupsListTabs.helpers({
     return userPreferences
   },
   searchQuerySpecials: type => (new ReactiveVar({ limit: 4, duties: [type] })),
-  searchQueryMenus: teamId => (new ReactiveVar({ limit: 3, teams: [teamId] })),
-  searchQueryAlaCarte: () => (new ReactiveVar({ limit: 10 })),
+  searchQueryMenus: teamId => (new ReactiveVar({ limit: 3, teams: [teamId], duties: ['shift'] })),
 })
 
 AutoForm.addHooks([

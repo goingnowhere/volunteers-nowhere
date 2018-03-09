@@ -42,9 +42,10 @@
   "all_users": "All Users",
   "profile_form": "Profile Form (edit)",
   "add_picture": "Add Picture",
-  "specials_of_the_day": "House's Specials",
-  "menus": "Menus",
-  "alacarte": "A la Carte",
+  "your_preferences": "Your Favourite Teams",
+  "build_strike": "Build/Strike",
   "important_shifts": "Important Shifts",
-  "lead_positions": "Lead Positions"
+  "lead_positions": "Lead Positions",
+  "event_time": "During Event",
+  "before_after_event": "Before and After the Event"
 }
