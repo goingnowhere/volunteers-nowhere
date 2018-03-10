@@ -77,31 +77,32 @@
         <div class="row">
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pr-1{{/if}}">
             <h2 class="header">{{__ "important_shifts"}}</h2>
-            {{> signupsListGroupped searchQuery=(searchQuerySpecials 'shift') }}
+            {{> signupsList }}
           </div>
           <div class="{{#if bookedMissions}}col-md-12{{else}}col pl-1{{/if}}">
             <h2 class="header">{{__ "lead_positions"}}</h2>
-            {{> signupsListGroupped searchQuery=(searchQuerySpecials 'lead') }}
+            {{> signupsList leadsOnly="true" }}
           </div>
         </div>
       </div>
     </div>
     <!-- Menus -->
     <div role="tabpanel" class="tab-pane fade" id="menus">
-      <div class="container-fluid">
+      {{> signupsList userPref }}
+      <!-- <div class="container-fluid">
         <div class="row">
           {{#each team in teamSelection }}
             <div class="{{#if bookedMissions}}col-md-12{{else}}col-md-6 pr-1{{/if}}">
               <h2 class="header">{{ team.name }}</h2>
-              {{> signupsListGroupped searchQuery=(searchQueryMenus team._id) }}
+              {{> signupsListTeam team }}
             </div>
           {{/each}}
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- A la Carte -->
     <div role="tabpanel" class="tab-pane fade" id="alacarte">
-      {{> signupsListGroupped searchQuery=(searchQuerySpecials 'project') }}
+      {{> signupsList dutytype="project" }}
     </div>
   </div>
 </template>
