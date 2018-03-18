@@ -56,12 +56,7 @@
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" href="#specials" role="tab" data-toggle="tab">
-        <span class="text-danger">{{fa "fire"}} {{__ "important_shifts"}} {{fa "fire"}}</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#menus" role="tab" data-toggle="tab">
-        <span class="text-warning">{{fa "bars"}} {{__ "your_preferences"}}</span>
+        <span class="text-danger">{{fa "fire"}} {{__ "event_shifts"}} {{fa "fire"}}</span>
       </a>
     </li>
     <li class="nav-item">
@@ -69,40 +64,22 @@
         <span class="text-info">{{fa "globe"}} {{__ "build_strike"}}</span>
     </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#menus" role="tab" data-toggle="tab">
+        <span class="text-warning">{{fa "bars"}} {{__ "lead_positions"}}</span>
+      </a>
+    </li>
   </ul>
   <!-- Specials -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="specials">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="{{#if bookedMissions}}col-md-12{{else}}col pr-1{{/if}}">
-            <h2 class="header">{{__ "important_shifts"}}</h2>
-            {{> signupsList }}
-          </div>
-          <div class="{{#if bookedMissions}}col-md-12{{else}}col pl-1{{/if}}">
-            <h2 class="header">{{__ "lead_positions"}}</h2>
-            {{> signupsList leadsOnly="true" }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Menus -->
-    <div role="tabpanel" class="tab-pane fade" id="menus">
       {{> signupsList userPref }}
-      <!-- <div class="container-fluid">
-        <div class="row">
-          {{#each team in teamSelection }}
-            <div class="{{#if bookedMissions}}col-md-12{{else}}col-md-6 pr-1{{/if}}">
-              <h2 class="header">{{ team.name }}</h2>
-              {{> signupsListTeam team }}
-            </div>
-          {{/each}}
-        </div>
-      </div> -->
     </div>
-    <!-- A la Carte -->
     <div role="tabpanel" class="tab-pane fade" id="alacarte">
-      {{> signupsList dutytype="project" }}
+      {{> signupsList dutyType="project" }}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="menus">
+      {{> signupsList leadsOnly="true" }}
     </div>
   </div>
 </template>
