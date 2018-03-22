@@ -26,5 +26,4 @@ export const createShifts = (Volunteers) => {
       }
     })
   }
-  Volunteers.updateTeamsScores(Volunteers.Collections.TeamShifts.find().fetch())
 }
