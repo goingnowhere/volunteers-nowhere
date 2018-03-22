@@ -20,7 +20,8 @@
         {
             "name": "NoInfo",
             "parent": "Volunteers",
-            "description": "Do you like helping people? Do you like knowing all the gossip? Are you\nwelcoming? Do you like to answer rhetorical questions? Come volunteer at the\nNoInfo Hub! We have \u0336a\u0336l\u0336l\u0336 \u0336o\u0336f\u0336 \u0336t\u0336h\u0336e\u0336 \u0336w\u0336r\u0336o\u0336n\u0336g\u0336 \u0336a\u0336n\u0336s\u0336w\u0336e\u0336r\u0336s\u0336 some correct information on what\nhappens when and where; we also help putting together people eager to volunteer\nwith teams needing their help, while lounging in a nice shade...just on the\nside of the Ice Ice Baby team\u2026.just saying\u2026. Join us and achieve stardom and\nwisdom!!! If you have any questions contact noinfo@goingnowhere.org. We work\nevent time on four hours sifts and require you to take up a minimum of two\nshifts.\n"
+            "description": "Do you like helping people? Do you like knowing all the gossip? Are you\nwelcoming? Do you like to answer rhetorical questions? Come volunteer at the\nNoInfo Hub! We have \u0336a\u0336l\u0336l\u0336 \u0336o\u0336f\u0336 \u0336t\u0336h\u0336e\u0336 \u0336w\u0336r\u0336o\u0336n\u0336g\u0336 \u0336a\u0336n\u0336s\u0336w\u0336e\u0336r\u0336s\u0336 some correct information on what\nhappens when and where; we also help putting together people eager to volunteer\nwith teams needing their help, while lounging in a nice shade...just on the\nside of the Ice Ice Baby team\u2026.just saying\u2026. Join us and achieve stardom and\nwisdom!!! If you have any questions contact noinfo@goingnowhere.org. We work\nevent time on four hours sifts and require you to take up a minimum of two\nshifts.\n",
+            "quirks": ["work in the shade"]
         },
         {
             "name": "DVS",
@@ -50,7 +51,8 @@
         {
             "name": "Fire Arena",
             "parent": "Malfare",
-            "description": "You love the smell of paraffin and you are passionate about fire performing and\nwilling to share your skills and to support the Nowhere fire community. You\nlove hippies and especially enjoy detracting them from putting those lovely\nplastic-y butterfly wings (and themselves) on fire? Come help us with\nmotivating people, getting the arena watched after, secured and organised...\nand of course, enjoy the show! We work event time in short shifts and a small\nteam.\n"
+            "description": "You love the smell of paraffin and you are passionate about fire performing and\nwilling to share your skills and to support the Nowhere fire community. You\nlove hippies and especially enjoy detracting them from putting those lovely\nplastic-y butterfly wings (and themselves) on fire? Come help us with\nmotivating people, getting the arena watched after, secured and organised...\nand of course, enjoy the show! We work event time in short shifts and a small\nteam.\n",
+            "skills": ["fire safety experience"]
         },
         {
             "name": "Power",
@@ -90,7 +92,8 @@
         {
             "name": "Interpreters",
             "parent": "Malfare",
-            "description": "The Interpreters team help our multi-language participants communicate with our\nemergency services, translating into Spanish as many languages as possible.\nMinimum requirement is English to Spanish but we invite all French, Dutch,\nGerman people, and many more to apply as well! We work event time on shifts.\n"
+            "description": "The Interpreters team help our multi-language participants communicate with our\nemergency services, translating into Spanish as many languages as possible.\nMinimum requirement is English to Spanish but we invite all French, Dutch,\nGerman people, and many more to apply as well! We work event time on shifts.\n",
+            "skills": ["languages"]
         },
         {
             "name": "Site Lead & Site Management Crew",
@@ -105,12 +108,16 @@
         {
             "name": "Nomads",
             "parent": "Malfare",
-            "description": "Nomads are members of the Nowhere community who volunteer some of their time to\ndispense information and act as non-confrontational mediators. Responding to\nthe ever-changing environment, Nomads promote awareness of potential hazards,\nfrom sunstroke to wet weather, and address situations that could otherwise\nrequire outside intervention. The most important 'qualification' for being a\nNomad is the desire to be an interactive participant. Helpful qualities include\na sense of humour, flexibility, and a good pair of walking shoes. Whenever\npossible, first-time Nomads will be paired with experienced Nomads \u2014 as well as\nhaving the support from an experienced leadership team. We work event time on\nsix hour shifts.\n"
+            "description": "Nomads are members of the Nowhere community who volunteer some of their time to\ndispense information and act as non-confrontational mediators. Responding to\nthe ever-changing environment, Nomads promote awareness of potential hazards,\nfrom sunstroke to wet weather, and address situations that could otherwise\nrequire outside intervention. The most important 'qualification' for being a\nNomad is the desire to be an interactive participant. Helpful qualities include\na sense of humour, flexibility, and a good pair of walking shoes. Whenever\npossible, first-time Nomads will be paired with experienced Nomads \u2014 as well as\nhaving the support from an experienced leadership team. We work event time on\nsix hour shifts.\n",
+            "quirks": ["sober shift"],
+            "skills": ["calm under pressure", "mediation"]
         },
         {
             "name": "Designated Driver",
             "parent": "BDSM",
-            "description": "Designated drivers are people willing to do a sober shift on stand-by. To do\nthis, you need to be licensed to drive a people-carrier/small van in Spain (we\nprovide the vehicle). Trips may include picking up people from the\nhealth-centre where they have no other means of getting back, going on errands\nto town to bring back supplies, acting as one of the resources when we go into\nsituation response mode. We work event time on six hour shifts.\n"
+            "description": "Designated drivers are people willing to do a sober shift on stand-by. To do\nthis, you need to be licensed to drive a people-carrier/small van in Spain (we\nprovide the vehicle). Trips may include picking up people from the\nhealth-centre where they have no other means of getting back, going on errands\nto town to bring back supplies, acting as one of the resources when we go into\nsituation response mode. We work event time on six hour shifts.\n",
+            "quirks": ["sober shift"],
+            "skills": ["licensed to drive in Spain"]
         },
         {
             "name": "La Cantina",
@@ -123,7 +130,8 @@
         {
             "name": "Grumpy Katz Gate Krew",
             "parent": "GG&P",
-            "description": "The Grumpy Katz are our gate-keepers, the 'guardians of the wall', the visible\nfrontier between the real world and Nowhere; they check tickets and give out\nwristbands, they oversee all entry and exit from our gates, helping vehicles\nand people\u00b4s traffic onsite. Katz are the first ones you\u00b4ll meet on the way in\nand last one you\u00b4ll say goodbye to on the way out. We work in shifts, stating\none week before the official opening and finishing after the last bus has left\non Monday\n"
+            "description": "The Grumpy Katz are our gate-keepers, the 'guardians of the wall', the visible\nfrontier between the real world and Nowhere; they check tickets and give out\nwristbands, they oversee all entry and exit from our gates, helping vehicles\nand people\u00b4s traffic onsite. Katz are the first ones you\u00b4ll meet on the way in\nand last one you\u00b4ll say goodbye to on the way out. We work in shifts, stating\none week before the official opening and finishing after the last bus has left\non Monday\n",
+            "quirks": ["work in the shade"]
         },
         {
             "name": "Perimeter Crew",
