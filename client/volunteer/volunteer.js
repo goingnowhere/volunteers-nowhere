@@ -68,29 +68,13 @@ Template.signupsListTabs.helpers({
     const form = Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
     return { quirks: form.quirks, skills: form.skills }
   },
-  teamSelection: () => {
-    const limit = Template.instance().teamLimit
-    const l = []
-    let sel = {}
-    // team selection based on the user preferences
-    const form = Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
-    if ((form.quirks) && (form.quirks.length > 0)) {
-      l.push({ quirks: { $in: form.quirks } })
-    }
-    if ((form.skills) && (form.skills.length > 0)) {
-      l.push({ skills: { $in: form.skills } })
-    }
-    if (l.length > 0) { sel = { $or: l } }
-    const userPreferences = Volunteers.Collections.Team.find(sel, { limit }).fetch()
-    // if (userPreferences.length < limit) {
-    //   const others = Volunteers.Collections.Team.find(
-    //     { $nor: l },
-    //     { limit: (limit - userPreferences.length) },
-    //   ).fetch()
-    //   return userPreferences.concat(others)
-    // }
-    return userPreferences
-  },
+})
+
+Template.signupsListTabs.events({
+  'change #tabSelect': (event, template) => {
+    template.$('.tab-pane').hide();
+    template.$('.tab-pane').eq($(event.target).val()).show();
+  }
 })
 
 AutoForm.addHooks([

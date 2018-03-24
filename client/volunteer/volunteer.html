@@ -53,32 +53,37 @@
 </template>
 
 <template name="signupsListTabs">
-  <ul class="nav nav-tabs" role="tablist">
+  <select id='tabSelect' class="selectpicker">
+      <option value='0'>{{__ "event_shifts"}}</option>
+      <option value='1'>{{__ "build_strike"}}</option>
+      <option value='2'>{{__ "lead_positions"}}</option>
+  </select>
+  <!-- HACK to make tabs open with a select -->
+  <ul class="nav nav-tabs" role="tablist" style="display:none">
     <li class="nav-item">
-      <a class="nav-link active" href="#specials" role="tab" data-toggle="tab">
-        <span class="text-danger">{{fa "fire"}} {{__ "event_shifts"}} {{fa "fire"}}</span>
+      <a class="nav-link active" href="#event" role="tab" data-toggle="tab">
+        <!-- <span class="text-danger">{{fa "fire"}} {{__ "event_shifts"}} {{fa "fire"}}</span> -->
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#alacarte" role="tab" data-toggle="tab">
-        <span class="text-info">{{fa "globe"}} {{__ "build_strike"}}</span>
+      <a class="nav-link" href="#build" role="tab" data-toggle="tab">
+        <!-- <span class="text-info">{{fa "globe"}} {{__ "build_strike"}}</span> -->
     </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#menus" role="tab" data-toggle="tab">
-        <span class="text-warning">{{fa "bars"}} {{__ "lead_positions"}}</span>
+      <a class="nav-link" href="#lead" role="tab" data-toggle="tab">
+        <!-- <span class="text-warning">{{fa "bars"}} {{__ "lead_positions"}}</span> -->
       </a>
     </li>
   </ul>
-  <!-- Specials -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="specials">
+    <div role="tabpanel" class="tab-pane active" id="event">
       {{> signupsList userPref }}
     </div>
-    <div role="tabpanel" class="tab-pane fade" id="alacarte">
+    <div role="tabpanel" class="tab-pane" id="build">
       {{> signupsList dutyType="project" }}
     </div>
-    <div role="tabpanel" class="tab-pane fade" id="menus">
+    <div role="tabpanel" class="tab-pane" id="lead">
       {{> signupsList leadsOnly="true" }}
     </div>
   </div>
