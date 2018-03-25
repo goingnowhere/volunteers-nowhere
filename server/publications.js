@@ -1,5 +1,4 @@
-import { Volunteers } from '../both/init';
-import { MeteorProfile } from '../both/users';
+import { MeteorProfile, Volunteers } from '../both/init';
 
 Meteor.publish(`${Volunteers.eventName}.allUsers`, function () {
   // XXX there should be a way to publish only those
