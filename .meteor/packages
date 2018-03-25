@@ -53,3 +53,4 @@ universe:i18n-blaze
 meteortesting:mocha
 fourseven:scss
 seba:minifiers-autoprefixer
+alethes:pages

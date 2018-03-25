@@ -44,44 +44,6 @@ Router.route('/organization', {
   controller: AnonymousController,
 })
 
-Router.route('/team/:_id', {
-  name: 'publicTeamView',
-  controller: AnonymousController,
-  waitOn() {
-    if (this.params && this.params._id) {
-      const sel = { _id: this.params._id }
-      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel)]
-    }
-    return null
-  },
-  data() {
-    if (this.params && this.params._id && this.ready()) {
-      return Volunteers.Collections.Team.findOne(this.params._id)
-    }
-    return null
-  },
-})
-
-Router.route('/department/:_id', {
-  name: 'publicDepartmentView',
-  controller: AnonymousController,
-  waitOn() {
-    if (this.params && this.params._id) {
-      const sel = { _id: this.params._id }
-      return [
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, sel),
-      ]
-    }
-    return null
-  },
-  data() {
-    if (this.params && this.params._id && this.ready()) {
-      return Volunteers.Collections.Department.findOne(this.params._id)
-    }
-    return null
-  },
-})
-
 // after login
 Router.route('/dashboard', {
   name: 'userDashboard',
@@ -103,6 +65,44 @@ Router.route('/dashboard', {
       Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
       Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
     ]
+  },
+})
+
+Router.route('/team/:_id', {
+  name: 'publicTeamView',
+  controller: AuthenticatedController,
+  waitOn() {
+    if (this.params && this.params._id) {
+      const sel = { _id: this.params._id }
+      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel)]
+    }
+    return null
+  },
+  data() {
+    if (this.params && this.params._id && this.ready()) {
+      return Volunteers.Collections.Team.findOne(this.params._id)
+    }
+    return null
+  },
+})
+
+Router.route('/department/:_id', {
+  name: 'publicDepartmentView',
+  controller: AuthenticatedController,
+  waitOn() {
+    if (this.params && this.params._id) {
+      const sel = { _id: this.params._id }
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, sel),
+      ]
+    }
+    return null
+  },
+  data() {
+    if (this.params && this.params._id && this.ready()) {
+      return Volunteers.Collections.Department.findOne(this.params._id)
+    }
+    return null
   },
 })
 
@@ -266,12 +266,11 @@ Router.route('/noinfo/newuser', {
 })
 
 Router.route('/noinfo/userList', {
-  name: 'noInfoAllUsers',
+  name: 'noInfoUserList',
   // XXX for the moment, but this should be a restricted version without
   // manager or lead annotations or restricted information
-  template: 'allUsersList',
   controller: LeadController,
-  data() { return { profileTemplate: 'noInfoUser' } },
+  // data() { return { profileTemplate: 'noInfoUser' } },
   waitOn() {
     return [
       Meteor.subscribe(`${Volunteers.eventName}.allUsers`),

@@ -27,6 +27,27 @@ Template.noInfoDashboard.events({
   },
 })
 
+Template.noInfoUserList.helpers({
+  'total_users': () => {
+    return Meteor.users.find().count()
+  },
+  'profile_filled': () => {
+    // TODO proper subscription
+    return Volunteers.Collections.VolunteerForm.find().count()
+  },
+  'with_duties': () => {
+    // TODO aggregation
+    return 0
+  }
+})
+
+Template.noInfoUserList.events({
+  'click [data-action="new_user"]': () => {
+    // TODO this should go in a modal
+    Router.go('noInfoNewUser')
+  },
+})
+
 Template.noInfoUser.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id

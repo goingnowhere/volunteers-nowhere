@@ -14,6 +14,18 @@
           <li class="nav-item">
             <a class="nav-link" href="{{pathFor 'userDashboard'}}">{{__ "my_dashboard"}}</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#"
+              id="navbarDropdown3" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+                {{__ "explore"}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+              {{#each dept in departments }}
+                <a class="dropdown-item" href="{{pathFor 'publicDepartmentView' _id=dept._id }}" >{{dept.name}}</a>
+              {{/each}}
+            </div>
+          </li>
           {{#if isManager }}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"
@@ -23,7 +35,6 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                 <a class="dropdown-item" href="{{pathFor 'managerView'}}">{{__ "dashboard"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'allUsersList'}}">{{__ "all_users"}}</a>
                 <a class="dropdown-item" href="{{pathFor 'managerUserForm'}}">{{__ "profile_form"}}</a>
               </div>
             </li>
@@ -37,8 +48,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                 <a class="dropdown-item" href="{{pathFor 'noInfoDashboard'}}">{{__ "dashboard"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'noInfoNewUser'}}">{{__ "new_user"}}</a>
-                <a class="dropdown-item" href="{{pathFor 'noInfoAllUsers'}}">{{__ "all_users"}}</a>
+                <a class="dropdown-item" href="{{pathFor 'noInfoUserList'}}">{{__ "all_users"}}</a>
               </div>
           </li>
           {{/if}}
