@@ -30,7 +30,7 @@ Template.metaleadDepartmentView.events({
   },
   'click [data-action="enroll_lead"]': (event, templateInstance) => {
     const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
-    // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable', dept)
   },
   'click [data-action="applications"]': (event, templateInstance) => {
     const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)

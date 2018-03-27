@@ -5,5 +5,10 @@ import { Volunteers } from '../both/init'
 import { runFixtures } from '../imports/fixtures/index'
 
 Meteor.startup(() => {
-  return runFixtures(Volunteers)
+  // Meteor.users._ensureIndex({
+  //   "profile.firstName": "text",
+  //   "profile.lastName": "text",
+  //   "emails.0.address": "text"});
+  // console.log(Meteor.users.find().fetch());
+  runFixtures(Volunteers)
 })

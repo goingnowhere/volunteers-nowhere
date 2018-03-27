@@ -48,9 +48,7 @@ themeteorchef:bert
 universe:i18n
 universe:i18n-blaze
 
-#ostrio:autoform-files
-#ostrio:files
-meteortesting:mocha
 fourseven:scss
 seba:minifiers-autoprefixer
 alethes:pages
+abate:autoform-components

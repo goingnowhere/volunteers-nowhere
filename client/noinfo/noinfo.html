@@ -55,18 +55,41 @@
 
 <template name="noInfoNewUser">
   <h1> NoInfo </h1>
-  {{> adminEnrollAccount}}
+  {{> adminEnrollAccount }}
 </template>
 
 <template name="userSearch">
-  <form>
-    <div class="form-group row">
-      <!-- <label for="users" class="col-sm-2 col-form-label">{{__ "users"}}</label> -->
-      <div class="col-sm-10">
-        <input type="text" id="users" class="form-control" placeholder="{{__ 'name_or_email'}}">
-      </div>
+  <div class="form-group row">
+    <!-- <label for="users" class="col-sm-2 col-form-label">{{__ "users"}}</label> -->
+    <div class="col-sm-10">
+      <input type="text" name="search" id="users"
+        class="form-control" placeholder="{{__ 'name_or_email'}}">
     </div>
-  </form>
+  </div>
+</template>
+
+<template name="allUsersTable">
+  {{> userSearch }}
+  {{> pages }}
+  {{> pagesNav }}
+</template>
+
+<template name="allUsersTableRow">
+  <tr>
+    <td>
+      {{debug }}
+      {{#if profile.picture}}
+        <!-- XXX link or subscription broken -->
+        <img src="{{imageFileLink profile.picture}}" class="rounded-circle header-avatar img-fluid">
+      {{else}}
+        <img src="/img/mr_nobody.jpg" class="rounded-circle header-avatar">
+      {{/if}}
+  </td>
+    <td>{{getUserName _id}}</td>
+    <td>{{emails.[0].address}}{{#if emails.[0].verified}}
+      <span class="text-success">{{fa 'check'}}</span>{{/if}}
+    </td>
+  </tr>
 </template>
 
 <template name="noInfoUserList">
@@ -94,8 +117,11 @@
 <template name="noInfoUser">
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
-  <!--  TODO this should be a button to open a modal with the user form display -->
-    {{> formBuilderDisplay userform }}
+    <button type="button" class="btn btn-default btn-sm"
+      data-action="user_form" data-id="{{_id}}" >
+      {{__ "user_form" }}
+    </button>
+    <!-- {{> formBuilderDisplay userform }} -->
   {{/allUsersProfile}}
 {{/if}}
 </template>
