@@ -56,8 +56,18 @@
                       {{lead.title}}:
                         {{#if lead.userId}}
                           {{getUserName lead.userId}}
+                          <a href="#" data-action="remove_lead"
+                            data-id="{{lead._id}}">
+                          ({{__ "remove"}})
+                          </a>
                         {{else}}
-                          <span class="text-warning">{{__ "vacant"}}</span>
+                          <span class="text-warning">{{__ "vacant"}}
+                          <a href="#" data-action="enroll_lead"
+                            data-shiftid="{{lead.shiftId}}"
+                            data-parentid="{{lead.parentId}}">
+                          ({{__ "enroll"}})
+                        </a>
+                        </span>
                         {{/if}}
                     </li>
                   {{/each}}
@@ -76,12 +86,14 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="#" data-action="edit_team" data-id="{{team._id}}">
+                    <li class="dropdown-item">
+                      <a href="#" data-action="edit_team"
+                      data-id="{{team._id}}">
                       {{fa "pencil-square-o"}} {{__ "edit"}}</a></li>
-                    <li class="dropdown-item"><a href="#" data-action="delete_team" data-id="{{team._id}}">
+                    <li class="dropdown-item">
+                      <a href="#" data-action="delete_team"
+                      data-id="{{team._id}}">
                       {{fa "trash-o"}} {{__ "remove"}}</a></li>
-                    <li class="dropdown-item"><a href="#" data-action="enroll_lead" data-id="{{team._id}}">
-                      {{fa "user"}} {{__ "enroll_lead"}}</a></li>
                   </ul>
                 </div>
               </td>

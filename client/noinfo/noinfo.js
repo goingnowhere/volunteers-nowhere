@@ -93,6 +93,31 @@ Template.noInfoUser.onCreated(function onCreated() {
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
 })
 
+Template.allUsersTableRow.events({
+  'change .enroll_lead': (event,templateInstance) => {
+    val = templateInstance.$('.enroll_lead:checked').val()
+    const userId = $(event.target).data('userid')
+    // this is the only place where I use a session variable.
+    // can't find a better way
+    let doc = Session.get("allUsersTableDoc")
+    doc.userId = userId
+    if (val == 'on') {
+      Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.insert`, doc,
+        function(err,res){
+          if (err) {
+            Meteor.throwError("enroll_lead failed")
+          } else {
+            Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`,res)
+          }
+        })
+    } else {
+      if (doc.shiftId) { // if shiftId exists, we remove the signup
+        Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.remove`, doc.shiftId)
+      }
+    }
+  },
+})
+
 // Template.noInfoUser.helpers({
 //   userform() {
 //     const userId = Template.currentData()._id

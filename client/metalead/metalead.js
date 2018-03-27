@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
+import { UserSearchPages } from '../../both/pages'
 
 Template.metaleadDepartmentView.onCreated(function onCreated() {
   const template = this
@@ -29,8 +30,14 @@ Template.metaleadDepartmentView.events({
     // Meteor.call("remove");
   },
   'click [data-action="enroll_lead"]': (event, templateInstance) => {
-    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable', dept)
+    const shiftId = $(event.target).data('shiftid')
+    const parentId = $(event.target).data('parentid')
+    Session.set( "allUsersTableDoc", {parentId,shiftId} );
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable')
+  },
+  'click [data-action="remove_lead"]': (event, templateInstance) => {
+    const signupId = $(event.target).data('id')
+    Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.remove`,signupId)
   },
   'click [data-action="applications"]': (event, templateInstance) => {
     const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
@@ -39,7 +46,9 @@ Template.metaleadDepartmentView.events({
 })
 
 Template.metaleadDepartmentView.helpers({
-  leadsDept: () => Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: Template.instance().departmentId }),
+  leadsDept: () =>
+    Volunteers.Collections.LeadSignups.find({
+      status: 'confirmed', parentId: Template.instance().departmentId }),
   teamsNumber: () => {
     const deptId = Template.instance().departmentId
     return Volunteers.Collections.Team.find({ parentId: deptId }).count()
@@ -86,9 +95,19 @@ Template.metaleadDepartmentView.helpers({
     return _.chain(l).flatten().uniq().value()
   },
   leadsTeam: (team) => {
-    const l = Volunteers.Collections.Lead.find({ parentId: team._id }).map((lead) => {
-      const s = Volunteers.Collections.LeadSignups.findOne({ status: 'confirmed', shiftId: lead._id })
-      if (s) { return _.extend(s, lead) } return _.extend(lead, { userId: null })
+    const l = Volunteers.Collections.Lead.find({
+      parentId: team._id }).map((lead) => {
+        const s = Volunteers.Collections.LeadSignups.findOne({
+          status: 'confirmed', shiftId: lead._id })
+      if (s) {
+        return _.extend(s, {title: lead.title} )
+      } else {
+        return {
+          title: lead.title,
+          shiftId: lead._id,
+          parentId: lead.parentId,
+          userId: null}
+      }
     })
     if (l) { return l } return []
   },

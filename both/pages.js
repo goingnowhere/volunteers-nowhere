@@ -1,7 +1,7 @@
 export const UserPages = new Meteor.Pagination(Meteor.users, {
   itemTemplate: "noInfoUser",
   templateName: "noInfoUserList",
-  // fastRender: true,
+  fastRender: true,
   perPage: 20,
   sort: {createdAt: -1},
   availableSettings: {
@@ -13,12 +13,11 @@ export const UserPages = new Meteor.Pagination(Meteor.users, {
 export const UserSearchPages = new Meteor.Pagination(Meteor.users, {
   itemTemplate: "allUsersTableRow",
   templateName: "allUsersTable",
-  // fastRender: true,
+  fastRender: true,
   perPage: 20,
   sort: {createdAt: -1},
   availableSettings: {
-    filters: true,
-    // settings: true
+    filters: true
   },
   table: {
     class: "table",
