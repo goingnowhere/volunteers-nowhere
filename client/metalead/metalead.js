@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Volunteers } from '../../both/init'
-import { UserSearchPages } from '../../both/pages'
+import { Pages } from '../../both/pages'
 
 Template.metaleadDepartmentView.onCreated(function onCreated() {
   const template = this
@@ -33,7 +33,7 @@ Template.metaleadDepartmentView.events({
     const shiftId = $(event.target).data('shiftid')
     const parentId = $(event.target).data('parentid')
     Session.set( "allUsersTableDoc", {parentId,shiftId} );
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable')
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable', {page: "EnrollUserSearchPages"})
   },
   'click [data-action="remove_lead"]': (event, templateInstance) => {
     const signupId = $(event.target).data('id')

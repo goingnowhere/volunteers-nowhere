@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from '../../both/init'
-import { UserPages } from '../../both/pages'
+import { Pages } from '../../both/pages'
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   const template = this
@@ -42,19 +42,21 @@ Template.noInfoUserList.helpers({
   }
 })
 
-const textSearch = function(value,pages,event) {
+const textSearch = function(value,page,event) {
+  pages = Pages[page]
+  // do this if you want to comulate multuple filters
   // let filters = pages.get("filters")
   let filters = {}
   if ((value) && (value.length > 3)) { //&& (event.keyCode == 13)) {
     filters = _.extend(_.clone(filters),
+      // TODO : I' really like to have full search someday ...
       // {"$text": {"$search": value}}
-      // { "$or": [
-      //   { "profile.firstName": { $regex: value } },
-      //   { "profile.lastName": { $regex: value } },
-        { "email.0.address": { $regex: value } },
-      // ]}
+      { "$or": [
+        { "profile.firstName": { $regex: value } },
+        { "profile.lastName": { $regex: value } },
+        { "emails.0.address": { $regex: value } },
+      ]}
     )
-    console.log(filters);
     pages.set("filters",filters)
     pages.reload()
   } else if (value == '') {
@@ -63,6 +65,15 @@ const textSearch = function(value,pages,event) {
     pages.set("filters",filters)
   }
 }
+
+Template.userSearch.events({
+  'keyup [name="search"]': (event, templateInstance) => {
+    event.preventDefault();
+    const value = event.target.value.trim()
+    const page = $(event.target).data('page')
+    textSearch(value,page,event)
+  },
+})
 
 Template.noInfoUserList.events({
   'click [data-action="new_user"]': (event,templateInstance) => {
@@ -77,12 +88,6 @@ Template.noInfoUserList.events({
     const userform = { formName: 'VolunteerForm', form, user }
     AutoFormComponents.ModalShowWithTemplate('formBuilderDisplay',
       userform, "User Form", 'lg')
-  },
-
-  'keyup [name="search"]': (event, templateInstance) => {
-    event.preventDefault();
-    const value = event.target.value.trim()
-    textSearch(value,UserPages,event)
   },
 
 })

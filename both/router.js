@@ -181,13 +181,13 @@ Router.route('/manager/userform', {
 })
 
 // leads / metaleads
-Router.route('/admin/users', {
-  name: 'allUsersList',
-  controller: LeadController,
-  waitOn() {
-    return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
-  },
-})
+// Router.route('/admin/users', {
+//   name: 'allUsersList',
+//   controller: LeadController,
+//   waitOn() {
+//     return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
+//   },
+// })
 
 // lead pages
 Router.route('/lead', {
@@ -267,15 +267,13 @@ Router.route('/noinfo/newuser', {
 
 Router.route('/noinfo/userList', {
   name: 'noInfoUserList',
-  // XXX for the moment, but this should be a restricted version without
-  // manager or lead annotations or restricted information
   controller: LeadController,
-  // data() { return { profileTemplate: 'noInfoUser' } },
-  waitOn() {
-    return [
-      Meteor.subscribe(`${Volunteers.eventName}.allUsers`),
-    ]
-  },
+  data() { return { page: 'NoInfoUserPages' } },
+  // waitOn() {
+  //   return [
+  //     Meteor.subscribe(`${Volunteers.eventName}.allUsers`),
+  //   ]
+  // },
 })
 
 // Router.route('/noinfo/user/:_id', {
