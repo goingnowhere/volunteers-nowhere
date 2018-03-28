@@ -92,8 +92,8 @@
       {{/if}}
   </td>
     <td>{{getUserName _id}}</td>
-    <td>{{emails.[0].address}}{{#if emails.[0].verified}}
-      <span class="text-success">{{fa 'check'}}</span>{{/if}}
+    <td>{{emails.[0].address}}
+      <!-- {{#if emails.[0].verified}}<span class="text-success">{{fa 'check'}}</span>{{/if}} -->
     </td>
   </tr>
 </template>
@@ -114,7 +114,7 @@
       <div class="col pt-2">
         {{> userSearch }}
         {{> pages }}
-        <div class="mx-auto">{{> pagesNav }}</div>
+        {{> pagesNav }}
       </div>
     </div>
   </div>
