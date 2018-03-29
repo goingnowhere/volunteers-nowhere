@@ -7,27 +7,26 @@
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
-    "bcrypt": "^1.0.3",
-    "bootstrap": "^4.0.0-beta.3",
+    "bootstrap": "^4.0.0",
     "bootstrap-select": "^1.13.0-beta",
-    "chart.js": "^2.7.1",
-    "jquery": "^3.2.1",
+    "chart.js": "^2.7.2",
+    "jquery": "^3.3.1",
     "jquery-affix": "0.0.5",
     "magnific-popup": "^1.1.0",
     "meteor-node-stubs": "~0.2.0",
-    "orgchart": "^2.0.12",
-    "popper.js": "^1.12.9",
+    "orgchart": "^2.1.1",
+    "popper.js": "^1.14.1",
     "simpl-schema": "^0.3.2",
     "underscore": "^1.8.3",
-    "webpack": "^3.10.0"
+    "webpack": "^3.11.0"
   },
   "devDependencies": {
-    "eslint": "^4.14.0",
-    "eslint-plugin-underscore": "0.0.10",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-import-resolver-meteor": "^0.4.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-meteor": "^4.1.4"
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-meteor": "^4.2.1",
+    "eslint-plugin-underscore": "0.0.10"
   },
   "coffeelintConfig": {
     "max_line_length": {
