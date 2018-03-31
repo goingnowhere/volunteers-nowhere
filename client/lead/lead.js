@@ -29,7 +29,7 @@ Template.leadTeamView.helpers({
 Template.leadTeamView.events({
   'click [data-action="team_settings"]': (event, template) => {
     const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
+    AutoFormComponents.ModalShowWithTemplate('teamEditDetails', team)
   },
   'click [data-action="add_shift"]': (event, template) => {
     const team = Volunteers.Collections.Team.findOne(template.data._id)

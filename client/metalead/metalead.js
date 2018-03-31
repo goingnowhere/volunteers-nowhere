@@ -16,6 +16,10 @@ Template.metaleadDepartmentView.onRendered(() => {
 })
 
 Template.metaleadDepartmentView.events({
+  'click [data-action="dept_settings"]': (event, template) => {
+    const deptId = Volunteers.Collections.Department.findOne(template.data._id)
+    AutoFormComponents.ModalShowWithTemplate('departmentEditDetails', deptId)
+  },
   'click [data-action="add_team"]': (event, templateInstance) => {
     const deptId = templateInstance.departmentId
     AutoFormComponents.ModalShowWithTemplate('addTeam', { departmentId: deptId })
