@@ -11,23 +11,20 @@ BUILD_DIR=${PWD}/../output			# <-- This is where meteor build your files.
 echo "Start building container ${CONTAINER} ..."
 
 # clean old build if exist
-#rm -rf $BUILD_DIR
+rm -rf $BUILD_DIR
 
 # install node packages
 
 # build meteor app
-if ! [ -d "$BUILD_DIR/.build" ]; then
-  mkdir -p $BUILD_DIR/.build
-  meteor npm install --production
-  meteor build --directory ${BUILD_DIR}/.build --server-only
-fi
+mkdir -p $BUILD_DIR/.build
+meteor npm install --production
+meteor build --directory ${BUILD_DIR}/.build --server-only
 
 # pull fresh base image:
-#docker pull pietropietro/alpine-meteor:latest
+docker pull pietropietro/alpine-meteor:latest
 
 cp Dockerfile .dockerignore ${BUILD_DIR}
 # build container
-#docker build --no-cache --rm -t ${CONTAINER}:${TAG} ${BUILD_DIR}
 docker build --no-cache --rm -t ${CONTAINER}:${TAG} ${BUILD_DIR}
 
 # create tag on container
@@ -53,6 +50,6 @@ fi
 # docker-compose up -d
 
 # clean build folder
-#rm -rf ${BUILD_DIR}
+rm -rf ${BUILD_DIR}
 
 echo "End build of container ${CONTAINER} ..."
