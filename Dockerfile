@@ -1,5 +1,2 @@
-#docker build . -t pietropietro/nowhere-volunteers
-#docker login -u pietropietro
-#docker push pietropietro/nowhere-volunteers
-
-FROM abernix/meteord:node-8-onbuild
+FROM pietropietro/alpine-meteor:latest
+RUN apk add --no-cache paxctl && paxctl -cm `which node` && apk del --no-cache paxctl
