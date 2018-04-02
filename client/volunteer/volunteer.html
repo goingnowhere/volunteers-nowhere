@@ -53,10 +53,15 @@
 </template>
 
 <template name="signupsListTabs">
-  <select id='tabSelect' class="selectpicker">
+  <select id='tabSelect'>
       <option value='0'>{{__ "event_shifts"}}</option>
       <option value='1'>{{__ "build_strike"}}</option>
       <option value='2'>{{__ "lead_positions"}}</option>
+  </select>
+  <select id='skillSelect' class="selectpicker" data-none-selected-text="{{__ 'skill_filter'}}" multiple>
+    {{#each skill in skills}}
+      <option value="{{skill.value}}">{{ skill.label }}</option>
+    {{/each}}
   </select>
   <!-- HACK to make tabs open with a select -->
   <ul class="nav nav-tabs" role="tablist" style="display:none">
@@ -78,13 +83,13 @@
   </ul>
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="event">
-      {{> signupsList userPref }}
+      {{> signupsList quirks=userPref.quirks skills=userPref.skills filters=filters }}
     </div>
     <div role="tabpanel" class="tab-pane" id="build">
-      {{> signupsList dutyType="project" }}
+      {{> signupsList dutyType="project" filters=filters }}
     </div>
     <div role="tabpanel" class="tab-pane" id="lead">
-      {{> signupsList leadsOnly="true" }}
+      {{> signupsList leadsOnly="true" filters=filters }}
     </div>
   </div>
 </template>
