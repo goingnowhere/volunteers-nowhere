@@ -59,6 +59,12 @@ p.card-text {
   font-size: 18px;
 }
 
+.navbar-nav .dropdown-menu {
+  overflow-y: auto;
+  /* Hack to set the max height correctly to allow scrolling */
+  max-height: calc(100vh - 58px);
+}
+
 /* .nav.nav-tabs > li.active a {
     border: 0;
 }
