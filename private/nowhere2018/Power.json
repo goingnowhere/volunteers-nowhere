@@ -1,782 +1,666 @@
-[
-  {
-    "start": 1497427200000,
-    "end": 1497470400000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1497513600000,
-    "end": 1497556800000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1497600000000,
-    "end": 1497643200000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1497772800000,
-    "end": 1497816000000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1497859200000,
-    "end": 1497902400000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498118400000,
-    "end": 1498161600000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498204800000,
-    "end": 1498248000000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498291200000,
-    "end": 1498334400000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498377600000,
-    "end": 1498420800000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498464000000,
-    "end": 1498507200000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498550400000,
-    "end": 1498593600000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498636800000,
-    "end": 1498680000000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498723200000,
-    "end": 1498766400000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498809600000,
-    "end": 1498852800000,
-    "title": "Lighting Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1498809600000,
-    "end": 1498852800000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498809600000,
-    "end": 1498852800000,
-    "title": "Sound Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1498896000000,
-    "end": 1498939200000,
-    "title": "Lighting Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1498896000000,
-    "end": 1498939200000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498896000000,
-    "end": 1498939200000,
-    "title": "Sound Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1498982400000,
-    "end": 1499025600000,
-    "title": "Lighting Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1498982400000,
-    "end": 1499025600000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1498982400000,
-    "end": 1499025600000,
-    "title": "Sound Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499112000000,
-    "title": "Lighting Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499112000000,
-    "title": "Power Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499112000000,
-    "title": "Sound Setup Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
-    "team": "Power",
-    "location": "Middle of Nowhere"
-  },
-  {
-    "start": 1499126400000,
-    "end": 1499148000000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499126400000,
-    "end": 1499148000000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499148000000,
-    "end": 1499169600000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499148000000,
-    "end": 1499169600000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499169600000,
-    "end": 1499191200000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499169600000,
-    "end": 1499191200000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499169600000,
-    "end": 1499191200000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499191200000,
-    "end": 1499212800000,
-    "title": "Lightsaber",
-    "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499191200000,
-    "end": 1499212800000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499191200000,
-    "end": 1499212800000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499191200000,
-    "end": 1499212800000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499212800000,
-    "end": 1499234400000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499212800000,
-    "end": 1499234400000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499234400000,
-    "end": 1499256000000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499234400000,
-    "end": 1499256000000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499256000000,
-    "end": 1499277600000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499256000000,
-    "end": 1499277600000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499256000000,
-    "end": 1499277600000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499277600000,
-    "end": 1499299200000,
-    "title": "Lightsaber",
-    "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499277600000,
-    "end": 1499299200000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499277600000,
-    "end": 1499299200000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499277600000,
-    "end": 1499299200000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499320800000,
-    "end": 1499342400000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499320800000,
-    "end": 1499342400000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499342400000,
-    "end": 1499364000000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499342400000,
-    "end": 1499364000000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499342400000,
-    "end": 1499364000000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499364000000,
-    "end": 1499385600000,
-    "title": "Lightsaber",
-    "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499364000000,
-    "end": 1499385600000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499364000000,
-    "end": 1499385600000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499364000000,
-    "end": 1499385600000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499407200000,
-    "end": 1499428800000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499407200000,
-    "end": 1499428800000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499428800000,
-    "end": 1499450400000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499428800000,
-    "end": 1499450400000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499428800000,
-    "end": 1499450400000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499450400000,
-    "end": 1499472000000,
-    "title": "Lightsaber",
-    "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499450400000,
-    "end": 1499472000000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499450400000,
-    "end": 1499472000000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499472000000,
-    "end": 1499493600000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499493600000,
-    "end": 1499515200000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499515200000,
-    "end": 1499536800000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499515200000,
-    "end": 1499536800000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499515200000,
-    "end": 1499536800000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499536800000,
-    "end": 1499558400000,
-    "title": "Lightsaber",
-    "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499536800000,
-    "end": 1499558400000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499580000000,
-    "end": 1499601600000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499580000000,
-    "end": 1499601600000,
-    "title": "Sound Lord",
-    "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Sound Lord \u00f0\u009f\u0094\u008a",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499601600000,
-    "end": 1499623200000,
-    "title": "Power Ranger",
-    "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499601600000,
-    "end": 1499623200000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499623200000,
-    "end": 1499644800000,
-    "title": "SLAP - Shift Lead",
-    "description": "Oversees the operations of the SLAP team during their shift.",
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499673600000,
-    "end": 1499716800000,
-    "title": "SLAP Strike Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Strike team",
-    "team": "Power",
-    "location": null
-  },
-  {
-    "start": 1499760000000,
-    "end": 1499803200000,
-    "title": "SLAP Strike Crew",
-    "description": null,
-    "department": "Sound, Lights and Power (SLAP)",
-    "role": "Strike team",
-    "team": "Power",
-    "location": null
-  }
-]
+{
+  "projects": [
+    {
+      "start": 1497427200000,
+      "end": 1498766400000,
+      "title": "Power Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": null
+    }
+  ],
+  "shifts": [
+    {
+      "start": 1498809600000,
+      "end": 1498852800000,
+      "title": "Lighting Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1498809600000,
+      "end": 1498852800000,
+      "title": "Power Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1498809600000,
+      "end": 1498852800000,
+      "title": "Sound Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1498896000000,
+      "end": 1498939200000,
+      "title": "Lighting Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1498896000000,
+      "end": 1498939200000,
+      "title": "Power Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1498896000000,
+      "end": 1498939200000,
+      "title": "Sound Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1498982400000,
+      "end": 1499025600000,
+      "title": "Lighting Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1498982400000,
+      "end": 1499025600000,
+      "title": "Power Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1498982400000,
+      "end": 1499025600000,
+      "title": "Sound Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499112000000,
+      "title": "Lighting Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499112000000,
+      "title": "Power Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499112000000,
+      "title": "Sound Setup Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Build crew \u00f0\u009f\u0094\u00a8",
+      "team": "Power",
+      "location": "Middle of Nowhere"
+    },
+    {
+      "start": 1499126400000,
+      "end": 1499148000000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499126400000,
+      "end": 1499148000000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499148000000,
+      "end": 1499169600000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499148000000,
+      "end": 1499169600000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499169600000,
+      "end": 1499191200000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499169600000,
+      "end": 1499191200000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499169600000,
+      "end": 1499191200000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499191200000,
+      "end": 1499212800000,
+      "title": "Lightsaber",
+      "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499191200000,
+      "end": 1499212800000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499191200000,
+      "end": 1499212800000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499191200000,
+      "end": 1499212800000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499212800000,
+      "end": 1499234400000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499212800000,
+      "end": 1499234400000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499234400000,
+      "end": 1499256000000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499234400000,
+      "end": 1499256000000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499256000000,
+      "end": 1499277600000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499256000000,
+      "end": 1499277600000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499256000000,
+      "end": 1499277600000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499277600000,
+      "end": 1499299200000,
+      "title": "Lightsaber",
+      "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499277600000,
+      "end": 1499299200000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499277600000,
+      "end": 1499299200000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499277600000,
+      "end": 1499299200000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499320800000,
+      "end": 1499342400000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499320800000,
+      "end": 1499342400000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499342400000,
+      "end": 1499364000000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499342400000,
+      "end": 1499364000000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499342400000,
+      "end": 1499364000000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499364000000,
+      "end": 1499385600000,
+      "title": "Lightsaber",
+      "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499364000000,
+      "end": 1499385600000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499364000000,
+      "end": 1499385600000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499364000000,
+      "end": 1499385600000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499407200000,
+      "end": 1499428800000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499407200000,
+      "end": 1499428800000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499428800000,
+      "end": 1499450400000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499428800000,
+      "end": 1499450400000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499428800000,
+      "end": 1499450400000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499450400000,
+      "end": 1499472000000,
+      "title": "Lightsaber",
+      "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499450400000,
+      "end": 1499472000000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499450400000,
+      "end": 1499472000000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499472000000,
+      "end": 1499493600000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499493600000,
+      "end": 1499515200000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499515200000,
+      "end": 1499536800000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499515200000,
+      "end": 1499536800000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499515200000,
+      "end": 1499536800000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499536800000,
+      "end": 1499558400000,
+      "title": "Lightsaber",
+      "description": "Do you like all those pretty lights at the Middle of Nowhere? Our Lightsaber operates and keeps them running, also supporting all other lighthings system around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Lightsaber \u00f0\u009f\u0092\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499536800000,
+      "end": 1499558400000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499580000000,
+      "end": 1499601600000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499580000000,
+      "end": 1499601600000,
+      "title": "Sound Lord",
+      "description": "Operating and maintenaning the sound system at Middle of Nowhere and help in other sound-related tasks around site.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Sound Lord \u00f0\u009f\u0094\u008a",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499601600000,
+      "end": 1499623200000,
+      "title": "Power Ranger",
+      "description": "Maintains the power grid, checks on generators (both Norg ones than Barrios), provides support in other power related things",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "\u00e2\u009a\u00a1 Power Ranger \u00e2\u009a\u00a1",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499601600000,
+      "end": 1499623200000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499623200000,
+      "end": 1499644800000,
+      "title": "SLAP - Shift Lead",
+      "description": "Oversees the operations of the SLAP team during their shift.",
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "SLAP Shift Lead \u00f0\u009f\u0093\u008b",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499673600000,
+      "end": 1499716800000,
+      "title": "SLAP Strike Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Strike team",
+      "team": "Power",
+      "location": null
+    },
+    {
+      "start": 1499760000000,
+      "end": 1499803200000,
+      "title": "SLAP Strike Crew",
+      "description": null,
+      "department": "Sound, Lights and Power (SLAP)",
+      "role": "Strike team",
+      "team": "Power",
+      "location": null
+    }
+  ]
+}

@@ -1,12 +1,14 @@
-[
-  {
-    "start": 1499673600000,
-    "end": 1499720400000,
-    "title": "Strike Crew",
-    "description": "Last one on site, we leave only dust behind us, we take down all  main structures and services, such as Middle of Nowhere, Gate, NoInfo etc.... If you want to join the STRIKE CREW click 'Apply to Join' on the only shift of this rota and our strike team will contact you. Thank you",
-    "department": "Build Design and Strike Management (BDSM)",
-    "role": "Strike team",
-    "team": "Strike Crew",
-    "location": null
-  }
-]
+{
+  "shifts": [
+    {
+      "start": 1499673600000,
+      "end": 1499720400000,
+      "title": "Strike Crew",
+      "description": "Last one on site, we leave only dust behind us, we take down all  main structures and services, such as Middle of Nowhere, Gate, NoInfo etc.... If you want to join the STRIKE CREW click 'Apply to Join' on the only shift of this rota and our strike team will contact you. Thank you",
+      "department": "Build Design and Strike Management (BDSM)",
+      "role": "Strike team",
+      "team": "Strike Crew",
+      "location": null
+    }
+  ]
+}
