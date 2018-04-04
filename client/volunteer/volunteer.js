@@ -79,6 +79,12 @@ Template.signupsListTabs.onRendered(function onRendered() {
   })
   // Possibly only needed in development when reloading
   template.$('#skillSelect').selectpicker('refresh')
+
+  template.$('#tabSelect').on('changed.bs.select', (event) => {
+    template.$('.tab-pane').hide()
+    template.$('.tab-pane').eq($(event.target).val()).show()
+  })
+  template.$('#tabSelect').selectpicker('refresh')
 })
 
 Template.signupsListTabs.helpers({
@@ -91,13 +97,6 @@ Template.signupsListTabs.helpers({
   filters: () => ({
     skills: Template.instance().filters.skills.get(),
   }),
-})
-
-Template.signupsListTabs.events({
-  'change #tabSelect': (event, template) => {
-    template.$('.tab-pane').hide()
-    template.$('.tab-pane').eq($(event.target).val()).show()
-  },
 })
 
 AutoForm.addHooks([

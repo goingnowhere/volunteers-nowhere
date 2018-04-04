@@ -53,10 +53,10 @@
 </template>
 
 <template name="signupsListTabs">
-  <select id='tabSelect'>
-      <option value='0'>{{__ "event_shifts"}}</option>
-      <option value='1'>{{__ "build_strike"}}</option>
-      <option value='2'>{{__ "lead_positions"}}</option>
+  <select id='tabSelect' class="selectpicker">
+      <option value="0">{{__ "event_shifts"}}</option>
+      <option value="1">{{__ "build_strike"}}</option>
+      <option value="2">{{__ "lead_positions"}}</option>
   </select>
   <select id='skillSelect' class="selectpicker" data-none-selected-text="{{__ 'skill_filter'}}" multiple>
     {{#each skill in skills}}
