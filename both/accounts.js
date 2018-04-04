@@ -42,6 +42,7 @@ AccountsTemplates.addField({
   select: [
     { text: 'en', value: 'en' },
     { text: 'fr', value: 'fr' },
+    { text: 'es', value: 'es' },
   ],
 })
 
