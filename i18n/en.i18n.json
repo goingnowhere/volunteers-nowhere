@@ -49,5 +49,6 @@
   "lead_positions": "Lead Positions",
   "event_time": "During Event",
   "before_after_event": "Before and After the Event",
-  "name_or_email": "Name or Email"
+  "name_or_email": "Name or Email",
+  "skill_filter": "By skill"
 }

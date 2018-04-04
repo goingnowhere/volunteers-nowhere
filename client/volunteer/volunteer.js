@@ -1,3 +1,7 @@
+import $ from 'jquery'
+import 'bootstrap'
+import 'bootstrap-select'
+import 'bootstrap-select/dist/css/bootstrap-select.css'
 import { Router } from 'meteor/iron:router'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Template } from 'meteor/templating'
@@ -61,6 +65,26 @@ Template.signupsListTabs.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
   template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
+  template.filters = {
+    skills: new ReactiveVar(),
+  }
+})
+Template.signupsListTabs.onRendered(function onRendered() {
+  const template = this
+  // Need to add this event listener this way as adding through Blaze doesn't work - Rich
+  template.$('#skillSelect').on('changed.bs.select', (event) => {
+    // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
+    const val = Array.from(event.target.selectedOptions).map(option => option.value)
+    template.filters.skills.set(val.length > 0 ? val : null)
+  })
+  // Possibly only needed in development when reloading
+  template.$('#skillSelect').selectpicker('refresh')
+
+  template.$('#tabSelect').on('changed.bs.select', (event) => {
+    template.$('.tab-pane').hide()
+    template.$('.tab-pane').eq($(event.target).val()).show()
+  })
+  template.$('#tabSelect').selectpicker('refresh')
 })
 
 Template.signupsListTabs.helpers({
@@ -68,13 +92,11 @@ Template.signupsListTabs.helpers({
     const form = Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
     return { quirks: form.quirks, skills: form.skills }
   },
-})
-
-Template.signupsListTabs.events({
-  'change #tabSelect': (event, template) => {
-    template.$('.tab-pane').hide();
-    template.$('.tab-pane').eq($(event.target).val()).show();
-  }
+  // Not sure why we're deliberately including null values in these lists - Rich
+  skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
+  filters: () => ({
+    skills: Template.instance().filters.skills.get(),
+  }),
 })
 
 AutoForm.addHooks([
