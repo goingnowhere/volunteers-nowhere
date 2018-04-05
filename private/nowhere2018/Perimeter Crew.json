@@ -1,202 +1,204 @@
-[
-  {
-    "start": 1498982400000,
-    "end": 1499004000000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499004000000,
-    "end": 1499025600000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499090400000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499090400000,
-    "end": 1499112000000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499112000000,
-    "end": 1499130000000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499130000000,
-    "end": 1499148000000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499155200000,
-    "end": 1499176800000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499176800000,
-    "end": 1499198400000,
-    "title": "Parking mayhem ",
-    "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499198400000,
-    "end": 1499216400000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499216400000,
-    "end": 1499234400000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499284800000,
-    "end": 1499302800000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499302800000,
-    "end": 1499320800000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499371200000,
-    "end": 1499389200000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499389200000,
-    "end": 1499407200000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499457600000,
-    "end": 1499475600000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499475600000,
-    "end": 1499493600000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499544000000,
-    "end": 1499562000000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499562000000,
-    "end": 1499580000000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499630400000,
-    "end": 1499648400000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  },
-  {
-    "start": 1499648400000,
-    "end": 1499666400000,
-    "title": "Nightwatch",
-    "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Perimeter crew",
-    "team": "Perimeter Crew",
-    "location": null
-  }
-]
+{
+  "shifts": [
+    {
+      "start": 1498982400000,
+      "end": 1499004000000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499004000000,
+      "end": 1499025600000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499090400000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499090400000,
+      "end": 1499112000000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499112000000,
+      "end": 1499130000000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499130000000,
+      "end": 1499148000000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499155200000,
+      "end": 1499176800000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499176800000,
+      "end": 1499198400000,
+      "title": "Parking mayhem ",
+      "description": "You will help the gate crew and traffic team to direct the incoming traffic in a safe way, making sure the perimeter is protected.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499198400000,
+      "end": 1499216400000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499216400000,
+      "end": 1499234400000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499284800000,
+      "end": 1499302800000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499302800000,
+      "end": 1499320800000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499371200000,
+      "end": 1499389200000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499389200000,
+      "end": 1499407200000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499457600000,
+      "end": 1499475600000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499475600000,
+      "end": 1499493600000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499544000000,
+      "end": 1499562000000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499562000000,
+      "end": 1499580000000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499630400000,
+      "end": 1499648400000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    },
+    {
+      "start": 1499648400000,
+      "end": 1499666400000,
+      "title": "Nightwatch",
+      "description": "You will check the perimeter and outskirts of our city, making sure they are safe and nobody is sneaking in..or died in a ditch trying...",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Perimeter crew",
+      "team": "Perimeter Crew",
+      "location": null
+    }
+  ]
+}

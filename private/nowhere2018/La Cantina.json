@@ -1,11 +1,13 @@
-[
-  {
-    "start": 1499673600000,
-    "end": 1499720400000,
-    "title": "Cantina Strike Crew",
-    "description": "cooking and cleaning",
-    "department": "Volunteers",
-    "role": "Cantina's elves (kitchen crew)",
-    "team": "La Cantina",
-  }
-]
+{
+  "shifts": [
+    {
+      "start": 1499673600000,
+      "end": 1499720400000,
+      "title": "Cantina Strike Crew",
+      "description": "cooking and cleaning",
+      "department": "Volunteers",
+      "role": "Cantina's elves (kitchen crew)",
+      "team": "La Cantina",
+    }
+  ]
+}

@@ -1,1092 +1,1094 @@
-[
-  {
-    "start": 1498633200000,
-    "end": 1498676400000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498658400000,
-    "end": 1498680000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498658400000,
-    "end": 1498680000000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498676400000,
-    "end": 1498719600000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498680000000,
-    "end": 1498701600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498680000000,
-    "end": 1498701600000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498701600000,
-    "end": 1498723200000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498701600000,
-    "end": 1498723200000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498719600000,
-    "end": 1498762800000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498723200000,
-    "end": 1498744800000,
-    "title": "Gate Crew",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1498723200000,
-    "end": 1498744800000,
-    "title": "Katz Fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498744800000,
-    "end": 1498766400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498744800000,
-    "end": 1498766400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498766400000,
-    "end": 1498788000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498766400000,
-    "end": 1498788000000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498788000000,
-    "end": 1498809600000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498788000000,
-    "end": 1498809600000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498806000000,
-    "end": 1498849200000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498809600000,
-    "end": 1498831200000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498809600000,
-    "end": 1498831200000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498831200000,
-    "end": 1498852800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498831200000,
-    "end": 1498852800000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498852800000,
-    "end": 1498874400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498852800000,
-    "end": 1498874400000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498874400000,
-    "end": 1498896000000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498874400000,
-    "end": 1498896000000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498892400000,
-    "end": 1498935600000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498896000000,
-    "end": 1498917600000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498896000000,
-    "end": 1498917600000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498917600000,
-    "end": 1498939200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498917600000,
-    "end": 1498939200000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498935600000,
-    "end": 1498978800000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498939200000,
-    "end": 1498960800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498939200000,
-    "end": 1498960800000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498960800000,
-    "end": 1498982400000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498960800000,
-    "end": 1498982400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498978800000,
-    "end": 1499022000000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498982400000,
-    "end": 1499004000000,
-    "title": "Gate Crew",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1498982400000,
-    "end": 1499004000000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499004000000,
-    "end": 1499025600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499004000000,
-    "end": 1499025600000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499022000000,
-    "end": 1499065200000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499025600000,
-    "end": 1499047200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499025600000,
-    "end": 1499047200000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499047200000,
-    "end": 1499068800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499047200000,
-    "end": 1499068800000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499065200000,
-    "end": 1499108400000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499090400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499090400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499068800000,
-    "end": 1499090400000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, creating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1499090400000,
-    "end": 1499112000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499090400000,
-    "end": 1499112000000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499090400000,
-    "end": 1499112000000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499108400000,
-    "end": 1499151600000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499112000000,
-    "end": 1499133600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous\r\n gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499112000000,
-    "end": 1499133600000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499133600000,
-    "end": 1499155200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499133600000,
-    "end": 1499155200000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499151600000,
-    "end": 1499194800000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499155200000,
-    "end": 1499176800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499155200000,
-    "end": 1499176800000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499155200000,
-    "end": 1499176800000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, creating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499176800000,
-    "end": 1499198400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": "Gate"
-  },
-  {
-    "start": 1499176800000,
-    "end": 1499198400000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499176800000,
-    "end": 1499198400000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499194800000,
-    "end": 1499238000000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499198400000,
-    "end": 1499220000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous\r\n gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499198400000,
-    "end": 1499220000000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499220000000,
-    "end": 1499241600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499220000000,
-    "end": 1499241600000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499238000000,
-    "end": 1499281200000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499241600000,
-    "end": 1499263200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499241600000,
-    "end": 1499306400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499241600000,
-    "end": 1499263200000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499263200000,
-    "end": 1499284800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499263200000,
-    "end": 1499284800000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499263200000,
-    "end": 1499284800000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499284800000,
-    "end": 1499306400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499284800000,
-    "end": 1499306400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499306400000,
-    "end": 1499328000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499306400000,
-    "end": 1499328000000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499324400000,
-    "end": 1499324400000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499328000000,
-    "end": 1499349600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499328000000,
-    "end": 1499349600000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499349600000,
-    "end": 1499371200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499349600000,
-    "end": 1499371200000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499349600000,
-    "end": 1499371200000,
-    "title": "Tetrix Meister (alias the Parking Lot Game)",
-    "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Tetrix Meister",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499367600000,
-    "end": 1499410800000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499371200000,
-    "end": 1499392800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499371200000,
-    "end": 1499392800000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499392800000,
-    "end": 1499414400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499392800000,
-    "end": 1499414400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499410800000,
-    "end": 1499454000000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499414400000,
-    "end": 1499436000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499414400000,
-    "end": 1499436000000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499436000000,
-    "end": 1499457600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499436000000,
-    "end": 1499457600000,
-    "title": "Katz fluffer",
-    "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499457600000,
-    "end": 1499479200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499479200000,
-    "end": 1499504400000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499500800000,
-    "end": 1499522400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499522400000,
-    "end": 1499544000000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499565600000,
-    "end": 1499587200000,
-    "title": "Katz Fluffer",
-    "description": null,
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Katz\u00c2\u00b4fluffer",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499583600000,
-    "end": 1499626800000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499587200000,
-    "end": 1499608800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499608800000,
-    "end": 1499630400000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499652000000,
-    "end": 1499673600000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499670000000,
-    "end": 1499713200000,
-    "title": "Daily Gate Lead",
-    "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Daily Gate Lead",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499673600000,
-    "end": 1499695200000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  },
-  {
-    "start": 1499695200000,
-    "end": 1499716800000,
-    "title": "Gate Crew",
-    "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
-    "department": "Gate, Perimeter & Greeters (G,P&G)",
-    "role": "Grumpy Katz (gate crew)",
-    "team": "Grumpy Katz Gate Crew",
-    "location": null
-  }
-]
+{
+  "shifts": [
+    {
+      "start": 1498633200000,
+      "end": 1498676400000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498658400000,
+      "end": 1498680000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498658400000,
+      "end": 1498680000000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498676400000,
+      "end": 1498719600000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498680000000,
+      "end": 1498701600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498680000000,
+      "end": 1498701600000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498701600000,
+      "end": 1498723200000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498701600000,
+      "end": 1498723200000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498719600000,
+      "end": 1498762800000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498723200000,
+      "end": 1498744800000,
+      "title": "Gate Crew",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1498723200000,
+      "end": 1498744800000,
+      "title": "Katz Fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498744800000,
+      "end": 1498766400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498744800000,
+      "end": 1498766400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498766400000,
+      "end": 1498788000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498766400000,
+      "end": 1498788000000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498788000000,
+      "end": 1498809600000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498788000000,
+      "end": 1498809600000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498806000000,
+      "end": 1498849200000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498809600000,
+      "end": 1498831200000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498809600000,
+      "end": 1498831200000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498831200000,
+      "end": 1498852800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498831200000,
+      "end": 1498852800000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498852800000,
+      "end": 1498874400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498852800000,
+      "end": 1498874400000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498874400000,
+      "end": 1498896000000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498874400000,
+      "end": 1498896000000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498892400000,
+      "end": 1498935600000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498896000000,
+      "end": 1498917600000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498896000000,
+      "end": 1498917600000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498917600000,
+      "end": 1498939200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498917600000,
+      "end": 1498939200000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498935600000,
+      "end": 1498978800000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498939200000,
+      "end": 1498960800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498939200000,
+      "end": 1498960800000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498960800000,
+      "end": 1498982400000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498960800000,
+      "end": 1498982400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498978800000,
+      "end": 1499022000000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498982400000,
+      "end": 1499004000000,
+      "title": "Gate Crew",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1498982400000,
+      "end": 1499004000000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499004000000,
+      "end": 1499025600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499004000000,
+      "end": 1499025600000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499022000000,
+      "end": 1499065200000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499025600000,
+      "end": 1499047200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499025600000,
+      "end": 1499047200000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499047200000,
+      "end": 1499068800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499047200000,
+      "end": 1499068800000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499065200000,
+      "end": 1499108400000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499090400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499090400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499068800000,
+      "end": 1499090400000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, creating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1499090400000,
+      "end": 1499112000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499090400000,
+      "end": 1499112000000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499090400000,
+      "end": 1499112000000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499108400000,
+      "end": 1499151600000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499112000000,
+      "end": 1499133600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous\r\n gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499112000000,
+      "end": 1499133600000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499133600000,
+      "end": 1499155200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499133600000,
+      "end": 1499155200000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499151600000,
+      "end": 1499194800000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499155200000,
+      "end": 1499176800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499155200000,
+      "end": 1499176800000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499155200000,
+      "end": 1499176800000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, creating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499176800000,
+      "end": 1499198400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": "Gate"
+    },
+    {
+      "start": 1499176800000,
+      "end": 1499198400000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499176800000,
+      "end": 1499198400000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499194800000,
+      "end": 1499238000000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499198400000,
+      "end": 1499220000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous\r\n gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499198400000,
+      "end": 1499220000000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499220000000,
+      "end": 1499241600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499220000000,
+      "end": 1499241600000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499238000000,
+      "end": 1499281200000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499241600000,
+      "end": 1499263200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499241600000,
+      "end": 1499306400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499241600000,
+      "end": 1499263200000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499263200000,
+      "end": 1499284800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499263200000,
+      "end": 1499284800000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499263200000,
+      "end": 1499284800000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499284800000,
+      "end": 1499306400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499284800000,
+      "end": 1499306400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499306400000,
+      "end": 1499328000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499306400000,
+      "end": 1499328000000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499324400000,
+      "end": 1499324400000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499328000000,
+      "end": 1499349600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499328000000,
+      "end": 1499349600000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499349600000,
+      "end": 1499371200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499349600000,
+      "end": 1499371200000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499349600000,
+      "end": 1499371200000,
+      "title": "Tetrix Meister (alias the Parking Lot Game)",
+      "description": "Help the gate team to fit all the cars in an organised and safe way, \r\ncreating your own bespoke game.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Tetrix Meister",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499367600000,
+      "end": 1499410800000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499371200000,
+      "end": 1499392800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499371200000,
+      "end": 1499392800000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499392800000,
+      "end": 1499414400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499392800000,
+      "end": 1499414400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499410800000,
+      "end": 1499454000000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499414400000,
+      "end": 1499436000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499414400000,
+      "end": 1499436000000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499436000000,
+      "end": 1499457600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets  and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499436000000,
+      "end": 1499457600000,
+      "title": "Katz fluffer",
+      "description": "You will look after the wellbeing of our gate crew, acting as a link with central services when needed (support the Daily Gate Lead and make sure the katz have their milk and biscuits and take their breaks)",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499457600000,
+      "end": 1499479200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499479200000,
+      "end": 1499504400000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499500800000,
+      "end": 1499522400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499522400000,
+      "end": 1499544000000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499565600000,
+      "end": 1499587200000,
+      "title": "Katz Fluffer",
+      "description": null,
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Katz\u00c2\u00b4fluffer",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499583600000,
+      "end": 1499626800000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499587200000,
+      "end": 1499608800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499608800000,
+      "end": 1499630400000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499652000000,
+      "end": 1499673600000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499670000000,
+      "end": 1499713200000,
+      "title": "Daily Gate Lead",
+      "description": "This is a 12 hours 'on call' shift for those katz who already have enough gate experience to herd our crew and support them in their duties. To apply please contact gate@goingnowhere.org",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Daily Gate Lead",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499673600000,
+      "end": 1499695200000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    },
+    {
+      "start": 1499695200000,
+      "end": 1499716800000,
+      "title": "Gate Crew",
+      "description": "This shifts needs at least one person speaking Spanish and at least one person with previous gate experience. You will check tickets and EARLY ENTRY CODES and help people in.",
+      "department": "Gate, Perimeter & Greeters (G,P&G)",
+      "role": "Grumpy Katz (gate crew)",
+      "team": "Grumpy Katz Gate Crew",
+      "location": null
+    }
+  ]
+}

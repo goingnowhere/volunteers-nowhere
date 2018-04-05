@@ -1,12 +1,14 @@
-[
-  {
-    "start": 1497600000000,
-    "end": 1497646800000,
-    "title": "The Fluffers",
-    "description": "Help our people not to die in the desert while they build and strike our wonderful city. You\u00c2\u00b4ll be providing snacks and water while shouting over a megaphone...priceless!",
-    "department": "Volunteers",
-    "role": "DVS team (aka the fluffers)",
-    "team": "DVS",
-    "location": null
-  }
-]
+{
+  "shifts": [
+    {
+      "start": 1497600000000,
+      "end": 1497646800000,
+      "title": "The Fluffers",
+      "description": "Help our people not to die in the desert while they build and strike our wonderful city. You\u00c2\u00b4ll be providing snacks and water while shouting over a megaphone...priceless!",
+      "department": "Volunteers",
+      "role": "DVS team (aka the fluffers)",
+      "team": "DVS",
+      "location": null
+    }
+  ]
+}

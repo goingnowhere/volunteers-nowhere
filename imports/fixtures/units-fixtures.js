@@ -68,36 +68,52 @@ const units = {
 }
 units.teams = JSON.parse(Assets.getText('nowhere2018/nowhere-teams.json'))
 
+const leadDefaults = {
+  title: 'Lead',
+  priority: 'essential',
+  policy: 'requireApproval',
+}
+
 export const createUnits = (Volunteers) => {
   if (Volunteers.Collections.Division.find().count() === 0) {
     units.divisions.forEach((doc) => {
-      console.log(`creating fixture for ${doc.name}`)
+      console.log(`creating division ${doc.name}`)
       const id = Volunteers.Collections.Division.insert(doc)
       Roles.createRole(id)
     })
   }
   if (Volunteers.Collections.Department.find().count() === 0) {
-    units.departments.forEach((doc) => {
-      console.log(`creating fixture for ${doc.name}`)
-      const parentId = Volunteers.Collections.Division.findOne({ name: doc.parent })._id
-      const id = Volunteers.Collections.Department.insert({
-        ...doc,
+    units.departments.forEach((dep) => {
+      console.log(`creating department and meta-lead ${dep.name}`)
+      const parentId = Volunteers.Collections.Division.findOne({ name: dep.parent })._id
+      const depId = Volunteers.Collections.Department.insert({
+        ...dep,
         parentId,
       })
-      Roles.createRole(id)
-      Roles.addRolesToParent(id, parentId)
+      Volunteers.Collections.Lead.insert({
+        ...leadDefaults,
+        description: `Meta-Lead of the ${dep.name} department.`,
+        parentId: depId,
+      })
+      Roles.createRole(depId)
+      Roles.addRolesToParent(depId, parentId)
     })
   }
   if (Volunteers.Collections.Team.find().count() === 0) {
-    units.teams.team.forEach((doc) => {
-      console.log(`creating fixture for ${doc.name}`)
-      const parentId = Volunteers.Collections.Department.findOne({ name: doc.parent })._id
-      const id = Volunteers.Collections.Team.insert({
-        ...doc,
+    units.teams.team.forEach((team) => {
+      console.log(`creating team and lead ${team.name}`)
+      const parentId = Volunteers.Collections.Department.findOne({ name: team.parent })._id
+      const teamId = Volunteers.Collections.Team.insert({
+        ...team,
         parentId,
       })
-      Roles.createRole(id)
-      Roles.addRolesToParent(id, parentId)
+      Volunteers.Collections.Lead.insert({
+        ...leadDefaults,
+        description: `Lead of the ${team.name} team.`,
+        parentId: teamId,
+      })
+      Roles.createRole(teamId)
+      Roles.addRolesToParent(teamId, parentId)
     })
   }
 }
