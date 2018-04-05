@@ -51,6 +51,7 @@
   "before_after_event": "Before and After the Event",
   "name_or_email": "Name or Email",
   "skill": "skill",
+  "quirk": "shift quirks",
   "filter_by": "By",
   "filter_selected": "selected"
 }

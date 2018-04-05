@@ -53,7 +53,11 @@ Template.userDashboard.events({
 Template.signupsListTabs.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
-  template.filters = { skills: new ReactiveVar() }
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
+  template.filters = {
+    skills: new ReactiveVar(),
+    quirks: new ReactiveVar(),
+  }
 })
 Template.signupsListTabs.onRendered(function onRendered() {
   const template = this
@@ -65,6 +69,14 @@ Template.signupsListTabs.onRendered(function onRendered() {
   })
   // Possibly only needed in development when reloading
   template.$('#skillSelect').selectpicker('refresh')
+
+  template.$('#quirkSelect').on('changed.bs.select', (event) => {
+    // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
+    const val = Array.from(event.target.selectedOptions).map(option => option.value)
+    template.filters.quirks.set(val.length > 0 ? val : null)
+  })
+  // Possibly only needed in development when reloading
+  template.$('#quirkSelect').selectpicker('refresh')
 
   template.$('#tabSelect').on('changed.bs.select', (event) => {
     template.$('.tab-pane').hide()
@@ -80,8 +92,10 @@ Template.signupsListTabs.helpers({
   },
   // Not sure why we're deliberately including null values in these lists - Rich
   skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
+  quirks: () => Volunteers.getQuirksList().filter(quirk => quirk.value),
   filters: () => ({
     skills: Template.instance().filters.skills.get(),
+    quirks: Template.instance().filters.quirks.get(),
   }),
 })
 

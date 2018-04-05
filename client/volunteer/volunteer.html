@@ -71,6 +71,19 @@
       <option value="{{skill.value}}">{{ skill.label }}</option>
     {{/each}}
   </select>
+  <select
+    id='quirkSelect'
+    class="selectpicker"
+    data-none-selected-text="{{__ 'filter_by'}} {{__ 'quirk'}}"
+    data-count-selected-text="{{__ 'quirk'}} {{__ 'filter_selected'}} {0}/{1}"
+    data-selected-text-format="count > 2"
+    data-actions-box="true"
+    multiple
+  >
+    {{#each quirk in quirks}}
+      <option value="{{quirk.value}}">{{ quirk.label }}</option>
+    {{/each}}
+  </select>
   <!-- HACK to make tabs open with a select -->
   <ul class="nav nav-tabs" role="tablist" style="display:none">
     <li class="nav-item">
