@@ -58,8 +58,15 @@
       <option value="1">{{__ "build_strike"}}</option>
       <option value="2">{{__ "lead_positions"}}</option>
   </select>
-  <select id='skillSelect' class="selectpicker"
-    data-none-selected-text="{{__ 'skill_filter'}}" multiple>
+  <select
+    id='skillSelect'
+    class="selectpicker"
+    data-none-selected-text="{{__ 'filter_by'}} {{__ 'skill'}}"
+    data-count-selected-text="{{__ 'skill'}} {{__ 'selected'}} {0}/{1}"
+    data-selected-text-format="count > 2"
+    data-actions-box="true"
+    multiple
+  >
     {{#each skill in skills}}
       <option value="{{skill.value}}">{{ skill.label }}</option>
     {{/each}}

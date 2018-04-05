@@ -50,5 +50,7 @@
   "event_time": "During Event",
   "before_after_event": "Before and After the Event",
   "name_or_email": "Name or Email",
-  "skill_filter": "By skill"
+  "skill": "skill",
+  "filter_by": "By",
+  "filter_selected": "selected"
 }
