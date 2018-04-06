@@ -61,8 +61,8 @@
   <select
     id='skillSelect'
     class="selectpicker"
-    data-none-selected-text="{{__ 'filter_by'}} {{__ 'skill'}}"
-    data-count-selected-text="{{__ 'skill'}} {{__ 'selected'}} {0}/{1}"
+    data-none-selected-text="{{__ 'filter_by_skill'}}"
+    data-count-selected-text="{{__ 'filter_selected_skill'}} {0}/{1}"
     data-selected-text-format="count > 2"
     data-actions-box="true"
     multiple
@@ -74,8 +74,8 @@
   <select
     id='quirkSelect'
     class="selectpicker"
-    data-none-selected-text="{{__ 'filter_by'}} {{__ 'quirk'}}"
-    data-count-selected-text="{{__ 'quirk'}} {{__ 'filter_selected'}} {0}/{1}"
+    data-none-selected-text="{{__ 'filter_by_quirk'}}"
+    data-count-selected-text="{{__ 'filter_selected_quirk'}} {0}/{1}"
     data-selected-text-format="count > 2"
     data-actions-box="true"
     multiple
@@ -83,6 +83,18 @@
     {{#each quirk in quirks}}
       <option value="{{quirk.value}}">{{ quirk.label }}</option>
     {{/each}}
+  </select>
+  <select
+    id='prioritySelect'
+    class="selectpicker"
+    data-none-selected-text="{{__ 'filter_by_priority'}}"
+    data-count-selected-text="{{__ 'filter_selected_priority'}} {0}/{1}"
+    data-selected-text-format="count > 2"
+    multiple
+  >
+    <option value="essential">{{__ 'essential'}}</option>
+    <option value="important">{{__ 'important'}}</option>
+    <option value="normal">{{__ 'normal'}}</option>
   </select>
   <!-- HACK to make tabs open with a select -->
   <ul class="nav nav-tabs" role="tablist" style="display:none">

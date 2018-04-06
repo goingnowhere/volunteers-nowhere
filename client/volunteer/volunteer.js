@@ -50,6 +50,17 @@ Template.userDashboard.events({
   },
 })
 
+const setSelectListener = (template, selector, filterVar) => {
+  // Need to add this event listener this way as adding through Blaze doesn't work - Rich
+  template.$(selector).on('changed.bs.select', (event) => {
+    // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
+    const val = Array.from(event.target.selectedOptions).map(option => option.value)
+    filterVar.set(val.length > 0 ? val : null)
+  })
+  // Possibly only needed in development when reloading
+  template.$(selector).selectpicker('refresh')
+}
+
 Template.signupsListTabs.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
@@ -57,26 +68,14 @@ Template.signupsListTabs.onCreated(function onCreated() {
   template.filters = {
     skills: new ReactiveVar(),
     quirks: new ReactiveVar(),
+    priorities: new ReactiveVar(),
   }
 })
 Template.signupsListTabs.onRendered(function onRendered() {
   const template = this
-  // Need to add this event listener this way as adding through Blaze doesn't work - Rich
-  template.$('#skillSelect').on('changed.bs.select', (event) => {
-    // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
-    const val = Array.from(event.target.selectedOptions).map(option => option.value)
-    template.filters.skills.set(val.length > 0 ? val : null)
-  })
-  // Possibly only needed in development when reloading
-  template.$('#skillSelect').selectpicker('refresh')
-
-  template.$('#quirkSelect').on('changed.bs.select', (event) => {
-    // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
-    const val = Array.from(event.target.selectedOptions).map(option => option.value)
-    template.filters.quirks.set(val.length > 0 ? val : null)
-  })
-  // Possibly only needed in development when reloading
-  template.$('#quirkSelect').selectpicker('refresh')
+  setSelectListener(template, '#skillSelect', template.filters.skills)
+  setSelectListener(template, '#quirkSelect', template.filters.quirks)
+  setSelectListener(template, '#prioritySelect', template.filters.priorities)
 
   template.$('#tabSelect').on('changed.bs.select', (event) => {
     template.$('.tab-pane').hide()
@@ -96,6 +95,7 @@ Template.signupsListTabs.helpers({
   filters: () => ({
     skills: Template.instance().filters.skills.get(),
     quirks: Template.instance().filters.quirks.get(),
+    priorities: Template.instance().filters.priorities.get(),
   }),
 })
 

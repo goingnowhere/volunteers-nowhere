@@ -50,8 +50,10 @@
   "event_time": "During Event",
   "before_after_event": "Before and After the Event",
   "name_or_email": "Name or Email",
-  "skill": "skill",
-  "quirk": "shift quirks",
-  "filter_by": "By",
-  "filter_selected": "selected"
+  "filter_by_skill": "By skill",
+  "filter_by_quirk": "By shift quirks",
+  "filter_by_priority": "By priority",
+  "filter_selected_skill": "skills selected",
+  "filter_selected_quirk": "quirks selected",
+  "filter_selected_priority": "priorities selected"
 }
