@@ -5,18 +5,12 @@
         <div class="card-header">
           <h5>{{ name }}</h5>
         </div>
-        {{debug}}
-
         <p>{{description}}</p>
-
-        <h3>Teams Within this Department</h3>
-        
-        {{#each team in teams}}
-          {{team.name}}
-        {{/each}}
-
-        {{> signupsList }}
       </div>
     </div>
+    <h3>Teams Within this Department</h3>
+    {{#each team in teams}}
+      {{> signupsListTeam team=team }}
+    {{/each}}
   </div>
   </template>
