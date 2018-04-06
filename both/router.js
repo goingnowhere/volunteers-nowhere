@@ -190,6 +190,11 @@ Router.route('/manager/userform', {
   controller: ManagerController,
 })
 
+Router.route('/manager/eventSettings', {
+  name: 'managerEventSettings',
+  controller: ManagerController,
+})
+
 // leads / metaleads
 // Router.route('/admin/users', {
 //   name: 'allUsersList',

@@ -15,7 +15,7 @@
     "magnific-popup": "^1.1.0",
     "meteor-node-stubs": "~0.2.0",
     "orgchart": "^2.1.1",
-    "popper.js": "^1.14.1",
+    "popper.js": "^1.14.3",
     "simpl-schema": "^0.3.2",
     "underscore": "^1.8.3",
     "webpack": "^3.11.0"
@@ -24,7 +24,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-import-resolver-meteor": "^0.4.0",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-meteor": "^4.2.1",
     "eslint-plugin-underscore": "0.0.10"
   },

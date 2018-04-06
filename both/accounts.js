@@ -20,14 +20,6 @@ AccountsTemplates.configure({
   // termsUrl: 'terms-of-use',
 })
 
-// if (!Settings.findOne().registrationClosed) {
-//   AccountsTemplates.configureRoute('signUp', { redirect: '/profile' })
-//   AccountsTemplates.configure({forbidClientAccountCreation: false})
-// } else {
-//   AccountsTemplates.configure({forbidClientAccountCreation: true})
-// }
-
-
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
 AccountsTemplates.configureRoute('changePwd', { redirect: '/dashboard' })
 AccountsTemplates.configureRoute('resetPwd')
@@ -60,39 +52,42 @@ moment.updateLocale('en', {
     dow: 1,
   },
 })
-// TODO: for later ...
-// this.setUserLanguage = (userId) => {
-//   const user = Meteor.users.findOne(userId)
-//   if (user) {
-//     T9n.setLanguage(user.profile.language)
-//     i18n.setLocale(user.profile.language)
-//     moment.locale(user.profile.language)
-//   }
-// }
 
+// default language
 i18n.setLocale('en-US')
+moment.locale('en-US')
 
-const addUsersToRoles = (userId) => {
-  // this can be useful
-  // if (Meteor.users.find().count() === 1) {
-  //   Roles.addUsersToRoles(userId, 'super-admin')
-  // }
+this.setUserLanguage = (userId) => {
+  const user = Meteor.users.findOne(userId)
+  if (user) {
+    // T9n.setLanguage(user.profile.language)
+    i18n.setLocale(user.profile.language)
+    moment.locale(user.profile.language)
+  }
 }
+
+// const addUsersToRoles = (userId) => {
+// this can be useful
+// if (Meteor.users.find().count() === 1) {
+//   Roles.addUsersToRoles(userId, 'super-admin')
+// }
+// }
 
 const postSignUpHook = (userId) => { // eslint-disable-line no-unused-vars
   if (Meteor.isServer) {
     Roles.addUsersToRoles(userId, 'user', Volunteers.eventName)
   }
-  // if (Meteor.isClient) {
-  //   this.setUserLanguage(userId)
-  // }
+  if (Meteor.isClient) {
+    this.setUserLanguage(userId)
+  }
 }
 
 Accounts.onLogin((conn) => {
+  // TODO : use mizzao:user-status instead
   if (Meteor.isServer) {
     Meteor.users.update(conn.user._id, { $set: { lastLogin: new Date() } })
   }
-  // if (Meteor.isClient) {
-  //   this.setUserLanguage(Meteor.userId())
-  // }
+  if (Meteor.isClient) {
+    this.setUserLanguage(Meteor.userId())
+  }
 })

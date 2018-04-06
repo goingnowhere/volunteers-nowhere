@@ -1,10 +1,16 @@
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
+// import { AutoForm } from 'meteor/aldeed:autoform'
 import { Template } from 'meteor/templating'
 import { Volunteers } from '../../both/init'
+import { EventSettings } from '../../both/settings'
+
+// name of the organization. Nowhere is a two level hierarchy
+// (departments,teams) with one top level division
+const topLevelDivision = 'NOrg 2018'
 
 Template.managerView.onCreated(function onCreated() {
   const template = this
-  template.divisionId = Volunteers.Collections.Division.findOne({ name: 'NOrg 2018' })
+  template.divisionId = Volunteers.Collections.Division.findOne({ name: topLevelDivision })
   template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.Manager`)
   template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.Manager`)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.Manager`)
@@ -15,35 +21,39 @@ Template.managerView.onRendered(() => {
 })
 
 Template.managerView.events({
-  'click [data-action="add_department"]': (event, templateInstance) => {
-    const divisionId = templateInstance.divisionId
-    AutoFormComponents.ModalShowWithTemplate('addDepartment', { divisionId })
+  'click [data-action="add_department"]': (event, template) => {
+    AutoFormComponents.ModalShowWithTemplate('addDepartment', { divisionId: template.divisionId })
   },
-  'click [data-action="edit_department"]': (event, templateInstance) => {
-    const deptId = templateInstance.$(event.target).data('id')
+  'click [data-action="edit_department"]': (event, template) => {
+    const deptId = template.$(event.target).data('id')
     const team = Volunteers.Collections.Department.findOne(deptId)
     AutoFormComponents.ModalShowWithTemplate('deptEdit', team)
   },
-  'click [data-action="delete_department"]': (event, templateInstance) => {
-    const teamId = templateInstance.$(event.target).data('id')
+  'click [data-action="delete_department"]': (event, template) => {
+    const teamId = template.$(event.target).data('id')
     // Meteor.call("remove");
   },
-  'click [data-action="enroll_lead"]': (event, templateInstance) => {
-    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
+  'click [data-action="enroll_lead"]': (event, template) => {
+    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
   },
-  'click [data-action="applications"]': (event, templateInstance) => {
-    const dept = Volunteers.Collections.Department.findOne(templateInstance.departmentId)
+  'click [data-action="applications"]': (event, template) => {
+    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
   },
 })
 
 Template.managerView.helpers({
   leads: () => {
-    const deptIds = Volunteers.Collections.Department.find({ parentId: Template.instance().divisionId }).map(d => d._id)
+    const sel = { parentId: Template.instance().divisionId }
+    const deptIds = Volunteers.Collections.Department.find(sel).map(d => d._id)
     return Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: { $in: deptIds } })
   },
-  metaleads: () => Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: Template.instance().divisionId }),
+  metaleads: () =>
+    Volunteers.Collections.LeadSignups.find({
+      status: 'confirmed',
+      parentId: Template.instance().divisionId,
+    }),
   teamsNumber: deptId => Volunteers.Collections.Team.find({ parentId: deptId }).count(),
   shiftsDept: (deptId) => {
     const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
@@ -69,4 +79,14 @@ Template.managerView.helpers({
   },
   allTeams: deptId => Volunteers.Collections.Team.find({ parentId: deptId }),
   shiftsTeam: teamId => ({ wanted: 0, covered: 0 }),
+})
+
+Template.managerEventSettings.onCreated(function onCreated() {
+  const template = this
+  template.subscribe('eventSettings')
+})
+
+Template.managerEventSettings.helpers({
+  form: () => ({ collection: EventSettings }),
+  data: () => (EventSettings.findOne()),
 })
