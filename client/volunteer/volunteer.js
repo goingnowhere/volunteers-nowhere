@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'bootstrap'
 import 'bootstrap-select'
 import 'bootstrap-select/dist/css/bootstrap-select.css'
@@ -61,42 +60,54 @@ const setSelectListener = (template, selector, filterVar) => {
   template.$(selector).selectpicker('refresh')
 }
 
-Template.signupsListTabs.onCreated(function onCreated() {
+Template.filteredSignupsList.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
   template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
+  template.type = new ReactiveVar('event')
   template.filters = {
     skills: new ReactiveVar(),
     quirks: new ReactiveVar(),
     priorities: new ReactiveVar(),
   }
 })
-Template.signupsListTabs.onRendered(function onRendered() {
+Template.filteredSignupsList.onRendered(function onRendered() {
   const template = this
   setSelectListener(template, '#skillSelect', template.filters.skills)
   setSelectListener(template, '#quirkSelect', template.filters.quirks)
   setSelectListener(template, '#prioritySelect', template.filters.priorities)
 
-  template.$('#tabSelect').on('changed.bs.select', (event) => {
-    template.$('.tab-pane').hide()
-    template.$('.tab-pane').eq($(event.target).val()).show()
+  template.$('#typeSelect').on('changed.bs.select', (event) => {
+    template.type.set(event.target.value)
   })
-  template.$('#tabSelect').selectpicker('refresh')
+  template.$('#typeSelect').selectpicker('refresh')
 })
 
-Template.signupsListTabs.helpers({
-  userPref: () => {
-    const form = Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
-    return { quirks: form.quirks, skills: form.skills }
-  },
+Template.filteredSignupsList.helpers({
   // Not sure why we're deliberately including null values in these lists - Rich
   skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
   quirks: () => Volunteers.getQuirksList().filter(quirk => quirk.value),
-  filters: () => ({
-    skills: Template.instance().filters.skills.get(),
-    quirks: Template.instance().filters.quirks.get(),
-    priorities: Template.instance().filters.priorities.get(),
-  }),
+  signupsListProps: () => {
+    const type = Template.instance().type.get()
+    let props = {
+      dutyType: type,
+      filters: {
+        skills: Template.instance().filters.skills.get(),
+        quirks: Template.instance().filters.quirks.get(),
+        priorities: Template.instance().filters.priorities.get(),
+      },
+    }
+    if (type === 'event') {
+      const { quirks, skills } =
+        Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
+      props = {
+        ...props,
+        quirks,
+        skills,
+      }
+    }
+    return props
+  },
 })
 
 AutoForm.addHooks([

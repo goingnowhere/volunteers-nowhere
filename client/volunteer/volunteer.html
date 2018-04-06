@@ -40,11 +40,11 @@
         </div>
         <div class="col-sm-12 col-md-5 pl-1">
           <h2 class="header">{{__ "shift_need_help"}}</h2>
-          {{> signupsListTabs bookedMissions="true" }}
+          {{> filteredSignupsList }}
         </div>
       {{else}}
         <div class="col-sm-6 col-md-10 pl-1">
-          {{> signupsListTabs }}
+          {{> filteredSignupsList }}
         </div>
       {{/if}}
     </div>
@@ -52,11 +52,11 @@
 {{/if}}
 </template>
 
-<template name="signupsListTabs">
-  <select id='tabSelect' class="selectpicker">
-      <option value="0">{{__ "event_shifts"}}</option>
-      <option value="1">{{__ "build_strike"}}</option>
-      <option value="2">{{__ "lead_positions"}}</option>
+<template name="filteredSignupsList">
+  <select id='typeSelect' class="selectpicker">
+      <option value="event">{{__ "event_shifts"}}</option>
+      <option value="project">{{__ "build_strike"}}</option>
+      <option value="lead">{{__ "lead_positions"}}</option>
   </select>
   <select
     id='skillSelect'
@@ -96,35 +96,7 @@
     <option value="important">{{__ 'important'}}</option>
     <option value="normal">{{__ 'normal'}}</option>
   </select>
-  <!-- HACK to make tabs open with a select -->
-  <ul class="nav nav-tabs" role="tablist" style="display:none">
-    <li class="nav-item">
-      <a class="nav-link active" href="#event" role="tab" data-toggle="tab">
-        <!-- <span class="text-danger">{{fa "fire"}} {{__ "event_shifts"}} {{fa "fire"}}</span> -->
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#build" role="tab" data-toggle="tab">
-        <!-- <span class="text-info">{{fa "globe"}} {{__ "build_strike"}}</span> -->
-    </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#lead" role="tab" data-toggle="tab">
-        <!-- <span class="text-warning">{{fa "bars"}} {{__ "lead_positions"}}</span> -->
-      </a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="event">
-      {{> signupsList quirks=userPref.quirks skills=userPref.skills filters=filters }}
-    </div>
-    <div role="tabpanel" class="tab-pane" id="build">
-      {{> signupsList dutyType="project" filters=filters }}
-    </div>
-    <div role="tabpanel" class="tab-pane" id="lead">
-      {{> signupsList leadsOnly="true" filters=filters }}
-    </div>
-  </div>
+  {{> signupsList signupsListProps }}
 </template>
 
 <template name="volunteerForm">
