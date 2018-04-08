@@ -60,9 +60,15 @@ Router.route('/dashboard', {
     }
   },
   waitOn() {
+    const userId = Meteor.userId()
     return [
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
-      Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId),
+      Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`),
     ]
   },
 })

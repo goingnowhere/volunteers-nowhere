@@ -8,17 +8,6 @@ import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
 
-Template.userDashboard.onCreated(function onCreated() {
-  const template = this
-  const userId = Meteor.userId()
-  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
-})
-
 Template.userDashboard.helpers({
   userId: () => Meteor.userId(),
   leads: () => {
@@ -64,10 +53,7 @@ Template.userDashboard.events({
 Template.signupsListTabs.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
-  template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
-  template.filters = {
-    skills: new ReactiveVar(),
-  }
+  template.filters = { skills: new ReactiveVar() }
 })
 Template.signupsListTabs.onRendered(function onRendered() {
   const template = this
