@@ -37,7 +37,6 @@ Template.userDashboard.helpers({
     return (
       (Volunteers.Collections.ShiftSignups.find(sel).count() > 0) ||
       (Volunteers.Collections.ProjectSignups.find(sel).count() > 0) ||
-      (Volunteers.Collections.LeadSignups.find(sel).count() > 0) ||
       (Volunteers.Collections.TaskSignups.find(sel).count() > 0)
     )
   },
