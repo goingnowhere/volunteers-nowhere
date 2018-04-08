@@ -1,3 +1,5 @@
+import { Roles } from 'meteor/piemonkey:roles'
+
 const defaultUsers = [
   {
     email: 'manager@example.com',
@@ -19,7 +21,7 @@ const defaultUsers = [
 export const createUsers = (Volunteers) => {
   _.each(defaultUsers, (options) => {
     if (!Meteor.users.findOne({ 'emails.address': options.email })) {
-      console.log("Create user ", options);
+      console.log('Create user ', options)
       const userId = Accounts.createUser(options)
       Meteor.users.update(userId, { $set: { 'emails.0.verified': true } })
       options.roles.forEach((role) => {

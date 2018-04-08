@@ -1,6 +1,5 @@
 import { Router, RouteController } from 'meteor/iron:router'
 import { AccountsTemplates } from 'meteor/useraccounts:core'
-import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from './init'
 
 Router.plugin('auth', {
@@ -119,6 +118,11 @@ Router.route('/profile', {
 Router.route('/profile/settings', {
   name: 'accountSettings',
   controller: AuthenticatedController,
+  waitOn() {
+    return [
+      Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
+    ]
+  },
 })
 
 Router.route('/sign-out', {
