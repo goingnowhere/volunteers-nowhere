@@ -1,4 +1,3 @@
-/* global VolunteersClass */
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
@@ -10,12 +9,12 @@ AccountsTemplates.configure({
   defaultLayout: 'userLayout',
   enablePasswordChange: true,
   showForgotPasswordLink: true,
-  // sendVerificationEmail: true,
+  sendVerificationEmail: true,
   continuousValidation: true,
   // enforceEmailVerification: true,
   // privacyUrl: '/s/privacy',
   // forbidClientAccountCreation: true,
-  // showResendVerificationEmailLink: true,
+  showResendVerificationEmailLink: true,
   // postSignUpHook,
   // onLogoutHook: onSignOut,
   // termsUrl: 'terms-of-use',

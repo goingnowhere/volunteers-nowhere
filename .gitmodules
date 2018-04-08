@@ -21,3 +21,6 @@
 	path = packages/meteor-user-profiles
 	url = git@gitlab.com:abate/meteor-user-profiles.git
 #  url = https://gitlab.com/abate/meteor-user-profiles.git
+[submodule "packages/meteor-mandrill"]
+	path = packages/meteor-mandrill
+	url = https://github.com/StorytellerCZ/meteor-mandrill.git

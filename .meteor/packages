@@ -52,3 +52,5 @@ fourseven:scss
 seba:minifiers-autoprefixer
 alethes:pages
 abate:autoform-components
+wylio:mandrill
+email

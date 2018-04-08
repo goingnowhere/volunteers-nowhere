@@ -139,5 +139,6 @@ useraccounts:core@1.14.2
 useraccounts:iron-routing@1.14.2
 webapp@1.4.0
 webapp-hashing@1.0.9
+wylio:mandrill@1.1.0
 zimme:active-route@2.3.2
 zimme:iron-router-auth@3.1.0
