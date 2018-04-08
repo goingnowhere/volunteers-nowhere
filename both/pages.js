@@ -8,7 +8,7 @@ const NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
   perPage: 20,
   sort: { createdAt: -1 },
   fields: {
-    profile: 1, emails: 1, createdAt: 1, roles: 1,
+    profile: 1, emails: 1, createdAt: 1, roles: 1, status: 1,
   },
   availableSettings: {
     filters: true,
