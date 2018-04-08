@@ -279,11 +279,6 @@ Router.route('/noinfo/userList', {
   name: 'noInfoUserList',
   controller: LeadController,
   data() { return { page: 'NoInfoUserPages' } },
-  // waitOn() {
-  //   return [
-  //     Meteor.subscribe(`${Volunteers.eventName}.allUsers`),
-  //   ]
-  // },
 })
 
 // Router.route('/noinfo/user/:_id', {
