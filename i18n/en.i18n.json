@@ -55,5 +55,6 @@
   "filter_by_priority": "By priority",
   "filter_selected_skill": "skills selected",
   "filter_selected_quirk": "quirks selected",
-  "filter_selected_priority": "priorities selected"
+  "filter_selected_priority": "priorities selected",
+  "wrong_or_required_field": "Error while validating the form"
 }

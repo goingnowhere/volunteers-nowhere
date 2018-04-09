@@ -146,3 +146,5 @@ et injecter la typo */
   width: 48px;
   height: :48px;
 }
+
+[data-required] label:after {content: ' *'; color: red}
