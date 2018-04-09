@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating'
-import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../../both/init'
 
 Template.publicDepartmentView.onCreated(function onCreated() {

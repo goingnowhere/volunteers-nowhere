@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'bootstrap'
 import 'bootstrap-select'
 import 'bootstrap-select/dist/css/bootstrap-select.css'
@@ -50,39 +49,65 @@ Template.userDashboard.events({
   },
 })
 
-Template.signupsListTabs.onCreated(function onCreated() {
-  const template = this
-  template.teamLimit = 4
-  template.filters = { skills: new ReactiveVar() }
-})
-Template.signupsListTabs.onRendered(function onRendered() {
-  const template = this
+const setSelectListener = (template, selector, filterVar) => {
   // Need to add this event listener this way as adding through Blaze doesn't work - Rich
-  template.$('#skillSelect').on('changed.bs.select', (event) => {
+  template.$(selector).on('changed.bs.select', (event) => {
     // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
     const val = Array.from(event.target.selectedOptions).map(option => option.value)
-    template.filters.skills.set(val.length > 0 ? val : null)
+    filterVar.set(val.length > 0 ? val : null)
   })
   // Possibly only needed in development when reloading
-  template.$('#skillSelect').selectpicker('refresh')
+  template.$(selector).selectpicker('refresh')
+}
 
-  template.$('#tabSelect').on('changed.bs.select', (event) => {
-    template.$('.tab-pane').hide()
-    template.$('.tab-pane').eq($(event.target).val()).show()
+Template.filteredSignupsList.onCreated(function onCreated() {
+  const template = this
+  template.teamLimit = 4
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
+  template.type = new ReactiveVar('event')
+  template.filters = {
+    skills: new ReactiveVar(),
+    quirks: new ReactiveVar(),
+    priorities: new ReactiveVar(),
+  }
+})
+Template.filteredSignupsList.onRendered(function onRendered() {
+  const template = this
+  setSelectListener(template, '#skillSelect', template.filters.skills)
+  setSelectListener(template, '#quirkSelect', template.filters.quirks)
+  setSelectListener(template, '#prioritySelect', template.filters.priorities)
+
+  template.$('#typeSelect').on('changed.bs.select', (event) => {
+    template.type.set(event.target.value)
   })
-  template.$('#tabSelect').selectpicker('refresh')
+  template.$('#typeSelect').selectpicker('refresh')
 })
 
-Template.signupsListTabs.helpers({
-  userPref: () => {
-    const form = Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
-    return { quirks: form.quirks, skills: form.skills }
-  },
+Template.filteredSignupsList.helpers({
   // Not sure why we're deliberately including null values in these lists - Rich
   skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
-  filters: () => ({
-    skills: Template.instance().filters.skills.get(),
-  }),
+  quirks: () => Volunteers.getQuirksList().filter(quirk => quirk.value),
+  signupsListProps: () => {
+    const type = Template.instance().type.get()
+    let props = {
+      dutyType: type,
+      filters: {
+        skills: Template.instance().filters.skills.get(),
+        quirks: Template.instance().filters.quirks.get(),
+        priorities: Template.instance().filters.priorities.get(),
+      },
+    }
+    if (type === 'event') {
+      const { quirks, skills } =
+        Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
+      props = {
+        ...props,
+        quirks,
+        skills,
+      }
+    }
+    return props
+  },
 })
 
 AutoForm.addHooks([
