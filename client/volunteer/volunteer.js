@@ -63,7 +63,7 @@ const setSelectListener = (template, selector, filterVar) => {
 Template.filteredSignupsList.onCreated(function onCreated() {
   const template = this
   template.teamLimit = 4
-  template.subscribe(`${Volunteers.eventName}.Volunteers.Team`)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.team`)
   template.type = new ReactiveVar('event')
   template.filters = {
     skills: new ReactiveVar(),
