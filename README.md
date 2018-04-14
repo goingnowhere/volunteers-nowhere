@@ -47,3 +47,9 @@ cd volunteers-nowhere
 meteor npm install
 METEOR_PACKAGE_DIRS=../ meteor
 ```
+
+update all submodules to master except meteor-roles
+
+```
+git submodule foreach '[ "$path" = "packages/meteor-roles" ] || git pull origin master'
+```
