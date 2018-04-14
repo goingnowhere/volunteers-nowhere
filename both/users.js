@@ -1,6 +1,5 @@
 import SimpleSchema from 'simpl-schema'
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
-import { UserStatus } from 'meteor/mizzao:user-status'
 import { MeteorProfile } from './init'
 
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
