@@ -24,3 +24,6 @@
 [submodule "packages/meteor-mandrill"]
 	path = packages/meteor-mandrill
 	url = https://github.com/StorytellerCZ/meteor-mandrill.git
+[submodule "packages/meteor-autoform"]
+	path = packages/meteor-autoform
+	url = git@github.com:abate/meteor-autoform.git
