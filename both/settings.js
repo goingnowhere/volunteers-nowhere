@@ -80,7 +80,7 @@ export const insertSettings = new ValidatedMethod({
   },
 })
 
-export const updateMovie = new ValidatedMethod({
+export const updateSetting = new ValidatedMethod({
   name: 'settings.update',
   validate: (doc) => {
     SettingsSchema.validate(doc.modifier, { clean: true, modifier: true })
