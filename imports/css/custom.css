@@ -142,9 +142,20 @@ et injecter la typo */
   }
 }
 
+/* Avatar image on the toolbar */
 .header-avatar {
   width: 48px;
   height: :48px;
 }
 
+/* Add red * to autoform required fields */
 [data-required] label:after {content: ' *'; color: red}
+
+/* Make Select2 boxes match Bootstrap heights: */
+.select2-selection__rendered {
+  line-height: 32px !important;
+}
+
+.select2-selection {
+  height: 45px !important;
+}
