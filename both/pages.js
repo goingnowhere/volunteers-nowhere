@@ -7,6 +7,8 @@ const NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
   fastRender: true,
   perPage: 20,
   sort: { createdAt: -1 },
+  // filter only on users that agreed with the TOS
+  filters: { terms: true },
   fields: {
     profile: 1, emails: 1, createdAt: 1, roles: 1, status: 1,
   },
@@ -24,6 +26,7 @@ export const EnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
   perPage: 20,
   // fields: {"profile": 1, "emails.0.address": 1, "createdAt": 1, "_id": 1},
   sort: { createdAt: -1 },
+  filters: { terms: true },
   availableSettings: {
     filters: true,
   },
