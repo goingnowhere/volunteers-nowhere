@@ -180,12 +180,22 @@
 </template>
 
 <template name="termsCheckbox">
-  <div class="at-input inline field">
+  <div class="at-input inline field mt-4">
+    <label>TOS</label>
     <div class="checkbox">
       <label for="at-field-{{_id}}">
       <input type="{{type}}" id="at-field-{{_id}}" name="at-field-{{_id}}" {{disabled}}>
         <span class="checkbox-material"><span class="check"></span></span>
-        I've read and agree to the <a href="{{pathFor 'staticContentDisplay' _name='volunteersAgreement'}}">Volunteer Agreement</a>
+        I've read and agree to the <a href="https://www.goingnowhere.org">Volunteer Agreement</a> and GDPR.
+        <div class="mt-2">
+          <label>GDPR Disclaimer: </label>
+          <p>
+             I consent to my data being stored for a period of up to 18 months, and for it to be used
+             to facilitate the scheduling and safety of volunteers behalf of Nowhere (Europe) Ltd.
+             I understand that you will delete my data within one month of my giving formal written
+             notice to request you to do so.
+           </p>
+         </div>
       </label>
     </div>
   </div>

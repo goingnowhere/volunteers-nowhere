@@ -205,19 +205,6 @@ const form = [
     rows: 3,
     group: 'Last One',
   },
-  {
-    type: 'checkbox-group',
-    required: true,
-    label: 'GDPR Disclaimer',
-    name: 'checkbox-group-1523997171648',
-    group: 'Last One',
-    values: [
-      {
-        label: 'I consent to my data being stored for a period of up to 18 months, and for it to be used to facilitate the scheduling and safety of volunteers behalf of Nowhere (Europe) Ltd. I understand that you will delete my data within one month of my giving formal written notice to request you to do so.',
-        value: 'gdpryes',
-      },
-    ],
-  },
 ]
 
 

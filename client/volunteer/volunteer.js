@@ -6,6 +6,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
+import { agreeTOS } from '../../both/users-methods'
 
 Template.userDashboard.helpers({
   userId: () => Meteor.userId(),

@@ -69,7 +69,7 @@ const SettingsSchema = new SimpleSchema({
 
 EventSettings.attachSchema(SettingsSchema)
 
-export const insertMovie = new ValidatedMethod({
+export const insertSettings = new ValidatedMethod({
   name: 'settings.insert',
   validate: SettingsSchema.validator({ clean: true }),
   run(doc) {

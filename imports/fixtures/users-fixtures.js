@@ -27,8 +27,13 @@ export const createUsers = (Volunteers) => {
     if (!Meteor.users.findOne({ 'emails.address': options.email })) {
       console.log('Create user ', options)
       const userId = Accounts.createUser(options)
-      Meteor.users.update(userId, { $set: { 'emails.0.verified': true } })
-      Meteor.users.update(userId, { $set: { 'profile.firstName': options.name } })
+      Meteor.users.update(userId, {
+        $set: {
+          'emails.0.verified': true,
+          'profile.firstName': options.name,
+          'profile.terms': true,
+        },
+      })
       options.roles.forEach((role) => {
         if (role === 'admin') {
           Roles.addUsersToRoles(userId, role)

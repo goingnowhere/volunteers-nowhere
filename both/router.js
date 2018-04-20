@@ -24,6 +24,13 @@ const AnonymousController = BaseController.extend({
 
 const AuthenticatedController = AnonymousController.extend({
   layoutTemplate: 'userLayout',
+  waitOn() {
+    const userId = Meteor.userId()
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId),
+      Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
+    ]
+  },
 })
 
 const LeadController = AuthenticatedController.extend({
@@ -66,8 +73,6 @@ Router.route('/dashboard', {
       Meteor.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId),
       Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId),
       Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId),
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId),
-      Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
       Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`),
     ]
   },

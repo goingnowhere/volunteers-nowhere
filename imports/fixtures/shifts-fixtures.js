@@ -19,7 +19,7 @@ export const createShifts = (Volunteers) => {
         Object.entries(groupBy(shifts, 'title')).forEach((g) => {
           const groupId = Random.id()
           g[1].forEach((doc) => {
-            console.log(`creating fixture for ${doc.title} ${groupId}`)
+            console.log(`creating fixture for ${doc.title}`)
             const start = new Date(doc.start)
             start.setFullYear(start.getFullYear() + 1)
             const end = new Date(doc.end)

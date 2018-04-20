@@ -14,6 +14,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{pathFor 'userDashboard'}}">{{__ "my_dashboard"}}</a>
           </li>
+          {{#if hasAgreedTOS }}
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" href="#"
               id="navbarDropdown3" role="button" data-toggle="dropdown"
@@ -26,6 +27,7 @@
               {{/each}}
             </div>
           </li>
+          {{/if}}
           {{#if isManager }}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"

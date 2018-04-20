@@ -31,13 +31,6 @@ Schemas.User = new SimpleSchema({
       return this.unset()
     },
   },
-  terms: {
-    type: Boolean,
-    defaultValue: false,
-    autoform: {
-      omit: true,
-    },
-  },
   services: {
     type: Object,
     optional: true,
@@ -52,6 +45,7 @@ Schemas.User = new SimpleSchema({
     optional: true,
     blackbox: true,
   },
+  // mizzao:userstatus
   status: {
     type: Object,
     optional: true,

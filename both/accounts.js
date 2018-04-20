@@ -46,6 +46,23 @@ AccountsTemplates.addField({
   negativeValidation: false,
 })
 
+const fields = AccountsTemplates.getFields()
+for (let i = 0; i < fields.length; i++) {
+  const field = fields[i]
+  if ((field._id === 'terms') || (field._id === 'language')) {
+    // Enable it for any other states you want
+    field.visible = ['signUp', 'enrollAccount']
+  }
+}
+
+if (Meteor.isServer) {
+  Accounts.onCreateUser((options, user) => {
+    user.profile = options.profile
+    return user
+  })
+}
+
+
 // For some reason the default en locale has the wrong first day of the week
 moment.updateLocale('en', {
   week: {
@@ -82,11 +99,7 @@ const postSignUpHook = (userId) => { // eslint-disable-line no-unused-vars
   }
 }
 
-Accounts.onLogin((conn) => {
-  // TODO : use mizzao:user-status instead
-  if (Meteor.isServer) {
-    Meteor.users.update(conn.user._id, { $set: { lastLogin: new Date() } })
-  }
+Accounts.onLogin(function onLogin() {
   if (Meteor.isClient) {
     this.setUserLanguage(Meteor.userId())
   }
