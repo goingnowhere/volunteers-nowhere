@@ -26,7 +26,8 @@ const form = [
   },
   {
     type: 'radio-group',
-    label: 'Gender - (This info is only used for particular shifts where a gender balance is desirable.)',
+    label: 'Gender',
+    description: 'This info is only used for particular shifts where a gender balance is desirable.',
     inline: true,
     name: 'radio-group-1523175199854',
     group: '1 - About You',
@@ -47,7 +48,8 @@ const form = [
   },
   {
     type: 'checkbox-group',
-    label: 'Food preference for if we feed you on shifts - (The local producer we use for meat is not certified halal and our kitchen is not kosher.)',
+    label: 'Food preference for if we feed you on shifts',
+    description: 'The local producer we use for meat is not certified halal and our kitchen is not kosher.',
     name: 'checkbox-group-1516823589180',
     group: '3 - Food',
     values: [
@@ -72,7 +74,8 @@ const form = [
   },
   {
     type: 'checkbox-group',
-    label: 'Grave Allergies - (If you eat these, we have to take you to the hospital.)',
+    label: 'Grave Allergies',
+    description: 'If you eat these  we have to take you to the hospital.',
     inline: true,
     name: 'checkbox-group-1516817336171',
     group: '3 - Food',
@@ -106,7 +109,8 @@ const form = [
   },
   {
     type: 'checkbox-group',
-    label: 'Food Intolerances - (You are not going to die if you come in contacts with traces of these common allergens. There might be contamination. Please be flexible and come talk to us for very special requirements.)',
+    label: 'Food Intolerance&nbsp;',
+    description: 'You are not going to die if you come in contacts with traces of these common allergens. There might be contamination. Please be flexible and come talk to us for very special requirements.',
     inline: true,
     name: 'checkbox-group-1523174426198',
     group: '3 - Food',
@@ -143,7 +147,8 @@ const form = [
   },
   {
     type: 'textarea',
-    label: 'Any medical conditions you think we should be aware of? - (This information is confidential and will be used only in case of emergency.)',
+    label: 'Any medical conditions you think we should be aware of ?',
+    description: 'This information is confidential and will be used only in case of emergency.',
     className: 'form-control',
     name: 'textarea-1516823680441',
     group: '2 - Safety',
@@ -185,16 +190,19 @@ const form = [
   {
     type: 'text',
     required: true,
-    label: 'Emergency contact information - (Name, contact number, languages spoken, relationship to you)',
+    label: 'Emergency contact information',
+    description: 'Name  contact number  languages spoken, relationship to you',
     className: 'form-control',
     name: 'text-1516823884058',
     group: '2 - Safety',
   },
   {
-    type: 'text',
+    type: 'textarea',
     label: 'Anything Else ?',
+    description: 'Anything relevant you might want to tell us.',
     className: 'form-control',
-    name: 'text-1516823974420',
+    name: 'textarea-1516823974420',
+    rows: 3,
     group: 'Last One',
   },
   {
@@ -211,6 +219,7 @@ const form = [
     ],
   },
 ]
+
 
 export const createForm = (Volunteers) => {
   console.log('Initializing User Form')
