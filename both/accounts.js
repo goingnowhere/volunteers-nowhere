@@ -51,7 +51,7 @@ for (let i = 0; i < fields.length; i++) {
   const field = fields[i]
   if ((field._id === 'terms') || (field._id === 'language')) {
     // Enable it for any other states you want
-    field.visible = ['signUp', 'enrollAccount']
+    field.visible = ['signUp', 'enrollAccount', 'resetPwd', 'changePwd']
   }
 }
 

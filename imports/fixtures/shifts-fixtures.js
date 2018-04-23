@@ -40,7 +40,7 @@ export const createShifts = (Volunteers) => {
         projects.forEach((project) => {
           const start = moment(project.start).add(1, 'year').startOf('day')
           const end = moment(project.end).add(1, 'year').endOf('day')
-          const staffing = (new Array(end.dayOfYear() - start.dayOfYear() + 1)).fill({ min: 1, max: 2 })
+          const staffing = (new Array(end.dayOfYear() - (start.dayOfYear() + 1))).fill({ min: 1, max: 2 })
           Volunteers.Collections.Projects.insert({
             priority: 'normal',
             policy: 'requireApproval',

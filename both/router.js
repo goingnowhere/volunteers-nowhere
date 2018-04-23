@@ -7,7 +7,7 @@ Router.plugin('auth', {
     route: 'atSignIn',
   },
   except: [
-    'atSignIn', 'atSignUp', 'changePwd', 'resetPwd', 'forgotPwd', 'enrollAccount',
+    'atSignIn', 'atSignUp', 'changePwd', 'resetPwd', 'forgotPwd', 'atEnrollAccount',
     'homePage', 'signups', 'organization'],
 })
 

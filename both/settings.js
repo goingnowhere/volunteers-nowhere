@@ -15,16 +15,6 @@ SimpleSchema.defineValidationErrorTransform((error) => {
 export const EventSettings = new Mongo.Collection('settings')
 
 const SettingsSchema = new SimpleSchema({
-  eventPeriod: {
-    type: new SimpleSchema({ start: Date, end: Date }),
-    autoform: {
-      type: 'flatpickerange',
-      opts: {
-        altInput: true,
-        altFormat: 'F j, Y',
-      },
-    },
-  },
 
   buildPeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
@@ -36,6 +26,18 @@ const SettingsSchema = new SimpleSchema({
       },
     },
   },
+
+  eventPeriod: {
+    type: new SimpleSchema({ start: Date, end: Date }),
+    autoform: {
+      type: 'flatpickerange',
+      opts: {
+        altInput: true,
+        altFormat: 'F j, Y',
+      },
+    },
+  },
+
   strikePeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
     autoform: {
@@ -61,9 +63,6 @@ const SettingsSchema = new SimpleSchema({
       },
     },
   },
-  emailVolunteers: String,
-  emailNoReplay: String,
-  emailTech: String,
 
 }, { check })
 

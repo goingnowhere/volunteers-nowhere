@@ -62,9 +62,14 @@ Schemas.User = new SimpleSchema({
   },
 })
 
+// each partecipant has a ticket
+const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
+  ticketNumber: String,
+})
+
 const userSchema = Schemas.User.extend({
   profile: {
-    type: MeteorProfile.Schemas.Profile,
+    type: ProfileSchema,
     optional: true,
   },
 })
