@@ -1,8 +1,10 @@
 import { Mandrill } from 'meteor/wylio:mandrill'
 import { Accounts } from 'meteor/accounts-base'
+import { Migrations } from 'meteor/percolate:migrations'
 import { Volunteers } from '../both/init'
 import { runFixtures } from '../imports/fixtures/index'
 import './email'
+import './migrations'
 
 if (process.env.MANDRILL_API_USER) {
   Mandrill.config({
@@ -24,4 +26,9 @@ Meteor.startup(() => {
 // startup function - MAIN
 Meteor.startup(() => {
   runFixtures(Volunteers)
+})
+
+Meteor.startup(() => {
+  // Migrations.unlock()
+  Migrations.migrateTo('latest')
 })
