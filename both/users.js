@@ -64,7 +64,10 @@ Schemas.User = new SimpleSchema({
 
 // each partecipant has a ticket
 const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
-  ticketNumber: String,
+  ticketNumber: {
+    type: String,
+    autoform: { readonly: true },
+  },
 })
 
 const userSchema = Schemas.User.extend({
