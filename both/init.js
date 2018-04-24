@@ -1,6 +1,7 @@
 import { VolunteersClass } from 'meteor/abate:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
+import { moment } from 'meteor/momentjs:moment'
 
 export const Volunteers = new VolunteersClass('nowhere2018')
 
@@ -13,3 +14,8 @@ if (Meteor.isServer) {
   Roles.addRolesToParent('manager', 'admin')
   Roles.addRolesToParent('user', 'manager')
 }
+
+// XXX adding the meoter timezone package for us to load all
+// the timezone file (lot of useless Kb) . This can be avoided
+// using the npm package
+moment.tz.setDefault('Europe/Paris')
