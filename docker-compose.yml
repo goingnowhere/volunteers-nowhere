@@ -1,0 +1,63 @@
+version: '3'
+
+volumes:
+  mongo_dbdata:
+  user_data:
+  backup_volume:
+  cache_volume:
+  mongo_backup:
+
+services:
+  vms:
+    image: pietropietro/volunteers-nowhere:latest
+    restart: unless-stopped
+    links:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb/volunteers
+      - ROOT_URL=http://localhost:3000
+      - DELAY=4
+      - NODE_ENV=production
+    volumes:
+      - user_data:/profilePictures
+    links:
+      - mongodb
+    ports:
+      - 3000:80
+
+  mongodb:
+    image: mongo:latest
+    command: mongod --storageEngine=wiredTiger
+    restart: unless-stopped
+    volumes:
+      - mongo_dbdata:/data/db
+
+  volumerize:
+    image: blacklabelops/volumerize
+    #command: backup
+    volumes:
+      - user_data:/source/user_data:ro
+      - backup_volume:/backup
+      - cache_volume:/volumerize-cache
+    environment:
+      - VOLUMERIZE_SOURCE=/source
+      - VOLUMERIZE_TARGET=file:///backup
+      - VOLUMERIZE_JOBBER_TIME=0 0 2 * * *
+      - VOLUMERIZE_FULL_IF_OLDER_THAN=7D
+      - VOLUMERIZE_DUPLICITY_OPTIONS=--no-encryption --volsize 500
+    restart: always
+
+  mongo-backup:
+    image: tiredofit/mongodb-backup
+    links:
+     - mongodb
+    volumes:
+      - mongo_backup:/backups
+    environment:
+      - DB_HOST=mongodb
+      - DB_DUMP_FREQ=1440
+      - DB_DUMP_BEGIN=0000
+      - DB_CLEANUP_TIME=8640
+      - MD5=TRUE
+      - COMPRESSION=XZ
+    restart: always
