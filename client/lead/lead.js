@@ -6,6 +6,8 @@ import { AutoForm } from 'meteor/aldeed:autoform'
 import { Modal } from 'meteor/peppelg:bootstrap-3-modal'
 import { Volunteers } from '../../both/init'
 
+moment.tz.setDefault('Europe/Paris')
+
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id

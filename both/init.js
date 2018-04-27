@@ -19,3 +19,4 @@ if (Meteor.isServer) {
 // the timezone file (lot of useless Kb) . This can be avoided
 // using the npm package
 moment.tz.setDefault('Europe/Paris')
+Volunteers.setTimeZone('Europe/Paris')
