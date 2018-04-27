@@ -19,7 +19,7 @@ services:
       - DELAY=4
       - NODE_ENV=production
     volumes:
-      - user_data:/profilePictures
+      - user_data:/app/programs/server/profilePictures
     links:
       - mongodb
     ports:
