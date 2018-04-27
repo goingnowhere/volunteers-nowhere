@@ -20,3 +20,11 @@ if (Meteor.isServer) {
 // using the npm package
 moment.tz.setDefault('Europe/Paris')
 Volunteers.setTimeZone('Europe/Paris')
+
+moment.locale('en-US')
+
+// For some reason the default en locale has the wrong first day of the week
+moment.updateLocale('en', { week: { dow: 1 } })
+
+// default language
+i18n.setLocale('en-US')

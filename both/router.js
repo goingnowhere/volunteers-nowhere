@@ -1,14 +1,24 @@
 import { Router, RouteController } from 'meteor/iron:router'
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Volunteers } from './init'
+import './accounts'
+
+AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('changePwd', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('resetPwd', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('forgotPwd', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('enrollAccount', { redirect: '/dashboard' })
 
 Router.plugin('auth', {
   authenticate: {
     route: 'atSignIn',
   },
   except: [
-    'atSignIn', 'atSignUp', 'changePwd', 'resetPwd', 'forgotPwd', 'atEnrollAccount',
-    'homePage', 'signups', 'organization'],
+    'atSignIn', 'atSignUp',
+    'atChangePwd', 'atEnrollAccount',
+    'atForgotPwd', 'atResetPwd',
+    'homePage',
+  ],
 })
 
 Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' })

@@ -20,12 +20,6 @@ AccountsTemplates.configure({
   // termsUrl: 'terms-of-use',
 })
 
-AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('changePwd', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('resetPwd')
-AccountsTemplates.configureRoute('forgotPwd')
-AccountsTemplates.configureRoute('enrollAccount')
-
 AccountsTemplates.addField({
   _id: 'language',
   type: 'select',
@@ -62,18 +56,6 @@ if (Meteor.isServer) {
     return user
   })
 }
-
-
-// For some reason the default en locale has the wrong first day of the week
-moment.updateLocale('en', {
-  week: {
-    dow: 1,
-  },
-})
-
-// default language
-i18n.setLocale('en-US')
-moment.locale('en-US')
 
 this.setUserLanguage = (userId) => {
   const user = Meteor.users.findOne(userId)
