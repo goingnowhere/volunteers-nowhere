@@ -51,3 +51,45 @@
     {{> emailForms }}
   </div>
 </template>
+
+<template name="managerUserList">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 bg-grey">
+        <h3>Manager</h3>
+        <h5 class="mb-2 dark-text">{{__ "total_users"}}:</h5> {{total_users}}
+        <h5 class="mb-2 dark-text">{{__ "profile_filled"}}:</h5> {{profile_filled}}
+        <h5 class="mb-2 dark-text">{{__ "user_with_duties"}}:</h5> {{with_duties}}
+        <br/>
+        <button type="button" class="btn btn-default btn-sm" data-action="new_user">
+          {{__ "new_user" }}
+        </button>
+      </div>
+      <div class="col pt-2">
+        {{> userSearch }}
+        {{> pages }}
+        {{> pagesNav }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="managerUser">
+<!-- {{#if Template.subscriptionsReady}} -->
+  {{#allUsersProfile}}
+    {{#usersProfileActions}}
+      {{> makeAdminUserAction}}
+      {{> makeManageUserAction}}
+      {{> makeUserUserAction}}
+      {{> removeUserAction}}
+      {{> banUserAction }}
+      {{> unBanUserAction }}
+    {{/usersProfileActions}}
+    <!-- <button type="button" class="btn btn-default btn-sm"
+      data-action="user_form" data-id="{{_id}}" >
+      {{__ "user_form" }}
+    </button> -->
+    <!-- {{> formBuilderDisplay userform }} -->
+  {{/allUsersProfile}}
+<!-- {{/if}} -->
+</template>

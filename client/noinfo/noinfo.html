@@ -123,6 +123,11 @@
 <template name="noInfoUser">
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
+    {{#usersProfileActions}}
+      {{> enrollUserAction }}
+      {{> editProfileUserAction }}
+      {{> changePwdUserAction}}
+    {{/usersProfileActions}}
     <button type="button" class="btn btn-default btn-sm"
       data-action="user_form" data-id="{{_id}}" >
       {{__ "user_form" }}

@@ -40,14 +40,18 @@ AccountsTemplates.addField({
   negativeValidation: false,
 })
 
-const fields = AccountsTemplates.getFields()
-for (let i = 0; i < fields.length; i++) {
-  const field = fields[i]
-  if ((field._id === 'terms') || (field._id === 'language')) {
-    // Enable it for any other states you want
-    field.visible = ['signUp', 'enrollAccount', 'resetPwd', 'changePwd']
+// Add terms and language fields at enrollment.
+// at startup to be executed after initialization
+Meteor.startup(() => {
+  const fields = AccountsTemplates.getFields()
+  for (let i = 0; i < fields.length; i++) {
+    const field = fields[i]
+    if ((field._id === 'terms') || (field._id === 'language')) {
+      // Enable it for any other states you want
+      field.visible = ['signUp', 'atEnrollAccount', 'enrollAccount']
+    }
   }
-}
+})
 
 if (Meteor.isServer) {
   Accounts.onCreateUser((options, user) => {
