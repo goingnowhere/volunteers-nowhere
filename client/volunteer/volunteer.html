@@ -104,6 +104,7 @@
 <template name="volunteerForm">
   <div class="container">
     <h2>{{__ "volunteer_form"}}</h2>
+    <p>{{__ "volunteer_form_help"}}</p>
     {{> addVolunteerForm }}
   </div>
 </template>
@@ -113,59 +114,4 @@
     <h2>{{__ "user_details"}}</h2>
     {{> userProfile }}
   </div>
-</template>
-
-<!-- <template name="volunteerFormDisplay">
-  <div class="container">
-    <div class="card">
-      <div class="card-header"><h3 class="card-title">{{__ "volunteer_profile"}}</h3></div>
-      <img src="{{imageFileLink user.profile.picture}}" class="rounded-circle header-avatar">
-      <div class="card-text">
-        <ul class="list-unstyled">
-          <li>
-            <strong>{{__ "full_name"}}</strong>: {{ getUserName user._id }}
-            {{#if user.verified}}<span class="text-success">{{fa "check"}}</span>{{/if}}
-          </li>
-          <li><strong>{{__ "last_login"}}</strong>: {{formatDateTime user.lastLogin}}</li>
-        </ul>
-      </div>
-      <div class="card-body">
-        {{> formBuilderDisplay }}
-      </div>
-    </div>
-  </div>
-</template> -->
-
-<!-- shifts & task the user has signed up for -->
-<template name="filterstest">
-    <h3>{total nb of shifts+tasks} Missions</h3>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle"
-        data-toggle="dropdown" role="button"
-        aria-haspopup="true" aria-expanded="false">
-        <p class="button">Filter shifts<span class="caret"></span></p>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="{{isActiveRoute 'managerView'}}">
-          <a href="{{pathFor 'managerView'}}">each Team names</a>
-        </li>
-        <li class="{{isActiveRoute 'allUsersList'}}">
-          <a href="{{pathFor 'allUsersList'}}">each Day</a>
-        </li>
-        <li class="{{isActiveRoute 'allUsersList'}}">
-          <a href="{{pathFor 'allUsersList'}}">Tasks</a>
-        </li>
-        <li class="{{isActiveRoute 'allUsersList'}}">
-          <a href="{{pathFor 'allUsersList'}}">Shifts</a>
-        </li>
-      </ul>
-    </li>
-
-    Shifts + tasks
-    separators
-</template>
-
-<!-- the shifts & tasks that could fit to the user -->
-<template name="matchItems">
-    identical to the list on top, exept with different content
 </template>

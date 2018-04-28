@@ -58,5 +58,6 @@
   "filter_selected_quirk": "quirks selected",
   "filter_selected_priority": "priorities selected",
   "wrong_or_required_field": "Error while validating the form",
-  "email_templates": "Email Templates"
+  "email_templates": "Email Templates",
+  "volunteer_form_help": "Please tell us something about you. We need this information to help you to find the best volunteering shift for your skill and keep you safe."
 }
