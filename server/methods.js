@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { getContext } from './email'
-// import { Volunteers } from '../both/init'
+import { Volunteers } from '../both/init'
 
 const EnrollUserSchema = new SimpleSchema({
   email: String,
@@ -24,6 +24,27 @@ export const enrollUser = new ValidatedMethod({
     console.log('Enroll ', user)
     const userId = Accounts.createUser(user)
     Accounts.sendEnrollmentEmail(userId)
+  },
+})
+
+const ChangePasswordSchema = new SimpleSchema({
+  userId: String,
+  password: String,
+  password_again: String,
+})
+
+export const adminChangeUserPassword = new ValidatedMethod({
+  name: 'Accounts.adminChangeUserPassword',
+  validate: ChangePasswordSchema.validator(),
+  run(doc) {
+    if (!Volunteers.isManager()) {
+      throw new Meteor.Error('unauthorized', "You don't have permission for this operation")
+    }
+    if (doc.password === doc.password_again) {
+      Accounts.setPassword(doc.userId, doc.password)
+    } else {
+      throw new Meteor.Error('userError', "Passwords don't match")
+    }
   },
 })
 

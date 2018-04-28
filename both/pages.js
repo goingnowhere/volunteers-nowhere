@@ -19,6 +19,22 @@ const NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
 })
 Pages.NoInfoUserPages = NoInfoUserPages
 
+const ManagerUserPages = new Meteor.Pagination(Meteor.users, {
+  itemTemplate: 'managerUser',
+  templateName: 'managerUserList',
+  fastRender: true,
+  perPage: 20,
+  sort: { createdAt: -1 },
+  fields: {
+    profile: 1, emails: 1, createdAt: 1, roles: 1, status: 1,
+  },
+  availableSettings: {
+    filters: true,
+    // settings: true
+  },
+})
+Pages.ManagerUserPages = ManagerUserPages
+
 export const EnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
   itemTemplate: 'allUsersTableRow',
   templateName: 'allUsersTable',

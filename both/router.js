@@ -215,6 +215,12 @@ Router.route('/manager/emailForms', {
   controller: ManagerController,
 })
 
+Router.route('/manager/userList', {
+  name: 'managerUserList',
+  controller: ManagerController,
+  data() { return { page: 'ManagerUserPages' } },
+})
+
 // leads / metaleads
 // Router.route('/admin/users', {
 //   name: 'allUsersList',

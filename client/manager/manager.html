@@ -75,21 +75,17 @@
 </template>
 
 <template name="managerUser">
-<!-- {{#if Template.subscriptionsReady}} -->
+{{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
     {{#usersProfileActions}}
-      {{> makeAdminUserAction}}
-      {{> makeManageUserAction}}
-      {{> makeUserUserAction}}
-      {{> removeUserAction}}
-      {{> banUserAction }}
-      {{> unBanUserAction }}
+      <!-- {{> makeAdminUserAction user=this}} -->
+      {{> makeManageUserAction user=this}}
+      {{> makeUserUserAction user=this}}
+      {{> removeUserAction user=this}}
+      <!-- TODO -->
+      <!-- {{> banUserAction user=this}} -->
+      <!-- {{> unBanUserAction user=this}} -->
     {{/usersProfileActions}}
-    <!-- <button type="button" class="btn btn-default btn-sm"
-      data-action="user_form" data-id="{{_id}}" >
-      {{__ "user_form" }}
-    </button> -->
-    <!-- {{> formBuilderDisplay userform }} -->
   {{/allUsersProfile}}
-<!-- {{/if}} -->
+{{/if}}
 </template>

@@ -1,5 +1,9 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
+import { AutoFormComponents } from 'meteor/abate:autoform-components'
+import { i18n } from 'meteor/universe:i18n'
+import { Bert } from 'meteor/themeteorchef:bert'
+
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
 
@@ -127,11 +131,31 @@ Template.allUsersTableRow.events({
   },
 })
 
-// Template.noInfoUser.helpers({
-//   userform() {
-//     const userId = Template.currentData()._id
-//     const form = Volunteers.Collections.VolunteerForm.findOne({ userId })
-//     const user = Meteor.users.findOne(userId)
-//     return { formName: 'VolunteerForm', form, user }
-//   },
-// })
+const callbackNotice = function callback(title, message) {
+  return (function callback(error, res) {
+    if (error) {
+      Bert.alert({
+        title: i18n.__('error'),
+        message: error.message,
+        type: 'error',
+      })
+    } else if (title) {
+      Bert.alert({
+        title: i18n.__(title),
+        message: i18n.__(message),
+        type: 'info',
+      })
+    }
+  })
+}
+Template.noInfoUser.helpers({
+  callbackEnrollment() {
+    return callbackNotice('invitation_sent', 'invitation_sent')
+  },
+})
+
+Template.noInfoUser.helpers({
+  callbackRemove() {
+    return callbackNotice()
+  },
+})

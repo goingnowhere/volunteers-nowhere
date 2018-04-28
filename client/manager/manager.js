@@ -90,3 +90,14 @@ Template.managerEventSettings.helpers({
   form: () => ({ collection: EventSettings }),
   data: () => (EventSettings.findOne()),
 })
+
+Template.managerUserList.helpers({
+  total_users: () => Meteor.users.find().count(),
+  profile_filled: () =>
+    // TODO proper subscription
+    Volunteers.Collections.VolunteerForm.find().count(),
+  with_duties: () =>
+    // TODO aggregation
+    0,
+
+})

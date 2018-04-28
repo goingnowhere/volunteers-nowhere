@@ -124,9 +124,9 @@
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
     {{#usersProfileActions}}
-      {{> enrollUserAction }}
-      {{> editProfileUserAction }}
-      {{> changePwdUserAction}}
+      {{> enrollUserAction callback=callbackEnrollment user=this }}
+      {{> editProfileUserAction user=this }}
+      {{> changePwdUserAction user=this }}
     {{/usersProfileActions}}
     <button type="button" class="btn btn-default btn-sm"
       data-action="user_form" data-id="{{_id}}" >

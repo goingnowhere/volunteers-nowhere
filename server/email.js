@@ -1,13 +1,25 @@
 import { Mongo } from 'meteor/mongo'
-import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
-import { Volunteers } from '../both/init'
+import { ValidatedMethodWithMixin, isManagerMixin, Volunteers } from '../both/init'
 
-// TODO add auth mixins !
-export const insertEmailTemplateMethod = new ValidatedMethod(EmailForms.insertEmailTemplate)
-export const updateEmailTemplateMethod = new ValidatedMethod(EmailForms.updateEmailTemplate)
-export const removeEmailTemplateMethod = new ValidatedMethod(EmailForms.removeEmailTemplate)
+export const insertEmailTemplateMethod =
+  ValidatedMethodWithMixin(
+    EmailForms.insertEmailTemplate,
+    [isManagerMixin],
+  )
+
+export const updateEmailTemplateMethod =
+  ValidatedMethodWithMixin(
+    EmailForms.updateEmailTemplate,
+    [isManagerMixin],
+  )
+
+export const removeEmailTemplateMethod =
+  ValidatedMethodWithMixin(
+    EmailForms.removeEmailTemplate,
+    [isManagerMixin],
+  )
 
 export const EmailLogs = new Mongo.Collection('emailLogs')
 

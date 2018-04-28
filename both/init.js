@@ -1,5 +1,6 @@
 import { VolunteersClass } from 'meteor/abate:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
+import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { Roles } from 'meteor/piemonkey:roles'
 import { moment } from 'meteor/momentjs:moment'
 
@@ -28,3 +29,20 @@ moment.updateLocale('en', { week: { dow: 1 } })
 
 // default language
 i18n.setLocale('en-US')
+
+export const ValidatedMethodWithMixin = (function add(method, mixins) {
+  method.mixins = mixins
+  return new ValidatedMethod(method)
+})
+
+export const isManagerMixin = function isManagerMixin(methodOptions) {
+  const { run } = methodOptions
+  const authRun = function authRun(doc) {
+    if (!Volunteers.isManager()) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return run(doc)
+  }
+  methodOptions.run = authRun
+  return methodOptions
+}
