@@ -73,11 +73,13 @@ Template.metaleadDepartmentView.helpers({
     const deptId = Template.instance().departmentId
     // XXX: this helper runs more then once. I think it's a problem with the subscription
     // getting ready ...
-    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
-      const wanted = Volunteers.Collections.Lead.find({ parentId: team._id }).count()
-      const covered = Volunteers.Collections.LeadSignups.find({ parentId: team._id, status: 'confirmed' }).count()
-      return { wanted, covered }
-    })
+    const l = Volunteers.Collections.Department.find({ _id: deptId }).fetch()
+      .concat(Volunteers.Collections.Team.find({ parentId: deptId }).fetch())
+      .map((team) => {
+        const wanted = Volunteers.Collections.Lead.find({ parentId: team._id }).count()
+        const covered = Volunteers.Collections.LeadSignups.find({ parentId: team._id, status: 'confirmed' }).count()
+        return { wanted, covered }
+      })
     return _.reduce(l, (s, acc) => ({
       wanted: s.wanted + acc.wanted,
       covered: s.covered + acc.covered,
@@ -87,7 +89,8 @@ Template.metaleadDepartmentView.helpers({
   shiftsTeam: teamId => ({ wanted: 0, covered: 0 }),
   allTeams: () => {
     const deptId = Template.instance().departmentId
-    return Volunteers.Collections.Team.find({ parentId: deptId })
+    return Volunteers.Collections.Department.find({ _id: deptId }).fetch()
+      .concat(Volunteers.Collections.Team.find({ parentId: deptId }).fetch())
   },
   allVolunteers: () => {
     const deptId = Template.instance().departmentId

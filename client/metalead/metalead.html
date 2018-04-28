@@ -50,7 +50,13 @@
           </thead>
           {{#each team in allTeams}}
             <tr class="{{#if $eq ($len (leadsTeam team)) 0 }}bg-warning{{/if}}">
-              <td><a href="{{pathFor "leadTeamView" _id=team._id}}"> {{team.name}}</a></td>
+              <td>
+                {{#unless $eq _id team._id}}
+                  <a href="{{pathFor "leadTeamView" _id=team._id}}">{{team.name}}</a>
+                {{else}}
+                  {{team.name}}
+                {{/unless}}
+              </td>
               <td>
                 <small>
                   <ul class="list-unstyled">
