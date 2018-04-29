@@ -320,23 +320,26 @@ Router.route('/noinfo/userList', {
   data() { return { page: 'NoInfoUserPages' } },
 })
 
-// Router.route('/noinfo/user/:_id', {
-//   name: 'volunteerFormDisplay',
-//   controller: AuthenticatedController,
-//   data: function() {
-//     if (this.params && this.params._id && this.ready()) {
-//       var user = this.params._id;
-//       form = Volunteers.Collections.VolunteerForm.findOne({userId:user._id});
-//       return { formName: "VolunteerForm", form: form, user: user};
-//     }
-//   },
-//   waitOn: function () {
-//     if (this.params && this.params._id) {
-//       var user = this.params._id;
-//       return [
-//         Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`,{userId: userId}),
-//         Meteor.subscribe(`meteor-user-profiles.ProfilePictures`,userId)
-//       ];
-//     }
-//   }
-// });
+Router.route('/noinfo/user/:_id', {
+  name: 'noInfoUserProfile',
+  controller: LeadController,
+  data() {
+    if (this.params && this.params._id && this.ready()) {
+      const user = Meteor.users.findOne(this.params._id)
+      const userform = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
+      return { userform, user }
+    } return null
+  },
+  waitOn() {
+    if (this.params && this.params._id) {
+      const userId = this.params._id
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId),
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId),
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId),
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, { userId }),
+        Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
+      ]
+    } return null
+  },
+})

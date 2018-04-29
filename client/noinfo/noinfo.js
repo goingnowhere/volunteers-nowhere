@@ -88,12 +88,12 @@ Template.noInfoUserList.events({
   },
 
   'click [data-action="user_form"]': (event, template) => {
-    const userId = template.$(event.target).data('id')
+    const userId = template.$(event.target).data('userid')
     const form = Volunteers.Collections.VolunteerForm.findOne({ userId })
     const user = Meteor.users.findOne(userId)
     const userform = { formName: 'VolunteerForm', form, user }
     AutoFormComponents.ModalShowWithTemplate(
-      'formBuilderDisplay',
+      'noInfoUserProfile',
       userform, 'User Form', 'lg',
     )
   },

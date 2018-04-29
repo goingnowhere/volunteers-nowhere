@@ -128,11 +128,37 @@
       {{> editProfileUserAction user=this }}
       {{> changePwdUserAction user=this }}
     {{/usersProfileActions}}
+    <br/>
     <button type="button" class="btn btn-default btn-sm"
-      data-action="user_form" data-id="{{_id}}" >
+      data-action="user_form" data-userid="{{_id}}" >
       {{__ "user_form" }}
     </button>
-    <!-- {{> formBuilderDisplay userform }} -->
+    <!-- <a href="{{pathFor 'noInfoUserProfile'}}">{{__ "user_details"}}</a> -->
   {{/allUsersProfile}}
 {{/if}}
+</template>
+
+<template name="noInfoUserProfile">
+  {{#if Template.subscriptionsReady}}
+  <div class="container-fluid">
+    <div class="row">
+      {{debug}}
+      <div class="col">
+        {{> allUsersProfile user}}
+        <p>
+        {{> formBuilderDisplay
+          formName=formName
+          form=form
+          user=user}}
+        </p>
+      </div>
+      <div class="col">
+        <h5 class="mb-2 dark-text">{{__ "responsabilities"}} </h5>
+        {{> userResponsabilities userId=user._id }}
+        <h2 class="header">{{__ "shifts" }}</h2>
+        {{> bookedTable userId=user._id }}
+      </div>
+    </div>
+  </div>
+  {{/if}}
 </template>
