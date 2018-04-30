@@ -46,3 +46,27 @@ export const isManagerMixin = function isManagerMixin(methodOptions) {
   methodOptions.run = authRun
   return methodOptions
 }
+
+export const isManagerOrLeadMixin = function isManagerOrLeadMixin(methodOptions) {
+  const { run } = methodOptions
+  const authRun = function authRun(doc) {
+    if (!Volunteers.isManagerOrLead()) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return run(doc)
+  }
+  methodOptions.run = authRun
+  return methodOptions
+}
+
+export const isLoggedInMixin = function isLoggedInMixin(methodOptions) {
+  const { run } = methodOptions
+  const authRun = function authRun(doc) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return run(doc)
+  }
+  methodOptions.run = authRun
+  return methodOptions
+}

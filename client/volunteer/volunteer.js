@@ -62,9 +62,6 @@ Template.userResponsabilities.helpers({
   isNoInfo: () => {
     const { userId } = Template.instance()
     const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-    console.log(noInfo)
-
-    console.log(Volunteers.isManagerOrLead(userId, [noInfo._id]))
     return (noInfo != null) && Volunteers.isManagerOrLead(userId, [noInfo._id])
   },
 })

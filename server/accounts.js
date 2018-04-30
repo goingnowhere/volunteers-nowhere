@@ -1,4 +1,9 @@
-import { MeteorProfile, isManagerMixin, ValidatedMethodWithMixin } from '../both/init'
+import {
+  MeteorProfile,
+  isManagerMixin,
+  ValidatedMethodWithMixin,
+  isLoggedInMixin,
+} from '../both/init'
 
 export const userProfileRemoveUser =
   ValidatedMethodWithMixin(
@@ -9,7 +14,7 @@ export const userProfileRemoveUser =
 export const userProfileUpdateUser =
   ValidatedMethodWithMixin(
     MeteorProfile.Methods.userProfileUpdateUser,
-    [isManagerMixin],
+    [isLoggedInMixin],
   )
 
 export const userProfileSendEnrollAccount =
