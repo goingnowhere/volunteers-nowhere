@@ -3,12 +3,6 @@ import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Volunteers } from './init'
 import './accounts'
 
-AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('changePwd', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('resetPwd', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('forgotPwd', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('enrollAccount', { redirect: '/dashboard' })
-
 Router.plugin('auth', {
   authenticate: {
     route: 'atSignIn',
@@ -17,7 +11,7 @@ Router.plugin('auth', {
     'atSignIn', 'atSignUp',
     'atChangePwd', 'atEnrollAccount',
     'atForgotPwd', 'atResetPwd',
-    'homePage',
+    'homePage', 'volAgreement',
   ],
 })
 
@@ -49,10 +43,25 @@ const LeadController = AuthenticatedController.extend({
 const ManagerController = AuthenticatedController.extend({
 })
 
+AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('signOut', { redirect: '/' })
+AccountsTemplates.configureRoute('changePwd', {
+  redirect: '/dashboard',
+  layoutTemplate: 'userLayout',
+})
+AccountsTemplates.configureRoute('resetPwd', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('forgotPwd', { redirect: '/dashboard' })
+AccountsTemplates.configureRoute('enrollAccount', { redirect: '/dashboard' })
+
 // public pages
 Router.route('/', {
   name: 'homePage',
   controller: BaseController,
+})
+
+Router.route('/volunteers-agreement', {
+  name: 'volAgreement',
+  controller: AnonymousController,
 })
 
 Router.route('/organization', {

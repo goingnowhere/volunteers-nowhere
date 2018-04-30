@@ -6,7 +6,7 @@ import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from './init'
 
 AccountsTemplates.configure({
-  defaultLayout: 'userLayout',
+  defaultLayout: 'homeLayout',
   enablePasswordChange: true,
   showForgotPasswordLink: true,
   sendVerificationEmail: true,

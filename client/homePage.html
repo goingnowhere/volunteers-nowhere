@@ -1,42 +1,51 @@
+<template name="hompageNav">
+  <nav class="navbar navbar-expand-lg bg-primary fixed-top text-uppercase" id="mainNav">
+      <a class="navbar-brand js-scroll-trigger" href="/">
+        <img src="/img/compass.svg" class="img-fluid header-avatar">
+      </a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase text-white rounded"
+        type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu<i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 js-scroll-trigger" href="{{pathFor 'atSignIn'}}">
+              <i class="fa fa-download mr-2"></i>Login Now
+            </a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+            href="/#portfolio">Organization</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+            href="/#about">About</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+            href="/#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+</template>
+
 <template name="homeLayout">
   {{> connectionBanner}}
-  {{> yield}}
+
+  <div id="page-top">
+    {{> hompageNav }}
+
+    {{> yield}}
+  </div>
 </template>
 
 <template name="homePage">
-  <body id="page-top">
+  <div id="page-top">
 
-    <nav class="navbar navbar-expand-lg bg-primary fixed-top text-uppercase" id="mainNav">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">
-          <img src="/img/compass.svg" class="img-fluid header-avatar">
-        </a>
-        <button class="navbar-toggler navbar-toggler-right text-uppercase text-white rounded"
-          type="button" data-toggle="collapse" data-target="#navbarResponsive"
-          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu<i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav">
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 js-scroll-trigger" href="{{pathFor 'atSignIn'}}">
-                <i class="fa fa-download mr-2"></i>Login Now
-              </a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-              href="#portfolio">Organization</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-              href="#about">About</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-              href="#contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-    </nav>
+    {{> hompageNav}}
 
     <!-- Header -->
     <header class="masthead bg-primary text-white text-center">
@@ -175,7 +184,7 @@
       </a>
     </div>
 
-  </body>
+  </div>
 
 </template>
 
@@ -186,14 +195,14 @@
       <label for="at-field-{{_id}}">
       <input type="{{type}}" id="at-field-{{_id}}" name="at-field-{{_id}}" {{disabled}}>
         <span class="checkbox-material"><span class="check"></span></span>
-        I've read and agree to the <a href="https://www.goingnowhere.org">Volunteer Agreement</a> and GDPR.
+        I've read and agree to the <a href="/volunteers-agreement">Volunteer Agreement</a> and GDPR.
         <div class="mt-2">
           <label>GDPR Disclaimer: </label>
           <p>
-             I consent to my data being stored for a period of up to 18 months, and for it to be used
-             to facilitate the scheduling and safety of volunteers behalf of Nowhere (Europe) Ltd.
-             I understand that you will delete my data within one month of my giving formal written
-             notice to request you to do so.
+            I consent to my data being stored for a period of up to 18 months from the  last date my data was
+            entered or modified, and for it to be used only to facilitate the scheduling and safety of volunteers
+            on behalf of Nowhere (Europe) Ltd. I understand that you will delete my data within one month of
+            my giving formal written notice to the registered address of Nowhere (Europe) Ltd, asking you to do so.
            </p>
          </div>
       </label>
