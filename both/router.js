@@ -37,11 +37,27 @@ const AuthenticatedController = AnonymousController.extend({
   },
 })
 
-const LeadController = AuthenticatedController.extend({
+const secureControllers = (function secureControllers(authFun) {
+  return {
+    onBeforeAction() {
+      if (authFun(Meteor.userId())) {
+        this.next()
+      } else {
+        this.redirect('dashboard')
+      }
+    },
+    onRun() {
+      if (authFun(Meteor.userId())) {
+        this.next()
+      } else {
+        this.redirect('dashboard')
+      }
+    },
+  }
 })
 
-const ManagerController = AuthenticatedController.extend({
-})
+const LeadController = AuthenticatedController.extend(secureControllers(userId => Volunteers.isManagerOrLead(userId)))
+const ManagerController = AuthenticatedController.extend(secureControllers(userId => Volunteers.isManager(userId)))
 
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
 AccountsTemplates.configureRoute('changePwd', {
@@ -137,66 +153,17 @@ Router.route('/department/:_id', {
 Router.route('/profile', {
   name: 'volunteerForm',
   controller: AuthenticatedController,
-  waitOn() {
-    return [
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
-    ]
-  },
 })
 
 Router.route('/profile/settings', {
   name: 'accountSettings',
   controller: AuthenticatedController,
-  waitOn() {
-    return [
-      Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
-    ]
-  },
 })
 
 Router.route('/sign-out', {
   name: 'atSignOut',
   onBeforeAction: AccountsTemplates.logout,
 })
-
-// XXX: Unused for the moment
-// Router.route('/signups', {
-//   name: 'signupsAll',
-//   controller: AuthenticatedController,
-// })
-//
-// Router.route('/signups/leads', {
-//   name: 'signupsLeads',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data: () => ({
-//     searchQuery: new ReactiveVar({ limit: 4, duties: ['lead'] }),
-//   }),
-// })
-//
-// Router.route('/signups/shifts', {
-//   name: 'signupsShifts',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data: () => ({
-//     searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'] }),
-//   }),
-// })
-//
-// Router.route('/signups/shifts/:_id', {
-//   name: 'signupsShiftTeam',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data() {
-//     if (this.params && this.params._id) {
-//       const teamId = this.params._id
-//       return {
-//         searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'], teams: [teamId] }),
-//       }
-//     }
-//     return null
-//   },
-// })
 
 // settings / administrative pages pages
 // accessible either to leads / metalead or manager
@@ -228,15 +195,6 @@ Router.route('/manager/userList', {
   controller: ManagerController,
   data() { return { page: 'ManagerUserPages' } },
 })
-
-// leads / metaleads
-// Router.route('/admin/users', {
-//   name: 'allUsersList',
-//   controller: LeadController,
-//   waitOn() {
-//     return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
-//   },
-// })
 
 // lead pages
 Router.route('/lead', {
@@ -320,7 +278,7 @@ Router.route('/noinfo/userList', {
   data() { return { page: 'NoInfoUserPages' } },
 })
 
-Router.route('/noinfo/user/:_id', {
+/* Router.route('/noinfo/user/:_id', {
   name: 'noInfoUserProfile',
   controller: LeadController,
   data() {
@@ -330,16 +288,4 @@ Router.route('/noinfo/user/:_id', {
       return { userform, user }
     } return null
   },
-  waitOn() {
-    if (this.params && this.params._id) {
-      const userId = this.params._id
-      return [
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId),
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId),
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId),
-        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, { userId }),
-        Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
-      ]
-    } return null
-  },
-})
+}) */
