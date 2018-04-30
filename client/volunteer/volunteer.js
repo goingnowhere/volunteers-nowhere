@@ -29,7 +29,6 @@ Template.userResponsabilities.onCreated(function OnCreated() {
   const template = this
   if ((template.data) && (template.data.userId)) {
     template.userId = template.data.userId
-    console.log('message')
   } else {
     template.userId = Meteor.userId()
   }

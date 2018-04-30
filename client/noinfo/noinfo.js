@@ -104,6 +104,14 @@ Template.noInfoUser.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
+  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+})
+
+Template.noInfoUserProfile.onCreated(function onCreated() {
+  const template = this
+  const userId = template.data._id
+  template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
+  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
 Template.allUsersTableRow.events({
