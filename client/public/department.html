@@ -4,11 +4,14 @@
       <div class="card">
         <div class="card-header">
           <h5>{{ name }}</h5>
+          {{#if email}}
+          <h5 class="text-muted text-right">{{__ "contact"}}: {{ email }}</h5>
+          {{/if}}
         </div>
-        <p>{{description}}</p>
+        <p class="m-2">{{description}}</p>
       </div>
     </div>
-    <h3>Teams Within this Department</h3>
+    <h3 class="pt-2">{{__ "teams_in_this_department"}}</h3>
     {{#each team in teams}}
       {{> signupsListTeam team=team }}
     {{/each}}
