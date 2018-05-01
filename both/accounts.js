@@ -23,7 +23,7 @@ AccountsTemplates.configure({
       if (!Meteor.user()) {
         Router.go('homePage')
       }
-    }, 50)
+    }, 100)
   },
 })
 

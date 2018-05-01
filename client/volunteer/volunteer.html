@@ -12,22 +12,7 @@
           <a href="{{pathFor 'accountSettings'}}">{{__ "add_picture"}}</a>
         {{/if}}
         <!-- <h5 class="mb-2 dark-text">{{__ "responsabilities"}} </h5> -->
-        <ul class="list-unstyled">
-          {{#if isManager }}<li><span class="mb-2 dark-text">{{__ "role"}}: </span>Manager</li>{{/if}}
-          {{#if isNoInfo }}<li><span class="mb-2 dark-text">{{__ "noInfo"}}: </span>Member</li>{{/if}}
-          {{#each team in leads}}
-            <li>
-              <span class="mb-2 dark-text">{{__ "lead"}}:</span>
-              <a href="{{pathFor 'leadTeamView' _id=team._id }}">{{team.name}}</a>
-            </li>
-          {{/each}}
-          {{#each dept in metaleads}}
-            <li>
-              <span class="mb-2 dark-text">{{__ "metalead"}}: </span>
-              <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}">{{dept.name}}</a>
-            </li>
-          {{/each}}
-        </ul>
+        {{> userResponsibilities }}
         <br/>
         <button type="button" class="btn btn-default btn-sm" data-action="edit_form">
           {{__ "edit_user_info" }}
@@ -52,6 +37,25 @@
 <!-- {{else}}
   {{> loader }} -->
 {{/if}}
+</template>
+
+<template name="userResponsibilities">
+  <ul class="list-unstyled">
+    {{#if isManager }}<li><span class="mb-2 dark-text">{{__ "role"}}: </span>Manager</li>{{/if}}
+    {{#if isNoInfo }}<li><span class="mb-2 dark-text">{{__ "noInfo"}}: </span>Member</li>{{/if}}
+    {{#each team in leads}}
+      <li>
+        <span class="mb-2 dark-text">{{__ "lead"}}:</span>
+        <a href="{{pathFor 'leadTeamView' _id=team._id }}">{{team.name}}</a>
+      </li>
+    {{/each}}
+    {{#each dept in metaleads}}
+      <li>
+        <span class="mb-2 dark-text">{{__ "metalead"}}: </span>
+        <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}">{{dept.name}}</a>
+      </li>
+    {{/each}}
+  </ul>
 </template>
 
 <template name="filteredSignupsList">

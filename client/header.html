@@ -22,7 +22,7 @@
                 {{__ "explore"}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-              {{#each dept in departments }}
+              {{#each dept in allDepartments }}
                 <a class="dropdown-item" href="{{pathFor 'publicDepartmentView' _id=dept._id }}" >{{dept.name}}</a>
               {{/each}}
             </div>

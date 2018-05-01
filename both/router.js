@@ -37,10 +37,68 @@ const AuthenticatedController = AnonymousController.extend({
   },
 })
 
+const NoInfoController = AuthenticatedController.extend({
+  waitOn() {
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`),
+    ]
+  },
+  onBeforeAction() {
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    console.log(noInfo)
+
+    if (Volunteers.isManager(Meteor.userId()) ||
+        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
+  /* onRun() {
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    console.log(noInfo)
+
+    if (Volunteers.isManager(Meteor.userId()) ||
+        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  }, */
+})
+
 const LeadController = AuthenticatedController.extend({
+  onBeforeAction() {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [this.params._id])) {
+      this.next()
+    } else {
+      this.render('userDashboard')
+    }
+  },
+  onRun() {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [this.params._id])) {
+      this.next()
+    } else {
+      this.render('userDashboard')
+    }
+  },
 })
 
 const ManagerController = AuthenticatedController.extend({
+  onBeforeAction() {
+    if (Volunteers.isManager()) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
+  onRun() {
+    if (Volunteers.isManager()) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
 })
 
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
@@ -137,66 +195,17 @@ Router.route('/department/:_id', {
 Router.route('/profile', {
   name: 'volunteerForm',
   controller: AuthenticatedController,
-  waitOn() {
-    return [
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, Meteor.userId()),
-    ]
-  },
 })
 
 Router.route('/profile/settings', {
   name: 'accountSettings',
   controller: AuthenticatedController,
-  waitOn() {
-    return [
-      Meteor.subscribe('meteor-user-profiles.ProfilePictures'),
-    ]
-  },
 })
 
 Router.route('/sign-out', {
   name: 'atSignOut',
   onBeforeAction: AccountsTemplates.logout,
 })
-
-// XXX: Unused for the moment
-// Router.route('/signups', {
-//   name: 'signupsAll',
-//   controller: AuthenticatedController,
-// })
-//
-// Router.route('/signups/leads', {
-//   name: 'signupsLeads',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data: () => ({
-//     searchQuery: new ReactiveVar({ limit: 4, duties: ['lead'] }),
-//   }),
-// })
-//
-// Router.route('/signups/shifts', {
-//   name: 'signupsShifts',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data: () => ({
-//     searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'] }),
-//   }),
-// })
-//
-// Router.route('/signups/shifts/:_id', {
-//   name: 'signupsShiftTeam',
-//   template: 'signupsList',
-//   controller: AuthenticatedController,
-//   data() {
-//     if (this.params && this.params._id) {
-//       const teamId = this.params._id
-//       return {
-//         searchQuery: new ReactiveVar({ limit: 4, duties: ['shift'], teams: [teamId] }),
-//       }
-//     }
-//     return null
-//   },
-// })
 
 // settings / administrative pages pages
 // accessible either to leads / metalead or manager
@@ -229,32 +238,11 @@ Router.route('/manager/userList', {
   data() { return { page: 'ManagerUserPages' } },
 })
 
-// leads / metaleads
-// Router.route('/admin/users', {
-//   name: 'allUsersList',
-//   controller: LeadController,
-//   waitOn() {
-//     return [Meteor.subscribe(`${Volunteers.eventName}.allUsers`)]
-//   },
-// })
-
 // lead pages
-Router.route('/lead', {
-  name: 'leadDashboard',
-  controller: LeadController,
-  // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-})
 
 Router.route('/lead/team/:_id', {
   name: 'leadTeamView',
   controller: LeadController,
-  // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
   waitOn() {
     if (this.params && this.params._id) {
       const sel = { _id: this.params._id }
@@ -273,14 +261,6 @@ Router.route('/lead/team/:_id', {
 })
 
 // metalead pages
-Router.route('/metalead', {
-  name: 'metaleadDashboard',
-  controller: LeadController,
-  // XXX restrict access only to the metalead of this team, or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-})
 
 Router.route('/metalead/department/:_id', {
   name: 'metaleadDepartmentView',
@@ -306,37 +286,28 @@ Router.route('/metalead/department/:_id', {
 // noInfo pages
 Router.route('/noinfo', {
   name: 'noInfoDashboard',
-  controller: LeadController,
+  controller: NoInfoController,
 })
 
 Router.route('/noinfo/newuser', {
   name: 'noInfoNewUser',
-  controller: LeadController,
+  controller: NoInfoController,
 })
 
 Router.route('/noinfo/userList', {
   name: 'noInfoUserList',
-  controller: LeadController,
+  controller: NoInfoController,
   data() { return { page: 'NoInfoUserPages' } },
 })
 
-// Router.route('/noinfo/user/:_id', {
-//   name: 'volunteerFormDisplay',
-//   controller: AuthenticatedController,
-//   data: function() {
-//     if (this.params && this.params._id && this.ready()) {
-//       var user = this.params._id;
-//       form = Volunteers.Collections.VolunteerForm.findOne({userId:user._id});
-//       return { formName: "VolunteerForm", form: form, user: user};
-//     }
-//   },
-//   waitOn: function () {
-//     if (this.params && this.params._id) {
-//       var user = this.params._id;
-//       return [
-//         Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`,{userId: userId}),
-//         Meteor.subscribe(`meteor-user-profiles.ProfilePictures`,userId)
-//       ];
-//     }
-//   }
-// });
+/* Router.route('/noinfo/user/:_id', {
+  name: 'noInfoUserProfile',
+  controller: LeadController,
+  data() {
+    if (this.params && this.params._id && this.ready()) {
+      const user = Meteor.users.findOne(this.params._id)
+      const userform = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
+      return { userform, user }
+    } return null
+  },
+}) */

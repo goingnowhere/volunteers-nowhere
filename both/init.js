@@ -36,13 +36,34 @@ export const ValidatedMethodWithMixin = (function add(method, mixins) {
 })
 
 export const isManagerMixin = function isManagerMixin(methodOptions) {
-  const { run } = methodOptions
-  const authRun = function authRun(doc) {
+  const runFunc = methodOptions.run
+  methodOptions.run = function run(...args) {
     if (!Volunteers.isManager()) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(doc)
+    return runFunc.call(this, ...args)
   }
-  methodOptions.run = authRun
+  return methodOptions
+}
+
+export const isManagerOrLeadMixin = function isManagerOrLeadMixin(methodOptions) {
+  const runFunc = methodOptions.run
+  methodOptions.run = function run(...args) {
+    if (!Volunteers.isManagerOrLead()) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return runFunc.call(this, ...args)
+  }
+  return methodOptions
+}
+
+export const isLoggedInMixin = function isLoggedInMixin(methodOptions) {
+  const runFunc = methodOptions.run
+  methodOptions.run = function run(...args) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return runFunc.call(this, ...args)
+  }
   return methodOptions
 }

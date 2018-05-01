@@ -9,29 +9,6 @@ import { Volunteers } from '../../both/init'
 
 Template.userDashboard.helpers({
   userId: () => Meteor.userId(),
-  leads: () => {
-    const sl = Volunteers.Collections.LeadSignups.find({ userId: Meteor.userId(), status: 'confirmed' }).fetch()
-    const l = sl.reduce((acc, s) => {
-      const t = Volunteers.Collections.Team.findOne(s.parentId)
-      if (t) { acc.push(t) }
-      return acc
-    }, [])
-    return l
-  },
-  metaleads: () => {
-    const sl = Volunteers.Collections.LeadSignups.find({ userId: Meteor.userId() }).fetch()
-    const l = sl.reduce((acc, s) => {
-      const t = Volunteers.Collections.Department.findOne(s.parentId)
-      if (t) { acc.push(t) }
-      return acc
-    }, [])
-    return l
-  },
-  isManager: () => Volunteers.isManager(),
-  isNoInfo: () => {
-    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-    return (noInfo != null) && Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])
-  },
   bookedMissions: () => {
     const sel = { status: { $in: ['confirmed', 'pending'] } }
     return (
@@ -45,6 +22,47 @@ Template.userDashboard.helpers({
 Template.userDashboard.events({
   'click [data-action="edit_form"]': () => {
     Router.go('volunteerForm')
+  },
+})
+
+Template.userResponsibilities.onCreated(function OnCreated() {
+  const template = this
+  if ((template.data) && (template.data.userId)) {
+    template.userId = template.data.userId
+  } else {
+    template.userId = Meteor.userId()
+  }
+})
+
+Template.userResponsibilities.helpers({
+  leads: () => {
+    const { userId } = Template.instance()
+    const sl = Volunteers.Collections.LeadSignups.find({ userId, status: 'confirmed' }).fetch()
+    const l = sl.reduce((acc, s) => {
+      const t = Volunteers.Collections.Team.findOne(s.parentId)
+      if (t) { acc.push(t) }
+      return acc
+    }, [])
+    return l
+  },
+  metaleads: () => {
+    const { userId } = Template.instance()
+    const sl = Volunteers.Collections.LeadSignups.find({ userId }).fetch()
+    const l = sl.reduce((acc, s) => {
+      const t = Volunteers.Collections.Department.findOne(s.parentId)
+      if (t) { acc.push(t) }
+      return acc
+    }, [])
+    return l
+  },
+  isManager: () => {
+    const { userId } = Template.instance()
+    Volunteers.isManager(userId)
+  },
+  isNoInfo: () => {
+    const { userId } = Template.instance()
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    return (noInfo != null) && Volunteers.isManagerOrLead(userId, [noInfo._id])
   },
 })
 
