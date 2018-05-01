@@ -91,6 +91,13 @@ Template.managerEventSettings.helpers({
   data: () => (EventSettings.findOne()),
 })
 
+Template.managerUser.onCreated(function onCreated() {
+  const template = this
+  const userId = template.data._id
+  template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
+  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+})
+
 Template.managerUserList.helpers({
   total_users: () => Meteor.users.find().count(),
   profile_filled: () =>

@@ -4,13 +4,25 @@ import { Volunteers } from '../both/init'
 
 Template.header.onCreated(function onCreated() {
   const template = this
+  const userId = Meteor.userId()
+  template.unitsSel = new ReactiveVar()
   template.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
+
+  template.autorun(() => {
+    const unitsIds = Volunteers.Collections.LeadSignups.find({ userId }).map(s => s.parentId)
+    if (Volunteers.isManager()) {
+      template.unitsSel.set({})
+    } else if (unitsIds.length > 0) {
+      template.unitsSel.set({ _id: { $in: unitsIds } })
+    }
+  })
 })
 
 Template.header.helpers({
-// XXX : restrict only to those depts and teams leaded by the user, or display all for manager
-  departments: () => Volunteers.Collections.Department.find(),
-  teams: () => Volunteers.Collections.Team.find(),
+  allDepartments: () => Volunteers.Collections.Department.find(),
+  departments: () => Volunteers.Collections.Department.find(Template.instance().unitsSel.get()),
+  teams: () => Volunteers.Collections.Team.find(Template.instance().unitsSel.get()),
   // the TOS is true only if the form was submitted
   hasAgreedTOS() {
     const user = Meteor.user()

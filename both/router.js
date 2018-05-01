@@ -37,27 +37,69 @@ const AuthenticatedController = AnonymousController.extend({
   },
 })
 
-const secureControllers = (function secureControllers(authFun) {
-  return {
-    onBeforeAction() {
-      if (authFun(Meteor.userId())) {
-        this.next()
-      } else {
-        this.redirect('dashboard')
-      }
-    },
-    onRun() {
-      if (authFun(Meteor.userId())) {
-        this.next()
-      } else {
-        this.redirect('dashboard')
-      }
-    },
-  }
+const NoInfoController = AuthenticatedController.extend({
+  waitOn() {
+    return [
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`),
+    ]
+  },
+  onBeforeAction() {
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    console.log(noInfo)
+
+    if (Volunteers.isManager(Meteor.userId()) ||
+        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
+  /* onRun() {
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    console.log(noInfo)
+
+    if (Volunteers.isManager(Meteor.userId()) ||
+        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  }, */
 })
 
-const LeadController = AuthenticatedController.extend(secureControllers(userId => Volunteers.isManagerOrLead(userId)))
-const ManagerController = AuthenticatedController.extend(secureControllers(userId => Volunteers.isManager(userId)))
+const LeadController = AuthenticatedController.extend({
+  onBeforeAction() {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [this.params._id])) {
+      this.next()
+    } else {
+      this.render('userDashboard')
+    }
+  },
+  onRun() {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [this.params._id])) {
+      this.next()
+    } else {
+      this.render('userDashboard')
+    }
+  },
+})
+
+const ManagerController = AuthenticatedController.extend({
+  onBeforeAction() {
+    if (Volunteers.isManager()) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
+  onRun() {
+    if (Volunteers.isManager()) {
+      this.next()
+    } else {
+      this.redirect('userDashboard')
+    }
+  },
+})
 
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
 AccountsTemplates.configureRoute('changePwd', {
@@ -197,22 +239,10 @@ Router.route('/manager/userList', {
 })
 
 // lead pages
-Router.route('/lead', {
-  name: 'leadDashboard',
-  controller: LeadController,
-  // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-})
 
 Router.route('/lead/team/:_id', {
   name: 'leadTeamView',
   controller: LeadController,
-  // XXX restrict access only to the lead of this team, or the metalead of the dept or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
   waitOn() {
     if (this.params && this.params._id) {
       const sel = { _id: this.params._id }
@@ -231,14 +261,6 @@ Router.route('/lead/team/:_id', {
 })
 
 // metalead pages
-Router.route('/metalead', {
-  name: 'metaleadDashboard',
-  controller: LeadController,
-  // XXX restrict access only to the metalead of this team, or manager
-  // XXX this waitOn cause a flikering because I force the whole page to be re-rendered. Maybe
-  // there is a better way to do it
-  // waitOn() { return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.allDuties.byTeam`, this.params._id)] },
-})
 
 Router.route('/metalead/department/:_id', {
   name: 'metaleadDepartmentView',
@@ -264,17 +286,17 @@ Router.route('/metalead/department/:_id', {
 // noInfo pages
 Router.route('/noinfo', {
   name: 'noInfoDashboard',
-  controller: LeadController,
+  controller: NoInfoController,
 })
 
 Router.route('/noinfo/newuser', {
   name: 'noInfoNewUser',
-  controller: LeadController,
+  controller: NoInfoController,
 })
 
 Router.route('/noinfo/userList', {
   name: 'noInfoUserList',
-  controller: LeadController,
+  controller: NoInfoController,
   data() { return { page: 'NoInfoUserPages' } },
 })
 

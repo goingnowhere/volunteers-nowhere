@@ -114,6 +114,12 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
+Template.allUsersTableRow.onCreated(function onCreated() {
+  const template = this
+  const userId = template.data._id
+  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+})
+
 Template.allUsersTableRow.events({
   'change .enroll_lead': (event, template) => {
     const val = template.$('.enroll_lead:checked').val()
