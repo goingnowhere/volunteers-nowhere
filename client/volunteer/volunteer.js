@@ -25,7 +25,7 @@ Template.userDashboard.events({
   },
 })
 
-Template.userResponsabilities.onCreated(function OnCreated() {
+Template.userResponsibilities.onCreated(function OnCreated() {
   const template = this
   if ((template.data) && (template.data.userId)) {
     template.userId = template.data.userId
@@ -34,7 +34,7 @@ Template.userResponsabilities.onCreated(function OnCreated() {
   }
 })
 
-Template.userResponsabilities.helpers({
+Template.userResponsibilities.helpers({
   leads: () => {
     const { userId } = Template.instance()
     const sl = Volunteers.Collections.LeadSignups.find({ userId, status: 'confirmed' }).fetch()

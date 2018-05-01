@@ -12,7 +12,7 @@
           <a href="{{pathFor 'accountSettings'}}">{{__ "add_picture"}}</a>
         {{/if}}
         <!-- <h5 class="mb-2 dark-text">{{__ "responsabilities"}} </h5> -->
-        {{> userResponsabilities }}
+        {{> userResponsibilities }}
         <br/>
         <button type="button" class="btn btn-default btn-sm" data-action="edit_form">
           {{__ "edit_user_info" }}
@@ -39,7 +39,7 @@
 {{/if}}
 </template>
 
-<template name="userResponsabilities">
+<template name="userResponsibilities">
   <ul class="list-unstyled">
     {{#if isManager }}<li><span class="mb-2 dark-text">{{__ "role"}}: </span>Manager</li>{{/if}}
     {{#if isNoInfo }}<li><span class="mb-2 dark-text">{{__ "noInfo"}}: </span>Member</li>{{/if}}
