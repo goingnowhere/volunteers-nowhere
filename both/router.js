@@ -44,7 +44,6 @@ const ManagerController = AuthenticatedController.extend({
 })
 
 AccountsTemplates.configureRoute('signIn', { redirect: '/dashboard' })
-AccountsTemplates.configureRoute('signOut', { redirect: '/' })
 AccountsTemplates.configureRoute('changePwd', {
   redirect: '/dashboard',
   layoutTemplate: 'userLayout',

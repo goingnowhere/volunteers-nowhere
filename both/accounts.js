@@ -18,6 +18,13 @@ AccountsTemplates.configure({
   // postSignUpHook,
   // onLogoutHook: onSignOut,
   // termsUrl: 'terms-of-use',
+  onLogoutHook() {
+    Meteor.setTimeout(() => {
+      if (!Meteor.user()) {
+        Router.go('homePage')
+      }
+    }, 50)
+  },
 })
 
 AccountsTemplates.addField({
