@@ -45,26 +45,20 @@ const NoInfoController = AuthenticatedController.extend({
   },
   onBeforeAction() {
     const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-    console.log(noInfo)
-
-    if (Volunteers.isManager(Meteor.userId()) ||
-        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
       this.next()
     } else {
       this.redirect('userDashboard')
     }
   },
-  /* onRun() {
+  onRun() {
     const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-    console.log(noInfo)
-
-    if (Volunteers.isManager(Meteor.userId()) ||
-        Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
+    if (Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
       this.next()
     } else {
       this.redirect('userDashboard')
     }
-  }, */
+  },
 })
 
 const LeadController = AuthenticatedController.extend({

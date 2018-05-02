@@ -2,7 +2,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { getContext } from './email'
-import { isManagerMixin, ValidatedMethodWithMixin } from '../both/init'
+import { isManagerMixin, isNoInfoInMixin, ValidatedMethodWithMixin } from '../both/init'
 
 const EnrollUserSchema = new SimpleSchema({
   email: String,
@@ -21,6 +21,7 @@ export const enrollUserMethod = {
   },
 }
 
+// create a new user and send an enrollment message
 export const enrollUser =
   ValidatedMethodWithMixin(
     enrollUserMethod,
@@ -48,7 +49,7 @@ export const adminChangeUserPasswordMethod = {
 export const adminChangeUserPassword =
   ValidatedMethodWithMixin(
     adminChangeUserPasswordMethod,
-    [isManagerMixin],
+    [isNoInfoInMixin],
   )
 
 export const sendWelcomeEmailMethod = {

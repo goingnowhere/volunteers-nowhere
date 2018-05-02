@@ -67,3 +67,17 @@ export const isLoggedInMixin = function isLoggedInMixin(methodOptions) {
   }
   return methodOptions
 }
+
+export const isNoInfoInMixin = function isNoInfoInMixin(methodOptions) {
+  const runFunc = methodOptions.run
+  methodOptions.run = function run(...args) {
+    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
+    console.log(noInfo)
+
+    if ((noInfo == null) || (!Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id]))) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return runFunc.call(this, ...args)
+  }
+  return methodOptions
+}

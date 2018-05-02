@@ -3,6 +3,7 @@ import {
   isManagerMixin,
   ValidatedMethodWithMixin,
   isLoggedInMixin,
+  isNoInfoInMixin,
 } from '../both/init'
 
 export const userProfileRemoveUser =
@@ -17,8 +18,9 @@ export const userProfileUpdateUser =
     [isLoggedInMixin],
   )
 
+// Just send an enrollment message to the user
 export const userProfileSendEnrollAccount =
   ValidatedMethodWithMixin(
     MeteorProfile.Methods.userProfileSendEnrollAccount,
-    [isManagerMixin],
+    [isNoInfoInMixin], // Manager and noInfo leads
   )
