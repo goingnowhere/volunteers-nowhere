@@ -30,7 +30,7 @@ Template.metaleadDepartmentView.events({
   },
   'click [data-action="delete_team"]': (event, template) => {
     const teamId = template.$(event.target).data('id')
-    // Meteor.call("remove");
+    Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, teamId)
   },
   'click [data-action="enroll_lead"]': (event, template) => {
     const shiftId = template.$(event.target).data('shiftid')
