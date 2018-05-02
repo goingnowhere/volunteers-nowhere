@@ -1,5 +1,6 @@
 /* eslint-disable meteor/template-names, no-underscore-dangle */
 import { Template } from 'meteor/templating'
+import { Roles } from 'meteor/piemonkey:roles'
 import { Volunteers } from '../both/init'
 
 Template.header.onCreated(function onCreated() {
@@ -10,7 +11,7 @@ Template.header.onCreated(function onCreated() {
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
 
   template.autorun(() => {
-    const unitsIds = Volunteers.Collections.LeadSignups.find({ userId }).map(s => s.parentId)
+    const unitsIds = Roles.getRolesForUser(userId, Volunteers.eventName)
     if (Volunteers.isManager()) {
       template.unitsSel.set({})
     } else if (unitsIds.length > 0) {
