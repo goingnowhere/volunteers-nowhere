@@ -77,6 +77,15 @@ Template.userSearch.events({
     const page = template.$(event.target).data('page')
     textSearch(value, page, event)
   },
+  'change [name="terms"]': (event, template) => {
+    event.preventDefault()
+    const value = event.target.checked
+    const page = template.$(event.target).data('page')
+    const pages = Pages[page]
+    let filters = {}
+    filters = { 'profile.terms': value }
+    pages.set('filters', filters)
+  },
 })
 
 Template.noInfoUserList.events({
@@ -146,7 +155,7 @@ Template.allUsersTableRow.events({
 })
 
 const callbackNotice = function callback(title, message) {
-  return (function callback(error, res) {
+  return ((error) => {
     if (error) {
       Bert.alert({
         title: i18n.__('error'),
@@ -162,6 +171,7 @@ const callbackNotice = function callback(title, message) {
     }
   })
 }
+
 Template.noInfoUser.helpers({
   callbackEnrollment() {
     return callbackNotice('invitation_sent', 'invitation_sent')

@@ -51,14 +51,14 @@ const NoInfoController = AuthenticatedController.extend({
       this.redirect('userDashboard')
     }
   },
-  onRun() {
+  /* onRun() {
     const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
     if (Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id])) {
       this.next()
     } else {
       this.redirect('userDashboard')
     }
-  },
+  }, */
 })
 
 const LeadController = AuthenticatedController.extend({
