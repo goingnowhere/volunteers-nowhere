@@ -66,10 +66,28 @@ Schemas.User = new SimpleSchema({
 const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
   ticketNumber: {
     type: String,
+    defaultValue: 'Manual registration',
     autoform: { readonly: true },
   },
   nickname: {
     type: String,
+  },
+  ticketDate: {
+    type: Date,
+    optional: true,
+    defaultValue() { return new Date() },
+    autoform: {
+      omit: true,
+      readonly: true,
+    },
+  },
+  manualRegistration: {
+    type: Boolean,
+    defaultValue: true,
+    autoform: {
+      omit: true,
+      readonly: true,
+    },
   },
 })
 

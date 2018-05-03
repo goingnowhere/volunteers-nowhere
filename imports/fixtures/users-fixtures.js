@@ -30,6 +30,8 @@ const enrolledUsers = [
       firstName: 'enrolled',
       lastName: 'test',
       ticketNumber: '435575677',
+      ticketDate: new Date(),
+      manualRegistration: false,
     },
   },
 ]
@@ -40,7 +42,9 @@ export const createUsers = (Volunteers) => {
       console.log('Create user ', options)
       options.profile = {
         firstName: options.name,
-        ticketNumber: 'testnumber12',
+        ticketNumber: 'Manual registration',
+        ticketDate: new Date(),
+        manualRegistration: true,
         nickname: options.name,
       }
       const userId = Accounts.createUser(options)

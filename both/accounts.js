@@ -60,7 +60,7 @@ AccountsTemplates.addField({
 // at startup to be executed after initialization
 Meteor.startup(() => {
   const fields = AccountsTemplates.getFields()
-  for (let i = 0; i < fields.length; i++) {
+  for (let i = 0; i < fields.length; i += 1) {
     const field = fields[i]
     if ((field._id === 'terms') || (field._id === 'language') || field._id === 'nickname') {
       // Enable it for any other states you want
@@ -72,7 +72,9 @@ Meteor.startup(() => {
 if (Meteor.isServer) {
   Accounts.onCreateUser((options, user) => {
     user.profile = options.profile
-    user.profile.ticketNumber = 'Manual registration'
+    /* user.profile.ticketNumber = 'Manual registration' */
+    /* user.profile.ticketDate = Date() */
+    /* user.profile.manualRegistration = true */
     return user
   })
 }

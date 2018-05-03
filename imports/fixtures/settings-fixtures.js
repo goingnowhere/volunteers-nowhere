@@ -9,7 +9,6 @@ const settings = {
   barriosArrivalDate: new Date(2018, 6, 31),
 }
 
-
 export const createSettings = () => {
   if (EventSettings.find().count() === 0) {
     console.log('Create Settings')

@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
 import { FormBuilder } from 'meteor/abate:formbuilder'
 import { Volunteers } from '../both/init'
+import { importUsers } from './importUsers'
 
 Migrations.config({
   log: true,
@@ -46,6 +47,8 @@ Migrations.add({
   },
 })
 
+
+
 Migrations.add({
   version: 3,
   name: 'Move fod-name to user account',
@@ -57,5 +60,29 @@ Migrations.add({
         Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
       }
     })
+  },
+})
+
+Migrations.add({
+  version: 4,
+  name: 'Update Profile for existing Users',
+  up() {
+    Meteor.users.find().fetch().forEach((user) => {
+      Meteor.users.update({ _id: user._id }, {
+        $set: {
+          'profile.ticketNumber': 'Manual registration',
+          'profile.ticketDate': new Date(),
+          'profile.manualRegistration': true,
+        },
+      })
+    })
+  },
+})
+
+Migrations.add({
+  version: 5,
+  name: 'Add guest list guests-2018-04-30.json',
+  up() {
+    importUsers('users/guests-2018-04-30.json')
   },
 })
