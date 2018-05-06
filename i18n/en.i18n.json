@@ -60,5 +60,6 @@
   "wrong_or_required_field": "Error while validating the form",
   "email_templates": "Email Templates",
   "volunteer_form_help": "Please tell us something about you. We need this information to help you to find the best volunteering shift for your skill and keep you safe.",
-  "teams_in_this_department": "Teams within this department"
+  "teams_in_this_department": "Teams within this department",
+  "enroll": "voluntell"
 }

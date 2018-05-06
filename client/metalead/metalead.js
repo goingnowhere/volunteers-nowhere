@@ -35,7 +35,8 @@ Template.metaleadDepartmentView.events({
   'click [data-action="enroll_lead"]': (event, template) => {
     const shiftId = template.$(event.target).data('shiftid')
     const parentId = template.$(event.target).data('parentid')
-    Session.set('allUsersTableDoc', { parentId, shiftId })
+    Session.set('allUsersTableData', { parentId, shiftId, duty: 'lead' })
+    Session.set('enrollments', [])
     AutoFormComponents.ModalShowWithTemplate('allUsersTable', { page: 'EnrollUserSearchPages' })
   },
   'click [data-action="remove_lead"]': (event, template) => {

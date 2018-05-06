@@ -123,6 +123,47 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
+Template.allUsersTable.events({
+  'click [data-action=enroll]': () => {
+    // this is the only place where I use a session variable.
+    // can't find a better way
+    const enrollments = Session.get('enrollments')
+    const { duty, policy, ...doc } = Session.get('allUsersTableData')
+    enrollments.forEach((enrollment) => {
+      const insert = {
+        ...doc,
+        userId: enrollment,
+      }
+      Meteor.call(
+        `${Volunteers.eventName}.Volunteers.${duty}Signups.insert`, insert,
+        (err, res) => {
+          if (err) {
+            Bert.alert({
+              title: i18n.__('error'),
+              message: err.message,
+              type: 'error',
+            })
+          } else if (policy === 'requireApproval') {
+            if (duty === 'lead') {
+              Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, res)
+            } else {
+              const signupId = res.insertedId
+              Meteor.call(`${Volunteers.eventName}.Volunteers.${duty}Signups.update`, {
+                _id: signupId,
+                modifier: {
+                  $set: {
+                    status: 'confirmed',
+                  },
+                },
+              })
+            }
+          }
+        },
+      )
+    })
+  },
+})
+
 Template.allUsersTableRow.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id
@@ -133,23 +174,14 @@ Template.allUsersTableRow.events({
   'change .enroll_lead': (event, template) => {
     const val = template.$('.enroll_lead:checked').val()
     const userId = template.$(event.target).data('userid')
-    // this is the only place where I use a session variable.
-    // can't find a better way
-    const doc = Session.get('allUsersTableDoc')
-    doc.userId = userId
+    const enrollments = Session.get('enrollments') || []
     if (val === 'on') {
-      Meteor.call(
-        `${Volunteers.eventName}.Volunteers.leadSignups.insert`, doc,
-        (err, res) => {
-          if (err) {
-            Meteor.throwError('enroll_lead failed')
-          } else {
-            Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, res)
-          }
-        },
-      )
-    } else if (doc.shiftId) { // if shiftId exists, we remove the signup
-      Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.remove`, doc.shiftId)
+      Session.set('enrollments', [
+        ...enrollments,
+        userId,
+      ])
+    } else {
+      Session.set('enrollments', enrollments.filter(enroll => enroll === userId))
     }
   },
 })

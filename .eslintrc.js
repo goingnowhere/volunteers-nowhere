@@ -28,6 +28,7 @@ module.exports = {
         allow: [
           '_id',
           '_ensureIndex',
+          '__',
         ],
       },
     ],
