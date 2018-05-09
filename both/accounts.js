@@ -13,7 +13,7 @@ AccountsTemplates.configure({
   continuousValidation: true,
   // enforceEmailVerification: true,
   // privacyUrl: '/s/privacy',
-  // forbidClientAccountCreation: true,
+  forbidClientAccountCreation: true,
   // showResendVerificationEmailLink: true,
   // postSignUpHook,
   // onLogoutHook: onSignOut,
