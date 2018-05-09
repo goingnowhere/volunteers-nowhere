@@ -82,6 +82,20 @@ Template.leadTeamTabs.helpers({
   },
 })
 
+Template.shiftSignupEnrollAction.events({
+  'click [data-action="enroll"]': (event, template) => {
+    const id = template.$(event.currentTarget).data('id')
+    const type = template.$(event.currentTarget).data('type')
+    const parentId = template.$(event.currentTarget).data('team')
+    const policy = template.$(event.currentTarget).data('policy')
+    Session.set('allUsersTableData', {
+      parentId, shiftId: id, duty: type, policy,
+    })
+    Session.set('enrollments', [])
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable', { page: 'EnrollUserSearchPages' })
+  },
+})
+
 AutoForm.addHooks([
   'UpdateTeamShiftsFormId', 'InsertTeamShiftsFormId',
   'UpdateTeamTasksFormId', 'InsertTeamTasksFormId',

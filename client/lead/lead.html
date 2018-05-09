@@ -75,7 +75,9 @@
     <div role="tabpanel" class="tab-pane active" id="shifts">
       <div class="pt-2">
         {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
-        {{> teamShiftsTable _id=_id date=currentDay }}
+        {{# teamShiftsTable _id=_id date=currentDay }}
+          {{> shiftSignupEnrollAction }}
+        {{/teamShiftsTable}}
       </div>
     </div>
     <!-- Projects -->
@@ -83,4 +85,10 @@
       {{> teamProjectsTable _id=_id }}
     </div>
   </div>
+</template>
+
+<template name="shiftSignupEnrollAction">
+  <button class="btn btn-sm btn-circle" href="#" data-action="enroll"
+    data-id="{{shift._id}}" data-team="{{shift.parentId}}" data-type="shift"
+    data-policy="{{shift.policy}}" > {{fa "user-plus"}} </button>
 </template>
