@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.1.1",
     "bootstrap-select": "^1.13.1",
     "chart.js": "^2.7.2",
     "jquery": "^3.3.1",
@@ -26,7 +26,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-meteor": "^4.2.1",
+    "eslint-plugin-meteor": "^4.2.2",
     "eslint-plugin-underscore": "0.0.10"
   },
   "coffeelintConfig": {
