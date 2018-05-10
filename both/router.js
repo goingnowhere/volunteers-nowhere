@@ -35,6 +35,20 @@ const AuthenticatedController = AnonymousController.extend({
       Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId),
     ]
   },
+  onBeforeAction() {
+    if (Meteor.userId()) {
+      this.next()
+    } else {
+      this.render('homePage')
+    }
+  },
+  onRun() {
+    if (Meteor.userId()) {
+      this.next()
+    } else {
+      this.render('homePage')
+    }
+  },
 })
 
 const NoInfoController = AuthenticatedController.extend({

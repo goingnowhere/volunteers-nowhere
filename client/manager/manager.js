@@ -25,12 +25,12 @@ Template.managerView.events({
     AutoFormComponents.ModalShowWithTemplate('addDepartment', { divisionId: template.divisionId })
   },
   'click [data-action="edit_department"]': (event, template) => {
-    const deptId = template.$(event.target).data('id')
+    const deptId = template.$(event.currentTarget).data('id')
     const team = Volunteers.Collections.Department.findOne(deptId)
     AutoFormComponents.ModalShowWithTemplate('deptEdit', team)
   },
   'click [data-action="delete_department"]': (event, template) => {
-    const teamId = template.$(event.target).data('id')
+    const teamId = template.$(event.currentTarget).data('id')
     // Meteor.call("remove");
   },
   'click [data-action="enroll_lead"]': (event, template) => {

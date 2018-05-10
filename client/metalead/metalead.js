@@ -25,26 +25,41 @@ Template.metaleadDepartmentView.events({
     AutoFormComponents.ModalShowWithTemplate('addTeam', { departmentId: deptId })
   },
   'click [data-action="edit_team"]': (event, template) => {
-    const teamId = template.$(event.target).data('id')
-    const team = Volunteers.Collections.Team.findOne(teamId)
-    AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
+    const teamId = template.$(event.currentTarget).data('id')
+    const type = template.$(event.currentTarget).data('type')
+    switch (type) {
+      case 'team': {
+        const team = Volunteers.Collections.Team.findOne(teamId)
+        AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
+      }
+        break
+      case 'department': {
+        const dept = Volunteers.Collections.Department.findOne(teamId)
+        AutoFormComponents.ModalShowWithTemplate('departmentEdit', dept)
+      }
+        break
+      default:
+    }
   },
   'click [data-action="delete_team"]': (event, template) => {
-    const teamId = template.$(event.target).data('id')
+    const teamId = template.$(event.currentTarget).data('id')
     Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, teamId)
   },
   'click [data-action="enroll_lead"]': (event, template) => {
-    const shiftId = template.$(event.target).data('shiftid')
-    const parentId = template.$(event.target).data('parentid')
+    const shiftId = template.$(event.currentTarget).data('shiftid')
+    const parentId = template.$(event.currentTarget).data('parentid')
+    const policy = template.$(event.currentTarget).data('policy')
     // eslint-disable-next-line meteor/no-session
-    Session.set(`enrollments-${shiftId}`, [])
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable', {
-      page: 'EnrollUserSearchPages',
-      data: { parentId, shiftId, duty: 'lead' },
+    Session.set('enrollments', [])
+    AutoFormComponents.ModalShowWithTemplate('leadEnrollUsersTable', {
+      page: 'LeadEnrollUserSearchPages',
+      data: {
+        parentId, shiftId, duty: 'lead', policy,
+      },
     })
   },
   'click [data-action="remove_lead"]': (event, template) => {
-    const signupId = template.$(event.target).data('id')
+    const signupId = template.$(event.currentTarget).data('id')
     Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.remove`, signupId)
   },
   'click [data-action="applications"]': (event, template) => {
@@ -106,18 +121,23 @@ Template.metaleadDepartmentView.helpers({
     return _.chain(l).flatten().uniq().value()
   },
   leadsTeam: (team) => {
-    const l = Volunteers.Collections.Lead.find({ parentId: team._id }).map((lead) => {
-      const s = Volunteers.Collections.LeadSignups.findOne({ status: 'confirmed', shiftId: lead._id })
-      if (s) {
-        return _.extend(s, { title: lead.title })
+    const leadShift = Volunteers.Collections.Lead.find({ parentId: team._id })
+    const leadShiftWithSignups = leadShift.map((lead) => {
+      const sel = { status: 'confirmed', shiftId: lead._id }
+      let leadSignup = Volunteers.Collections.LeadSignups.findOne(sel)
+      if (leadSignup) {
+        leadSignup = _.extend(leadSignup, { title: lead.title })
+      } else {
+        leadSignup = {
+          title: lead.title,
+          shiftId: lead._id,
+          parentId: lead.parentId,
+          policy: lead.policy,
+          userId: null,
+        }
       }
-      return {
-        title: lead.title,
-        shiftId: lead._id,
-        parentId: lead.parentId,
-        userId: null,
-      }
+      return leadSignup
     })
-    if (l) { return l } return []
+    if (leadShiftWithSignups) { return leadShiftWithSignups } return []
   },
 })

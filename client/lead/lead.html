@@ -82,13 +82,21 @@
     </div>
     <!-- Projects -->
     <div role="tabpanel" class="tab-pane fade" id="projects">
-      {{> teamProjectsTable _id=_id }}
+      {{# teamProjectsTable _id=_id }}
+        {{> projectSignupEnrollAction }}
+      {{/teamProjectsTable}}
     </div>
   </div>
 </template>
 
 <template name="shiftSignupEnrollAction">
   <button class="btn btn-sm btn-circle" href="#" data-action="enroll"
-    data-id="{{shift._id}}" data-team="{{shift.parentId}}" data-type="shift"
-    data-policy="{{shift.policy}}" > {{fa "user-plus"}} </button>
+    data-id="{{shift._id}}" data-team="{{shift.parentId}}" data-type="shift">
+    {{fa "user-plus"}} </button>
+</template>
+
+<template name="projectSignupEnrollAction">
+  <button class="btn btn-sm btn-circle" href="#" data-action="enroll"
+    data-id="{{project._id}}" data-team="{{project.parentId}}" data-type="project">
+    {{fa "user-plus"}} </button>
 </template>

@@ -70,7 +70,7 @@ const setSelectListener = (template, selector, filterVar) => {
   // Need to add this event listener this way as adding through Blaze doesn't work - Rich
   template.$(selector).on('changed.bs.select', (event) => {
     // Seriously? There must be a better way. Docs claim we get an arg but we don't - Rich
-    const val = Array.from(event.target.selectedOptions).map(option => option.value)
+    const val = Array.from(event.currentTarget.selectedOptions).map(option => option.value)
     filterVar.set(val.length > 0 ? val : null)
   })
   // Possibly only needed in development when reloading
@@ -95,7 +95,7 @@ Template.filteredSignupsList.onRendered(function onRendered() {
   setSelectListener(template, '#prioritySelect', template.filters.priorities)
 
   template.$('#typeSelect').on('changed.bs.select', (event) => {
-    template.type.set(event.target.value)
+    template.type.set(event.currentTarget.value)
   })
   template.$('#typeSelect').selectpicker('refresh')
 })

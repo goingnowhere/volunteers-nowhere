@@ -3,7 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
-import { Modal } from 'meteor/peppelg:bootstrap-3-modal'
 import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
 
@@ -83,25 +82,49 @@ Template.leadTeamTabs.helpers({
   },
 })
 
-Template.shiftSignupEnrollAction.events({
+const enrollEvent = {
   'click [data-action="enroll"]': (event, template) => {
     const id = template.$(event.currentTarget).data('id')
     const type = template.$(event.currentTarget).data('type')
     const parentId = template.$(event.currentTarget).data('team')
     const policy = template.$(event.currentTarget).data('policy')
-    // eslint-disable-next-line meteor/no-session
-    Session.set(`enrollments-${id}`, [])
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable', {
-      page: 'EnrollUserSearchPages',
-      data: {
-        parentId,
-        shiftId: id,
-        duty: type,
-        policy,
-      },
-    })
+    switch (type) {
+      case 'shift': {
+        // eslint-disable-next-line meteor/no-session
+        Session.set('enrollments', [])
+        AutoFormComponents.ModalShowWithTemplate('shiftEnrollUsersTable', {
+          page: 'ShiftEnrollUserSearchPages',
+          data: {
+            parentId,
+            shiftId: id,
+            duty: type,
+            policy,
+          },
+        })
+        break
+      }
+      case 'project': {
+        const { start, end } = Volunteers.Collections.Projects.findOne(id)
+        AutoFormComponents.ModalShowWithTemplate('projectEnrollUsersTable', {
+          page: 'ProjectEnrollUserSearchPages',
+          data: {
+            parentId,
+            shiftId: id,
+            duty: type,
+            policy,
+            start,
+            end,
+          },
+        })
+        break
+      }
+      default:
+    }
   },
-})
+}
+
+Template.shiftSignupEnrollAction.events(enrollEvent)
+Template.projectSignupEnrollAction.events(enrollEvent)
 
 AutoForm.addHooks([
   'UpdateTeamShiftsFormId', 'InsertTeamShiftsFormId',
@@ -110,6 +133,6 @@ AutoForm.addHooks([
   'UpdateTeamFormId', 'InsertTeamFormId',
 ], {
   onSuccess: () => {
-    Modal.hide()
+    AutoFormComponents.modalHide()
   },
 })

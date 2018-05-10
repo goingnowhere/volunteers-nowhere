@@ -77,23 +77,10 @@
   </div>
 </template>
 
-<template name="allUsersTable">
-  {{> userSearch }}
-  {{> pages }}
-  {{> pagesNav }}
-  <button class="btn btn-primary pull-right" data-action="enroll">
-    {{__ 'enroll'}}
-  </button>
-</template>
 
-<template name="allUsersTableRow">
+<template name="enrollTableRow">
   <tr>
-    <td>
-      <input name="{{_id}}-group" class="enroll_lead"
-        type="checkbox" id="{{_id}}"
-        data-userid="{{_id}}"
-        checked="{{#if signed}}true{{/if}}"/>
-    </td>
+    <td> {{> Template.contentBlock }} </td>
     <td>
       {{#if profile.picture}}
         <!-- XXX link or subscription broken -->
@@ -107,6 +94,74 @@
       <!-- {{#if emails.[0].verified}}<span class="text-success">{{fa 'check'}}</span>{{/if}} -->
     </td>
   </tr>
+</template>
+
+<template name="leadEnrollUsersTable">
+  {{> userSearch }}
+  {{> pages }}
+  {{> pagesNav }}
+  <button class="btn btn-primary pull-right" data-action="enroll">
+    {{__ 'enroll'}}
+  </button>
+</template>
+
+<template name="leadEnrollTableRow">
+  {{#enrollTableRow}}
+  <div class="form-check">
+    <label>
+      <input name="radioGroup" class="enrollUser"
+        type="radio" id="{{_id}}"
+        data-userid="{{_id}}"
+        checked="{{#if signed}}true{{/if}}"/>
+    </label>
+  </div>
+  {{/enrollTableRow}}
+</template>
+
+<template name="shiftEnrollUsersTable">
+  {{> userSearch }}
+  {{> pages }}
+  {{> pagesNav }}
+  <button class="btn btn-primary pull-right" data-action="enroll">
+    {{__ 'enroll'}}
+  </button>
+</template>
+
+<template name="shiftEnrollTableRow">
+  {{#enrollTableRow}}
+    <input name="{{_id}}-group" class="enrollUser"
+      type="checkbox" id="{{_id}}"
+      data-userid="{{_id}}"
+      checked="{{#if signed}}true{{/if}}"/>
+  {{/enrollTableRow}}
+</template>
+
+<template name="projectEnrollUsersTable">
+  {{> userSearch }}
+  {{> pages data=this}}
+  {{> pagesNav }}
+  <button class="btn btn-primary pull-right" data-action="enroll">
+    {{__ 'enroll'}}
+  </button>
+</template>
+
+<template name="projectEnrollTableRow">
+  {{debug}}
+  {{#enrollTableRow}}
+    <div class="form-inline">
+      <div class="input-group mb-2 mr-sm-2">
+        <input type="text" class="form-control"
+          placeholder="{{__ 'select_dates'}}"
+          id="{{_id}}" data-userid="{{_id}}"
+          data-input>
+        <div class="input-group-prepend">
+          <button type="button" class="btn btn-action" title="clear" data-clear>
+            {{fa "close"}}
+          </button>
+        </div>
+      </div>
+    </div>
+  {{/enrollTableRow}}
 </template>
 
 <template name="noInfoUserList">
