@@ -4,6 +4,7 @@ import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Modal } from 'meteor/peppelg:bootstrap-3-modal'
+import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
 
 moment.tz.setDefault('Europe/Paris')
@@ -88,11 +89,17 @@ Template.shiftSignupEnrollAction.events({
     const type = template.$(event.currentTarget).data('type')
     const parentId = template.$(event.currentTarget).data('team')
     const policy = template.$(event.currentTarget).data('policy')
-    Session.set('allUsersTableData', {
-      parentId, shiftId: id, duty: type, policy,
+    // eslint-disable-next-line meteor/no-session
+    Session.set(`enrollments-${id}`, [])
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable', {
+      page: 'EnrollUserSearchPages',
+      data: {
+        parentId,
+        shiftId: id,
+        duty: type,
+        policy,
+      },
     })
-    Session.set('enrollments', [])
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable', { page: 'EnrollUserSearchPages' })
   },
 })
 

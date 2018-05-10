@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { i18n } from 'meteor/universe:i18n'
 import { Bert } from 'meteor/themeteorchef:bert'
+import { Session } from 'meteor/session'
 
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
@@ -125,10 +126,11 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
 
 Template.allUsersTable.events({
   'click [data-action=enroll]': () => {
+    const { duty, policy, ...doc } = Template.currentData().data
     // this is the only place where I use a session variable.
-    // can't find a better way
-    const enrollments = Session.get('enrollments')
-    const { duty, policy, ...doc } = Session.get('allUsersTableData')
+    // can't find a better way. Use shiftId to avoid global namespace issues.
+    // eslint-disable-next-line meteor/no-session
+    const enrollments = Session.get(`enrollments-${duty.shiftId}`)
     enrollments.forEach((enrollment) => {
       const insert = {
         ...doc,

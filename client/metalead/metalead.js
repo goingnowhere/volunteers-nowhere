@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
+import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
 
 Template.metaleadDepartmentView.onCreated(function onCreated() {
@@ -35,9 +36,12 @@ Template.metaleadDepartmentView.events({
   'click [data-action="enroll_lead"]': (event, template) => {
     const shiftId = template.$(event.target).data('shiftid')
     const parentId = template.$(event.target).data('parentid')
-    Session.set('allUsersTableData', { parentId, shiftId, duty: 'lead' })
-    Session.set('enrollments', [])
-    AutoFormComponents.ModalShowWithTemplate('allUsersTable', { page: 'EnrollUserSearchPages' })
+    // eslint-disable-next-line meteor/no-session
+    Session.set(`enrollments-${shiftId}`, [])
+    AutoFormComponents.ModalShowWithTemplate('allUsersTable', {
+      page: 'EnrollUserSearchPages',
+      data: { parentId, shiftId, duty: 'lead' },
+    })
   },
   'click [data-action="remove_lead"]': (event, template) => {
     const signupId = template.$(event.target).data('id')
