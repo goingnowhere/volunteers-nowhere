@@ -1,7 +1,7 @@
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
-// import { AutoForm } from 'meteor/aldeed:autoform'
 import { Template } from 'meteor/templating'
 import { Volunteers } from '../../both/init'
+import { Pages } from '../../both/pages'
 import { EventSettings } from '../../both/settings'
 
 // name of the organization. Nowhere is a two level hierarchy
@@ -106,5 +106,8 @@ Template.managerUserList.helpers({
   with_duties: () =>
     // TODO aggregation
     0,
+})
 
+Template.managerUserList.onRendered(() => {
+  Pages.ManagerUserPages.requestPage(1)
 })
