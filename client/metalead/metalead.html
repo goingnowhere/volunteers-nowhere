@@ -91,18 +91,20 @@
                 {{/let}}
                 </span></td>
               <td>
-                <button class="btn btn-sm btn-circle"
-                  data-action="edit_team"
-                  data-id="{{team._id}}"
-                  data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
-                  {{fa "pencil-square-o"}}</button>
-                {{#unless $eq team._id _id}}
-                <button class="btn btn-sm btn-circle"
-                  data-action="delete_team"
-                  data-id="{{team._id}}"
-                  data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
-                  {{fa "trash-o"}}</button>
-                {{/unless}}
+                <div class="btn-group inline pull-left">
+                  <button class="btn btn-sm btn-circle"
+                    data-action="edit_team"
+                    data-id="{{team._id}}"
+                    data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
+                    {{fa "pencil-square-o"}}</button>
+                  {{#unless $eq team._id _id}}
+                  <button class="btn btn-sm btn-circle"
+                    data-action="delete_team"
+                    data-id="{{team._id}}"
+                    data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
+                    {{fa "trash-o"}}</button>
+                  {{/unless}}
+                </div>
               </td>
             </tr>
           {{/each}}
