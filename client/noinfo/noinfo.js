@@ -4,11 +4,18 @@ import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { i18n } from 'meteor/universe:i18n'
 import { Bert } from 'meteor/themeteorchef:bert'
 import { Session } from 'meteor/session'
+import { SpacebarsCompiler } from 'meteor/spacebars-compiler'
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/flatpickr.css'
 
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
+
+const applyContext = (function applyContext(body, context) {
+  const compiled = SpacebarsCompiler.compile(body, { isBody: true })
+  const content = Blaze.toHTML(Blaze.With(context, eval(compiled)))
+  return content
+})
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   const template = this
@@ -133,11 +140,27 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
     `${Volunteers.eventName}.Volunteers.${duty}Signups.insert`, insert,
     (err, signupId) => {
       if (err) {
-        Bert.alert({
-          title: i18n.__('error'),
-          message: err.message,
-          type: 'error',
-        })
+        switch (err.error) {
+          case 409:
+            Bert.alert({
+              hideDelay: 6500,
+              title: i18n.__('abate:volunteers', 'double_booking'),
+              /* XXX: add details of the other bookings stored in err.details */
+              /* message: applyContext(templatebody, err),  */
+              message: i18n.__('abate:volunteers', 'double_booking_msg'),
+              type: 'warning',
+              style: 'growl-top-right',
+            })
+            break
+          default:
+            Bert.alert({
+              hideDelay: 6500,
+              title: i18n.__('abate:volunteers', 'error'),
+              message: err.reason,
+              type: 'danger',
+              style: 'growl-top-right',
+            })
+        }
       } if (policy === 'requireApproval') {
         if (duty === 'lead') {
           Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, signupId)
