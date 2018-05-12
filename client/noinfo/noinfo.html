@@ -199,7 +199,6 @@
       data-action="user_form" data-userid="{{_id}}" >
       {{__ "user_form" }}
     </button>
-    <!-- <a href="{{pathFor 'noInfoUserProfile'}}">{{__ "user_details"}}</a> -->
   {{/allUsersProfile}}
 {{/if}}
 </template>
@@ -225,6 +224,7 @@
               <tr><td>{{__ "name"}}</td><td>{{getUserName user._id}}
                 {{#if status.online}}<span class="text-success"> {{fa "circle"}}</span>{{/if}}
               </td></tr>
+              <tr><td>{{__ "real_name"}}</td><td>{{getRealName user._id}}</td></tr>
               <tr><td>{{__ "email"}} </td>
                 <td>{{user.emails.[0].address}}
                   {{#if user.emails.[0].verified}}<span class="text-success">{{fa 'check'}}</span>{{/if}}

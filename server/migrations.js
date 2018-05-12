@@ -2,6 +2,8 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import { Migrations } from 'meteor/percolate:migrations'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
+import { FormBuilder } from 'meteor/abate:formbuilder'
+import { Volunteers } from '../both/init'
 
 Migrations.config({
   log: true,
@@ -41,5 +43,19 @@ Migrations.add({
     Roles.addUsersToRoles(pm._id, 'admin')
     Roles.addUsersToRoles(dr._id, 'admin')
     Roles.addUsersToRoles(hc._id, 'admin')
+  },
+})
+
+Migrations.add({
+  version: 3,
+  name: 'Move fod-name to user account',
+  up() {
+    const volunteerForm = FormBuilder.Collections.DynamicForms.findOne({ name: 'VolunteerForm' })
+    const fodNameField = volunteerForm.form.find(field => field.label.includes("Name / Field of Dirt (it's not a playa) Name"))
+    Volunteers.Collections.VolunteerForm.find().map((vol) => {
+      if (vol[fodNameField.name]) {
+        Meteor.users.update(vol.userId, { $set: { test: vol[fodNameField.name] } })
+      }
+    })
   },
 })

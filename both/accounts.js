@@ -28,6 +28,15 @@ AccountsTemplates.configure({
 })
 
 AccountsTemplates.addField({
+  _id: 'nickname',
+  type: 'text',
+  displayName: 'Playa Name/FoD Name/Nickname',
+  placeholder: 'Field of Dirt Name',
+  required: true,
+  errStr: 'We need to know what to call you',
+})
+
+AccountsTemplates.addField({
   _id: 'language',
   type: 'select',
   displayName: 'Language',
