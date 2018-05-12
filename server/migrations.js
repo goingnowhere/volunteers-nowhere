@@ -54,7 +54,7 @@ Migrations.add({
     const fodNameField = volunteerForm.form.find(field => field.label.includes("Name / Field of Dirt (it's not a playa) Name"))
     Volunteers.Collections.VolunteerForm.find().map((vol) => {
       if (vol[fodNameField.name]) {
-        Meteor.users.update(vol.userId, { $set: { test: vol[fodNameField.name] } })
+        Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
       }
     })
   },

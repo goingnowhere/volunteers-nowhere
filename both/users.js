@@ -68,6 +68,9 @@ const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
     type: String,
     autoform: { readonly: true },
   },
+  nickname: {
+    type: String,
+  },
 })
 
 const userSchema = Schemas.User.extend({

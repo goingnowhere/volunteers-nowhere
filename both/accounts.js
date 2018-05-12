@@ -62,7 +62,7 @@ Meteor.startup(() => {
   const fields = AccountsTemplates.getFields()
   for (let i = 0; i < fields.length; i++) {
     const field = fields[i]
-    if ((field._id === 'terms') || (field._id === 'language')) {
+    if ((field._id === 'terms') || (field._id === 'language') || field._id === 'nickname') {
       // Enable it for any other states you want
       field.visible = ['signUp', 'atEnrollAccount', 'enrollAccount']
     }
