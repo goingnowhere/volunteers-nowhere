@@ -10,11 +10,12 @@ The admin password is admin@example.com / apple1
 
 The majority of the code is written in Coffeescript, but the intention is to migrate this to Javascript for greater accessibility to developers. Meteor is used as a framework, using Blaze as a view layer.
 
-## Testing
+## Testing (TODO)
 
    meteor test --driver-package practicalmeteor:mocha --port 3100
 
    meteor test-packages --driver-package practicalmeteor:mocha --port 3100
+
 ### Git submodule install
 
 To run this project you must [install meteor](https://www.meteor.com/install) and checkout all additional modules. This can be done in one step by using git submodules, though it may require you to have a Github and Gitlab accounts set up with SSH keys set up (all the code is public but since we use SSH urls for the repositories hosted on Github and Gitlab you need an account, an [alternative install method](#non-ssh-install) exists if you don't want to set this up):
@@ -52,4 +53,11 @@ update all submodules to master except meteor-roles
 
 ```
 git submodule foreach '[ "$path" = "packages/meteor-roles" ] || git pull origin master'
+```
+
+restore all the backup data for testing
+run ```meteor mongo``` in a shell and then run the following command to replate the existing database with a copy from ```backups/mongo__mongodb_20180512-000008/volunteers/```
+
+```
+mongorestore -h 127.0.0.1 --port 3001 -d meteor --drop backups/mongo__mongodb_20180512-000008/volunteers/
 ```
