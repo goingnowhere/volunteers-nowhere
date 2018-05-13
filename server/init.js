@@ -29,6 +29,6 @@ Meteor.startup(() => {
 })
 
 Meteor.startup(() => {
-  /* Migrations.unlock() */
+  Migrations.unlock()
   Migrations.migrateTo('latest')
 })

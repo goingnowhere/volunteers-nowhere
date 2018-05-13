@@ -48,7 +48,6 @@ Migrations.add({
 })
 
 
-
 Migrations.add({
   version: 3,
   name: 'Move fod-name to user account',
@@ -81,8 +80,8 @@ Migrations.add({
 
 Migrations.add({
   version: 5,
-  name: 'Add guest list guests-2018-04-30.json',
+  name: 'Add guest list guests-2018-05-06.json',
   up() {
-    importUsers('users/guests-2018-04-30.json')
+    importUsers('users/guests-2018-05-06.json')
   },
 })

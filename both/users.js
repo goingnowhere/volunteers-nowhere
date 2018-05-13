@@ -8,6 +8,10 @@ SimpleSchema.extendOptions(['autoform'])
 export const Schemas = {}
 
 Schemas.User = new SimpleSchema({
+  username: {
+    type: String,
+    optional: true,
+  },
   emails: {
     type: Array,
     optional: true,
@@ -71,6 +75,7 @@ const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
   },
   nickname: {
     type: String,
+    optional: true,
   },
   ticketDate: {
     type: Date,
