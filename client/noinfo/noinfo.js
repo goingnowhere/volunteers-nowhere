@@ -42,14 +42,17 @@ Template.noInfoDashboard.events({
   },
 })
 
+Template.noInfoUserList.onCreated(function onCreated() {
+  const template = this
+  template.userStats = new ReactiveVar({})
+  Meteor.call('users.stats', (err, res) => {
+    if (err) { console.log('error', err) }
+    if (res) { template.userStats.set(res) }
+  })
+})
+
 Template.noInfoUserList.helpers({
-  total_users: () => Meteor.users.find().count(),
-  profile_filled: () =>
-    // TODO proper subscription
-    Volunteers.Collections.VolunteerForm.find().count(),
-  with_duties: () =>
-    // TODO aggregation
-    0,
+  userStats: () => Template.instance().userStats.get(),
 })
 
 const textSearch = (function textSearch(value, page, event) {

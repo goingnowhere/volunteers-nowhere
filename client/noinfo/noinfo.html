@@ -169,9 +169,11 @@
     <div class="row">
       <div class="col-md-2 bg-grey">
         <h3>NoInfo</h3>
-        <h5 class="mb-2 dark-text">{{__ "total_users"}}:</h5> {{total_users}}
-        <h5 class="mb-2 dark-text">{{__ "profile_filled"}}:</h5> {{profile_filled}}
-        <h5 class="mb-2 dark-text">{{__ "user_with_duties"}}:</h5> {{with_duties}}
+        <h5 class="mb-2 dark-text">{{__ "ticket_holders"}}:</h5> {{userStats.ticketHolders}}
+        <!-- <h5 class="mb-2 dark-text">{{__ "enrollment_sent"}}:</h5> {{userStats.enrollmentSent}} -->
+        <h5 class="mb-2 dark-text">{{__ "enrolled"}}:</h5> {{userStats.enrolled}}
+        <h5 class="mb-2 dark-text">{{__ "profile_filled"}}:</h5> {{userStats.profileFilled}}
+        <h5 class="mb-2 dark-text">{{__ "with_duties"}}:</h5> {{userStats.withDuties}}
         <br/>
         <button type="button" class="btn btn-default btn-sm" data-action="new_user">
           {{__ "new_user" }}

@@ -1,10 +1,11 @@
+import { MeteorProfile } from '../both/init'
+
 import {
-  MeteorProfile,
   isManagerMixin,
   ValidatedMethodWithMixin,
   isLoggedInMixin,
   isNoInfoInMixin,
-} from '../both/init'
+} from '../both/authMixins'
 
 export const userProfileRemoveUser =
   ValidatedMethodWithMixin(

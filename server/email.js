@@ -1,7 +1,12 @@
 import { Mongo } from 'meteor/mongo'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
-import { ValidatedMethodWithMixin, isManagerMixin, Volunteers } from '../both/init'
+import { Volunteers } from '../both/init'
+import {
+  isManagerMixin,
+  ValidatedMethodWithMixin,
+} from '../both/authMixins'
+
 
 export const insertEmailTemplateMethod =
   ValidatedMethodWithMixin(
@@ -20,8 +25,6 @@ export const removeEmailTemplateMethod =
     EmailForms.removeEmailTemplate,
     [isManagerMixin],
   )
-
-export const EmailLogs = new Mongo.Collection('emailLogs')
 
 export const getContext = (function getContext(cntxlist, user, context = {}) {
   cntxlist.forEach((cntx) => {

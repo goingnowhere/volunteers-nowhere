@@ -1,8 +1,15 @@
 import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
+import { Promise } from 'meteor/promise'
+import { Email } from 'meteor/email'
+import { Volunteers } from '../both/init'
 import { getContext } from './email'
-import { isManagerMixin, isNoInfoInMixin, ValidatedMethodWithMixin } from '../both/init'
+import {
+  isManagerMixin,
+  isNoInfoInMixin,
+  ValidatedMethodWithMixin,
+} from '../both/authMixins'
 
 const EnrollUserSchema = new SimpleSchema({
   email: String,
@@ -12,7 +19,7 @@ const EnrollUserSchema = new SimpleSchema({
   'profile.ticketNumber': String,
 })
 
-export const enrollUserMethod = {
+const enrollUserMethod = {
   name: 'Accounts.enrollUserCustom',
   validate: EnrollUserSchema.validator(),
   run(user) {
@@ -34,7 +41,7 @@ const ChangePasswordSchema = new SimpleSchema({
   password_again: String,
 })
 
-export const adminChangeUserPasswordMethod = {
+const adminChangeUserPasswordMethod = {
   name: 'Accounts.adminChangeUserPassword',
   validate: ChangePasswordSchema.validator(),
   run(doc) {
@@ -52,9 +59,11 @@ export const adminChangeUserPassword =
     [isNoInfoInMixin],
   )
 
-export const sendWelcomeEmailMethod = {
+export const EmailLogs = new Mongo.Collection('emailLogs')
+
+const sendWelcomeEmailMethod = {
   name: 'email.sendWelcome',
-  validate() { return true },
+  validate: null,
   run(user) {
     const doc = EmailForms.previewTemplate('welcomeEmail', user, getContext)
     if (doc) {
@@ -75,4 +84,34 @@ export const sendWelcomeEmail =
   ValidatedMethodWithMixin(
     sendWelcomeEmailMethod,
     [isManagerMixin],
+  )
+
+const userStatsMethod = {
+  name: 'users.stats',
+  validate: null,
+  run() {
+    const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 'Manual Registration' } }).count()
+    const enrollmentSent = 0
+    const enrolled = Meteor.users.find({
+      $and: [
+        { 'profile.ticketNumber': { $ne: 'Manual Registration' } },
+        { 'profile.terms': true },
+      ],
+    }).count()
+    const profileFilled = Volunteers.Collections.VolunteerForm.find().count()
+    const withDuties = Promise.await(Volunteers.Collections.ShiftSignups.rawCollection().distinct('userId'))
+    return {
+      ticketHolders,
+      enrollmentSent,
+      enrolled,
+      profileFilled,
+      withDuties: withDuties.length,
+    }
+  },
+}
+
+export const userStats =
+  ValidatedMethodWithMixin(
+    userStatsMethod,
+    [isNoInfoInMixin],
   )

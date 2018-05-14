@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
 import { check } from 'meteor/check'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
-import { Volunteers } from './init'
+import { isManagerMixin } from '../both/authMixins'
 
 SimpleSchema.defineValidationErrorTransform((error) => {
   const ddpError = new Meteor.Error(error.message)
@@ -71,10 +71,8 @@ EventSettings.attachSchema(SettingsSchema)
 export const insertSettings = new ValidatedMethod({
   name: 'settings.insert',
   validate: SettingsSchema.validator({ clean: true }),
+  mixins: [isManagerMixin],
   run(doc) {
-    if (!Volunteers.isManager()) {
-      throw new Meteor.Error('unauthorized', "You don't have permission for this operation")
-    }
     EventSettings.insert(doc)
   },
 })
@@ -84,11 +82,8 @@ export const updateSetting = new ValidatedMethod({
   validate: (doc) => {
     SettingsSchema.validate(doc.modifier, { clean: true, modifier: true })
   },
+  mixins: [isManagerMixin],
   run(doc) {
-    if (!Volunteers.isManager()) {
-      throw new Meteor.Error('unauthorized', "You don't have permission for this operation")
-    }
-    // TODO: should be an upsert
     EventSettings.update(doc._id, doc.modifier)
   },
 })
