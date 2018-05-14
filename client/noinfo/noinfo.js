@@ -164,7 +164,7 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
               style: 'growl-top-right',
             })
         }
-      } if (policy === 'requireApproval') {
+      } if (signupId && (policy === 'requireApproval' || policy === 'adminOnly')) {
         if (duty === 'lead') {
           Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, signupId)
         } else {
