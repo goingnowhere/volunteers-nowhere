@@ -4,7 +4,8 @@ import {
   isManagerMixin,
   ValidatedMethodWithMixin,
   isLoggedInMixin,
-  isNoInfoInMixin,
+  isNoInfoMixin,
+  isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
 
 export const userProfileRemoveUser =
@@ -23,5 +24,23 @@ export const userProfileUpdateUser =
 export const userProfileSendEnrollAccount =
   ValidatedMethodWithMixin(
     MeteorProfile.Methods.userProfileSendEnrollAccount,
-    [isNoInfoInMixin], // Manager and noInfo leads
+    [isNoInfoMixin], // Manager and noInfo leads
+  )
+
+export const userProfileAddEmail =
+  ValidatedMethodWithMixin(
+    MeteorProfile.Methods.userAddEmail,
+    [isLoggedInMixin, isSameUserOrNoInfoMixin],
+  )
+
+export const userMakeEmailPrimary =
+  ValidatedMethodWithMixin(
+    MeteorProfile.Methods.userMakeEmailPrimary,
+    [isLoggedInMixin, isSameUserOrNoInfoMixin],
+  )
+
+export const userRemoveEmail =
+  ValidatedMethodWithMixin(
+    MeteorProfile.Methods.userRemoveEmail,
+    [isLoggedInMixin, isSameUserOrNoInfoMixin],
   )

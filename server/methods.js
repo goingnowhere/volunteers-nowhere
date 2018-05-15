@@ -7,7 +7,7 @@ import { Volunteers } from '../both/init'
 import { getContext } from './email'
 import {
   isManagerMixin,
-  isNoInfoInMixin,
+  isNoInfoMixin,
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 
@@ -56,7 +56,7 @@ const adminChangeUserPasswordMethod = {
 export const adminChangeUserPassword =
   ValidatedMethodWithMixin(
     adminChangeUserPasswordMethod,
-    [isNoInfoInMixin],
+    [isNoInfoMixin],
   )
 
 export const EmailLogs = new Mongo.Collection('emailLogs')
@@ -113,5 +113,5 @@ const userStatsMethod = {
 export const userStats =
   ValidatedMethodWithMixin(
     userStatsMethod,
-    [isNoInfoInMixin],
+    [isNoInfoMixin],
   )
