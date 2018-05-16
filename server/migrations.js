@@ -57,5 +57,10 @@ Migrations.add({
         Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
       }
     })
+    Meteor.users.update(
+      { 'profile.nickname': { $eq: null } },
+      { $set: { 'profile.nickname': '' } },
+      { multi: true },
+    )
   },
 })

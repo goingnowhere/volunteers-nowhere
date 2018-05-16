@@ -30,6 +30,7 @@ const enrolledUsers = [
       firstName: 'enrolled',
       lastName: 'test',
       ticketNumber: '435575677',
+      nickname: '',
     },
   },
 ]
@@ -41,6 +42,7 @@ export const createUsers = (Volunteers) => {
       options.profile = {
         firstName: options.name,
         ticketNumber: 'testnumber12',
+        nickname: options.name,
       }
       const userId = Accounts.createUser(options)
       Meteor.users.update(userId, {
