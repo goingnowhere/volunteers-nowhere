@@ -52,6 +52,7 @@ export const importUsers = (guestsFile) => {
             'profile.ticketNumber': user.TicketId,
             'profile.ticketDate': new Date(user.DateAdded),
             'profile.manualRegistration': false,
+            'emails.0.verified': true,
           },
         })
       } else if (!(userExists.profile.ticketNumber === user.TicketId)) {
