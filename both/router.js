@@ -141,11 +141,8 @@ Router.route('/dashboard', {
   onBeforeAction() {
     const user = Meteor.user()
     if (user) {
-      if (user.emails.length === 0) {
-        // this case if for those people that got two tickets with the same
-        // email. We send two enrollment links, and we force them to give
-        // a valid email before proceeding
-        this.redirect('/profile/settings')
+      if ((user.emails.length === 0) || (user.emails[0].address.indexOf('@email.invalid') > 0)) {
+        this.redirect('/profile/settings#email')
       } else if (Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })) {
         this.next()
       } else {

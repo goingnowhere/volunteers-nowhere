@@ -39,6 +39,12 @@ export const userMakeEmailPrimary =
     [isLoggedInMixin, isSameUserOrNoInfoMixin],
   )
 
+export const sendVerificationEmail =
+  ValidatedMethodWithMixin(
+    MeteorProfile.Methods.sendVerificationEmail,
+    [isLoggedInMixin, isSameUserOrNoInfoMixin],
+  )
+
 export const userRemoveEmail =
   ValidatedMethodWithMixin(
     MeteorProfile.Methods.userRemoveEmail,

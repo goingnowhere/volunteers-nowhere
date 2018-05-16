@@ -1,7 +1,8 @@
-import { Mongo } from 'meteor/mongo'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
 import { Volunteers } from '../both/init'
+import { pendingUsers } from './importUsers'
+import './accounts'
 import {
   isManagerMixin,
   ValidatedMethodWithMixin,
@@ -26,6 +27,17 @@ export const removeEmailTemplateMethod =
     [isManagerMixin],
   )
 
+const generateEnrollmentLinks = (address) => {
+  const sel = { Email: address, fakeEmail: { $ne: null } }
+  const links = pendingUsers.find(sel).map((pendingUserData) => {
+    const pu = Accounts.findUserByEmail(pendingUserData.fakeEmail)
+    const { token } = Accounts.generateResetToken(pu._id, pendingUserData.fakeEmail, 'enrollAccount')
+    return Accounts.urls.enrollAccount(token)
+  })
+  return links
+}
+
+/* Here we add application specific contexts for the emails-forms package */
 export const getContext = (function getContext(cntxlist, user, context = {}) {
   cntxlist.forEach((cntx) => {
     switch (cntx.name) {
@@ -36,11 +48,22 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         }
         break
       }
+      case 'Tickets': {
+        const { address } = user.emails[0]
+        context[`${cntx.namespace}`] = { users: generateEnrollmentLinks(address) }
+        break
+      }
       default:
     }
   })
+  console.log(context)
   return context
 })
+
+
+/* Accounts.onEnrollmentLink((token, done) => {
+
+  }) */
 
 // Defaults
 Accounts.emailTemplates.from = 'VMS <vms-support@goingnowhere.org>'

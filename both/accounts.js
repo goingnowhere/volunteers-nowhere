@@ -1,9 +1,8 @@
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
-import { Roles } from 'meteor/piemonkey:roles'
 import i18n from 'meteor/universe:i18n'
 import { moment } from 'meteor/momentjs:moment'
-import { Volunteers } from './init'
+
 
 AccountsTemplates.configure({
   defaultLayout: 'homeLayout',
@@ -11,11 +10,11 @@ AccountsTemplates.configure({
   showForgotPasswordLink: true,
   sendVerificationEmail: true,
   continuousValidation: true,
-  // enforceEmailVerification: true,
+  enforceEmailVerification: true,
   // privacyUrl: '/s/privacy',
   forbidClientAccountCreation: true,
-  // showResendVerificationEmailLink: true,
-  // postSignUpHook,
+  showResendVerificationEmailLink: true,
+  /* postSignUpHook, */
   // onLogoutHook: onSignOut,
   // termsUrl: 'terms-of-use',
   onLogoutHook() {
@@ -93,17 +92,16 @@ this.setUserLanguage = (userId) => {
 // }
 // }
 
-const postSignUpHook = (userId) => { // eslint-disable-line no-unused-vars
-  if (Meteor.isServer) {
-    Roles.addUsersToRoles(userId, 'user', Volunteers.eventName)
-  }
-  if (Meteor.isClient) {
-    this.setUserLanguage(userId)
-  }
-}
 
 Accounts.onLogin(function onLogin() {
   if (Meteor.isClient) {
     this.setUserLanguage(Meteor.userId())
+  }
+  if (Meteor.isServer) {
+    const user = Meteor.user()
+    // after the enrollment this address is not needed anymore
+    if (user.emails[0].address.indexOf('@email.invalid') > 0) {
+      Meteor.users.update({ _id: user._id }, { $set: { emails: [] } })
+    }
   }
 })

@@ -136,6 +136,14 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
+/* Template.noInfoUserProfile.events({
+  'click [data-action=copy-enrollment]': (event, template) => {
+    event.preventDefault()
+    Accounts.urls.enrollAccount(token)
+    event.clipboardData.setData('text/plain', link)
+  },
+}) */
+
 const enrollEventCall = (function enrollEventCall(doc, enrollment) {
   const { duty, policy, ...rest } = doc
   const insert = { ...rest, ...enrollment }

@@ -85,3 +85,18 @@ Migrations.add({
     importUsers('users/guests-2018-05-06.json')
   },
 })
+
+Migrations.add({
+  version: 6,
+  name: 'add user and site context',
+  up() {
+    EmailForms.Collections.EmailTemplateContext.insert({
+      name: 'Tickets',
+      namespace: 'tickets',
+      variables: [
+        { name: 'users', description: 'additional tickets associated to this email' },
+
+      ],
+    })
+  },
+})
