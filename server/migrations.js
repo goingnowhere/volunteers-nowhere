@@ -40,9 +40,9 @@ Migrations.add({
     const pm = Accounts.findUserByEmail('piemonkey@gmail.com')
     const dr = Accounts.findUserByEmail('dr.munga@gmail.com')
     const hc = Accounts.findUserByEmail('hardcastle@goingnowhere.org')
-    Roles.addUsersToRoles(pm._id, 'admin')
-    Roles.addUsersToRoles(dr._id, 'admin')
-    Roles.addUsersToRoles(hc._id, 'admin')
+    if (pm) { Roles.addUsersToRoles(pm._id, 'admin') }
+    if (dr) { Roles.addUsersToRoles(dr._id, 'admin') }
+    if (hc) { Roles.addUsersToRoles(hc._id, 'admin') }
   },
 })
 
@@ -57,10 +57,5 @@ Migrations.add({
         Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
       }
     })
-    Meteor.users.update(
-      { 'profile.nickname': { $eq: null } },
-      { $set: { 'profile.nickname': '' } },
-      { multi: true },
-    )
   },
 })

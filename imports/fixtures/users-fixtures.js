@@ -30,7 +30,6 @@ const enrolledUsers = [
       firstName: 'enrolled',
       lastName: 'test',
       ticketNumber: '435575677',
-      nickname: '',
     },
   },
 ]
@@ -62,12 +61,12 @@ export const createUsers = (Volunteers) => {
     }
   })
 
-  _.each(enrolledUsers, (options) => {
+  /* _.each(enrolledUsers, (options) => {
     if (!Meteor.users.findOne({ 'emails.address': options.email })) {
       console.log('Eroll user ', options)
       enrollUser.call({ email: options.email, profile: options.profile })
     }
-  })
+  }) */
 }
 
 // _.each(enrolledUsers, (options) => {
