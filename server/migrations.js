@@ -80,9 +80,9 @@ Migrations.add({
 
 Migrations.add({
   version: 5,
-  name: 'Add guest list guests-2018-05-06.json',
+  name: 'Add guest list guests-2018-05-14.json',
   up() {
-    importUsers('users/guests-2018-05-06.json')
+    importUsers('users/guests-2018-05-14.json')
   },
 })
 
