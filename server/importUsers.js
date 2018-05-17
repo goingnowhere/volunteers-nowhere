@@ -39,6 +39,8 @@ const addUserToPending = (user) => {
 }
 
 export const importUsers = (guestsFile) => {
+  console.log(Assets.absoluteFilePath(guestsFile))
+
   const users = JSON.parse(Assets.getText(guestsFile))
   users.forEach((user) => {
     console.log('Create User', user.Email)
