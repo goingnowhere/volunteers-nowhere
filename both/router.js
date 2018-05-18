@@ -1,6 +1,7 @@
 import { Router, RouteController } from 'meteor/iron:router'
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Volunteers } from './init'
+import { EventSettings } from './settings'
 import './accounts'
 
 Router.plugin('auth', {
@@ -164,24 +165,6 @@ Router.route('/dashboard', {
   },
 })
 
-Router.route('/team/:_id', {
-  name: 'publicTeamView',
-  controller: AuthenticatedController,
-  waitOn() {
-    if (this.params && this.params._id) {
-      const sel = { _id: this.params._id }
-      return [Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel)]
-    }
-    return null
-  },
-  data() {
-    if (this.params && this.params._id && this.ready()) {
-      return Volunteers.Collections.Team.findOne(this.params._id)
-    }
-    return null
-  },
-})
-
 Router.route('/department/:_id', {
   name: 'publicDepartmentView',
   controller: AuthenticatedController,
@@ -197,6 +180,42 @@ Router.route('/department/:_id', {
   data() {
     if (this.params && this.params._id && this.ready()) {
       return Volunteers.Collections.Department.findOne(this.params._id)
+    }
+    return null
+  },
+})
+
+Router.route('/department/:_deptId/team/:_teamId/:_period?', {
+  name: 'publicTeamView',
+  controller: AuthenticatedController,
+  waitOn() {
+    if (this.params) {
+      const sel = { _id: this.params._deptId }
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, sel),
+        Meteor.subscribe('eventSettings'),
+      ]
+    }
+    return null
+  },
+  data() {
+    if (this.params && this.ready()) {
+      const { _teamId, _period } = this.params
+      const settings = EventSettings.findOne()
+      let team = Volunteers.Collections.Team.findOne(_teamId)
+      switch (_period) {
+        case 'event':
+          team = _.extend(team, { period: settings.eventPeriod })
+          break
+        case 'build':
+          team = _.extend(team, { period: settings.buildPeriod })
+          break
+        case 'strike':
+          team = _.extend(team, { period: settings.strikePeriod })
+          break
+        default:
+      }
+      return team
     }
     return null
   },

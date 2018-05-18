@@ -66,5 +66,7 @@
   "enrolled": "Enrolled",
   "profile_filled": "With Profile",
   "with_duties": "With Duties",
-  "enrollment_sent": "Enrollment Sent"
+  "enrollment_sent": "Enrollment Sent",
+  "shifts_in_this_team": "Shifts in this Team",
+  "public_link": "Public Link"
 }

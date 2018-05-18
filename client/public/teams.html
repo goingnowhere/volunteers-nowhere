@@ -2,18 +2,16 @@
   <div class="container">
     <div class="row">
       <div class="card">
-        <div class="col-md-3">
-          <h2>{{ name }}</h2>
-          leads ...
+        <div class="card-header">
+          <h5>{{ name }}</h5>
+          {{#if email}}
+          <h5 class="text-muted text-right">{{__ "contact"}}: {{ email }}</h5>
+          {{/if}}
         </div>
-        <div class="col">
-          <p>{{description}}</p>
-        </div>
+        <p class="m-2">{{description}}</p>
       </div>
     </div>
-    <div>
-      <h3>Shifts and Tasks</h3>
-      {{> volunteerShiftsList }}
-    </div>
+    <h3 class="pt-2">{{__ "shifts_in_this_team"}}</h3>
+    {{> signupsListTeam team=this }}
   </div>
-</template>
+  </template>

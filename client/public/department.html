@@ -7,6 +7,22 @@
           {{#if email}}
           <h5 class="text-muted text-right">{{__ "contact"}}: {{ email }}</h5>
           {{/if}}
+          <div>
+            <a class="nav-link dropdown-toggle" href="#"
+              id="navbarDropdown3" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+                {{__ "teams"}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+              {{#each team in teams }}
+              {{debug team}}
+                <a class="dropdown-item"
+                    href="{{pathFor 'publicTeamView' _deptId=_id _teamId=team._id}}" >
+                    {{team.name}}
+                </a>
+              {{/each}}
+            </div>
+          </div>
         </div>
         <p class="m-2">{{description}}</p>
       </div>
