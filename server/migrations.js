@@ -100,3 +100,26 @@ Migrations.add({
     })
   },
 })
+
+Migrations.add({
+  version: 7,
+  name: 'Cleanup removed shifts',
+  up() {
+    Volunteers.Collections.TeamShifts.find().forEach((shift) => {
+      if (!Volunteers.Collections.Team.findOne(shift.parentId)) {
+        console.log('remove stale shift ', shift.title)
+        Volunteers.Collections.TeamShifts.remove(shift._id)
+      }
+    })
+    Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
+      if (!Volunteers.Collections.TeamShifts.findOne(signup.shiftId)) {
+        const user = Meteor.users.findOne(signup.userId)
+        const team = Volunteers.Collections.Team.findOne(signup.parentId)
+        const email = ((user) ? user.emails[0].address : '')
+        const title = ((team) ? team.name : '')
+        console.log(`remove stale signup for ${email} (${title})`)
+        Volunteers.Collections.ShiftSignups.update(signup._id, { $set: { status: 'cancelled' } })
+      }
+    })
+  },
+})
