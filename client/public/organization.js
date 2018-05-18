@@ -3,7 +3,7 @@ import 'orgchart'
 import 'orgchart/src/css/jquery.orgchart.css'
 import { Volunteers } from '../../both/init'
 
-const listToTree = function(list) {
+const listToTree = function listToTree(list) {
   const map = {}
   const roots = []
   list.map((node) => {

@@ -39,7 +39,7 @@ Template.leadTeamView.events({
   },
   'click [data-action="add_shift_group"]': (event, template) => {
     const team = Volunteers.Collections.Team.findOne(template.data._id)
-    AutoFormComponents.ModalShowWithTemplate('addShiftGroup', { team })
+    AutoFormComponents.ModalShowWithTemplate('addShiftGroup', { parentId: team._id })
   },
   'click [data-action="add_task"]': (event, template) => {
     const team = Volunteers.Collections.Team.findOne(template.data._id)

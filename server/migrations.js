@@ -3,6 +3,7 @@ import { Migrations } from 'meteor/percolate:migrations'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
 import { FormBuilder } from 'meteor/abate:formbuilder'
+import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { importUsers } from './importUsers'
 
@@ -120,6 +121,28 @@ Migrations.add({
         console.log(`remove stale signup for ${email} (${title})`)
         Volunteers.Collections.ShiftSignups.update(signup._id, { $set: { status: 'cancelled' } })
       }
+    })
+  },
+})
+
+Migrations.add({
+  version: 8,
+  name: 'Add RotaId to all existing rotas',
+  up() {
+    const allShifts = Volunteers.Collections.TeamShifts.find({ groupId: { $ne: null } }).fetch()
+    console.log('Total Shifts ', allShifts.length)
+    const grouppedShifts = _.groupBy(allShifts, 'groupId')
+    console.log('Total Rotas ', Object.keys(grouppedShifts).length)
+    Object.entries(grouppedShifts).forEach(([groupId, shifts]) => {
+      const dayGrouppedShifts = _.groupBy(shifts, s => moment(s.start).dayOfYear())
+      console.log('Total Sub Rotas by day', Object.keys(dayGrouppedShifts).length)
+      Object.values(dayGrouppedShifts).forEach((shiftsByDay) => {
+        _.sortBy(shiftsByDay, s => s.start)
+        shiftsByDay.forEach((v, i) => {
+          console.log(`update ${v.title} with rotaId ${i}`)
+          Volunteers.Collections.TeamShifts.update(v._id, { $set: { rotaId: parseInt(i) } })
+        })
+      })
     })
   },
 })
