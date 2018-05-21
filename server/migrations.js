@@ -146,3 +146,13 @@ Migrations.add({
     })
   },
 })
+
+Migrations.add({
+  version: 9,
+  name: 'Set Enrolled flag for all signups',
+  up() {
+    Volunteers.Collections.ShiftSignups.update({}, { $set: { enrolled: true } }, { multi: true })
+    Volunteers.Collections.ProjectSignups.update({}, { $set: { enrolled: true } }, { multi: true })
+    Volunteers.Collections.LeadSignups.update({}, { $set: { enrolled: true } }, { multi: true })
+  },
+})

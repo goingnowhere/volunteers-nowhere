@@ -146,7 +146,7 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
 
 const enrollEventCall = (function enrollEventCall(doc, enrollment) {
   const { duty, policy, ...rest } = doc
-  const insert = { ...rest, ...enrollment }
+  const insert = { ...rest, ...enrollment, enrolled: true }
   Meteor.call(
     `${Volunteers.eventName}.Volunteers.${duty}Signups.insert`, insert,
     (err, signupId) => {

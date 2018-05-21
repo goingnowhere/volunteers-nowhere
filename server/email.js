@@ -53,6 +53,10 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         context[`${cntx.namespace}`] = { users: generateEnrollmentLinks(address) }
         break
       }
+      case 'Voluntell': {
+        context[`${cntx.namespace}`] = {}
+        break
+      }
       default:
     }
   })
