@@ -5,6 +5,7 @@ import { Roles } from 'meteor/piemonkey:roles'
 import { FormBuilder } from 'meteor/abate:formbuilder'
 import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
+import { EventSettings } from '../both/settings'
 import { importUsers } from './importUsers'
 
 Migrations.config({
@@ -149,17 +150,6 @@ Migrations.add({
 
 Migrations.add({
   version: 9,
-  name: 'Set Enrolled flag for all signups',
-  up() {
-    const modifier = { $set: { enrolled: true, notification: false } }
-    Volunteers.Collections.ShiftSignups.update({}, modifier, { multi: true })
-    Volunteers.Collections.ProjectSignups.update({}, modifier, { multi: true })
-    Volunteers.Collections.LeadSignups.update({}, modifier, { multi: true })
-  },
-})
-
-Migrations.add({
-  version: 10,
   name: 'add lead, shift and project context',
   up() {
     EmailForms.Collections.EmailTemplateContext.insert({
@@ -213,10 +203,30 @@ const cleanSignups = (collection) => {
 }
 
 Migrations.add({
-  version: 11,
+  version: 10,
   name: 'cleanup shift signups',
   up() {
     cleanSignups(Volunteers.Collections.ShiftSignups)
     cleanSignups(Volunteers.Collections.ProjectSignups)
   },
 })
+
+Migrations.add({
+  version: 11,
+  name: 'Add and set EventSettings.cronFrequency (disable emails)',
+  up() {
+    EventSettings.update({}, { $set: { cronFrequency: '' } })
+  },
+})
+
+/* Migrations.add({
+  version: 11,
+  name: 'Set Enrolled flag for all signups',
+  up() {
+    const modifier = { $set: { enrolled: true, notification: false } }
+    Volunteers.Collections.ShiftSignups.update({}, modifier, { multi: true })
+    Volunteers.Collections.ProjectSignups.update({}, modifier, { multi: true })
+    Volunteers.Collections.LeadSignups.update({}, modifier, { multi: true })
+  },
+})
+ */

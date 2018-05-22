@@ -68,5 +68,6 @@
   "with_duties": "With Duties",
   "enrollment_sent": "Enrollment Sent",
   "shifts_in_this_team": "Shifts in this Team",
-  "public_link": "Public Link"
+  "public_link": "Public Link",
+  "cron_frequency": "Interval at which automatic enrollment emails are sent to users (leave empty to disable automatic email)"
 }

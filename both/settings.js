@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
 import { check } from 'meteor/check'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
+import i18n from 'meteor/universe:i18n'
 import { isManagerMixin } from '../both/authMixins'
 
 SimpleSchema.defineValidationErrorTransform((error) => {
@@ -62,6 +63,13 @@ const SettingsSchema = new SimpleSchema({
         altFormat: 'F j, Y',
       },
     },
+  },
+
+  cronFrequency: {
+    type: String,
+    optional: true,
+    label: () => i18n.__('cron_frequency'),
+
   },
 
 }, { check })

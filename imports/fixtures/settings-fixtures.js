@@ -7,6 +7,7 @@ const settings = {
   strikePeriod: { start: new Date(2018, 7, 9), end: new Date(2018, 7, 15) },
   earlyEntryMax: 120,
   barriosArrivalDate: new Date(2018, 6, 31),
+  cronFrequency: 'every 15 mins',
 }
 
 export const createSettings = () => {
