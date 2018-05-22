@@ -69,5 +69,8 @@
   "enrollment_sent": "Enrollment Sent",
   "shifts_in_this_team": "Shifts in this Team",
   "public_link": "Public Link",
-  "cron_frequency": "Interval at which automatic enrollment emails are sent to users (leave empty to disable automatic email)"
+  "cron_frequency": "Interval at which automatic enrollment emails are sent to users (leave empty to disable automatic email)",
+  "send_notifications": "Send Notifications",
+  "notification_sent": "Notifications Sent",
+  "invitation_sent": "Invitation Sent"
 }

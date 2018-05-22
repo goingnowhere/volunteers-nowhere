@@ -187,11 +187,20 @@
   </div>
 </template>
 
+<template name="notificationsUserAction">
+  <li class="dropdown-item">
+    <a data-action="send-notification">
+      {{fa "envelope"}} {{__ "send_notifications"}}
+    </a>
+  </li>
+</template>
+
 <template name="noInfoUser">
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
     {{#usersProfileActions}}
       {{> enrollUserAction callback=callbackEnrollment user=this }}
+      {{> notificationsUserAction callback=callbackNotification user=this }}
       {{> editProfileUserAction user=this }}
       {{> editEmailUserAction user=this }}
       {{> changePwdUserAction user=this }}

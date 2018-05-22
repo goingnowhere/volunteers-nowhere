@@ -182,22 +182,30 @@ Migrations.add({
   },
 })
 
-const cleanSignups = (collection) => {
+const cleanSignups = (collection, shiftCollection, lead = false) => {
   collection.find().forEach((signup) => {
     const user = Meteor.users.findOne({ _id: signup.userId })
     if (!user) {
       console.log('remove signup: user not found')
       collection.remove(signup._id)
     }
-    const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
+    const shift = shiftCollection.findOne({ _id: signup.shiftId })
     if (!shift) {
       console.log('remove signup: shift not found')
       collection.remove(signup._id)
     }
     const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
     if (!team) {
-      console.log('remove signup: team not found')
-      collection.remove(signup._id)
+      if (lead) {
+        const dept = Volunteers.Collections.Department.findOne({ _id: signup.parentId })
+        if (!dept) {
+          console.log('remove signup: team or dept not found')
+          collection.remove(signup._id)
+        }
+      } else {
+        console.log('remove signup: team not found')
+        collection.remove(signup._id)
+      }
     }
   })
 }
@@ -206,8 +214,20 @@ Migrations.add({
   version: 10,
   name: 'cleanup shift signups',
   up() {
-    cleanSignups(Volunteers.Collections.ShiftSignups)
-    cleanSignups(Volunteers.Collections.ProjectSignups)
+    cleanSignups(
+      Volunteers.Collections.ShiftSignups,
+      Volunteers.Collections.TeamShifts,
+    )
+    cleanSignups(
+      Volunteers.Collections.ProjectSignups,
+      Volunteers.Collections.Projects,
+    )
+    cleanSignups(
+      Volunteers.Collections.LeadSignups,
+      Volunteers.Collections.Lead,
+      true,
+
+    )
   },
 })
 
@@ -219,8 +239,66 @@ Migrations.add({
   },
 })
 
-/* Migrations.add({
-  version: 11,
+Migrations.add({
+  version: 12,
+  name: 'Add voluntell email template',
+  up() {
+    const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Shifts', 'Leads', 'Projects'] } }).map(c => c._id)
+    EmailForms.Collections.EmailTemplate.upsert({ name: 'voluntell' }, {
+      $set: {
+        context,
+        from: 'noreply@goingnowhere.org',
+        subject: 'NOWHERE SHIFT ASSIGNMENT',
+        body: `VOLUNTOLD!
+
+Congratulations, you’ve been assigned a shift, it's:
+Félicitations, on vous a assigné un équipe, c’est:
+Felicidades, te han asignado un turno, es:
+{{#if $gt ($len duties.newShiftEnrollments) 0 }}Shifts
+{{#each duties.newShiftEnrollments }}
+- {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
+{{/each}}
+{{/if}}
+{{#if $gt ($len duties.newProjectEnrollments) 0 }}Projects
+{{#each duties.newProjectEnrollments }}
+- {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
+{{/each}}
+{{/if}}
+{{#if $gt ($len duties.newLeadEnrollments) 0 }}Leads
+{{#each duties.newLeadEnrollments }}
+- {{teamName}} > {{title}}
+{{/each}}
+{{/if}}
+
+This is a summary of all your engagements. Please pay attention !
+{{#if $gt ($len duties.shifts) 0 }}Shifts
+{{#each duties.shifts }}
+- {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
+{{/each}}
+{{/if}}
+{{#if $gt ($len duties.projects) 0 }}Projects
+{{#each duties.projects }}
+- {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
+{{/each}}
+{{/if}}
+{{#if $gt ($len duties.leads) 0 }}Leads
+{{#each duties.leads }}
+- {{teamName}} > {{title}}
+{{/each}}
+{{/if}}
+
+This is an automated message, please contact the shift lead if you have questions.
+Ceci est un message automatisé, s'il vous plaît contacter le chef de quart si vous avez des questions.
+Este es un mensaje automatizado, contáctese con el líder del turno si tiene preguntas.
+`,
+        notes: 'For when you voluntell a user',
+      },
+    })
+  },
+})
+
+Migrations.add({
+  version: 13,
   name: 'Set Enrolled flag for all signups',
   up() {
     const modifier = { $set: { enrolled: true, notification: false } }
@@ -229,4 +307,3 @@ Migrations.add({
     Volunteers.Collections.LeadSignups.update({}, modifier, { multi: true })
   },
 })
- */

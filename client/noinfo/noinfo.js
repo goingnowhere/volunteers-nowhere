@@ -304,9 +304,24 @@ const callbackNotice = function callback(title, message) {
   })
 }
 
+Template.notificationsUserAction.events({
+  'click [data-action="send-notification"]': (event, template) => {
+    const { callback, user } = template.data
+    Meteor.call('email.sendNotifications', user._id, (err, res) => {
+      if (callback) { callback(err, res) }
+    })
+  },
+})
+
 Template.noInfoUser.helpers({
   callbackEnrollment() {
     return callbackNotice('invitation_sent', 'invitation_sent')
+  },
+})
+
+Template.noInfoUser.helpers({
+  callbackNotification() {
+    return callbackNotice('notification_sent', 'notification_sent')
   },
 })
 

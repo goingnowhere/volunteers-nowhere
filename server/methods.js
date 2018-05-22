@@ -2,9 +2,8 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
-import { Email } from 'meteor/email'
 import { Volunteers } from '../both/init'
-import { getContext } from './email'
+import { getContext, WrapEmailSend } from './email'
 import {
   isManagerMixin,
   isNoInfoMixin,
@@ -59,32 +58,51 @@ export const adminChangeUserPassword =
     [isNoInfoMixin],
   )
 
-export const EmailLogs = new Mongo.Collection('emailLogs')
+export const sendNotificationEmailFunction = (userId) => {
+  if (userId) {
+    const user = Meteor.users.findOne(userId)
+    const sel = { enrolled: true, notification: false, userId }
+    const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
+    const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
+    const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
+    const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
-const sendWelcomeEmailMethod = {
-  name: 'email.sendWelcome',
-  validate: null,
-  run(user) {
-    const doc = EmailForms.previewTemplate('welcomeEmail', user, getContext)
-    if (doc) {
-      Email.send(doc, (err) => {
-        if (!err) {
-          EmailLogs.insert({
-            userId: user._id,
-            template: doc.templateId,
-            sent: Date(),
-          })
+    if (user && (allSignups.length > 0)) {
+      const doc = EmailForms.previewTemplate('voluntell', user, getContext)
+      allSignups.forEach((signup) => {
+        const modifier = { $set: { notification: true } }
+        switch (signup.type) {
+          case 'shift':
+            Volunteers.Collections.ShiftSignups.update(signup._id, modifier)
+            break
+          case 'project':
+            Volunteers.Collections.ProjectSignups.update(signup._id, modifier)
+            break
+          case 'lead':
+            Volunteers.Collections.LeadSignups.update(signup._id, modifier)
+            break
+          default:
         }
       })
+      WrapEmailSend(user, doc)
+      if (!user.profile.terms) {
+        Accounts.sendEnrollmentEmail(userId)
+      }
     }
-  },
+  }
 }
 
-export const sendWelcomeEmail =
-  ValidatedMethodWithMixin(
-    sendWelcomeEmailMethod,
-    [isManagerMixin],
-  )
+const sendNotificationEmailMethod = {
+  name: 'email.sendNotifications',
+  validate: null,
+  run: sendNotificationEmailFunction,
+}
+
+export const sendNotificationEmail =
+ValidatedMethodWithMixin(
+  sendNotificationEmailMethod,
+  [isNoInfoMixin],
+)
 
 const userStatsMethod = {
   name: 'users.stats',

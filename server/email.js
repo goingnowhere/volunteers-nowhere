@@ -1,5 +1,6 @@
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
+import { Email } from 'meteor/email'
 import { Volunteers } from '../both/init'
 import { pendingUsers } from './importUsers'
 import './accounts'
@@ -8,6 +9,20 @@ import {
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 
+export const EmailLogs = new Mongo.Collection('emailLogs')
+export const WrapEmailSend = (user, doc) => {
+  if (doc) {
+    Email.send(doc, (err) => {
+      if (!err) {
+        EmailLogs.insert({
+          userId: user._id,
+          template: doc.templateId,
+          sent: Date(),
+        })
+      }
+    })
+  }
+}
 
 export const insertEmailTemplateMethod =
   ValidatedMethodWithMixin(
@@ -126,7 +141,6 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
       default:
     }
   })
-  /* console.log(context) */
   return context
 })
 
