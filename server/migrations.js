@@ -151,8 +151,72 @@ Migrations.add({
   version: 9,
   name: 'Set Enrolled flag for all signups',
   up() {
-    Volunteers.Collections.ShiftSignups.update({}, { $set: { enrolled: true } }, { multi: true })
-    Volunteers.Collections.ProjectSignups.update({}, { $set: { enrolled: true } }, { multi: true })
-    Volunteers.Collections.LeadSignups.update({}, { $set: { enrolled: true } }, { multi: true })
+    const modifier = { $set: { enrolled: true, notification: false } }
+    Volunteers.Collections.ShiftSignups.update({}, modifier, { multi: true })
+    Volunteers.Collections.ProjectSignups.update({}, modifier, { multi: true })
+    Volunteers.Collections.LeadSignups.update({}, modifier, { multi: true })
+  },
+})
+
+Migrations.add({
+  version: 10,
+  name: 'add lead, shift and project context',
+  up() {
+    EmailForms.Collections.EmailTemplateContext.insert({
+      name: 'Shifts',
+      namespace: 'duties',
+      variables: [
+        {
+          name: 'shifts', description: 'shifts signup associated to the user',
+        },
+      ],
+    })
+    EmailForms.Collections.EmailTemplateContext.insert({
+      name: 'Leads',
+      namespace: 'duties',
+      variables: [
+        {
+          name: 'leads', description: 'leads signup associated to the user',
+        },
+      ],
+    })
+    EmailForms.Collections.EmailTemplateContext.insert({
+      name: 'Projects',
+      namespace: 'duties',
+      variables: [
+        {
+          name: 'projects', description: 'projects signup associated to the user',
+        },
+      ],
+    })
+  },
+})
+
+const cleanSignups = (collection) => {
+  collection.find().forEach((signup) => {
+    const user = Meteor.users.findOne({ _id: signup.userId })
+    if (!user) {
+      console.log('remove signup: user not found')
+      collection.remove(signup._id)
+    }
+    const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
+    if (!shift) {
+      console.log('remove signup: shift not found')
+      collection.remove(signup._id)
+    }
+    const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
+    if (!team) {
+      console.log('remove signup: team not found')
+      collection.remove(signup._id)
+    }
+  })
+}
+
+Migrations.add({
+  version: 11,
+  name: 'cleanup shift signups',
+  up() {
+    cleanSignups(Volunteers.Collections.ShiftSignups)
+    cleanSignups(Volunteers.Collections.ProjectSignups)
   },
 })
