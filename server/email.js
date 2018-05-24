@@ -93,6 +93,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
             notification,
             title: duty.title,
             teamName: unit.name,
+            email: unit.email,
           }
         })
         const newLeadEnrollments = allLeads.filter(s => (
@@ -124,6 +125,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
             notification,
             title: duty.title,
             teamName: team.name,
+            email: team.email,
             start: moment(duty.start),
             end: moment(duty.end),
           }
@@ -156,6 +158,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
             notification,
             title: duty.title,
             teamName: team.name,
+            email: team.email,
             start: moment(s.start),
             end: moment(s.end),
           }
