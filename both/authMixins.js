@@ -39,7 +39,7 @@ export const isSameUserMixin = function isSameUserMixin(methodOptions) {
   return methodOptions
 }
 
-export const isSameUserOrManagerMixin = function isSameUserMixin(methodOptions) {
+export const isSameUserOrManagerMixin = function isSameUserMMixin(methodOptions) {
   const runFunc = methodOptions.run
   methodOptions.run = function run(...args) {
     const currentUserId = Meteor.userId()
@@ -47,7 +47,7 @@ export const isSameUserOrManagerMixin = function isSameUserMixin(methodOptions) 
     if (!Volunteers.isManager()) {
       // if the current user is not a Manager, then
       // the doc must belong to the user
-      if (Match.test(userId, String) && (currentUserId !== userId)) {
+      if (currentUserId && Match.test(userId, String) && (currentUserId !== userId)) {
         throw new Meteor.Error('403', "You don't have permission for this operation")
       } else {
         const doc = args[0]
@@ -65,15 +65,15 @@ export const isSameUserOrManagerMixin = function isSameUserMixin(methodOptions) 
   return methodOptions
 }
 
-export const isSameUserOrNoInfoMixin = function isSameUserMixin(methodOptions) {
+export const isSameUserOrNoInfoMixin = function isSameUserIMixin(methodOptions) {
   const runFunc = methodOptions.run
   methodOptions.run = function run(...args) {
-    const currentUserId = Meteor.userId()
-    const userId = args[0]
     if (!isNoInfo()) {
       // if the current user is not part of noInfo, then
       // the doc must belong to the user
-      if (Match.test(userId, String) && (currentUserId !== userId)) {
+      const currentUserId = Meteor.userId()
+      const userId = args[0]
+      if (currentUserId && Match.test(userId, String) && (currentUserId !== userId)) {
         throw new Meteor.Error('403', "You don't have permission for this operation")
       } else {
         const doc = args[0]

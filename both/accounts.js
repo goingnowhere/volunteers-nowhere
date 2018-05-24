@@ -3,7 +3,6 @@ import { Accounts } from 'meteor/accounts-base'
 import i18n from 'meteor/universe:i18n'
 import { moment } from 'meteor/momentjs:moment'
 
-
 AccountsTemplates.configure({
   defaultLayout: 'homeLayout',
   enablePasswordChange: true,
@@ -17,6 +16,22 @@ AccountsTemplates.configure({
   /* postSignUpHook, */
   // onLogoutHook: onSignOut,
   // termsUrl: 'terms-of-use',
+  onSubmitHook: function onSubmitHook(err, state) {
+    // we manually set additional fields we collect on enrollment
+    if (state === 'enrollAccount') {
+      const { nickname, terms, language } = Session.get('enrollAccountCustomFields')
+      Meteor.call('Accounts.UpdateUser', {
+        _id: Meteor.userId(),
+        modifier: {
+          $set: {
+            'profile.nickname': nickname,
+            'profile.terms': terms,
+            'profile.language': language,
+          },
+        },
+      })
+    }
+  },
   onLogoutHook() {
     Meteor.setTimeout(() => {
       if (!Meteor.user()) {
@@ -49,11 +64,25 @@ AccountsTemplates.addField({
 AccountsTemplates.addField({
   _id: 'terms',
   type: 'checkbox',
+  required: true,
   template: 'termsCheckbox',
   errStr: 'You must agree to the Terms and Conditions',
   func: value => !value,
   negativeValidation: false,
 })
+
+if (Meteor.isClient) {
+  Template.atPwdForm.events({
+    submit: function sub(event, template) {
+      const nickname = template.$('#at-field-nickname').val()
+      const language = template.$('#at-field-language').val()
+      const terms = template.$('#at-field-terms').is(':checked')
+      if (nickname && language && terms) {
+        Session.set('enrollAccountCustomFields', { nickname, terms, language })
+      }
+    },
+  })
+}
 
 // Add terms and language fields at enrollment.
 // at startup to be executed after initialization

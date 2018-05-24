@@ -1,7 +1,10 @@
 import { SyncedCron } from 'meteor/percolate:synced-cron'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { sendNotificationEmailFunction } from './methods'
+import {
+  sendEnrollmentNotificationEmailFunction,
+  sendReviewNotificationEmailFunction,
+} from './methods'
 
 /* SyncedCron.add({
   name: 'Cleanup old signups',
@@ -36,24 +39,48 @@ const EnrollmentTask = (time) => {
       return parser.text(time)
     },
     job() {
-      const sel = { enrolled: true, notification: false }
+      const sel = { enrolled: true, notification: false, status: 'confirmed' }
       const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
       const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
       const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
       const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
       Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
-        sendNotificationEmailFunction(userId)
+        sendEnrollmentNotificationEmailFunction(userId)
       })
     },
   })
 }
 
+const ReviewTask = (time) => {
+  SyncedCron.add({
+    name: 'ReviewNotifications',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      const sel = {
+        notification: false,
+        reviewed: true,
+        status: { $in: ['confirmed', 'refused', 'pending'] },
+      }
+      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
+      const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
+      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
+      const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
+
+      Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
+        sendReviewNotificationEmailFunction(userId)
+      })
+    },
+  })
+}
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Enrollment emails to ', cronFrequency)
     SyncedCron.stop()
     EnrollmentTask(cronFrequency)
+    ReviewTask(cronFrequency)
     SyncedCron.start()
   } else {
     console.log('Disable Enrollment emails')

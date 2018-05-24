@@ -1,6 +1,7 @@
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
 import { Email } from 'meteor/email'
+import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { pendingUsers } from './importUsers'
 import './accounts'
@@ -8,6 +9,8 @@ import {
   isManagerMixin,
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
+
+moment.tz.setDefault('Europe/Paris')
 
 export const EmailLogs = new Mongo.Collection('emailLogs')
 export const WrapEmailSend = (user, doc) => {
@@ -72,69 +75,100 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Leads': {
-        const list = Volunteers.Collections.LeadSignups.find({ userId: user._id })
-        const leads = list.map((s) => {
+        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.LeadSignups.find(sel)
+        const allLeads = list.map((s) => {
           const duty = Volunteers.Collections.Lead.findOne(s.shiftId)
           let unit = Volunteers.Collections.Team.findOne(s.parentId)
           if (!unit) {
             unit = Volunteers.Collections.Department.findOne(s.parentId)
           }
-          const { enrolled, notification } = s
+          const {
+            enrolled, notification, status, reviewed,
+          } = s
           return {
-            enrolled, notification, title: duty.title, teamName: unit.name,
+            reviewed,
+            status,
+            enrolled,
+            notification,
+            title: duty.title,
+            teamName: unit.name,
           }
         })
-        const newLeadEnrollments = leads.filter(s => (s.enrolled && (!s.notification)))
+        const newLeadEnrollments = allLeads.filter(s => (
+          s.enrolled && (!s.notification) && (s.status === 'confirmed')))
+        const newLeadReviews = allLeads.filter(s => (s.reviewed && (!s.notification)))
+        const leads = allLeads.filter(s => ((s.status === 'confirmed') || (s.status === 'pending')))
+        const doc = { leads, newLeadEnrollments, newLeadReviews }
         if (context[`${cntx.namespace}`]) {
-          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], { leads, newLeadEnrollments })
+          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], doc)
         } else {
-          context[`${cntx.namespace}`] = { leads, newLeadEnrollments }
+          context[`${cntx.namespace}`] = doc
         }
         break
       }
       case 'Shifts': {
-        const list = Volunteers.Collections.ShiftSignups.find({ userId: user._id })
-        const shifts = list.map((s) => {
+        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.ShiftSignups.find(sel)
+        /* day.utcOffset(timezone) */
+        const allShifts = list.map((s) => {
           const duty = Volunteers.Collections.TeamShifts.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
-          const { enrolled, notification } = s
+          const {
+            enrolled, notification, status, reviewed,
+          } = s
           return {
+            reviewed,
+            status,
             enrolled,
             notification,
             title: duty.title,
             teamName: team.name,
-            start: duty.start,
-            end: duty.end,
+            start: moment(duty.start),
+            end: moment(duty.end),
           }
         })
-        const newShiftEnrollments = shifts.filter(s => (s.enrolled && (!s.notification)))
+        const newShiftEnrollments = allShifts.filter(s => (
+          s.enrolled && (!s.notification) && (s.status === 'confirmed')))
+        const newShiftReviews = allShifts.filter(s => (s.reviewed && (!s.notification)))
+        const shifts = allShifts.filter(s => ((s.status === 'confirmed') || (s.status === 'pending')))
+        const doc = { shifts, newShiftEnrollments, newShiftReviews }
         if (context[`${cntx.namespace}`]) {
-          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], { shifts, newShiftEnrollments })
+          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], doc)
         } else {
-          context[`${cntx.namespace}`] = { shifts, newShiftEnrollments }
+          context[`${cntx.namespace}`] = doc
         }
         break
       }
       case 'Projects': {
-        const list = Volunteers.Collections.ProjectSignups.find({ userId: user._id })
-        const projects = list.map((s) => {
+        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.ProjectSignups.find(sel)
+        const allProjects = list.map((s) => {
           const duty = Volunteers.Collections.Projects.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
-          const { enrolled, notification } = s
+          const {
+            enrolled, notification, status, reviewed,
+          } = s
           return {
+            reviewed,
+            status,
             enrolled,
             notification,
             title: duty.title,
             teamName: team.name,
-            start: s.start,
-            end: s.end,
+            start: moment(s.start),
+            end: moment(s.end),
           }
         })
-        const newProjectEnrollments = projects.filter(s => (s.enrolled && (!s.notification)))
+        const newProjectEnrollments = allProjects.filter(s => (
+          s.enrolled && (!s.notification) && (s.status === 'confirmed')))
+        const newProjectReviews = allProjects.filter(s => (s.reviewed && (!s.notification)))
+        const projects = allProjects.filter(s => ((s.status === 'confirmed') || (s.status === 'pending')))
+        const doc = { projects, newProjectEnrollments, newProjectReviews }
         if (context[`${cntx.namespace}`]) {
-          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], { projects, newProjectEnrollments })
+          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], doc)
         } else {
-          context[`${cntx.namespace}`] = { projects, newProjectEnrollments }
+          context[`${cntx.namespace}`] = doc
         }
         break
       }

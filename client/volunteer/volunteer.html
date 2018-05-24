@@ -7,7 +7,7 @@
           <h3>{{__ "welcome"}} {{ getUserName userId }}</h3>
           <img src="{{imageFileLink currentUser.profile.picture}}" class="rounded-circle header-avatar">
         {{else}}
-          <h3>{{__ "welcome"}} Nobody</h3>
+          <h3>{{__ "welcome"}} {{ getUserName userId }}</h3>
           <img src="img/mr_nobody.jpg" class="rounded-circle header-avatar">
           <a href="{{pathFor 'accountSettings'}}">{{__ "add_picture"}}</a>
         {{/if}}

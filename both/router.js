@@ -55,7 +55,7 @@ const AuthenticatedController = AnonymousController.extend({
 const NoInfoController = AuthenticatedController.extend({
   waitOn() {
     return [
-      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`),
+      Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, {}),
     ]
   },
   onBeforeAction() {

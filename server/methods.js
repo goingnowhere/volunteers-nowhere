@@ -58,17 +58,21 @@ export const adminChangeUserPassword =
     [isNoInfoMixin],
   )
 
-export const sendNotificationEmailFunction = (userId) => {
+const sendNotificationEmailFunctionGeneric = (userId, template, selector, notification = false) => {
   if (userId) {
     const user = Meteor.users.findOne(userId)
-    const sel = { enrolled: true, notification: false, userId }
+    const sel = {
+      ...selector, userId, status: { $in: ['confirmed', 'pending', 'refused'] },
+    }
+    if (notification) { sel.notification = notification }
     const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
     const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
     const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
     const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
-
     if (user && (allSignups.length > 0)) {
-      const doc = EmailForms.previewTemplate('voluntell', user, getContext)
+      const doc = EmailForms.previewTemplate(template, user, getContext)
+      WrapEmailSend(user, doc)
+      if (!user.profile.terms) { Accounts.sendEnrollmentEmail(userId) }
       allSignups.forEach((signup) => {
         const modifier = { $set: { notification: true } }
         switch (signup.type) {
@@ -84,23 +88,36 @@ export const sendNotificationEmailFunction = (userId) => {
           default:
         }
       })
-      WrapEmailSend(user, doc)
-      if (!user.profile.terms) {
-        Accounts.sendEnrollmentEmail(userId)
-      }
     }
   }
 }
 
-const sendNotificationEmailMethod = {
-  name: 'email.sendNotifications',
+export const sendEnrollmentNotificationEmailFunction = userId =>
+  sendNotificationEmailFunctionGeneric(userId, 'voluntell', { enrolled: true })
+export const sendReviewNotificationEmailFunction = userId =>
+  sendNotificationEmailFunctionGeneric(userId, 'reviewed', { reviewed: true })
+
+const sendEnrollmentNotificationEmailMethod = {
+  name: 'email.sendEnrollmentNotifications',
   validate: null,
-  run: sendNotificationEmailFunction,
+  run: userId => sendNotificationEmailFunctionGeneric(userId, 'shiftReminder', {}, null),
 }
 
 export const sendNotificationEmail =
 ValidatedMethodWithMixin(
-  sendNotificationEmailMethod,
+  sendEnrollmentNotificationEmailMethod,
+  [isNoInfoMixin],
+)
+
+const sendReviewNotificationEmailMethod = {
+  name: 'email.sendReviewNotifications',
+  validate: null,
+  run: sendReviewNotificationEmailFunction,
+}
+
+export const sendReviewNotificationEmail =
+ValidatedMethodWithMixin(
+  sendReviewNotificationEmailMethod,
   [isNoInfoMixin],
 )
 

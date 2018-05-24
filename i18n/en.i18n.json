@@ -61,7 +61,7 @@
   "email_templates": "Email Templates",
   "volunteer_form_help": "Please tell us something about you. We need this information to help you to find the best volunteering shift for your skill and keep you safe.",
   "teams_in_this_department": "Teams within this department",
-  "enroll": "voluntell",
+  "enroll": "Voluntell",
   "ticket_holders": "Ticker Holders",
   "enrolled": "Enrolled",
   "profile_filled": "With Profile",
@@ -72,5 +72,6 @@
   "cron_frequency": "Interval at which automatic enrollment emails are sent to users (leave empty to disable automatic email)",
   "send_notifications": "Send Notifications",
   "notification_sent": "Notifications Sent",
-  "invitation_sent": "Invitation Sent"
+  "invitation_sent": "Invitation Sent",
+  "real_name": "Real Name"
 }
