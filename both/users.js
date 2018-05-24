@@ -94,6 +94,14 @@ const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
       readonly: true,
     },
   },
+  invitationSent: {
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      omit: true,
+      readonly: true,
+    },
+  },
 })
 
 const userSchema = Schemas.User.extend({

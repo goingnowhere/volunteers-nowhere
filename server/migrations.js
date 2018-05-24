@@ -7,6 +7,7 @@ import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
 import { importUsers } from './importUsers'
+import { EmailLogs } from './email'
 
 Migrations.config({
   log: true,
@@ -500,6 +501,20 @@ Este es un mensaje automatizado, contáctese con el líder del turno si tiene pr
 `,
         notes: 'Friendly reminder',
       },
+    })
+  },
+})
+
+Migrations.add({
+  version: 18,
+  name: 'Set invitationSent flag to all people with verified email',
+  up() {
+    const sel = { 'emails.$.verified': true }
+    const modifier = { $set: { 'profile.invitationSent': true } }
+    Meteor.users.update(sel, modifier, { multi: true })
+    const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
+    EmailLogs.find({ template: tid }).forEach((log) => {
+      Meteor.users.update(log._id, modifier, { multi: true })
     })
   },
 })
