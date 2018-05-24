@@ -122,6 +122,19 @@ Template.noInfoUserList.events({
   },
 })
 
+Template.noInfoUserProfileLink.events({
+  'click [data-action="user_form"]': (event, template) => {
+    const userId = template.$(event.currentTarget).data('userid')
+    const form = Volunteers.Collections.VolunteerForm.findOne({ userId })
+    const user = Meteor.users.findOne(userId)
+    const userform = { formName: 'VolunteerForm', form, user }
+    AutoFormComponents.ModalShowWithTemplate(
+      'noInfoUserProfile',
+      userform, 'User Form', 'lg',
+    )
+  },
+})
+
 Template.noInfoUser.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id
@@ -132,6 +145,13 @@ Template.noInfoUser.onCreated(function onCreated() {
 Template.noInfoUserProfile.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id
+  template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
+  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+})
+
+Template.noInfoUserProfileLink.onCreated(function onCreated() {
+  const template = this
+  const { userId } = template.data
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })

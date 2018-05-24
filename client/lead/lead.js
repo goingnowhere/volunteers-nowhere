@@ -26,6 +26,11 @@ Template.leadTeamView.helpers({
   team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
   allLeads: () =>
     Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
+  signupListContext: () => {
+    const data = Template.currentData()
+    data.userInfoTemplate = 'noInfoUserProfileLink'
+    return data
+  },
 })
 
 Template.leadTeamView.events({

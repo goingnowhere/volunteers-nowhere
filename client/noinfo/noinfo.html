@@ -174,9 +174,9 @@
         <h5 class="mb-2 dark-text">{{__ "profile_filled"}}:</h5> {{userStats.profileFilled}}
         <h5 class="mb-2 dark-text">{{__ "with_duties"}}:</h5> {{userStats.withDuties}}
         <br/>
-        <button type="button" class="btn btn-default btn-sm" data-action="new_user">
+        <!-- <button type="button" class="btn btn-default btn-sm" data-action="new_user">
           {{__ "new_user" }}
-        </button>
+        </button> -->
       </div>
       <div class="col pt-2">
         {{> userSearch }}
@@ -212,6 +212,10 @@
     </button>
   {{/allUsersProfile}}
 {{/if}}
+</template>
+
+<template name="noInfoUserProfileLink">
+  <a href="#" data-action="user_form" data-userid="{{userId}}">{{getUserName userId}}</a>
 </template>
 
 <template name="noInfoUserProfile">

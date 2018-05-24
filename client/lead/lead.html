@@ -56,7 +56,7 @@
       {{#if $gt pendingRequests 0}}
         <div class="col-sm-12 col-md-5 pl-1 user-top">
           <h2 class="header">{{__ "applications" }}</h2>
-          {{> teamSignupsList }}
+          {{> teamSignupsList signupListContext }}
         </div>
       {{/if}}
     </div>
@@ -82,7 +82,7 @@
     <div role="tabpanel" class="tab-pane active" id="shifts">
       <div class="pt-2">
         {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
-        {{# teamShiftsTable _id=_id date=currentDay }}
+        {{# teamShiftsTable _id=_id date=currentDay userInfoTemplate="noInfoUserProfileLink" }}
           {{> shiftSignupEnrollAction }}
         {{/teamShiftsTable}}
       </div>
