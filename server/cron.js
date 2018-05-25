@@ -75,6 +75,11 @@ const ReviewTask = (time) => {
     },
   })
 }
+
+SyncedCron.config({
+  log: false,
+})
+
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Enrollment emails to ', cronFrequency)
