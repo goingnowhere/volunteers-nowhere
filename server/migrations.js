@@ -518,3 +518,20 @@ Migrations.add({
     })
   },
 })
+
+Migrations.add({
+  version: 19,
+  name: 'Move rota from team to team',
+  up() {
+    const newTeam = Volunteers.Collections.Team.findOne({ name: 'Event-Time Maintenance' })
+    const oldTeam = Volunteers.Collections.Team.findOne({ name: 'Site Leads' })
+    if (newTeam) {
+      Volunteers.Collections.TeamShifts.update(
+        { title: 'Event-Time Maintenance Crew', parentId: oldTeam._id },
+        { $set: { parentId: newTeam._id } },
+        { multi: true },
+
+      )
+    }
+  },
+})
