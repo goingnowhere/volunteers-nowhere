@@ -24,6 +24,7 @@ const addUser = (user, fakeEmail = null) => {
       profile,
     })
   }
+
   Meteor.users.update({ _id: userId }, {
     $set: {
       'emails.0.verified': (userId) && (!fakeEmail),

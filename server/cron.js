@@ -1,6 +1,9 @@
 import { SyncedCron } from 'meteor/percolate:synced-cron'
+import { Accounts } from 'meteor/accounts-base'
+import { EmailForms } from 'meteor/abate:email-forms'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
+import { EmailLogs } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
@@ -76,24 +79,57 @@ const ReviewTask = (time) => {
   })
 }
 
+const MassEnrollmentTask = (time) => {
+  SyncedCron.add({
+    name: 'MassEnrollment',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      console.log('wakeup MassEnrollment')
+      const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
+      const sel = {
+        'profile.terms': false,
+        'profile.invitationSent': { $exists: false },
+        'profile.ticketNumber': { $ne: 'Manual registration' },
+      }
+      Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
+        if (!EmailLogs.findOne({ template: tid, userId: user._id })) {
+          try {
+            console.log(`Sending enrollment to ${user.emails[0].address}`)
+            Accounts.sendEnrollmentEmail(user._id)
+          } catch (error) {
+            console.log(`Error Sending enrollment to ${user.emails[0].address} : ${error}`)
+          }
+        } else {
+          // if there is an email log, let's make sure to update this field as well
+          Meteor.users.update(user._id, { $set: { 'profile.invitationSent': true } })
+        }
+      })
+    },
+  })
+}
+
+
 SyncedCron.config({
   log: false,
 })
 
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
-    console.log('Set Enrollment emails to ', cronFrequency)
+    console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
     EnrollmentTask(cronFrequency)
     ReviewTask(cronFrequency)
+    MassEnrollmentTask('every 1 mins')
     SyncedCron.start()
   } else {
-    console.log('Disable Enrollment emails')
+    console.log('Disable Cron')
     SyncedCron.stop()
   }
 }
 // Reactive observer to enable / disable enrollment emails
-EventSettings.find().observe({
+EventSettings.find({}).observe({
   added: doc => cronActivate(doc),
   changed: doc => cronActivate(doc),
 })

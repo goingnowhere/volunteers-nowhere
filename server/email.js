@@ -74,6 +74,29 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         context[`${cntx.namespace}`] = { users: generateEnrollmentLinks(address) }
         break
       }
+
+      case 'UserTeams': {
+        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
+        const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
+        const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
+        const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
+        const emails = Object.keys(_.groupBy(allSignups, 'parentId')).map((parentId) => {
+          let unit = Volunteers.Collections.Team.findOne(parentId)
+          if (!unit) {
+            unit = Volunteers.Collections.Department.findOne(parentId)
+          }
+          if (unit) { return { email: unit.email, name: unit.name } }
+          return { name: unit.name }
+        })
+
+        if (context[`${cntx.namespace}`]) {
+          context[`${cntx.namespace}`] = _.extend(context[`${cntx.namespace}`], emails)
+        } else {
+          context[`${cntx.namespace}`] = emails
+        }
+        break
+      }
       case 'Leads': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
         const list = Volunteers.Collections.LeadSignups.find(sel)
@@ -111,7 +134,6 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
       case 'Shifts': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
         const list = Volunteers.Collections.ShiftSignups.find(sel)
-        /* day.utcOffset(timezone) */
         const allShifts = list.map((s) => {
           const duty = Volunteers.Collections.TeamShifts.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
@@ -206,8 +228,36 @@ Accounts.emailTemplates.verifyEmail.subject = (user) => {
   const doc = EmailForms.previewTemplate('verifyEmail', user, getContext)
   return doc.subject
 }
-Accounts.emailTemplates.verifyEmail.text = (user, url) => {
-  const context = { verifyEmail: { url } }
-  const doc = EmailForms.previewTemplate('verifyEmail', user, getContext, context)
-  return doc.text
+
+const tmpEmailEn = Accounts.sendEnrollmentEmail
+Accounts.sendEnrollmentEmail = (userId) => {
+  try {
+    tmpEmailEn(userId)
+    Meteor.users.update(userId, { $set: { 'profile.invitationSent': true } })
+    const template = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
+    EmailLogs.insert({
+      userId,
+      template,
+      sent: Date(),
+    })
+  } catch (error) {
+    const user = Meteor.users.findOne(userId)
+    console.log(`Error Sending enrollment to ${user.emails[0].address} : ${error}`)
+  }
+}
+
+const tmpEmailVr = Accounts.sendVerificationEmail
+Accounts.sendVerificationEmail = (userId) => {
+  try {
+    tmpEmailVr(userId)
+    const template = EmailForms.Collections.EmailTemplate.findOne({ name: 'verifyEmail' })._id
+    EmailLogs.insert({
+      userId,
+      template,
+      sent: Date(),
+    })
+  } catch (error) {
+    const user = Meteor.users.findOne(userId)
+    console.log(`Error Sending verifyEmail to ${user.emails[0].address} : ${error}`)
+  }
 }

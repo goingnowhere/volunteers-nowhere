@@ -72,7 +72,13 @@ const sendNotificationEmailFunctionGeneric = (userId, template, selector, notifi
     if (user && (allSignups.length > 0)) {
       const doc = EmailForms.previewTemplate(template, user, getContext)
       WrapEmailSend(user, doc)
-      if (!user.profile.terms) { Accounts.sendEnrollmentEmail(userId) }
+      if (!user.profile.terms) {
+        Accounts.sendEnrollmentEmail(userId, (err) => {
+          if (!err) {
+            Meteor.users.update({ _id: userId }, { $set: { 'profile.invitationSent': true } })
+          }
+        })
+      }
       allSignups.forEach((signup) => {
         const modifier = { $set: { notification: true } }
         switch (signup.type) {

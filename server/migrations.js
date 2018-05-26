@@ -535,3 +535,18 @@ Migrations.add({
     }
   },
 })
+
+Migrations.add({
+  version: 20,
+  name: 'add afftected teams context',
+  up() {
+    EmailForms.Collections.EmailTemplateContext.insert({
+      name: 'UserTeams',
+      namespace: 'teams',
+      variables: [
+        { name: 'name', description: 'name of the team' },
+        { name: 'email', description: 'contact email for the team' },
+      ],
+    })
+  },
+})
