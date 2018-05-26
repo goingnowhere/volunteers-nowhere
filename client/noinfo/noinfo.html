@@ -242,8 +242,8 @@
               <tr><td>{{__ "real_name"}}</td><td>{{getRealName user._id}}</td></tr>
               <tr><td>{{__ "email"}} </td>
                 <td>
-                  {{emails.[0].address}}
-                  {{#if emails.[0].verified}}
+                  {{user.emails.[0].address}}
+                  {{#if user.emails.[0].verified}}
                     <span class="text-success">{{fa 'check'}}</span>
                   {{else}}
                     <span class="text-danger">{{fa 'warning'}}</span>
