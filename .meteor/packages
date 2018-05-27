@@ -60,3 +60,4 @@ abate:email-forms
 aldeed:moment-timezone
 spacebars-compiler
 percolate:synced-cron
+ostrio:logger
