@@ -67,6 +67,7 @@ const textSearch = (function textSearch(value, page, event) {
       // {"$text": {"$search": value}}
       {
         $or: [
+          { 'profile.nickname': { $regex: value } },
           { 'profile.firstName': { $regex: value } },
           { 'profile.lastName': { $regex: value } },
           { 'emails.0.address': { $regex: value } },
