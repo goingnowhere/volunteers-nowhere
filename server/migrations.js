@@ -550,3 +550,57 @@ Migrations.add({
     })
   },
 })
+
+Migrations.add({
+  version: 21,
+  name: 'add enrollAccountInvalidEmail email template',
+  up() {
+    const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Tickets'] } }).map(c => c._id)
+    EmailForms.Collections.EmailTemplate.upsert({ name: 'enrollAccountInvalidEmail' }, {
+      $set: {
+        context,
+        from: 'volunteers@goingnowhere.org',
+        subject: 'Nowhere: More enrollment links (because you got more than one ticket) !',
+        body: `Hello {{ user.firstName}} {{#if user.nickname}}/ ( {{user.nickname}}) {{/if}}
+
+
+Since we found more than one ticket associated to the same email address, we write to you
+to kindly forward the following link to join the volunteer website to the rigthfull
+ticket holder.
+
+{{tickets.FirstName}} {{tickets.LastName}} (ticker number {{ tickets.TicketId }})
+
+{{tickets.enrollmentLink}}
+
+Since this is an unsual situation, after logging in and setting up a password,
+you need to go thought one additional step and assocate a valid email to this account.
+
+After logging in proceed to https://vms.goingnowhere.org/profile/settings
+and complete your profile form adding the real name of the ticket holder, and more
+importantly a new valid email (you will be asked to confirm the email address).
+
+After this step, you can continue to fill the volunteer profile and finally
+select a shift or two.
+
+If in the mean time you sold or gifted the ticket, and you have already tranfer the ticket to the new
+owner, please disregard this message.
+
+You are going to receive one email for each ticket associated to this email address.
+
+Thank you for your help.
+
+This is an automated message, please contact the volunteer coordinator if you have questions.
+`,
+        notes: 'For when people got more than one ticket with the same email address',
+      },
+    })
+  },
+})
+
+Migrations.add({
+  version: 22,
+  name: 'reset invitationSent flag for invalid emails',
+  up() {
+    Meteor.users.update({ 'emails.0.address': { $not: /@email.invalid/ } }, { $set: { 'profile.invitationSent': false } }, { multi: true })
+  },
+})

@@ -45,16 +45,9 @@ export const removeEmailTemplateMethod =
     [isManagerMixin],
   )
 
-const generateEnrollmentLinks = (address) => {
-  const sel = { Email: address, fakeEmail: { $ne: null } }
-  const links = pendingUsers.find(sel).map((pendingUserData) => {
-    const pu = Accounts.findUserByEmail(pendingUserData.fakeEmail)
-    if (pu) {
-      const { token } = Accounts.generateResetToken(pu._id, pendingUserData.fakeEmail, 'enrollAccount')
-      return Accounts.urls.enrollAccount(token)
-    } return null
-  })
-  return links.filter(Boolean)
+const generateEnrollmentLink = (userId, fakeEmail) => {
+  const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
+  return Accounts.urls.enrollAccount(token)
 }
 
 /* Here we add application specific contexts for the emails-forms package */
@@ -70,8 +63,14 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Tickets': {
-        const { address } = user.emails[0]
-        context[`${cntx.namespace}`] = { users: generateEnrollmentLinks(address) }
+        const fakeEmail = user.emails[0].address
+        const enrollmentLink = generateEnrollmentLink(user._id, fakeEmail)
+        const { FirstName, LastName, TicketId } = pendingUsers.findOne({ fakeEmail })
+        context[`${cntx.namespace}`] = {
+          enrollmentLink, LastName, FirstName, TicketId,
+        }
+        console.log(context)
+
         break
       }
 

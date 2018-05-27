@@ -3,7 +3,8 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { EmailLogs } from './email'
+import { pendingUsers } from './importUsers'
+import { EmailLogs, getContext, WrapEmailSend } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
@@ -92,6 +93,7 @@ const MassEnrollmentTask = (time) => {
         'profile.terms': false,
         'profile.invitationSent': { $exists: false },
         'profile.ticketNumber': { $ne: 'Manual registration' },
+        'emails.0.address': { $not: /@email.invalid/ },
       }
       Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
         if (!EmailLogs.findOne({ template: tid, userId: user._id })) {
@@ -110,6 +112,37 @@ const MassEnrollmentTask = (time) => {
   })
 }
 
+const MassEnrollmentInvalidEmailsTask = (time) => {
+  SyncedCron.add({
+    name: 'MassEnrollmentInvalidEmails',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      console.log('wakeup MassEnrollmentInvalidEmails')
+      const sel = {
+        'profile.terms': false,
+        'profile.invitationSent': false,
+        'emails.0.address': /@email.invalid/,
+      }
+      Meteor.users.find(sel, { limit: 10 }).forEach((fakeUser) => {
+        const fakeEmail = fakeUser.emails[0].address
+        const pendingUser = pendingUsers.findOne({ fakeEmail })
+        if (pendingUser) {
+          const doc = EmailForms.previewTemplate('enrollAccountInvalidEmail', fakeUser, getContext)
+          doc.to = pendingUser.Email
+          try {
+            console.log(`Sending enrollment for ${fakeEmail} to ${pendingUser.Email}`)
+            WrapEmailSend(fakeUser, doc)
+            Meteor.users.update(fakeUser._id, { $set: { 'profile.invitationSent': true } })
+          } catch (error) {
+            console.log(`Error Sending enrollment for ${fakeEmail} to ${pendingUser.Email} : ${error}`)
+          }
+        }
+      })
+    },
+  })
+}
 
 SyncedCron.config({
   log: false,
@@ -121,7 +154,8 @@ const cronActivate = ({ cronFrequency }) => {
     SyncedCron.stop()
     EnrollmentTask(cronFrequency)
     ReviewTask(cronFrequency)
-    MassEnrollmentTask('every 1 mins')
+    /* MassEnrollmentTask('every 1 mins') */
+    MassEnrollmentInvalidEmailsTask('every 1 mins')
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
