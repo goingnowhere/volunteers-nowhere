@@ -1,6 +1,7 @@
 import { SyncedCron } from 'meteor/percolate:synced-cron'
 import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
+import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
 import { pendingUsers } from './importUsers'
@@ -10,31 +11,41 @@ import {
   sendReviewNotificationEmailFunction,
 } from './methods'
 
-/* SyncedCron.add({
-  name: 'Cleanup old signups',
-  schedule(parser) {
-    return parser.text('every 1 mins')
-  },
-  job() {
-    Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
-      const user = Meteor.users.findOne({ _id: signup.userId })
-      if (!user) {
-        console.log('remove signup: user not found')
+moment.tz.setDefault('Europe/Paris')
+
+const signupsGC = (time) => {
+  SyncedCron.add({
+    name: 'signupsGC',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      const today = moment().subtract(7, 'days').startOf('day').toDate()
+      const sel = { status: { $in: ['bailed', 'refused'] }, createdAt: { $lt: today } }
+      Volunteers.Collections.ShiftSignups.find(sel).forEach((signup) => {
+        console.log('remove signup: GC ', signup)
         Volunteers.Collections.ShiftSignups.remove(signup._id)
-      }
-      const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
-      if (!shift) {
-        console.log('remove signup: shift not found')
-        Volunteers.Collections.ShiftSignups.remove(signup._id)
-      }
-      const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
-      if (!team) {
-        console.log('remove signup: team not found')
-        Volunteers.Collections.ShiftSignups.remove(signup._id)
-      }
-    })
-  },
-}) */
+      })
+      Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
+        const user = Meteor.users.findOne({ _id: signup.userId })
+        if (!user) {
+          console.log('remove signup: user not found', signup)
+          Volunteers.Collections.ShiftSignups.remove(signup._id)
+        }
+        const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
+        if (!shift) {
+          console.log('remove signup: shift not found', signup)
+          Volunteers.Collections.ShiftSignups.remove(signup._id)
+        }
+        const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
+        if (!team) {
+          console.log('remove signup: team not found', signup)
+          Volunteers.Collections.ShiftSignups.remove(signup._id)
+        }
+      })
+    },
+  })
+}
 
 const EnrollmentTask = (time) => {
   SyncedCron.add({
@@ -87,7 +98,7 @@ const MassEnrollmentTask = (time) => {
       return parser.text(time)
     },
     job() {
-      console.log('wakeup MassEnrollment')
+      /* console.log('wakeup MassEnrollment') */
       const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
       const sel = {
         'profile.terms': false,
@@ -119,7 +130,7 @@ const MassEnrollmentInvalidEmailsTask = (time) => {
       return parser.text(time)
     },
     job() {
-      console.log('wakeup MassEnrollmentInvalidEmails')
+      /* console.log('wakeup MassEnrollmentInvalidEmails') */
       const sel = {
         'profile.terms': false,
         'profile.invitationSent': false,
@@ -154,8 +165,9 @@ const cronActivate = ({ cronFrequency }) => {
     SyncedCron.stop()
     EnrollmentTask(cronFrequency)
     ReviewTask(cronFrequency)
-    /* MassEnrollmentTask('every 1 mins') */
-    MassEnrollmentInvalidEmailsTask('every 1 mins')
+    MassEnrollmentTask('every 5 mins')
+    /* MassEnrollmentInvalidEmailsTask('every 10 mins') */
+    /* signupsGC('every 10 days') */
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
