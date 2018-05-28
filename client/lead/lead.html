@@ -20,17 +20,17 @@
         <ul>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ 'wanted_covered_confirmed'}}">
-              {{__ "shifts"}}: {{shiftRate.needed}}/{{shiftRate.confirmed}}
+              {{__ "shifts"}}: {{teamStats.team.shiftRate.needed}}/{{teamStats.team.shiftRate.confirmed}}
             </div>
           </li>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ 'total_number_of_volunteers'}}">
-              {{__ "volunteers"}}: {{volunteerNumber}}
+              {{__ "volunteers"}}: {{teamStats.team.volunteerNumber}}
             </div>
           </li>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ 'total_number_of_volunteers'}}">
-              {{__ "pending_requests"}}: {{pendingRequests}}
+              {{__ "pending_requests"}}: {{$len teamStats.pendingRequests}}
             </div>
           </li>
         </ul>
@@ -50,10 +50,16 @@
           {{fa "wrench"}} {{__ "add_project"}}
         </button>
       </div>
-      <div class="{{#if $gt pendingRequests 0}}col-sm-12 col-md-5 pr-1{{else}}col-sm-6 col-md-10{{/if}} pl-1 user-top">
+      <div class="
+        {{#if $gt ($len teamStats.pendingRequests) 0}}
+          col-sm-12 col-md-5 pr-1
+        {{else}}
+          col-sm-6 col-md-10
+        {{/if}}
+        pl-1 user-top">
         {{> leadTeamTabs }}
       </div>
-      {{#if $gt pendingRequests 0}}
+      {{#if $gt ($len teamStats.pendingRequests) 0}}
         <div class="col-sm-12 col-md-5 pl-1 user-top">
           <h2 class="header">{{__ "applications" }}</h2>
           {{> teamSignupsList signupListContext }}

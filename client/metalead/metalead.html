@@ -13,22 +13,22 @@
         <ul>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ "total_number_of_teams"}}">
-              {{__ "teams"}}: {{teamsNumber}}
+              {{__ "teams"}}: {{dept.teamsNumber}}
             </div>
           </li>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ "wanted_covered_confirmed"}}">
-              {{__ "leads"}}: {{allLeads.wanted}}/{{allLeads.covered}}
+              {{__ "leads"}}: {{dept.leadRate.needed}}/{{dept.leadRate.confirmed}}
             </div>
             </li>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ "wanted_covered_confirmed"}}">
-              {{__ "shifts"}}: {{shiftsDept.wanted}}/{{shiftsDept.covered}}
+              {{__ "shifts"}}: {{dept.shiftRate.needed}}/{{dept.shiftRate.confirmed}}
             </div>
           </li>
           <li>
             <div data-toggle="tooltip" data-placement="top" title="{{__ "total_number_of_volunteers"}}">
-              {{__ "volunteer"}}: {{$len allVolunteers}}
+              {{__ "volunteer"}}: {{dept.volunteerNumber}}
             </div>
           </li>
         </ul>
@@ -87,7 +87,7 @@
               </td>
               <td><span class="badge badge-pill badge-primary">
                 {{#let s = (shiftsTeam team._id)}}
-                  {{s.wanted}}/{{s.covered}}
+                  {{s.shiftRate.needed}}/{{s.shiftRate.confirmed}}
                 {{/let}}
                 </span></td>
               <td>

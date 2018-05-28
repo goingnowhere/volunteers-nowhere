@@ -6,9 +6,8 @@ import { Volunteers } from '../../both/init'
 Template.metaleadDepartmentView.onCreated(function onCreated() {
   const template = this
   template.departmentId = template.data._id
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byDepartment`, template.departmentId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byDepartment`, template.departmentId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byDepartment`, template.departmentId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byDepartment`, template.departmentId)
 })
 
 Template.metaleadDepartmentView.onRendered(() => {
@@ -69,56 +68,28 @@ Template.metaleadDepartmentView.events({
 })
 
 Template.metaleadDepartmentView.helpers({
-  leadsDept: () =>
-    Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: Template.instance().departmentId }),
-  teamsNumber: () => {
-    const deptId = Template.instance().departmentId
-    return Volunteers.Collections.Team.find({ parentId: deptId }).count()
+  dept: () => {
+    const parentId = Template.instance().departmentId
+    const stats = Volunteers.Collections.UnitAggregation.findOne(parentId)
+    if (stats) { return stats.dept } return null
   },
-  shiftsDept: () => {
-    const deptId = Template.instance().departmentId
-    // XXX: this helper runs more then once. I think it's a problem with the subscription
-    // getting ready ...
-    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
-      const wanted = Volunteers.Collections.TeamShifts.find({ parentId: team._id }).count()
-      const covered = Volunteers.Collections.ShiftSignups.find({ parentId: team._id, status: 'confirmed' }).count()
-      return { wanted, covered }
-    })
-    return _.reduce(l, (s, acc) => ({
-      wanted: s.wanted + acc.wanted,
-      covered: s.covered + acc.covered,
-    }), { wanted: 0, covered: 0 })
+  shiftsTeam: (teamId) => {
+    const stats = Volunteers.Collections.UnitAggregation.findOne(teamId)
+    if (stats) {
+      return stats.team
+    } return null
   },
-  allLeads: () => {
-    const deptId = Template.instance().departmentId
-    // XXX: this helper runs more then once. I think it's a problem with the subscription
-    // getting ready ...
-    const l = Volunteers.Collections.Department.find({ _id: deptId }).fetch()
-      .concat(Volunteers.Collections.Team.find({ parentId: deptId }).fetch())
-      .map((team) => {
-        const wanted = Volunteers.Collections.Lead.find({ parentId: team._id }).count()
-        const covered = Volunteers.Collections.LeadSignups.find({ parentId: team._id, status: 'confirmed' }).count()
-        return { wanted, covered }
-      })
-    return _.reduce(l, (s, acc) => ({
-      wanted: s.wanted + acc.wanted,
-      covered: s.covered + acc.covered,
-    }), { wanted: 0, covered: 0 })
+  leadsDept: () => {
+    const parentId = Template.instance().departmentId
+    const sel = { status: 'confirmed', parentId }
+    return Volunteers.Collections.LeadSignups.find(sel)
   },
-  // TODO !!!
-  shiftsTeam: teamId => ({ wanted: 0, covered: 0 }),
   allTeams: () => {
-    const deptId = Template.instance().departmentId
-    return Volunteers.Collections.Department.find({ _id: deptId }).fetch()
-      .concat(Volunteers.Collections.Team.find({ parentId: deptId }).fetch())
-  },
-  allVolunteers: () => {
-    const deptId = Template.instance().departmentId
-    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
-      const userList = Volunteers.Collections.ShiftSignups.find({ parentId: team._id, status: 'confirmed' }).map(s => s.userId)
-      if (userList) { return userList } return []
-    })
-    return _.chain(l).flatten().uniq().value()
+    const parentId = Template.instance().departmentId
+    const dept = Volunteers.Collections.Department.findOne(parentId)
+    const teams = Volunteers.Collections.Team.find({ parentId }).fetch()
+    teams.push(dept)
+    return teams
   },
   leadsTeam: (team) => {
     const leadShift = Volunteers.Collections.Lead.find({ parentId: team._id })

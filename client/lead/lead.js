@@ -11,8 +11,9 @@ moment.tz.setDefault('Europe/Paris')
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id
-  template.stats = Volunteers.teamStats(template.teamId)
+  template.teamStats = Volunteers.teamStats(template.teamId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byTeam`, template.teamId)
 })
 
 Template.leadTeamView.onRendered(() => {
@@ -20,12 +21,15 @@ Template.leadTeamView.onRendered(() => {
 })
 
 Template.leadTeamView.helpers({
-  shiftRate: () => Template.instance().stats.shiftRate(),
-  volunteerNumber: () => Template.instance().stats.volunteerNumber(),
-  pendingRequests: () => Template.instance().stats.pendingRequests().length,
-  team: () => Volunteers.Collections.Team.findOne(Template.instance().teamId),
-  allLeads: () =>
-    Volunteers.Collections.LeadSignups.find({ parentId: Template.instance().teamId, status: 'confirmed' }),
+  teamStats: () => {
+    const { teamId } = Template.instance()
+    const stats = Volunteers.Collections.UnitAggregation.findOne(teamId)
+    if (stats) { return stats } return null
+  },
+  allLeads: () => {
+    const parentId = Template.instance().teamId
+    return Volunteers.Collections.LeadSignups.find({ parentId, status: 'confirmed' })
+  },
   signupListContext: () => {
     const data = Template.currentData()
     data.userInfoTemplate = 'noInfoUserProfileLink'
