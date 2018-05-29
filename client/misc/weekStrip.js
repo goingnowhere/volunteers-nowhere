@@ -30,12 +30,14 @@ const isCurrentDay = date => Template.instance().day.get() && Template.instance(
 Template.weekstrip.helpers({
   week: () => {
     const { weekNumber, year } = Template.instance()
-    const start = moment()
-      .week(weekNumber.get())
-      .year(year.get())
-      .weekday(0)
-      .startOf('day')
-    return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
+    if (weekNumber) {
+      const start = moment()
+        .week(weekNumber.get())
+        .year(year.get())
+        .weekday(0)
+        .startOf('day')
+      return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
+    } []
   },
   displayDay: date => date.format('ddd Do'),
   displayMonth: date => date.format('MMM'),

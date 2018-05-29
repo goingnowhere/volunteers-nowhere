@@ -70,6 +70,7 @@
 </template>
 
 <template name="leadTeamTabs">
+  {{#if Template.subscriptionsReady}}
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" href="#shifts" role="tab" data-toggle="tab">
@@ -100,6 +101,7 @@
       {{/teamProjectsTable}}
     </div>
   </div>
+  {{/if}}
 </template>
 
 <template name="shiftSignupEnrollAction">

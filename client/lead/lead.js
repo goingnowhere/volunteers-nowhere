@@ -4,6 +4,7 @@ import { moment } from 'meteor/momentjs:moment'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Session } from 'meteor/session'
+import { EventSettings } from '../../both/settings'
 import { Volunteers } from '../../both/init'
 
 moment.tz.setDefault('Europe/Paris')
@@ -63,21 +64,23 @@ Template.leadTeamView.events({
 Template.leadTeamTabs.onCreated(function onCreated() {
   const template = this
   template.teamId = template.data._id
+  template.shownDay = new ReactiveVar()
   template.currentDay = new ReactiveVar()
-  template.shownDay = new ReactiveVar(moment())
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byTeam`, template.teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byTeam`, template.teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byTeam`, template.teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
-  return template.autorun(() => {
-    if (template.subscriptionsReady()) {
-      const lastShift = Volunteers.Collections.TeamShifts.findOne(
-        { parentId: template.teamId },
-        { sort: { start: -1 }, limit: 1, reactive: false },
-      )
-      if (lastShift) {
-        template.shownDay.set(moment(lastShift.start))
-      }
+  template.autorun(() => {
+    if (Meteor.subscribe('eventSettings').ready()) {
+      const settings = EventSettings.findOne()
+      template.shownDay.set(moment(settings.eventPeriod.start))
+      template.currentDay.set(moment(settings.eventPeriod.start))
+    }
+  })
+
+  template.autorun(() => {
+    const lastShift = Volunteers.Collections.TeamShifts.findOne(
+      { parentId: template.teamId },
+      { sort: { start: -1 }, limit: 1, reactive: false },
+    )
+    if (lastShift) {
+      template.shownDay.set(moment(lastShift.start))
     }
   })
 })
