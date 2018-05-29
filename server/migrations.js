@@ -8,6 +8,10 @@ import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
 import { importUsers } from './importUsers'
 import { EmailLogs } from './email'
+import {
+  voluntellEmail,
+  reminderEmail, reviewEmail, enrollInvalidEmail,
+} from './migrationsData/migrationsData'
 
 Migrations.config({
   log: true,
@@ -246,54 +250,7 @@ Migrations.add({
   up() {
     const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Shifts', 'Leads', 'Projects'] } }).map(c => c._id)
     EmailForms.Collections.EmailTemplate.upsert({ name: 'voluntell' }, {
-      $set: {
-        context,
-        from: 'noreply@goingnowhere.org',
-        subject: 'NOWHERE SHIFT ASSIGNMENT',
-        body: `VOLUNTOLD!
-
-Congratulations, you’ve been assigned a shift, it's:
-Félicitations, on vous a assigné un équipe, c’est:
-Felicidades, te han asignado un turno, es:
-{{#if $gt ($len duties.newShiftEnrollments) 0 }}Shifts
-{{#each duties.newShiftEnrollments }}
-- {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.newProjectEnrollments) 0 }}Projects
-{{#each duties.newProjectEnrollments }}
-- {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.newLeadEnrollments) 0 }}Leads
-{{#each duties.newLeadEnrollments }}
-- {{teamName}} > {{title}}
-{{/each}}
-{{/if}}
-
-This is a summary of all your engagements. Please pay attention !
-{{#if $gt ($len duties.shifts) 0 }}Shifts
-{{#each duties.shifts }}
-- {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.projects) 0 }}Projects
-{{#each duties.projects }}
-- {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.leads) 0 }}Leads
-{{#each duties.leads }}
-- {{teamName}} > {{title}}
-{{/each}}
-{{/if}}
-
-This is an automated message, please contact the shift lead if you have questions.
-Ceci est un message automatisé, s'il vous plaît contacter le chef de quart si vous avez des questions.
-Este es un mensaje automatizado, contáctese con el líder del turno si tiene preguntas.
-`,
-        notes: 'For when you voluntell a user',
-      },
+      $set: { ...voluntellEmail, context },
     })
   },
 })
@@ -316,82 +273,7 @@ Migrations.add({
     const sel = { name: { $in: ['User', 'Shifts', 'Leads', 'Projects'] } }
     const context = EmailForms.Collections.EmailTemplateContext.find(sel).map(c => c._id)
     EmailForms.Collections.EmailTemplate.upsert({ name: 'reviewed' }, {
-      $set: {
-        context,
-        from: 'noreply@goingnowhere.org',
-        subject: 'Your shift application at nowhere has been reviewed',
-        body: `Dear {{user.firstName}} {{#if user.nickName}}/ {{user.nickName}}{{/if}}
-
-You applied for a shift subject to approval from a team lead.
-
-{{#if $gt ($len duties.newShiftReviews) 0 }}
-  {{#each duties.newShiftReviews }}
-    {{#if $eq status 'confirmed'}}
-The shift {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}} ,
-has been approved. Please put these dates in your agenda.
-    {{/if}}
-    {{#if $eq status 'refused'}}
-The application for the shift {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}} ,
-has been refused. Don't be put down by this. We need to take multiple factors into
-consideration while putting together a crew. If you think there is a mistake, please contact
-the volunteer coordinator or team lead directly. Otherwise take your time to apply to
-another shift.
-    {{/if}}
-    {{/each}}
-{{/if}}
-
-{{#if $gt ($len duties.newProjectReviews) 0 }}
-  {{#each duties.newProjectReviews }}
-    {{#if $eq status 'confirmed'}}
-The application for {{teamName}} > {{title}} starting {{$formatDateTime start}},
-has been approved. Please put these dates in your agenda.
-    {{/if}}
-    {{#if $eq status 'refused'}}
-The application for the project {{teamName}} > {{title}} starting {{$formatDateTime start}},
-has been refused. Don't be put down by this. We need to take multiple factors into
-consideration while putting together a crew. If you think there is a mistake, please contact
-the volunteer coordinator or team lead directly. Otherwise take your time to apply to
-another shift.
-    {{/if}}
-  {{/each}}
-{{/if}}
-{{#if $gt ($len duties.newLeadReviews) 0 }}
-  {{#each duties.newLeadReviews }}
-    {{#if $eq status 'confirmed'}}
-The application for the lead position {{teamName}} > {{title}},
-has been approved. Please get in touch with your metalead or the volunteer coordinator.
-    {{/if}}
-    {{#if $eq status 'refused'}}
-The application for the lead position {{teamName}} > {{title}},
-has been refused. Don't be put down by this. We need to take multiple factors into
-consideration while putting together a crew. If you think there is a mistake, please contact
-the volunteer coordinator. Otherwise take your time to apply to another shift.
-    {{/if}}
-  {{/each}}
-{{/if}}
-This is a summary of all your engagements at the moment. Please be on time !
-{{#if $gt ($len duties.shifts) 0 }}Shifts
-  {{#each duties.shifts }}
-- ({{status}}) : {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-  {{/each}}
-{{/if}}
-{{#if $gt ($len duties.projects) 0 }}Projects
-  {{#each duties.projects }}
-- ({{status}}) : {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-  {{/each}}
-{{/if}}
-{{#if $gt ($len duties.leads) 0 }}Leads
-  {{#each duties.leads }}
-- ({{status}}) : {{teamName}} > {{title}}
-  {{/each}}
-{{/if}}
-
-This is an automated message, please contact the shift lead if you have questions.
-Ceci est un message automatisé, s'il vous plaît contacter le chef de quart si vous avez des questions.
-Este es un mensaje automatizado, contáctese con el líder del turno si tiene preguntas.
-`,
-        notes: 'For when you voluntell a user',
-      },
+      $set: { ...reviewEmail, context },
     })
   },
 })
@@ -402,54 +284,7 @@ Migrations.add({
   up() {
     const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Shifts', 'Leads', 'Projects'] } }).map(c => c._id)
     EmailForms.Collections.EmailTemplate.upsert({ name: 'voluntell' }, {
-      $set: {
-        context,
-        from: 'noreply@goingnowhere.org',
-        subject: 'NOWHERE SHIFT ASSIGNMENT',
-        body: `VOLUNTOLD!
-
-Congratulations, you’ve been assigned a shift, it's:
-Félicitations, on vous a assigné un équipe, c’est:
-Felicidades, te han asignado un turno, es:
-{{#if $gt ($len duties.newShiftEnrollments) 0 }}Shifts
-{{#each duties.newShiftEnrollments }}
-- {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.newProjectEnrollments) 0 }}Projects
-{{#each duties.newProjectEnrollments }}
-- {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.newLeadEnrollments) 0 }}Leads
-{{#each duties.newLeadEnrollments }}
-- {{teamName}} > {{title}}
-{{/each}}
-{{/if}}
-
-This is a summary of all your engagements. Please pay attention !
-{{#if $gt ($len duties.shifts) 0 }}Shifts
-{{#each duties.shifts }}
-- ({{status}}) : {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.projects) 0 }}Projects
-{{#each duties.projects }}
-- ({{status}}) : {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.leads) 0 }}Leads
-{{#each duties.leads }}
-- ({{status}}) : {{teamName}} > {{title}}
-{{/each}}
-{{/if}}
-
-This is an automated message, please contact the shift lead if you have questions.
-Ceci est un message automatisé, s'il vous plaît contacter le chef de quart si vous avez des questions.
-Este es un mensaje automatizado, contáctese con el líder del turno si tiene preguntas.
-`,
-        notes: 'For when you voluntell a user',
-      },
+      $set: { ...voluntellEmail, context },
     })
   },
 })
@@ -472,35 +307,7 @@ Migrations.add({
   up() {
     const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Shifts', 'Leads', 'Projects'] } }).map(c => c._id)
     EmailForms.Collections.EmailTemplate.upsert({ name: 'shiftReminder' }, {
-      $set: {
-        context,
-        from: 'noreply@goingnowhere.org',
-        subject: 'Nowhere Shifts Reminder',
-        body: `Hello,
-
-This is a reminder regarding all your engagements at nowhere .
-{{#if $gt ($len duties.shifts) 0 }}Shifts
-{{#each duties.shifts }}
-- ({{status}}) : {{teamName}} > {{title}} {{$formatDateTime start}} - {{$formatDateTime end}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.projects) 0 }}Projects
-{{#each duties.projects }}
-- ({{status}}) : {{teamName}} > {{title}} . You are set to start the {{$formatDateTime start}}
-{{/each}}
-{{/if}}
-{{#if $gt ($len duties.leads) 0 }}Leads
-{{#each duties.leads }}
-- ({{status}}) : {{teamName}} > {{title}}
-{{/each}}
-{{/if}}
-
-This is an automated message, please contact the shift lead if you have questions.
-Ceci est un message automatisé, s'il vous plaît contacter le chef de quart si vous avez des questions.
-Este es un mensaje automatizado, contáctese con el líder del turno si tiene preguntas.
-`,
-        notes: 'Friendly reminder',
-      },
+      $set: { ...reminderEmail, context },
     })
   },
 })
@@ -553,54 +360,53 @@ Migrations.add({
 
 Migrations.add({
   version: 21,
-  name: 'add enrollAccountInvalidEmail email template',
+  name: 'Run Once off GC',
   up() {
-    const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Tickets'] } }).map(c => c._id)
-    EmailForms.Collections.EmailTemplate.upsert({ name: 'enrollAccountInvalidEmail' }, {
-      $set: {
-        context,
-        from: 'volunteers@goingnowhere.org',
-        subject: 'Nowhere: More enrollment links (because you got more than one ticket) !',
-        body: `Hello {{ user.firstName}} {{#if user.nickname}}/ ( {{user.nickname}}) {{/if}}
-
-
-Since we found more than one ticket associated to the same email address, we write to you
-to kindly forward the following link to join the volunteer website to the rigthfull
-ticket holder.
-
-{{tickets.FirstName}} {{tickets.LastName}} (ticker number {{ tickets.TicketId }})
-
-{{tickets.enrollmentLink}}
-
-Since this is an unsual situation, after logging in and setting up a password,
-you need to go thought one additional step and assocate a valid email to this account.
-
-After logging in proceed to https://vms.goingnowhere.org/profile/settings
-and complete your profile form adding the real name of the ticket holder, and more
-importantly a new valid email (you will be asked to confirm the email address).
-
-After this step, you can continue to fill the volunteer profile and finally
-select a shift or two.
-
-If in the mean time you sold or gifted the ticket, and you have already tranfer the ticket to the new
-owner, please disregard this message.
-
-You are going to receive one email for each ticket associated to this email address.
-
-Thank you for your help.
-
-This is an automated message, please contact the volunteer coordinator if you have questions.
-`,
-        notes: 'For when people got more than one ticket with the same email address',
-      },
+    const today = moment().subtract(7, 'days').startOf('day').toDate()
+    const sel = { status: { $in: ['bailed', 'refused'] }, createdAt: { $lt: today } }
+    Volunteers.Collections.ShiftSignups.find(sel).forEach((signup) => {
+      Volunteers.Collections.ShiftSignups.remove(signup._id)
+    })
+    Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
+      const user = Meteor.users.findOne({ _id: signup.userId })
+      if (!user) {
+        Volunteers.Collections.ShiftSignups.remove(signup._id)
+      }
+      const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
+      if (!shift) {
+        Volunteers.Collections.ShiftSignups.remove(signup._id)
+      }
+      const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
+      if (!team) {
+        Volunteers.Collections.ShiftSignups.remove(signup._id)
+      }
     })
   },
 })
 
 Migrations.add({
   version: 22,
+  name: 'add enrollAccountInvalidEmail email template',
+  up() {
+    const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User', 'Tickets'] } }).map(c => c._id)
+    EmailForms.Collections.EmailTemplate.upsert({ name: 'enrollAccountInvalidEmail' }, {
+      $set: { ...enrollInvalidEmail, context },
+    })
+  },
+})
+
+Migrations.add({
+  version: 23,
   name: 'reset invitationSent flag for invalid emails',
   up() {
-    Meteor.users.update({ 'emails.0.address': { $not: /@email.invalid/ } }, { $set: { 'profile.invitationSent': false } }, { multi: true })
+    Meteor.users.update({ 'emails.0.address': /@email.invalid/ }, { $set: { 'profile.invitationSent': false } }, { multi: true })
+  },
+})
+
+Migrations.add({
+  version: 23,
+  name: 'fix invitationSent for users already on the system',
+  up() {
+    Meteor.users.update({ 'profile.terms': true }, { $set: { 'profile.invitationSent': true } }, { multi: true })
   },
 })

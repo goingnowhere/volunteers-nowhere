@@ -63,17 +63,21 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Tickets': {
-        const fakeEmail = user.emails[0].address
-        const enrollmentLink = generateEnrollmentLink(user._id, fakeEmail)
-        const { FirstName, LastName, TicketId } = pendingUsers.findOne({ fakeEmail })
+        /* the Tickets context is run for a user and pulls all the
+           pending users email associated with his principal
+           email address. Use we the pending user profile to generate
+           the enrollment link */
+        const email = user.emails[0].address
+        const {
+          FirstName, LastName, TicketId, fakeEmail,
+        } = pendingUsers.findOne({ Email: { $regex: new RegExp(email, 'i') } })
+        const pendingUser = Accounts.findUserByEmail(fakeEmail)
+        const enrollmentLink = generateEnrollmentLink(pendingUser._id, fakeEmail)
         context[`${cntx.namespace}`] = {
           enrollmentLink, LastName, FirstName, TicketId,
         }
-        console.log(context)
-
         break
       }
-
       case 'UserTeams': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
         const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
@@ -105,19 +109,21 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
           if (!unit) {
             unit = Volunteers.Collections.Department.findOne(s.parentId)
           }
-          const {
-            enrolled, notification, status, reviewed,
-          } = s
-          return {
-            reviewed,
-            status,
-            enrolled,
-            notification,
-            title: duty.title,
-            teamName: unit.name,
-            email: unit.email,
-          }
-        })
+          if (duty && unit) {
+            const {
+              enrolled, notification, status, reviewed,
+            } = s
+            return {
+              reviewed,
+              status,
+              enrolled,
+              notification,
+              title: duty.title,
+              teamName: unit.name,
+              email: unit.email,
+            }
+          } return null
+        }).filter(Boolean)
         const newLeadEnrollments = allLeads.filter(s => (
           s.enrolled && (!s.notification) && (s.status === 'confirmed')))
         const newLeadReviews = allLeads.filter(s => (s.reviewed && (!s.notification)))
@@ -136,21 +142,26 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         const allShifts = list.map((s) => {
           const duty = Volunteers.Collections.TeamShifts.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
-          const {
-            enrolled, notification, status, reviewed,
-          } = s
-          return {
-            reviewed,
-            status,
-            enrolled,
-            notification,
-            title: duty.title,
-            teamName: team.name,
-            email: team.email,
-            start: moment(duty.start),
-            end: moment(duty.end),
-          }
-        })
+          /* duty and team should always exists for a signup. If not the GC should
+             remove these signups */
+          if (duty && team) {
+            const {
+              enrolled, notification, status, reviewed,
+            } = s
+            return {
+              reviewed,
+              status,
+              enrolled,
+              notification,
+              title: duty.title,
+              teamName: team.name,
+              email: team.email,
+              start: moment(duty.start),
+              end: moment(duty.end),
+            }
+          } return null
+        }).filter(Boolean)
+
         const newShiftEnrollments = allShifts.filter(s => (
           s.enrolled && (!s.notification) && (s.status === 'confirmed')))
         const newShiftReviews = allShifts.filter(s => (s.reviewed && (!s.notification)))
@@ -169,21 +180,25 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         const allProjects = list.map((s) => {
           const duty = Volunteers.Collections.Projects.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
-          const {
-            enrolled, notification, status, reviewed,
-          } = s
-          return {
-            reviewed,
-            status,
-            enrolled,
-            notification,
-            title: duty.title,
-            teamName: team.name,
-            email: team.email,
-            start: moment(s.start),
-            end: moment(s.end),
-          }
-        })
+          if (duty && team) {
+            const {
+              enrolled, notification, status, reviewed,
+            } = s
+
+            return {
+              reviewed,
+              status,
+              enrolled,
+              notification,
+              title: duty.title,
+              teamName: team.name,
+              email: team.email,
+              start: moment(s.start),
+              end: moment(s.end),
+            }
+          } return null
+        }).filter(Boolean)
+
         const newProjectEnrollments = allProjects.filter(s => (
           s.enrolled && (!s.notification) && (s.status === 'confirmed')))
         const newProjectReviews = allProjects.filter(s => (s.reviewed && (!s.notification)))

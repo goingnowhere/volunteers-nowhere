@@ -55,12 +55,15 @@ const EnrollmentTask = (time) => {
     },
     job() {
       const sel = { enrolled: true, notification: false, status: 'confirmed' }
-      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
-      const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
-      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
+      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'shift' }))
+      const leadSignups = Volunteers.Collections.LeadSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'lead' }))
+      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'project' }))
       const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
       Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
+        const user = Meteor.users.findOne(userId)
+        console.log('send EnrollmentNotification to ', user.emails[0].address)
+
         sendEnrollmentNotificationEmailFunction(userId)
       })
     },
@@ -77,14 +80,16 @@ const ReviewTask = (time) => {
       const sel = {
         notification: false,
         reviewed: true,
-        status: { $in: ['confirmed', 'refused', 'pending'] },
+        status: { $in: ['confirmed', 'refused'] },
       }
-      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
-      const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
-      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
+      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'shift' }))
+      const leadSignups = Volunteers.Collections.LeadSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'lead' }))
+      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'project' }))
       const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
       Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
+        const user = Meteor.users.findOne(userId)
+        console.log('Send Review Notification ', user.emails[0].address)
         sendReviewNotificationEmailFunction(userId)
       })
     },
@@ -98,7 +103,6 @@ const MassEnrollmentTask = (time) => {
       return parser.text(time)
     },
     job() {
-      /* console.log('wakeup MassEnrollment') */
       const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
       const sel = {
         'profile.terms': false,
@@ -130,7 +134,6 @@ const MassEnrollmentInvalidEmailsTask = (time) => {
       return parser.text(time)
     },
     job() {
-      /* console.log('wakeup MassEnrollmentInvalidEmails') */
       const sel = {
         'profile.terms': false,
         'profile.invitationSent': false,
@@ -139,12 +142,12 @@ const MassEnrollmentInvalidEmailsTask = (time) => {
       Meteor.users.find(sel, { limit: 10 }).forEach((fakeUser) => {
         const fakeEmail = fakeUser.emails[0].address
         const pendingUser = pendingUsers.findOne({ fakeEmail })
-        if (pendingUser) {
-          const doc = EmailForms.previewTemplate('enrollAccountInvalidEmail', fakeUser, getContext)
-          doc.to = pendingUser.Email
+        const mainUser = Accounts.findUserByEmail(pendingUser.Email)
+        if (pendingUser && mainUser) {
+          const doc = EmailForms.previewTemplate('enrollAccountInvalidEmail', mainUser, getContext)
           try {
             console.log(`Sending enrollment for ${fakeEmail} to ${pendingUser.Email}`)
-            WrapEmailSend(fakeUser, doc)
+            WrapEmailSend(mainUser, doc)
             Meteor.users.update(fakeUser._id, { $set: { 'profile.invitationSent': true } })
           } catch (error) {
             console.log(`Error Sending enrollment for ${fakeEmail} to ${pendingUser.Email} : ${error}`)
@@ -163,11 +166,11 @@ const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
-    EnrollmentTask(cronFrequency)
-    ReviewTask(cronFrequency)
-    MassEnrollmentTask('every 5 mins')
-    /* MassEnrollmentInvalidEmailsTask('every 10 mins') */
-    /* signupsGC('every 10 days') */
+    EnrollmentTask('every 10 mins')
+    ReviewTask('every 12 mins')
+    MassEnrollmentTask('every 15 mins')
+    MassEnrollmentInvalidEmailsTask('every 17 mins')
+    signupsGC('every 10 days')
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
