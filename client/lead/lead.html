@@ -96,7 +96,7 @@
     </div>
     <!-- Projects -->
     <div role="tabpanel" class="tab-pane fade" id="projects">
-      {{# teamProjectsTable _id=_id }}
+      {{# teamProjectsTable _id=_id userInfoTemplate="noInfoUserProfileLink" }}
         {{> projectSignupEnrollAction }}
       {{/teamProjectsTable}}
     </div>
