@@ -256,7 +256,8 @@ Accounts.sendEnrollmentEmail = (userId) => {
     })
   } catch (error) {
     const user = Meteor.users.findOne(userId)
-    console.log(`Error Sending enrollment to ${user.emails[0].address} : ${error}`)
+    console.log(`Error Sending enrollment email to ${user.emails[0].address} : ${error}`)
+    throw new Meteor.Error('500', `Error Sending enrollment email to ${user.emails[0].address}`, error)
   }
 }
 
@@ -273,5 +274,6 @@ Accounts.sendVerificationEmail = (userId) => {
   } catch (error) {
     const user = Meteor.users.findOne(userId)
     console.log(`Error Sending verifyEmail to ${user.emails[0].address} : ${error}`)
+    throw new Meteor.Error('500', `Error Sending verifyEmail to ${user.emails[0].address}`, error)
   }
 }
