@@ -73,5 +73,7 @@
   "send_notifications": "Send Notifications",
   "notification_sent": "Notifications Sent",
   "invitation_sent": "Invitation Sent",
-  "real_name": "Real Name"
+  "real_name": "Real Name",
+  "manual_registration": "Manual Registration",
+  "online": "Online"
 }

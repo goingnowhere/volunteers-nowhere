@@ -72,12 +72,13 @@ const sendNotificationEmailFunctionGeneric = (userId, template, selector, notifi
     if (user && (allSignups.length > 0)) {
       const doc = EmailForms.previewTemplate(template, user, getContext)
       WrapEmailSend(user, doc)
-      if (!user.profile.terms) {
-        Accounts.sendEnrollmentEmail(userId, (err) => {
-          if (!err) {
-            Meteor.users.update({ _id: userId }, { $set: { 'profile.invitationSent': true } })
-          }
-        })
+      if (!user.profile.terms && !user.profile.invitationSent) {
+        try {
+          Accounts.sendEnrollmentEmail(userId)
+          Meteor.users.update({ _id: userId }, { $set: { 'profile.invitationSent': true } })
+        } catch (error) {
+          throw new Meteor.Error('500', 'Send Email Error ', error)
+        }
       }
       allSignups.forEach((signup) => {
         const modifier = { $set: { notification: true } }
@@ -132,21 +133,27 @@ const userStatsMethod = {
   validate: null,
   run() {
     const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 'Manual registration' } }).count()
-    const enrollmentSent = 0
-    const enrolled = Meteor.users.find({
-      $and: [
-        { 'profile.ticketNumber': { $ne: 'Manual Registration' } },
-        { 'profile.terms': true },
-      ],
+    const enrollmentSent = Meteor.users.find({ 'profile.invitationSent': true }).count()
+    const enrollmentAck = Meteor.users.find({
+      'profile.invitationSent': true,
+      'profile.terms': true,
+      'profile.ticketNumber': { $ne: 'Manual registration' },
     }).count()
+    const manualRegistration = Meteor.users.find({
+      'profile.ticketNumber': 'Manual registration',
+      'profile.terms': true,
+    }).count()
+    const online = Meteor.users.find({ 'status.online': true }).count()
     const profileFilled = Volunteers.Collections.VolunteerForm.find().count()
     const withDuties = Promise.await(Volunteers.Collections.ShiftSignups.rawCollection().distinct('userId'))
     return {
       ticketHolders,
       enrollmentSent,
-      enrolled,
+      enrollmentAck,
       profileFilled,
       withDuties: withDuties.length,
+      manualRegistration,
+      online,
     }
   },
 }
