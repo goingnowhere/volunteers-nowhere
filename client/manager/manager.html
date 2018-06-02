@@ -74,6 +74,14 @@
   </div>
 </template>
 
+<template name="resetUserAction">
+  <li class="dropdown-item">
+    <a data-action="reset-user">
+      {{fa "undo"}} {{__ "reset"}}
+    </a>
+  </li>
+</template>
+
 <template name="managerUser">
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
@@ -82,6 +90,7 @@
       {{> makeManageUserAction user=this}}
       {{> makeUserUserAction user=this}}
       {{> removeUserAction user=this}}
+      {{> resetUserAction user=this}}
       <!-- TODO -->
       <!-- {{> banUserAction user=this}} -->
       <!-- {{> unBanUserAction user=this}} -->

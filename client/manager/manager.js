@@ -108,6 +108,15 @@ Template.managerUserList.helpers({
     0,
 })
 
+Template.resetUserAction.events({
+  'click [data-action="reset-user"]': (event, template) => {
+    const { callback, user } = template.data
+    Meteor.call('Accounts.resetUser', user._id, (err, res) => {
+      if (callback) { callback(err, res) }
+    })
+  },
+})
+
 Template.managerUserList.onRendered(() => {
   Pages.ManagerUserPages.requestPage(1)
 })

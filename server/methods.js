@@ -2,6 +2,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
+import { Roles } from 'meteor/piemonkey:roles'
 import { Volunteers } from '../both/init'
 import { getContext, WrapEmailSend } from './email'
 import {
@@ -162,4 +163,35 @@ export const userStats =
   ValidatedMethodWithMixin(
     userStatsMethod,
     [isNoInfoMixin],
+  )
+
+const resetUserMethod = {
+  name: 'Accounts.resetUser',
+  validate: null,
+  run(userId) {
+    Meteor.users.update(
+      userId,
+      {
+        $set: {
+          'profile.firstName': 'test',
+          'profile.ticketNumber': 12345678,
+          'profile.terms': false,
+          'profile.lastName': '',
+          'profile.nickname': '',
+        },
+      },
+    )
+    Volunteers.Collections.VolunteerForm.remove({ userId })
+    Volunteers.Collections.ShiftSignups.remove({ userId })
+    Volunteers.Collections.ProjectSignups.remove({ userId })
+    Volunteers.Collections.LeadSignups.remove({ userId })
+    Volunteers.Collections.TaskSignups.remove({ userId })
+    Roles.removeUsersFromRoles(userId, Roles.getRolesForUser(userId))
+  },
+}
+
+export const resetUser =
+  ValidatedMethodWithMixin(
+    resetUserMethod,
+    [isManagerMixin],
   )
