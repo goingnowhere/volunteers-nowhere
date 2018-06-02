@@ -75,5 +75,11 @@
   "invitation_sent": "Invitation Sent",
   "real_name": "Real Name",
   "manual_registration": "Manual Registration",
-  "online": "Online"
+  "online": "Online",
+  "settings": "Settings",
+  "early_entry": "Early Entry",
+  "ticket_number": "Ticket #",
+  "team": "Team",
+  "status": "Status",
+  "leads": "Leads"
 }

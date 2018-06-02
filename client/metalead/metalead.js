@@ -65,6 +65,10 @@ Template.metaleadDepartmentView.events({
     const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
   },
+  'click [data-action="early_entry"]': (event, template) => {
+    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+    AutoFormComponents.ModalShowWithTemplate('earlyEntry', dept, 'Early Entries')
+  },
 })
 
 Template.metaleadDepartmentView.helpers({
@@ -72,6 +76,13 @@ Template.metaleadDepartmentView.helpers({
     const parentId = Template.instance().departmentId
     const stats = Volunteers.Collections.UnitAggregation.findOne(parentId)
     if (stats) { return stats.dept } return null
+  },
+  pendingLeadRequests: () => {
+    const parentId = Template.instance().departmentId
+    const stats = Volunteers.Collections.UnitAggregation.findOne(parentId)
+    if (stats) {
+      return stats.pendingLeadRequests
+    } return 0
   },
   shiftsTeam: (teamId) => {
     const stats = Volunteers.Collections.UnitAggregation.findOne(teamId)

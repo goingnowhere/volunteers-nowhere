@@ -1,0 +1,22 @@
+<template name="earlyEntry">
+
+  <table class="table">
+    <thead>
+      <th>{{__ "name"}}</th>
+      <th>{{__ "ticket_number"}}</th>
+      <th>{{__ "arrival_date"}}</th>
+      <th>{{__ "team"}}</th>
+    </thead>
+    <tbody>
+    {{#each eeUsers}}
+      <tr>
+        <td>{{getUserName userId}}</td>
+        <td>{{ticketNumber}}</td>
+        <td>{{formatDate arrivalDate}}</td>
+        <td>{{teamName}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  </table>
+
+</template>

@@ -33,97 +33,95 @@
           </li>
         </ul>
         <button type="button" class="btn btn-default btn-sm" data-action="dept_settings">
-          {{fa "wrench"}} {{__ "dept_settings"}}
+          {{fa "wrench"}} {{__ "settings"}}
         </button>
         <button type="button" class="btn btn-default btn-sm" data-action="add_team">
           {{fa "wrench"}} {{__ "add_team" }}
         </button>
+        <button type="button" class="btn btn-default btn-sm" data-action="early_entry">
+          {{fa "calendar"}} {{__ "early_entry" }}
+        </button>
       </div>
-      <div class="col-md-5">
+      <div class="{{#if $eq pendingLeadRequests 0}}col{{else}}col-6{{/if}}">
         <h2 class="header">{{__ "all_teams"}}</h2>
         <table class="table">
           <thead>
             <th>{{__ "name"}}</th>
             <th>{{__ "leads"}}</th>
-            <th>{{__ "wanted/covered"}}</th>
+            <th>{{__ "status"}}</th>
             <th></th>
           </thead>
-          {{#each team in allTeams}}
-            <tr class="{{#if $eq ($len (leadsTeam team)) 0 }}bg-warning{{/if}}">
-              <td>
-                {{#unless $eq _id team._id}}
-                  <a href="{{pathFor "leadTeamView" _id=team._id}}">{{team.name}}</a>
-                {{else}}
-                  {{team.name}}
-                {{/unless}}
-              </td>
-              <td>
-                <small>
-                  <ul class="list-unstyled">
-                  {{#each lead in (leadsTeam team)}}
-                    <li>
-                      {{lead.title}}:
-                        {{#if lead.userId}}
-                          {{getUserName lead.userId}}
-                          <a href="#" data-action="remove_lead"
-                            data-id="{{lead._id}}">
-                          ({{__ "remove"}})
-                          </a>
-                        {{else}}
-                          <small>
-                            <button class="btn btn-sm btn-circle"
-                              data-action="enroll_lead"
-                              data-shiftid="{{lead.shiftId}}"
-                              data-parentid="{{lead.parentId}}"
-                              data-policy="{{lead.policy}}" >
-                              {{fa "user-plus"}}
-                            </button>
-                          </small>
-                        {{/if}}
-                    </li>
-                  {{/each}}
-                  </ul>
-                </small>
-              </td>
-              <td><span class="badge badge-pill badge-primary">
-                {{#let s = (shiftsTeam team._id)}}
-                  {{s.shiftRate.needed}}/{{s.shiftRate.confirmed}}
-                {{/let}}
-                </span></td>
-              <td>
-                <div class="btn-group inline pull-left">
-                  <button class="btn btn-sm btn-circle"
-                    data-action="edit_team"
-                    data-id="{{team._id}}"
-                    data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
-                    {{fa "pencil-square-o"}}</button>
-                  {{#unless $eq team._id _id}}
-                  <button class="btn btn-sm btn-circle"
-                    data-action="delete_team"
-                    data-id="{{team._id}}"
-                    data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
-                    {{fa "trash-o"}}</button>
+          <tbody>
+            {{#each team in allTeams}}
+              <tr class="{{#if $eq ($len (leadsTeam team)) 0 }}bg-warning{{/if}}">
+                <td>
+                  {{#unless $eq _id team._id}}
+                    <a href="{{pathFor "leadTeamView" _id=team._id}}">{{team.name}}</a>
+                  {{else}}
+                    {{team.name}}
                   {{/unless}}
-                </div>
-              </td>
-            </tr>
-          {{/each}}
+                </td>
+                <td>
+                  <small>
+                    <ul class="list-unstyled">
+                    {{#each lead in (leadsTeam team)}}
+                      <li>
+                        {{lead.title}}:
+                          {{#if lead.userId}}
+                            {{getUserName lead.userId}}
+                            <a href="#" data-action="remove_lead"
+                              data-id="{{lead._id}}">
+                            ({{__ "remove"}})
+                            </a>
+                          {{else}}
+                            <small>
+                              <button class="btn btn-sm btn-circle"
+                                data-action="enroll_lead"
+                                data-shiftid="{{lead.shiftId}}"
+                                data-parentid="{{lead.parentId}}"
+                                data-policy="{{lead.policy}}" >
+                                {{fa "user-plus"}}
+                              </button>
+                            </small>
+                          {{/if}}
+                      </li>
+                    {{/each}}
+                    </ul>
+                  </small>
+                </td>
+                <td>
+                  <span class="badge badge-pill badge-primary">
+                  {{#let s = (shiftsTeam team._id)}}
+                    {{s.shiftRate.needed}}/{{s.shiftRate.confirmed}}
+                  {{/let}}
+                  </span></td>
+                <td>
+                  <div class="btn-group inline pull-left">
+                    <button class="btn btn-sm btn-circle"
+                      data-action="edit_team"
+                      data-id="{{team._id}}"
+                      data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
+                      {{fa "pencil-square-o"}}</button>
+                    {{#unless $eq team._id _id}}
+                    <button class="btn btn-sm btn-circle"
+                      data-action="delete_team"
+                      data-id="{{team._id}}"
+                      data-type="{{#if $eq team._id _id}}department{{else}}team{{/if}}">
+                      {{fa "trash-o"}}</button>
+                    {{/unless}}
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
         </table>
-        <!-- {{#markdown}}
-        Collect and show all aggregated data regarding this department, including:
-
-        - highlight teams that do not have a lead
-        - highlight teams with a low completition rate
-        - highlight teams with pending requests
-        - show leads activity
-        - nice graph showing the rate of signup over time
-        - completition rate for the whole dept
-        {{/markdown}} -->
       </div>
-      <div class="col-md-5">
-        <h2 class="header">{{__ "pending_lead_requests"}}</h2>
-        {{> departmentSignupsList }}
-      </div>
+      {{#if $gt pendingLeadRequests 0}}
+        <div class="col-6">
+          <h2 class="header">{{__ "pending_lead_requests"}}</h2>
+          {{> departmentSignupsList }}
+        </div>
+      {{/if}}
     </div>
   </div>
 </template>
