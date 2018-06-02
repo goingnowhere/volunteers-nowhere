@@ -10,7 +10,7 @@ import { importUsers, Tickets } from './importUsers'
 import { EmailLogs } from './email'
 import {
   voluntellEmail,
-  reminderEmail, reviewEmail, enrollInvalidEmail,
+  reminderEmail, reviewEmail, enrollInvalidEmail, earlyAdoptersEmail,
 } from './migrationsData/migrationsData'
 
 Migrations.config({
@@ -425,7 +425,8 @@ Migrations.add({
       }
       Meteor.users.update(user._id, { $set: { 'profile.ticketNumber': ticketNumber } })
       if (ticketNumber !== 0) {
-        Tickets.insert({ userId: user._id, ticketNumber })
+        const email = ((user.emails.length > 0) ? user.emails[0].address : '')
+        Tickets.insert({ userId: user._id, ticketNumber, email })
       }
     })
   },
@@ -436,5 +437,16 @@ Migrations.add({
   name: 'Add guest list guests-2018-05-21.json',
   up() {
     importUsers('users/guests-2018-05-21.json')
+  },
+})
+
+Migrations.add({
+  version: 27,
+  name: 'add earlyAdoptersEmail email template',
+  up() {
+    const context = EmailForms.Collections.EmailTemplateContext.find({ name: { $in: ['User'] } }).map(c => c._id)
+    EmailForms.Collections.EmailTemplate.upsert({ name: 'earlyAdoptersEmail' }, {
+      $set: { ...earlyAdoptersEmail, context },
+    })
   },
 })

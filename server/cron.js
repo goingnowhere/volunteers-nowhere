@@ -4,7 +4,7 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { pendingUsers } from './importUsers'
+import { Tickets, pendingUsers } from './importUsers'
 import { EmailLogs, getContext, WrapEmailSend } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,
@@ -158,6 +158,51 @@ const MassEnrollmentInvalidEmailsTask = (time) => {
   })
 }
 
+const EarlyAdopterEmailsTask = (time) => {
+  SyncedCron.add({
+    name: 'EarlyAdopterEmails',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      const sel = { 'profile.ticketNumber': 0 }
+      Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
+        const doc = EmailForms.previewTemplate('earlyAdoptersEmail', user, getContext)
+        try {
+          console.log(`Sending early adopters remident for ${user.emails[0].address}`)
+          WrapEmailSend(user, doc)
+        } catch (error) {
+          console.log(`Sending early adopters remident for ${user.emails[0].address}: ${error}`)
+        }
+      })
+    },
+  })
+}
+
+const EarlyAdopterFixTicketTask = (time) => {
+  SyncedCron.add({
+    name: 'EarlyAdopterFixTicket',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job() {
+      const sel = { 'profile.ticketNumber': 0 }
+      Meteor.users.find(sel).forEach((user) => {
+        const emails = user.emails.map(email => _.pluck(email, 'address'))
+        emails.forEach((address) => {
+          const tickets = Tickets.find({ email: address }).fetch()
+          if (tickets.length === 1) {
+            console.log(`fix ticker numer for ${emails[0]}`)
+            Meteor.users.update(user._id, { $set: { 'profile.ticketNumber': tickets[0].ticketNumber } })
+          } else if (tickets.length > 1) {
+            console.log('Double snowflake ', emails, tickets)
+          }
+        })
+      })
+    },
+  })
+}
+
 SyncedCron.config({
   log: false,
 })
@@ -166,12 +211,16 @@ const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
-    /* EnrollmentTask('every 10 mins') */
-    /* ReviewTask('every 12 mins') */
-    /* MassEnrollmentTask('every 15 mins') */
-    /* MassEnrollmentInvalidEmailsTask('every 17 mins') */
-    /* signupsGC('every 10 days') */
-    /* SyncedCron.start() */
+
+    EnrollmentTask('every 10 mins')
+    ReviewTask('every 12 mins')
+    MassEnrollmentTask('every 15 mins')
+
+    MassEnrollmentInvalidEmailsTask('every 17 mins')
+    // EarlyAdopterEmailsTask('every 1 mins')
+    // EarlyAdopterFixTicketTask('every 1 mins')
+    signupsGC('every 10 days')
+    SyncedCron.start()
   } else {
     console.log('Disable Cron')
     SyncedCron.stop()

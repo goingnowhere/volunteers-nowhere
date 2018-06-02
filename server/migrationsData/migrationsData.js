@@ -195,3 +195,28 @@ This is an automated message, please contact the volunteer coordinator if you ha
 `,
   notes: 'For when people got more than one ticket with the same email address',
 }
+
+export const earlyAdoptersEmail = {
+  from: 'volunteers@goingnowhere.org',
+  subject: 'Nowhere VMS: Need to know your ticket number !',
+  body: `Hello {{user.firstName}} {{#if user.nickname}}/ ( {{user.nickname}}) {{/if}}
+
+As first tester of the system you were asked to manually registered an
+account  Since you used a different email than the one used to buy your
+nowhere ticket (there are 36 of you ! ), we were not able to reconcile your
+account with your ticket. Since we need this information to compile the
+Early Entry list, is important to get this information from you and add it
+to your profile on the vms.
+
+A simple way to solve this problem is to add the email you used to get your
+ticket as secondary email in your account settings (https://vms.goingnowhere.org/profile/settings).
+
+Shortly after, the system will pick up this new email address and use it to find
+your ticket number. EasyPeasy.
+
+If you have problems with this procedure, please come back to us.
+
+ps: I'll send you an automatic reminder about this (this very same email),
+every now and then till this is done :)
+ `,
+}

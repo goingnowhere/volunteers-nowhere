@@ -83,7 +83,7 @@ export const importUsers = (guestsFile) => {
       // ticket does not exists and user does not exists : we create the user
         const userId = addUser(user)
         console.log(`Create User ${userId}`, user.Email)
-        Tickets.insert({ userId, ticketNumber: Number(user.TicketId) })
+        Tickets.insert({ userId, ticketNumber: Number(user.TicketId), email: user.Email })
       }
     }
     // we ship this user
@@ -110,8 +110,4 @@ export const importUsers = (guestsFile) => {
   })
 
   NewTickets.remove({})
-}
-
-export const removeUsers = () => {
-
 }

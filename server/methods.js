@@ -132,15 +132,15 @@ const userStatsMethod = {
   name: 'users.stats',
   validate: null,
   run() {
-    const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 'Manual registration' } }).count()
+    const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 0 } }).count()
     const enrollmentSent = Meteor.users.find({ 'profile.invitationSent': true }).count()
     const enrollmentAck = Meteor.users.find({
       'profile.invitationSent': true,
       'profile.terms': true,
-      'profile.ticketNumber': { $ne: 'Manual registration' },
+      'profile.ticketNumber': { $ne: 0 },
     }).count()
     const manualRegistration = Meteor.users.find({
-      'profile.ticketNumber': 'Manual registration',
+      'profile.ticketNumber': 0,
       'profile.terms': true,
     }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
