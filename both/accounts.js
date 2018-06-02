@@ -3,6 +3,10 @@ import { Accounts } from 'meteor/accounts-base'
 import i18n from 'meteor/universe:i18n'
 import { moment } from 'meteor/momentjs:moment'
 
+Accounts.config({
+  passwordEnrollTokenExpirationInDays: 60,
+})
+
 AccountsTemplates.configure({
   defaultLayout: 'homeLayout',
   enablePasswordChange: true,
@@ -133,4 +137,8 @@ Accounts.onLogin(function onLogin() {
       Meteor.users.update({ _id: user._id }, { $set: { emails: [] } })
     }
   }
+})
+
+Accounts.validateLoginAttempt(({ user }) => {
+  if (user.isBanned) throw new Meteor.Error(403, 'You are banned')
 })

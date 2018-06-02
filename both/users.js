@@ -60,6 +60,11 @@ Schemas.User = new SimpleSchema({
     optional: true,
     defaultValue: false,
   },
+  isBanned: {
+    type: Boolean,
+    optional: true,
+    defaultValue: false,
+  },
   _impersonateToken: {
     type: String,
     optional: true,
