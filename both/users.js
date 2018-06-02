@@ -74,8 +74,8 @@ Schemas.User = new SimpleSchema({
 // each partecipant has a ticket
 const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
   ticketNumber: {
-    type: String,
-    defaultValue: 'Manual registration',
+    type: Number,
+    defaultValue: 0,
     autoform: { readonly: true },
   },
   nickname: {
@@ -116,3 +116,7 @@ const userSchema = Schemas.User.extend({
   },
 })
 Meteor.users.attachSchema(userSchema, { replace: true })
+
+if (Meteor.isServer) {
+  Meteor.users._ensureIndex({ 'profile.ticketNumber': 1 })
+}

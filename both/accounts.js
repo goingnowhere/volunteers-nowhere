@@ -102,13 +102,6 @@ Meteor.startup(() => {
   }
 })
 
-if (Meteor.isServer) {
-  Accounts.onCreateUser((options, user) => {
-    user.profile = options.profile
-    return user
-  })
-}
-
 this.setUserLanguage = (userId) => {
   const user = Meteor.users.findOne(userId)
   if (user) {
@@ -139,6 +132,21 @@ Accounts.onLogin(function onLogin() {
   }
 })
 
-Accounts.validateLoginAttempt(({ user }) => {
-  if (user.isBanned) throw new Meteor.Error(403, 'You are banned')
-})
+
+if (Meteor.isServer) {
+  Accounts.onCreateUser((options, user) => {
+    user.profile = options.profile
+    return user
+  })
+
+  Accounts.validateLoginAttempt((info) => {
+    const { user } = info
+    if (user) {
+      const hasIsBannedProperty = Object.prototype.hasOwnProperty.call(user, 'isBanned')
+      if (hasIsBannedProperty && user.isBanned) {
+        throw new Meteor.Error(403, 'You are banned')
+      }
+      return true
+    } return false
+  })
+}

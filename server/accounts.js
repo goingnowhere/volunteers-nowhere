@@ -5,7 +5,6 @@ import {
   ValidatedMethodWithMixin,
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
-  isSameUserOrManagerMixin,
 } from '../both/authMixins'
 
 export const userProfileRemoveUser =

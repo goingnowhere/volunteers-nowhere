@@ -21,9 +21,9 @@ const signupsGC = (time) => {
     },
     job() {
       const today = moment().subtract(7, 'days').startOf('day').toDate()
-      const sel = { status: { $in: ['bailed', 'refused'] }, createdAt: { $lt: today } }
+      const sel = { status: { $in: ['bailed'] }, createdAt: { $lt: today } }
       Volunteers.Collections.ShiftSignups.find(sel).forEach((signup) => {
-        console.log('remove signup: GC ', signup)
+        console.log('remove signup (bailed): GC ', signup)
         Volunteers.Collections.ShiftSignups.remove(signup._id)
       })
       Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
@@ -166,12 +166,12 @@ const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
-    EnrollmentTask('every 10 mins')
-    ReviewTask('every 12 mins')
-    MassEnrollmentTask('every 15 mins')
-    MassEnrollmentInvalidEmailsTask('every 17 mins')
-    signupsGC('every 10 days')
-    SyncedCron.start()
+    /* EnrollmentTask('every 10 mins') */
+    /* ReviewTask('every 12 mins') */
+    /* MassEnrollmentTask('every 15 mins') */
+    /* MassEnrollmentInvalidEmailsTask('every 17 mins') */
+    /* signupsGC('every 10 days') */
+    /* SyncedCron.start() */
   } else {
     console.log('Disable Cron')
     SyncedCron.stop()

@@ -6,7 +6,7 @@ import { FormBuilder } from 'meteor/abate:formbuilder'
 import { moment } from 'meteor/momentjs:moment'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { importUsers } from './importUsers'
+import { importUsers, Tickets } from './importUsers'
 import { EmailLogs } from './email'
 import {
   voluntellEmail,
@@ -363,7 +363,7 @@ Migrations.add({
   name: 'Run Once off GC',
   up() {
     const today = moment().subtract(7, 'days').startOf('day').toDate()
-    const sel = { status: { $in: ['bailed', 'refused'] }, createdAt: { $lt: today } }
+    const sel = { status: { $in: ['bailed'] }, createdAt: { $lt: today } }
     Volunteers.Collections.ShiftSignups.find(sel).forEach((signup) => {
       Volunteers.Collections.ShiftSignups.remove(signup._id)
     })
@@ -404,9 +404,37 @@ Migrations.add({
 })
 
 Migrations.add({
-  version: 23,
+  version: 24,
   name: 'fix invitationSent for users already on the system',
   up() {
     Meteor.users.update({ 'profile.terms': true }, { $set: { 'profile.invitationSent': true } }, { multi: true })
+  },
+})
+
+Migrations.add({
+  version: 25,
+  name: 'Associate ticket number to users',
+  up() {
+    let ticketNumber
+    console.log('initialize tickets collection ', Tickets.remove({}))
+    Meteor.users.find().forEach((user) => {
+      if (user.profile.ticketNumber === 'Manual registration') {
+        ticketNumber = 0
+      } else {
+        ticketNumber = Number(user.profile.ticketNumber)
+      }
+      Meteor.users.update(user._id, { $set: { 'profile.ticketNumber': ticketNumber } })
+      if (ticketNumber !== 0) {
+        Tickets.insert({ userId: user._id, ticketNumber })
+      }
+    })
+  },
+})
+
+Migrations.add({
+  version: 26,
+  name: 'Add guest list guests-2018-05-21.json',
+  up() {
+    importUsers('users/guests-2018-05-21.json')
   },
 })
