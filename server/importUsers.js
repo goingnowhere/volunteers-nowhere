@@ -96,10 +96,10 @@ export const importUsers = (guestsFile) => {
         if (user.profile.terms === true) {
           console.log(`${user.emails[0].address} flagged for removal`)
           Meteor.users.update(user._id, { $set: { isBanned: true, 'profile.ticketNumber': -1 } })
-          Volunteers.Collections.shiftSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
-          Volunteers.Collections.leadSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
-          Volunteers.Collections.projectSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
-          Volunteers.Collections.taskSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
+          Volunteers.Collections.ShiftSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
+          Volunteers.Collections.LeadSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
+          Volunteers.Collections.ProjectSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
+          Volunteers.Collections.TaskSignups.update({ userId: user._id }, { $set: { status: 'cancelled' } })
         } else {
           console.log(`${user.emails[0].address} Removed`)
 

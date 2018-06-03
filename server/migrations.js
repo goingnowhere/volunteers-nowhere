@@ -450,3 +450,11 @@ Migrations.add({
     })
   },
 })
+
+Migrations.add({
+  version: 28,
+  name: 'Add guest list guests-2018-06-03.json',
+  up() {
+    importUsers('users/guests-2018-06-03.json')
+  },
+})
