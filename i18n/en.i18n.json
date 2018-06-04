@@ -79,6 +79,7 @@
   "settings": "Settings",
   "early_entry": "Early Entry",
   "ticket_number": "Ticket #",
+  "ticket_number_search": "Ticket # (e.g. 5795491)",
   "team": "Team",
   "status": "Status",
   "leads": "Leads",

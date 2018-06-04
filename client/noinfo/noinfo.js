@@ -98,7 +98,6 @@ Template.userSearch.events({
     const pages = Pages[page]
     let filters = {}
     filters = { 'profile.ticketNumber': Number(value) }
-    console.log(filters)
     pages.set('filters', filters)
     pages.reload()
   },
