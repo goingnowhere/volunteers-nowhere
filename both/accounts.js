@@ -126,7 +126,7 @@ Accounts.onLogin(function onLogin() {
   if (Meteor.isServer) {
     const user = Meteor.user()
     // after the enrollment this address is not needed anymore
-    if (user.emails[0].address.indexOf('@email.invalid') > 0) {
+    if (user.emails && (user.emails[0].address.indexOf('@email.invalid') > 0)) {
       Meteor.users.update({ _id: user._id }, { $set: { emails: [] } })
     }
   }

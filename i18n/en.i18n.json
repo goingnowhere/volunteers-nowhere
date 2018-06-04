@@ -81,5 +81,6 @@
   "ticket_number": "Ticket #",
   "team": "Team",
   "status": "Status",
-  "leads": "Leads"
+  "leads": "Leads",
+  "with_picture": "With Picture"
 }

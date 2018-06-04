@@ -106,8 +106,8 @@ const MassEnrollmentTask = (time) => {
       const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
       const sel = {
         'profile.terms': false,
-        'profile.invitationSent': { $exists: false },
-        'profile.ticketNumber': { $ne: 'Manual registration' },
+        'profile.invitationSent': false,
+        'profile.ticketNumber': { $ne: 0 },
         'emails.0.address': { $not: /@email.invalid/ },
       }
       Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
@@ -214,7 +214,7 @@ const cronActivate = ({ cronFrequency }) => {
 
     EnrollmentTask('every 10 mins')
     ReviewTask('every 12 mins')
-    MassEnrollmentTask('every 15 mins')
+    MassEnrollmentTask('every 1 mins')
 
     MassEnrollmentInvalidEmailsTask('every 17 mins')
     // EarlyAdopterEmailsTask('every 1 mins')

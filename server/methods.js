@@ -147,12 +147,14 @@ const userStatsMethod = {
     const online = Meteor.users.find({ 'status.online': true }).count()
     const profileFilled = Volunteers.Collections.VolunteerForm.find().count()
     const withDuties = Promise.await(Volunteers.Collections.ShiftSignups.rawCollection().distinct('userId'))
+    const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
     return {
       ticketHolders,
       enrollmentSent,
       enrollmentAck,
       profileFilled,
       withDuties: withDuties.length,
+      withPicture,
       manualRegistration,
       online,
     }
