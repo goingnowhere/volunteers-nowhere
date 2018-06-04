@@ -91,6 +91,17 @@ Template.userSearch.events({
     const page = template.$(event.currentTarget).data('page')
     textSearch(value, page, event)
   },
+  'keyup [name="ticketNumber"]': (event, template) => {
+    event.preventDefault()
+    const value = event.currentTarget.value.trim()
+    const page = template.$(event.currentTarget).data('page')
+    const pages = Pages[page]
+    let filters = {}
+    filters = { 'profile.ticketNumber': Number(value) }
+    console.log(filters)
+    pages.set('filters', filters)
+    pages.reload()
+  },
   'change [name="terms"]': (event, template) => {
     event.preventDefault()
     const value = event.currentTarget.checked

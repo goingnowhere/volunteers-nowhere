@@ -60,11 +60,18 @@
 
 <template name="userSearch">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-6">
       <div class="form-group">
       <input type="text" name="search" id="users"
         data-page="{{page}}"
         class="form-control" placeholder="{{__ 'name_or_email'}}">
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+      <input type="text" name="ticketNumber" id="ticketNumber"
+        data-page="{{page}}"
+        class="form-control" placeholder="{{__ 'ticket_number'}}">
       </div>
     </div>
     <div class="col">
