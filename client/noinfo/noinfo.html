@@ -249,6 +249,7 @@
                 {{#if status.online}}<span class="text-success"> {{fa "circle"}}</span>{{/if}}
               </td></tr>
               <tr><td>{{__ "real_name"}}</td><td>{{user.profile.firstName}} {{user.profile.lastName}}</td></tr>
+              <tr><td>{{__ "ticket_number"}}</td><td>{{user.profile.ticketNumber}}</td></tr>
               <tr><td>{{__ "email"}} </td>
                 <td>
                   {{user.emails.[0].address}}

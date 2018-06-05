@@ -37,13 +37,14 @@ Template.earlyEntry.helpers({
       }
       const projects = Volunteers.Collections.ProjectSignups.find(sel).fetch()
       return _.chain(projects).map((pr) => {
-        const { profile } = Meteor.users.findOne(pr.userId)
+        const { profile, emails } = Meteor.users.findOne(pr.userId)
         const { name } = Volunteers.Collections.Team.findOne(pr.parentId)
         return {
           teamName: name,
           ticketNumber: profile.ticketNumber,
           arrivalDate: pr.start,
           userId: pr.userId,
+          email: emails[0].address,
         }
       }).sortBy('arrivalDate').value()
     } return []
