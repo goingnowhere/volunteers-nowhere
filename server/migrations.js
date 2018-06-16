@@ -458,3 +458,50 @@ Migrations.add({
     importUsers('users/guests-2018-06-03.json')
   },
 })
+
+Migrations.add({
+  version: 29,
+  name: 'Recover nomad shifts and signups',
+  up() {
+    const shiftFile = 'users/nomads.shifts'
+    const shifts = JSON.parse(Assets.getText(shiftFile))
+    shifts.forEach((s) => {
+      Volunteers.Collections.TeamShifts.insert(s)
+    })
+  },
+})
+
+Migrations.add({
+  version: 30,
+  name: 'Add guest list guests-2018-06-10T23_00_10+02_00.json',
+  up() {
+    importUsers('users/guests-2018-06-10T23_00_10+02_00.json')
+  },
+})
+
+
+Migrations.add({
+  version: 31,
+  name: 'Recover nomad shifts and signups',
+  up() {
+    const shiftFile = 'users/nomads.shifts'
+    const shifts = JSON.parse(Assets.getText(shiftFile))
+    shifts.forEach((s) => {
+      Volunteers.Collections.TeamShifts.upsert(s._id, { $set: _.omit(s, '_id') })
+    })
+  },
+})
+
+Migrations.add({
+  version: 32,
+  name: 'Recover nomad shifts and signups',
+  up() {
+    const shiftFile = 'users/nomads.signups'
+    Volunteers.Collections.ShiftSignups.remove({ parentId: 'mdv7jkFCpcy3n7JDC' })
+    const shifts = JSON.parse(Assets.getText(shiftFile))
+    shifts.forEach((s) => {
+      console.log(s)
+      Volunteers.Collections.ShiftSignups.insert(s)
+    })
+  },
+})
