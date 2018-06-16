@@ -85,14 +85,14 @@ Migrations.add({
   },
 })
 
-Migrations.add({
+/* Migrations.add({
   version: 5,
   name: 'Add guest list guests-2018-05-14.json',
   up() {
     importUsers('users/guests-2018-05-14.json')
   },
 })
-
+ */
 Migrations.add({
   version: 6,
   name: 'add user and site context',
@@ -432,14 +432,14 @@ Migrations.add({
   },
 })
 
-Migrations.add({
+/* Migrations.add({
   version: 26,
   name: 'Add guest list guests-2018-05-21.json',
   up() {
     importUsers('users/guests-2018-05-21.json')
   },
 })
-
+ */
 Migrations.add({
   version: 27,
   name: 'add earlyAdoptersEmail email template',
@@ -451,15 +451,15 @@ Migrations.add({
   },
 })
 
-Migrations.add({
+/* Migrations.add({
   version: 28,
   name: 'Add guest list guests-2018-06-03.json',
   up() {
     importUsers('users/guests-2018-06-03.json')
   },
-})
+}) */
 
-Migrations.add({
+/* Migrations.add({
   version: 29,
   name: 'Recover nomad shifts and signups',
   up() {
@@ -469,18 +469,17 @@ Migrations.add({
       Volunteers.Collections.TeamShifts.insert(s)
     })
   },
-})
+}) */
 
-Migrations.add({
+/* Migrations.add({
   version: 30,
   name: 'Add guest list guests-2018-06-10T23_00_10+02_00.json',
   up() {
     importUsers('users/guests-2018-06-10T23_00_10+02_00.json')
   },
-})
+}) */
 
-
-Migrations.add({
+/* Migrations.add({
   version: 31,
   name: 'Recover nomad shifts and signups',
   up() {
@@ -491,17 +490,56 @@ Migrations.add({
     })
   },
 })
+ */
 
 Migrations.add({
   version: 32,
   name: 'Recover nomad shifts and signups',
   up() {
-    const shiftFile = 'users/nomads.signups'
+    /* const shiftFile = 'users/nomads.signups'
     Volunteers.Collections.ShiftSignups.remove({ parentId: 'mdv7jkFCpcy3n7JDC' })
     const shifts = JSON.parse(Assets.getText(shiftFile))
     shifts.forEach((s) => {
       console.log(s)
       Volunteers.Collections.ShiftSignups.insert(s)
-    })
+    }) */
   },
+})
+
+Migrations.add({
+  version: 33,
+  name: 'Add guest list guests-2018-06-16.json',
+  up() {
+    /* importUsers('users/guests-2018-06-16.json') */
+  },
+})
+
+Migrations.add({
+  version: 34,
+  name: 'Fix ban error',
+  up() {
+    /* Meteor.users.update({ 'emails.$.address': 'lindseytreloar@gmail.com' }, {
+      $set: { 'profile.ticketNumber': 5788342, 'profile.invitationSent': false },
+    })
+    Meteor.users.update({ 'emails.$.address': 'Reuvenic@gmail.com' }, {
+      $set: { 'profile.ticketNumber': 5798670, 'profile.invitationSent': false },
+    }) */
+  },
+})
+
+Migrations.add({
+  version: 35,
+  name: 'Add guest list guests-2018-06-16.json',
+  up() {
+    /* importUsers('users/guests-2018-06-16.json') */
+  },
+})
+
+Migrations.add({
+  version: 36,
+  name: 'Add guest list guests-2018-06-16.json',
+  up() {
+    importUsers('users/guests-2018-06-16.json')
+  },
+
 })
