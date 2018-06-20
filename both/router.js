@@ -289,6 +289,27 @@ Router.route('/lead/team/:_id', {
   },
 })
 
+Router.route('/lead/team/:_id/rota', {
+  name: 'leadTeamRota',
+  template: 'teamShiftsRota',
+  controller: LeadController,
+  waitOn() {
+    if (this.params && this.params._id) {
+      const sel = { _id: this.params._id }
+      return [
+        Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, sel),
+      ]
+    }
+    return null
+  },
+  data() {
+    if (this.params && this.params._id && this.ready()) {
+      return Volunteers.Collections.Team.findOne(this.params._id)
+    }
+    return null
+  },
+})
+
 // metalead pages
 
 Router.route('/metalead/department/:_id', {
