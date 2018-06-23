@@ -59,6 +59,10 @@ Template.leadTeamView.events({
     const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('addProject', { team })
   },
+  'click [data-action="show_rota"]': (event, template) => {
+    const team = Volunteers.Collections.Team.findOne(template.data._id)
+    Router.go('leadTeamRota', {_id: template.data._id})
+  },
 })
 
 Template.leadTeamTabs.onCreated(function onCreated() {
