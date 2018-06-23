@@ -50,8 +50,8 @@
           {{fa "wrench"}} {{__ "add_project"}}
         </button>
 
-        <button type="button" class="btn btn-default btn-sm">
-          <a href="{{pathFor "leadTeamRota" _id=_id}}"> {{fa "calendar"}} {{__ "rota"}}</a>
+        <button type="button" class="btn btn-default btn-sm" data-id="{{_id}}" data-action="show_rota">
+          {{fa "calendar"}} {{__ "rota"}}
         </button>
       </div>
       <div class="
