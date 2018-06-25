@@ -15,7 +15,7 @@ AccountsTemplates.configure({
   continuousValidation: true,
   enforceEmailVerification: true,
   // privacyUrl: '/s/privacy',
-  forbidClientAccountCreation: true,
+  // forbidClientAccountCreation: true,
   showResendVerificationEmailLink: true,
   /* postSignUpHook, */
   // onLogoutHook: onSignOut,
@@ -136,6 +136,10 @@ Accounts.onLogin(function onLogin() {
 if (Meteor.isServer) {
   Accounts.onCreateUser((options, user) => {
     user.profile = options.profile
+    user.profile.ticketDate = new Date()
+    user.profile.ticketNumber = 0
+    user.profile.manualRegistration = true
+    user.profile.invitationSent = false
     return user
   })
 
