@@ -1,6 +1,6 @@
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { i18n } from 'meteor/universe:i18n'
-import { Bert } from 'meteor/themeteorchef:bert'
+import * as Bert from 'meteor/themeteorchef:bert'
 
 Bert.defaults = {
   hideDelay: 4500,

@@ -274,7 +274,9 @@
         <h5 class="mb-2 dark-text">{{__ "responsibilities"}} </h5>
         {{> userResponsibilities userId=user._id }}
         <h2 class="header">{{__ "shifts" }}</h2>
-        {{> bookedTable userId=user._id }}
+        <div>
+          {{> React component=BookedTable userId=user._id }}
+        </div>
       </div>
     </div>
   </div>

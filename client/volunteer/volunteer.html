@@ -21,7 +21,9 @@
       {{#if bookedMissions }}
         <div class="col-sm-12 col-md-5 pl-1 pr-1">
           <h2 class="header">{{__ "booked_missions" }}</h2>
-          {{> bookedTable }}
+          <div>
+            {{> React component=BookedTable }}
+          </div>
         </div>
         <div class="col-sm-12 col-md-5 pl-1">
           <h2 class="header">{{__ "shift_need_help"}}</h2>

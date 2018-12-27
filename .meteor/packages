@@ -61,3 +61,5 @@ aldeed:moment-timezone
 spacebars-compiler
 percolate:synced-cron
 ostrio:logger
+react-template-helper
+react-meteor-data

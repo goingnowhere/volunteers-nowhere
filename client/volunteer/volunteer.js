@@ -7,7 +7,10 @@ import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
 
+const { BookedTableContainer } = Volunteers.components
+
 Template.userDashboard.helpers({
+  BookedTable: () => BookedTableContainer,
   userId: () => Meteor.userId(),
   bookedMissions: () => {
     const sel = { status: { $in: ['confirmed', 'pending'] } }

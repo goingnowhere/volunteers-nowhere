@@ -11,6 +11,8 @@ import 'flatpickr/dist/flatpickr.css'
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
 
+const { BookedTableContainer } = Volunteers.components
+
 const applyContext = (function applyContext(body, context) {
   const compiled = SpacebarsCompiler.compile(body, { isBody: true })
   const content = Blaze.toHTML(Blaze.With(context, eval(compiled)))
@@ -155,9 +157,13 @@ Template.noInfoUser.onCreated(function onCreated() {
 
 Template.noInfoUserProfile.onCreated(function onCreated() {
   const template = this
-  const userId = template.data._id
+  const userId = template.data.user._id
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+})
+
+Template.noInfoUserProfile.helpers({
+  BookedTable: () => BookedTableContainer,
 })
 
 Template.noInfoUserProfileLink.onCreated(function onCreated() {
@@ -166,14 +172,6 @@ Template.noInfoUserProfileLink.onCreated(function onCreated() {
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
-
-/* Template.noInfoUserProfile.events({
-  'click [data-action=copy-enrollment]': (event, template) => {
-    event.preventDefault()
-    Accounts.urls.enrollAccount(token)
-    event.clipboardData.setData('text/plain', link)
-  },
-}) */
 
 const enrollEventCall = (function enrollEventCall(doc, enrollment) {
   const { duty, policy, ...rest } = doc

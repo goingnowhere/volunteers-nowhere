@@ -8,6 +8,7 @@ module.exports = {
     'underscore',
   ],
   extends: [
+    '@meteorjs/eslint-config-meteor',
     'airbnb-base',
     'plugin:meteor/recommended',
   ],
@@ -43,5 +44,8 @@ module.exports = {
     'meteor/eventmap-params': ['error', {
       "templateInstanceParamName": "template",
     }],
+    'react/jsx-one-expression-per-line': 'off',
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 }
