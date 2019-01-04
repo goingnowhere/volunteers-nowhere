@@ -1,7 +1,7 @@
 import { SyncedCron } from 'meteor/percolate:synced-cron'
 import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
 import { Tickets, pendingUsers } from './importUsers'

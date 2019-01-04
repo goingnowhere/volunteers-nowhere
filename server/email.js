@@ -1,7 +1,7 @@
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
 import { Email } from 'meteor/email'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { pendingUsers } from './importUsers'
 import './accounts'

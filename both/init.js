@@ -1,7 +1,8 @@
 import { VolunteersClass } from 'meteor/abate:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
+import i18n from 'meteor/universe:i18n'
 
 export const Volunteers = new VolunteersClass('nowhere2018')
 

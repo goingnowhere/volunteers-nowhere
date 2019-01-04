@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Session } from 'meteor/session'

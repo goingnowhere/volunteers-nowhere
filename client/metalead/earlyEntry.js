@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from '../../both/init'
 import { EventSettings } from '../../both/settings'

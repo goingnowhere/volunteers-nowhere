@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import 'fs'
 import { Random } from 'meteor/random'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment'
 
 const groupBy = function groupBy(xs, key) {
   return xs.reduce((rv, x) => {

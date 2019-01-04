@@ -108,15 +108,15 @@ Template.filteredSignupsList.helpers({
   skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
   quirks: () => Volunteers.getQuirksList().filter(quirk => quirk.value),
   signupsListProps: () => {
-    const type = Template.instance().type.get()
+    const instance = Template.instance()
     const { quirks, skills } =
       Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
     return {
-      dutyType: type,
+      dutyType: instance.type.get(),
       filters: {
-        skills: Template.instance().filters.skills.get(),
-        quirks: Template.instance().filters.quirks.get(),
-        priorities: Template.instance().filters.priorities.get(),
+        skills: instance.filters.skills.get(),
+        quirks: instance.filters.quirks.get(),
+        priorities: instance.filters.priorities.get(),
       },
       quirks,
       skills,

@@ -27,7 +27,6 @@ accounts-base #@1.4.0
 useraccounts:bootstrap
 useraccounts:iron-routing
 
-momentjs:moment
 dynamic-import
 session
 dburles:collection-helpers
@@ -57,7 +56,6 @@ email
 mdg:validated-method
 mizzao:user-status
 abate:email-forms
-aldeed:moment-timezone
 spacebars-compiler
 percolate:synced-cron
 ostrio:logger

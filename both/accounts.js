@@ -1,7 +1,7 @@
 import { AccountsTemplates } from 'meteor/useraccounts:core'
 import { Accounts } from 'meteor/accounts-base'
 import i18n from 'meteor/universe:i18n'
-import { moment } from 'meteor/momentjs:moment'
+import moment from 'moment-timezone'
 
 Accounts.config({
   passwordEnrollTokenExpirationInDays: 60,
