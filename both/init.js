@@ -1,4 +1,4 @@
-import { VolunteersClass } from 'meteor/abate:volunteers'
+import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
 import moment from 'moment-timezone'

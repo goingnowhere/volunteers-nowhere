@@ -1,5 +1,5 @@
 {
-  "name": "contentTest",
+  "name": "volunteers-nowhere",
   "private": true,
   "scripts": {
     "start": "meteor run",

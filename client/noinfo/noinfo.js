@@ -193,10 +193,10 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
           case 409:
             Bert.alert({
               hideDelay: 6500,
-              title: i18n.__('abate:volunteers', 'double_booking'),
+              title: i18n.__('goingnowhere:volunteers', 'double_booking'),
               /* XXX: add details of the other bookings stored in err.details */
               /* message: applyContext(templatebody, err),  */
-              message: i18n.__('abate:volunteers', 'double_booking_msg'),
+              message: i18n.__('goingnowhere:volunteers', 'double_booking_msg'),
               type: 'warning',
               style: 'growl-top-right',
             })
@@ -204,7 +204,7 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
           default:
             Bert.alert({
               hideDelay: 6500,
-              title: i18n.__('abate:volunteers', 'error'),
+              title: i18n.__('goingnowhere:volunteers', 'error'),
               message: err.reason,
               type: 'danger',
               style: 'growl-top-right',

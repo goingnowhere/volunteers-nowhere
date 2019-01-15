@@ -3,7 +3,6 @@ abate:autoform-datetimepicker@1.0.8
 abate:email-forms@0.0.1
 abate:formbuilder@0.0.1
 abate:meteor-user-profiles@0.0.1
-abate:volunteers@0.0.1
 accounts-base@1.4.3
 accounts-password@1.5.1
 aldeed:autoform@6.3.0
@@ -51,6 +50,7 @@ fortawesome:fontawesome@4.7.0
 fourseven:scss@4.10.0
 gadicc:blaze-react-component@1.4.1
 geojson-utils@1.0.10
+goingnowhere:volunteers@0.0.2
 hot-code-push@1.0.4
 html-tools@1.0.11
 htmljs@1.0.11
