@@ -32,13 +32,13 @@
             </div>
           </li>
         </ul>
-        <button type="button" class="btn btn-default btn-sm" data-action="dept_settings">
+        <button type="button" class="btn btn-light btn-sm" data-action="dept_settings">
           {{fa "wrench"}} {{__ "settings"}}
         </button>
-        <button type="button" class="btn btn-default btn-sm" data-action="add_team">
+        <button type="button" class="btn btn-light btn-sm" data-action="add_team">
           {{fa "wrench"}} {{__ "add_team" }}
         </button>
-        <button type="button" class="btn btn-default btn-sm" data-action="early_entry">
+        <button type="button" class="btn btn-light btn-sm" data-action="early_entry">
           {{fa "calendar"}} {{__ "early_entry" }}
         </button>
       </div>
@@ -56,7 +56,7 @@
               <tr class="{{#if $eq ($len (leadsTeam team)) 0 }}bg-warning{{/if}}">
                 <td>
                   {{#unless $eq _id team._id}}
-                    <a href="{{pathFor "leadTeamView" _id=team._id}}">{{team.name}}</a>
+                    <a href="/lead/team/{{team._id}}">{{team.name}}</a>
                   {{else}}
                     {{team.name}}
                   {{/unless}}

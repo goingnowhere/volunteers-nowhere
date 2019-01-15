@@ -11,10 +11,20 @@ moment.tz.setDefault('Europe/Paris')
 
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
-  template.teamId = template.data._id
-  template.teamStats = Volunteers.teamStats(template.teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, template.teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byTeam`, template.teamId)
+  const { _id: teamId } = template.data
+  const teamSub = template.subscribe(`${Volunteers.eventName}.Volunteers.team`, { _id: teamId })
+  template.teamStats = Volunteers.teamStats(teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byTeam`, teamId)
+  template.name = new ReactiveVar()
+  template.parentId = new ReactiveVar()
+  template.autorun(() => {
+    if (teamSub.ready()) {
+      const team = Volunteers.Collections.Team.findOne(teamId)
+      template.name.set(team.name)
+      template.parentId.set(team.parentId)
+    }
+  })
 })
 
 Template.leadTeamView.onRendered(() => {
@@ -22,13 +32,15 @@ Template.leadTeamView.onRendered(() => {
 })
 
 Template.leadTeamView.helpers({
+  name: () => Template.instance().name.get(),
+  parentId: () => Template.instance().parentId.get(),
   teamStats: () => {
-    const { teamId } = Template.instance()
-    const stats = Volunteers.Collections.UnitAggregation.findOne(teamId)
+    const { _id } = Template.currentData()
+    const stats = Volunteers.Collections.UnitAggregation.findOne(_id)
     if (stats) { return stats } return null
   },
   allLeads: () => {
-    const parentId = Template.instance().teamId
+    const parentId = Template.currentData().teamId
     return Volunteers.Collections.LeadSignups.find({ parentId, status: 'confirmed' })
   },
   signupListContext: () => {

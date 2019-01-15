@@ -9,12 +9,12 @@
         {{else}}
           <h3>{{__ "welcome"}} {{ getUserName userId }}</h3>
           <img src="img/mr_nobody.jpg" class="rounded-circle header-avatar">
-          <a href="{{pathFor 'accountSettings'}}">{{__ "add_picture"}}</a>
+          <a href="/profile/settings">{{__ "add_picture"}}</a>
         {{/if}}
         <!-- <h5 class="mb-2 dark-text">{{__ "responsibilities"}} </h5> -->
         {{> userResponsibilities }}
         <br/>
-        <button type="button" class="btn btn-default btn-sm" data-action="edit_form">
+        <button type="button" class="btn btn-light btn-sm" data-action="edit_form">
           {{__ "edit_user_info" }}
         </button>
       </div>
@@ -48,13 +48,13 @@
     {{#each team in leads}}
       <li>
         <span class="mb-2 dark-text">{{__ "lead"}}:</span>
-        <a href="{{pathFor 'leadTeamView' _id=team._id }}">{{team.name}}</a>
+        <a href="/lead/team/{{team._id}}">{{team.name}}</a>
       </li>
     {{/each}}
     {{#each dept in metaleads}}
       <li>
         <span class="mb-2 dark-text">{{__ "metalead"}}: </span>
-        <a href="{{pathFor 'metaleadDepartmentView' _id=dept._id }}">{{dept.name}}</a>
+        <a href="/metalead/department/{{dept._id}}">{{dept.name}}</a>
       </li>
     {{/each}}
   </ul>

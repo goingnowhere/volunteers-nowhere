@@ -1,13 +1,22 @@
 import 'bootstrap'
 import 'bootstrap-select'
 import 'bootstrap-select/dist/css/bootstrap-select.css'
-import { Router } from 'meteor/iron:router'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
 
 const { BookedTableContainer } = Volunteers.components
+
+Template.userDashboard.onCreated(function onCreated() {
+  const template = this
+  const userId = Meteor.userId()
+  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.team`)
+})
 
 Template.userDashboard.helpers({
   BookedTable: () => BookedTableContainer,
@@ -24,7 +33,8 @@ Template.userDashboard.helpers({
 
 Template.userDashboard.events({
   'click [data-action="edit_form"]': () => {
-    Router.go('volunteerForm')
+    // FIXME
+    window.location.href = '/profile'
   },
 })
 
@@ -110,7 +120,7 @@ Template.filteredSignupsList.helpers({
   signupsListProps: () => {
     const instance = Template.instance()
     const { quirks, skills } =
-      Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() })
+      Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() }) || {}
     return {
       dutyType: instance.type.get(),
       filters: {
@@ -130,6 +140,7 @@ AutoForm.addHooks([
   'InsertVolunteerFormFormId',
   'UpdateVolunteerFormFormId'], {
   onSuccess() {
-    Router.go('/dashboard')
+    // FIXME
+    window.location.href = '/dashboard'
   },
 })

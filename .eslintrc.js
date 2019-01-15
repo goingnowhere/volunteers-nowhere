@@ -47,5 +47,6 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
   },
 }

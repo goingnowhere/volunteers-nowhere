@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating'
+import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
@@ -6,8 +7,16 @@ import { Volunteers } from '../../both/init'
 Template.metaleadDepartmentView.onCreated(function onCreated() {
   const template = this
   template.departmentId = template.data._id
+  template.name = new ReactiveVar()
+  const deptSub = template.subscribe(`${Volunteers.eventName}.Volunteers.department`, { _id: template.data._id })
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byDepartment`, template.departmentId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byDepartment`, template.departmentId)
+  template.autorun(() => {
+    if (deptSub.ready()) {
+      const dept = Volunteers.Collections.Department.findOne(template.data._id)
+      template.name.set(dept.name)
+    }
+  })
 })
 
 Template.metaleadDepartmentView.onRendered(() => {
@@ -72,13 +81,14 @@ Template.metaleadDepartmentView.events({
 })
 
 Template.metaleadDepartmentView.helpers({
+  name: () => Template.instance().name.get(),
   dept: () => {
-    const parentId = Template.instance().departmentId
+    const parentId = Template.currentData()._id
     const stats = Volunteers.Collections.UnitAggregation.findOne(parentId)
     if (stats) { return stats.dept } return null
   },
   pendingLeadRequests: () => {
-    const parentId = Template.instance().departmentId
+    const parentId = Template.currentData()._id
     const stats = Volunteers.Collections.UnitAggregation.findOne(parentId)
     if (stats) {
       return stats.pendingLeadRequests
@@ -91,12 +101,12 @@ Template.metaleadDepartmentView.helpers({
     } return null
   },
   leadsDept: () => {
-    const parentId = Template.instance().departmentId
+    const parentId = Template.currentData()._id
     const sel = { status: 'confirmed', parentId }
     return Volunteers.Collections.LeadSignups.find(sel)
   },
   allTeams: () => {
-    const parentId = Template.instance().departmentId
+    const parentId = Template.currentData()._id
     const dept = Volunteers.Collections.Department.findOne(parentId)
     const teams = Volunteers.Collections.Team.find({ parentId }).fetch()
     teams.push(dept)

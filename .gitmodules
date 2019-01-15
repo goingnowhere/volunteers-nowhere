@@ -29,7 +29,10 @@
 	url = git@github.com:abate/meteor-autoform.git
 [submodule "packages/email-forms"]
 	path = packages/email-forms
-	url = git@github.com:abate/emailForms.git
+	url = git@github.com:piemonkey/emailForms.git
 [submodule "packages/meteor-pages"]
 	path = packages/meteor-pages
 	url = git@github.com:piemonkey/meteor-pages.git
+[submodule "packages/accounts-ui"]
+	path = packages/accounts-ui
+	url = git@github.com:piemonkey/accounts-ui.git

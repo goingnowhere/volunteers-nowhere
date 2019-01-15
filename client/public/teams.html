@@ -3,15 +3,15 @@
     <div class="row">
       <div class="card">
         <div class="card-header">
-          <h5>{{ name }}</h5>
-          {{#if email}}
-          <h5 class="text-muted text-right">{{__ "contact"}}: {{ email }}</h5>
+          <h5>{{ team.name }}</h5>
+          {{#if team.email}}
+          <h5 class="text-muted text-right">{{__ "contact"}}: {{ team.email }}</h5>
           {{/if}}
         </div>
-        <p class="m-2">{{description}}</p>
+        <p class="m-2">{{team.description}}</p>
       </div>
     </div>
     <h3 class="pt-2">{{__ "shifts_in_this_team"}}</h3>
-    {{> signupsListTeam team=this }}
+    {{> signupsListTeam team=team }}
   </div>
   </template>

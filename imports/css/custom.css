@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Unica+One');
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* FONTS */
 h1, h2, h3 {
   font-family: 'Unica One' /*'Roboto Condensed'*/;
@@ -88,7 +92,7 @@ p.card-text {
 }
 
 /* for buttons in the left pannel */
-.btn-default {
+.btn-light {
   border-radius: 0px;
   font-size: 16px;
   font-weight: 200;

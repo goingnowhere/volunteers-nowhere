@@ -21,6 +21,7 @@ const applyContext = (function applyContext(body, context) {
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   const template = this
+  template.subscribe(`${Volunteers.eventName}.Volunteers.team`, {})
   template.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
   template.currentDay = new ReactiveVar()
   template.searchQuery = new ReactiveVar({})
@@ -156,13 +157,21 @@ Template.noInfoUser.onCreated(function onCreated() {
 })
 
 Template.noInfoUserProfile.onCreated(function onCreated() {
+  // const userform = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
+  // template.userform = new ReactiveVar()
   const template = this
-  const userId = template.data.user._id
+  const { userId } = template.data
   template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
+  template.user = new ReactiveVar()
+  template.autorun(() => {
+    const user = Meteor.users.findOne(userId)
+    template.user.set(user)
+  })
 })
 
 Template.noInfoUserProfile.helpers({
+  user: () => Template.instance().user.get(),
   BookedTable: () => BookedTableContainer,
 })
 

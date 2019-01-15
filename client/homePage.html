@@ -1,52 +1,5 @@
-<template name="hompageNav">
-  <nav class="navbar navbar-expand-lg bg-primary fixed-top text-uppercase" id="mainNav">
-      <a class="navbar-brand js-scroll-trigger" href="/">
-        <img src="/img/compass.svg" class="img-fluid header-avatar">
-      </a>
-      <button class="navbar-toggler navbar-toggler-right text-uppercase text-white rounded"
-        type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu<i class="fa fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav">
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 js-scroll-trigger" href="{{pathFor 'atSignIn'}}">
-              <i class="fa fa-download mr-2"></i>Login Now
-            </a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-            href="/#portfolio">Organization</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-            href="/#about">About</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-            href="/#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-  </nav>
-</template>
-
-<template name="homeLayout">
-  {{> connectionBanner}}
-
-  <div id="page-top">
-    {{> hompageNav }}
-
-    {{> yield}}
-  </div>
-</template>
-
 <template name="homePage">
   <div id="page-top">
-
-    {{> hompageNav}}
-
     <!-- Header -->
     <header class="masthead bg-primary text-white text-center">
       <div class="container">

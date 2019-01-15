@@ -3,9 +3,9 @@
     <div class="row">
       <div class="card">
         <div class="card-header">
-          <h5>{{ name }}</h5>
-          {{#if email}}
-          <h5 class="text-muted text-right">{{__ "contact"}}: {{ email }}</h5>
+          <h5>{{ dep.name }}</h5>
+          {{#if dep.email}}
+          <h5 class="text-muted text-right">{{__ "contact"}}: {{ dep.email }}</h5>
           {{/if}}
           <div>
             <a class="nav-link dropdown-toggle" href="#"
@@ -17,14 +17,14 @@
               {{#each team in teams }}
               {{debug team}}
                 <a class="dropdown-item"
-                    href="{{pathFor 'publicTeamView' _deptId=_id _teamId=team._id}}" >
+                    href="/department/{{_id}}/team/{{team._id}}" >
                     {{team.name}}
                 </a>
               {{/each}}
             </div>
           </div>
         </div>
-        <p class="m-2">{{description}}</p>
+        <p class="m-2">{{dep.description}}</p>
       </div>
     </div>
     <h3 class="pt-2">{{__ "teams_in_this_department"}}</h3>
