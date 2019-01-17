@@ -1,29 +1,21 @@
-/* eslint-disable react/jsx-max-props-per-line, react/no-multi-comp, react/button-has-type */
+/* eslint-disable react/jsx-max-props-per-line, react/no-multi-comp */
 import React, { Fragment, memo } from 'react'
 import {
   BrowserRouter,
   Route,
   Switch,
-  Link,
   Redirect,
 } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
 import Blaze from 'meteor/gadicc:blaze-react-component'
-import { Accounts, STATES } from 'meteor/piemonkey:accounts-ui'
-import { Header as LoggedInHeader } from './components/common/Header.jsx'
-import { HomeHeader } from './components/common/HomeHeader.jsx'
+import { Header } from './components/common/Header.jsx'
 import { NotFound } from './components/common/NotFound.jsx'
-
-// TODO move out?
-const Header = withTracker(
-  () => ({ loggedIn: !!Meteor.userId() }),
-)(
-  ({ loggedIn }) => (loggedIn ? (
-    <LoggedInHeader />
-  ) : (
-    <HomeHeader />
-  )),
-)
+import {
+  Login,
+  Signup,
+  Reset,
+  Password,
+} from './components/accounts/accountsUI/pages.jsx'
 
 // TODO Add redirect to profile
 // hasAgreedTOS() {
@@ -45,88 +37,6 @@ const LoggedInRoute = ({ component: Component, ...routeProps }) => (
     )}
   />
 )
-
-// TODO move to separate file
-class Field extends Accounts.ui.Field {
-  render() {
-    const {
-      id,
-      hint,
-      label,
-      type = 'text',
-      onChange,
-      required = false,
-      defaultValue = '',
-      message,
-    } = this.props
-    return (
-      <div className="form-group">
-        <label className="control-label" htmlFor={id}>
-          {label}
-        </label>
-        <input
-          ref={(ref) => { this.input = ref }}
-          type={type}
-          className="form-control"
-          id={id}
-          name="at-field-email"
-          placeholder={hint}
-          autoCapitalize="none"
-          autoCorrect="off"
-          required={required}
-          onChange={onChange}
-          defaultValue={defaultValue}
-        />
-        {message && <span className={`help-block ${message.type}`}>{message.message}</span>}
-      </div>
-    )
-  }
-}
-
-Accounts.ui.Field = Field
-const buttonTexts = {
-  switchToSignUp: 'Don\'t have an account?',
-}
-const Button = memo(({
-  id,
-  label,
-  href,
-  type = 'button',
-  disabled = false,
-  className = '',
-  onClick,
-}) => (type === 'link' ? (
-  <div className="at-signup-link">
-    <p>
-      {buttonTexts[id] && `${buttonTexts[id]} `}
-      <Link to={href}>{label}</Link>
-    </p>
-  </div>
-) : (
-  <button
-    type={type}
-    className={`at-btn submit btn btn-lg btn-block btn-light ${className}`}
-    disabled={disabled}
-    onClick={onClick}
-  >
-    {label}
-  </button>
-)))
-Accounts.ui.Button = Button
-
-const authForm = state => props => (
-  <div className="container">
-    <div className="row">
-      <div className="col-md-6 col-md-offset-3">
-        <Accounts.ui.LoginForm formState={state} {...props} />
-      </div>
-    </div>
-  </div>
-)
-const Login = authForm()
-const Signup = authForm(STATES.SIGN_UP)
-const Reset = authForm(STATES.PASSWORD_RESET)
-const Password = authForm(STATES.PASSWORD_CHANGE)
 
 const Dashboard = () => <Blaze template="userDashboard" />
 export const Routes = () => (
