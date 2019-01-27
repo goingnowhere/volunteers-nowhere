@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data'
 import { Roles } from 'meteor/piemonkey:roles'
 import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import { __ } from './i18n'
+import { T } from './i18n'
 import { Volunteers } from '../../../both/init'
 
 const LoggedInHeaderComponent = ({
@@ -33,7 +33,7 @@ const LoggedInHeaderComponent = ({
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <NavLink to="/dashboard" className="nav-link">{__('my_dashboard')}</NavLink>
+          <NavLink to="/dashboard" className="nav-link"><T>my_dashboard</T></NavLink>
         </li>
         <li className="nav-item">
           <a
@@ -45,7 +45,7 @@ const LoggedInHeaderComponent = ({
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {__('explore')}
+            <T>explore</T>
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
             {allDepartments.map(dept => (
@@ -66,14 +66,14 @@ const LoggedInHeaderComponent = ({
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {__('manager')}
+              <T>manager</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-              <NavLink to="/manager" className="dropdown-item">{__('dashboard')}</NavLink>
-              <NavLink to="/manager/userform" className="dropdown-item">{__('profile_form')}</NavLink>
-              <NavLink to="/manager/eventSettings" className="dropdown-item">{__('event_settings')}</NavLink>
-              <NavLink to="/manager/emailForms" className="dropdown-item">{__('email_templates')}</NavLink>
-              <NavLink to="/manager/userList" className="dropdown-item">{__('all_users')}</NavLink>
+              <NavLink to="/manager" className="dropdown-item"><T>dashboard</T></NavLink>
+              <NavLink to="/manager/userform" className="dropdown-item"><T>profile_form</T></NavLink>
+              <NavLink to="/manager/eventSettings" className="dropdown-item"><T>event_settings</T></NavLink>
+              <NavLink to="/manager/emailForms" className="dropdown-item"><T>email_templates</T></NavLink>
+              <NavLink to="/manager/userList" className="dropdown-item"><T>all_users</T></NavLink>
             </div>
           </li>
         )}
@@ -88,11 +88,11 @@ const LoggedInHeaderComponent = ({
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {__('noinfo')}
+              <T>noinfo</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
-              <NavLink to="/noinfo" className="dropdown-item">{__('dashboard')}</NavLink>
-              <NavLink to="/noinfo/userList" className="dropdown-item">{__('all_users')}</NavLink>
+              <NavLink to="/noinfo" className="dropdown-item"><T>dashboard</T></NavLink>
+              <NavLink to="/noinfo/userList" className="dropdown-item"><T>all_users</T></NavLink>
             </div>
           </li>
         )}
@@ -107,7 +107,7 @@ const LoggedInHeaderComponent = ({
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {__('metalead')}
+              <T>metalead</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
               {userDepartments.map(dept => (
@@ -127,7 +127,7 @@ const LoggedInHeaderComponent = ({
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {__('lead')}
+              <T>lead</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
               {userTeams.map(team => (
@@ -146,16 +146,16 @@ const LoggedInHeaderComponent = ({
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {__('welcome')} {name}
+            <T>welcome</T> {name}
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-            <NavLink to="/profile" className="dropdown-item">{__('volunteer_form')}</NavLink>
-            <NavLink to="/password" className="dropdown-item">{__('change_password')}</NavLink>
-            <NavLink to="/profile/settings" className="dropdown-item">{__('user_details')}</NavLink>
+            <NavLink to="/profile" className="dropdown-item"><T>volunteer_form</T></NavLink>
+            <NavLink to="/password" className="dropdown-item"><T>change_password</T></NavLink>
+            <NavLink to="/profile/settings" className="dropdown-item"><T>user_details</T></NavLink>
             {roles.isImpersonating
-              && <a className="dropdown-item" data-action="unimpersonate">{__('impersonate')}</a>
+              && <a className="dropdown-item" data-action="unimpersonate"><T>impersonate</T></a>
             }
-            <a className="dropdown-item" role="button" href="#" onClick={logout}>{__('logout')}</a>
+            <a className="dropdown-item" role="button" href="#" onClick={logout}><T>logout</T></a>
           </div>
         </li>
       </ul>

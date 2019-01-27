@@ -1,6 +1,5 @@
 import { Accounts } from 'meteor/accounts-base'
-import i18n from 'meteor/universe:i18n'
-import moment from 'moment-timezone'
+import { setUserLocale } from './locale'
 
 Accounts.config({
   passwordEnrollTokenExpirationInDays: 60,
@@ -20,18 +19,9 @@ Accounts.ui.config({
   onSignedInHook: () => { window.location.href = '/dashboard' },
 })
 
-this.setUserLanguage = (userId) => {
-  const user = Meteor.users.findOne(userId)
-  if (user) {
-    // T9n.setLanguage(user.profile.language)
-    i18n.setLocale(user.profile.language)
-    moment.locale(user.profile.language)
-  }
-}
-
-Accounts.onLogin(function onLogin() {
+Accounts.onLogin(() => {
   if (Meteor.isClient) {
-    this.setUserLanguage(Meteor.userId())
+    setUserLocale(Meteor.userId())
   }
   // TODO Not sure why the below was put in - Rich
   // if (Meteor.isServer) {
