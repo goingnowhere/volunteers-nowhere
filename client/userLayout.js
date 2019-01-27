@@ -1,6 +1,0 @@
-// import { Template } from 'meteor/templating'
-// import 'jquery'
-// import 'popper.js'
-// import 'bootstrap'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import '../imports/css/custom.css'

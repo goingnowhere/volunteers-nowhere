@@ -1,8 +1,0 @@
-import 'jquery'
-import 'popper.js'
-import 'bootstrap'
-import 'magnific-popup'
-import 'magnific-popup/dist/magnific-popup.css'
-import '../imports/freelancer/css/freelancer.css'
-import '../imports/css/custom.css'
-import '../imports/freelancer/js/freelancer'

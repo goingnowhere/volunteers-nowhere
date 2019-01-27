@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
 import Blaze from 'meteor/gadicc:blaze-react-component'
+import { HomePage } from './components/HomePage.jsx'
 import { Header } from './components/common/Header.jsx'
 import { NotFound } from './components/common/NotFound.jsx'
 import {
@@ -44,12 +45,11 @@ export const Routes = () => (
     <Fragment>
       <Header />
       <Switch>
-        <Route exact path="/" render={() => <Blaze template="homePage" />} />
+        <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/password-reset" component={Reset} />
-        <Route path="/volunteers-agreement" render={() => <Blaze template="organization" />} />
-        <Route path="/organization" render={() => <Blaze template="organization" />} />
+        <Route path="/volunteers-agreement" render={() => <Blaze template="volAgreement" />} />
         <LoggedInRoute path="/password" component={Password} />
         <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />
         <LoggedInRoute path="/profile" component={memo(() => <Blaze template="volunteerForm" />)} />
