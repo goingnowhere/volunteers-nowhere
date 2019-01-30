@@ -1,17 +1,12 @@
 import SimpleSchema from 'simpl-schema'
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
-import { MeteorProfile } from './init'
+import { MeteorProfile, Volunteers } from './init'
 
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
 
-export const Schemas = {}
-
-Schemas.User = new SimpleSchema({
-  username: {
-    type: String,
-    optional: true,
-  },
+// FIXME Should all of these be optional?
+export const userSchema = new SimpleSchema({
   emails: {
     type: Array,
     optional: true,
@@ -49,13 +44,21 @@ Schemas.User = new SimpleSchema({
     optional: true,
     blackbox: true,
   },
+  quicket: {
+    type: Object,
+    blackbox: true,
+  },
+  profile: {
+    type: MeteorProfile.Schemas.Profile,
+    optional: true,
+  },
   // mizzao:userstatus
   status: {
     type: Object,
     optional: true,
     blackbox: true,
   },
-  verified: {
+  formFilled: {
     type: Boolean,
     optional: true,
     defaultValue: false,
@@ -71,52 +74,63 @@ Schemas.User = new SimpleSchema({
   },
 })
 
-// each partecipant has a ticket
-const ProfileSchema = MeteorProfile.Schemas.Profile.extend({
-  ticketNumber: {
-    type: Number,
-    defaultValue: 0,
-    autoform: { readonly: true },
-  },
-  nickname: {
+Meteor.users.attachSchema(userSchema, { replace: true })
+
+export const volunteerFormSchema = new SimpleSchema({
+  about: {
     type: String,
     optional: true,
   },
-  ticketDate: {
-    type: Date,
+  experience: {
+    type: String,
     optional: true,
-    defaultValue() { return new Date() },
-    autoform: {
-      omit: true,
-      readonly: true,
-    },
   },
-  manualRegistration: {
-    type: Boolean,
-    defaultValue: true,
-    autoform: {
-      omit: true,
-      readonly: true,
-    },
+  gender: {
+    type: String,
+    allowedValues: ['male', 'female', 'other'],
+    optional: true,
   },
-  invitationSent: {
-    type: Boolean,
-    defaultValue: false,
-    autoform: {
-      omit: true,
-      readonly: true,
-    },
+  food: {
+    type: String,
+    allowedValues: ['omnivore', 'vegetarian', 'vegan', 'fish'],
+    optional: true,
+  },
+  allergies: {
+    type: Array,
+    optional: true,
+  },
+  'allergies.$': {
+    type: String,
+    allowedValues: ['celiac', 'shellfish', 'nuts/peanuts', 'treenuts', 'soy', 'egg'],
+  },
+  intolerances: {
+    type: Array,
+    optional: true,
+  },
+  'intolerances.$': {
+    type: String,
+    allowedValues: ['gluten', 'peppers', 'shellfish', 'nuts', 'egg', 'lactose', 'other'],
+  },
+  medical: {
+    type: String,
+    optional: true,
+  },
+  languages: {
+    type: Array,
+    optional: true,
+  },
+  'languages.$': {
+    type: String,
+    allowedValues: ['english', 'french', 'spanish', 'german', 'italian', 'other'],
+  },
+  emergencyContact: {
+    type: String,
+  },
+  anything: {
+    type: String,
+    optional: true,
   },
 })
 
-const userSchema = Schemas.User.extend({
-  profile: {
-    type: ProfileSchema,
-    optional: true,
-  },
-})
-Meteor.users.attachSchema(userSchema, { replace: true })
-
-if (Meteor.isServer) {
-  Meteor.users._ensureIndex({ 'profile.ticketNumber': 1 })
-}
+volunteerFormSchema.extend(Volunteers.Schemas.VolunteerForm)
+Volunteers.Collections.VolunteerForm.attachSchema(volunteerFormSchema)

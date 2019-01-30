@@ -2,11 +2,11 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import { Migrations } from 'meteor/percolate:migrations'
 import { Accounts } from 'meteor/accounts-base'
 import { Roles } from 'meteor/piemonkey:roles'
-import { FormBuilder } from 'meteor/abate:formbuilder'
+// import { FormBuilder } from 'meteor/abate:formbuilder'
 import moment from 'moment'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { importUsers, Tickets } from './importUsers'
+// import { importUsers, Tickets } from './importUsers'
 import { EmailLogs } from './email'
 import {
   voluntellEmail,
@@ -55,19 +55,19 @@ Migrations.add({
 })
 
 
-Migrations.add({
-  version: 3,
-  name: 'Move fod-name to user account',
-  up() {
-    const volunteerForm = FormBuilder.Collections.DynamicForms.findOne({ name: 'VolunteerForm' })
-    const fodNameField = volunteerForm.form.find(field => field.label.includes("Name / Field of Dirt (it's not a playa) Name"))
-    Volunteers.Collections.VolunteerForm.find().map((vol) => {
-      if (vol[fodNameField.name]) {
-        Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
-      }
-    })
-  },
-})
+// Migrations.add({
+//   version: 3,
+//   name: 'Move fod-name to user account',
+//   up() {
+//     const volunteerForm = FormBuilder.Collections.DynamicForms.findOne({ name: 'VolunteerForm' })
+//     const fodNameField = volunteerForm.form.find(field => field.label.includes("Name / Field of Dirt (it's not a playa) Name"))
+//     Volunteers.Collections.VolunteerForm.find().map((vol) => {
+//       if (vol[fodNameField.name]) {
+//         Meteor.users.update(vol.userId, { $set: { 'profile.nickname': vol[fodNameField.name] } })
+//       }
+//     })
+//   },
+// })
 
 Migrations.add({
   version: 4,
@@ -535,11 +535,11 @@ Migrations.add({
   },
 })
 
-Migrations.add({
-  version: 36,
-  name: 'Add guest list guests-2018-06-16.json',
-  up() {
-    importUsers('users/guests-2018-06-16.json')
-  },
+// Migrations.add({
+//   version: 36,
+//   name: 'Add guest list guests-2018-06-16.json',
+//   up() {
+//     importUsers('users/guests-2018-06-16.json')
+//   },
 
-})
+// })

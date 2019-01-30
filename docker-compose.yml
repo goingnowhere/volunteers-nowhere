@@ -18,6 +18,9 @@ services:
       - ROOT_URL=http://localhost:3000
       - DELAY=4
       - NODE_ENV=production
+      - QUICKET_API_KEY=
+      - QUICKET_USER_TOKEN=
+      - QUICKET_EVENT_ID=
     volumes:
       - user_data:/app/programs/server/profilePictures
     links:

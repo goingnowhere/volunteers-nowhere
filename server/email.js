@@ -3,7 +3,6 @@ import { Accounts } from 'meteor/accounts-base'
 import { Email } from 'meteor/email'
 import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
-import { pendingUsers } from './importUsers'
 import './accounts'
 import {
   isManagerMixin,
@@ -45,10 +44,10 @@ export const removeEmailTemplateMethod =
     [isManagerMixin],
   )
 
-const generateEnrollmentLink = (userId, fakeEmail) => {
-  const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
-  return Accounts.urls.enrollAccount(token)
-}
+// const generateEnrollmentLink = (userId, fakeEmail) => {
+//   const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
+//   return Accounts.urls.enrollAccount(token)
+// }
 
 /* Here we add application specific contexts for the emails-forms package */
 export const getContext = (function getContext(cntxlist, user, context = {}) {
@@ -62,22 +61,22 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         }
         break
       }
-      case 'Tickets': {
-        /* the Tickets context is run for a user and pulls all the
-           pending users email associated with his principal
-           email address. Use we the pending user profile to generate
-           the enrollment link */
-        const email = user.emails[0].address
-        const {
-          FirstName, LastName, TicketId, fakeEmail,
-        } = pendingUsers.findOne({ Email: { $regex: new RegExp(email, 'i') } })
-        const pendingUser = Accounts.findUserByEmail(fakeEmail)
-        const enrollmentLink = generateEnrollmentLink(pendingUser._id, fakeEmail)
-        context[`${cntx.namespace}`] = {
-          enrollmentLink, LastName, FirstName, TicketId,
-        }
-        break
-      }
+      // case 'Tickets': {
+      //   /* the Tickets context is run for a user and pulls all the
+      //      pending users email associated with his principal
+      //      email address. Use we the pending user profile to generate
+      //      the enrollment link */
+      //   const email = user.emails[0].address
+      //   const {
+      //     FirstName, LastName, TicketId, fakeEmail,
+      //   } = pendingUsers.findOne({ Email: { $regex: new RegExp(email, 'i') } })
+      //   const pendingUser = Accounts.findUserByEmail(fakeEmail)
+      //   const enrollmentLink = generateEnrollmentLink(pendingUser._id, fakeEmail)
+      //   context[`${cntx.namespace}`] = {
+      //     enrollmentLink, LastName, FirstName, TicketId,
+      //   }
+      //   break
+      // }
       case 'UserTeams': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
         const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
@@ -273,7 +272,7 @@ Accounts.sendVerificationEmail = (userId) => {
     })
   } catch (error) {
     const user = Meteor.users.findOne(userId)
-    console.log(`Error Sending verifyEmail to ${user.emails[0].address} : ${error}`)
+    console.error(`Error Sending verifyEmail to ${user.emails[0].address}:`, error)
     throw new Meteor.Error('500', `Error Sending verifyEmail to ${user.emails[0].address}`, error)
   }
 }

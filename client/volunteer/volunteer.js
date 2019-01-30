@@ -114,9 +114,8 @@ Template.filteredSignupsList.onRendered(function onRendered() {
 })
 
 Template.filteredSignupsList.helpers({
-  // Not sure why we're deliberately including null values in these lists - Rich
-  skills: () => Volunteers.getSkillsList().filter(skill => skill.value),
-  quirks: () => Volunteers.getQuirksList().filter(quirk => quirk.value),
+  skills: Volunteers.getSkillsList,
+  quirks: Volunteers.getQuirksList,
   signupsListProps: () => {
     const instance = Template.instance()
     const { quirks, skills } =

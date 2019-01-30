@@ -41,9 +41,8 @@ git clone https://github.com/goingnowhere/meteor-volunteers.git
 # dependencies
 git clone https://gitlab.com/abate/meteor-autoform-components.git
 git clone https://github.com/abate/meteor-autoform-datetimepicker.git
-git clone https://gitlab.com/abate/meteor-formbuilder.git
 git clone https://github.com/piemonkey/meteor-roles.git
-git clone https://gitlab.com/abate/meteor-user-profiles.git
+git clone https://gitlab.com/piemonkey/meteor-user-profiles.git
 git clone https://github.com/StorytellerCZ/meteor-mandrill.git
 git clone https://github.com/abate/meteor-autoform.git
 git clone https://github.com/piemonkey/emailForms.git

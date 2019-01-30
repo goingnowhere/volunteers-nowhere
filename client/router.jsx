@@ -17,14 +17,16 @@ import {
   Reset,
   Password,
 } from './components/accounts/accountsUI/pages.jsx'
+import { VolunteerForm } from './components/volunteer/VolunteerForm.jsx'
 
-// TODO Add redirect to profile
+// TODO Add redirect to profile & require confirmation
 // hasAgreedTOS() {
 //   const user = Meteor.user()
 //   const f = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
 //   const t = user.profile.terms
 //   return (t && f)
 // },
+// TODO separate out component used as route arg
 const LoggedInRoute = ({ component: Component, ...routeProps }) => (
   <Route
     {...routeProps} component={withTracker(
@@ -52,7 +54,7 @@ export const Routes = () => (
         <Route path="/volunteers-agreement" render={() => <Blaze template="volAgreement" />} />
         <LoggedInRoute path="/password" component={Password} />
         <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />
-        <LoggedInRoute path="/profile" component={memo(() => <Blaze template="volunteerForm" />)} />
+        <LoggedInRoute path="/profile" component={VolunteerForm} />
         <LoggedInRoute path="/dashboard" component={Dashboard} />
         <LoggedInRoute path="/department/:_id/team/:_teamId/:_period?" component={memo(({ match }) => <Blaze template="publicTeamView" {...match.params} />)} />
         <LoggedInRoute path="/department/:id" component={memo(({ match }) => <Blaze template="publicDepartmentView" _id={match.params.id} />)} />
@@ -61,7 +63,6 @@ export const Routes = () => (
         {/* FIXME needs to check for metalead */}
         <LoggedInRoute path="/metalead/department/:id" component={memo(({ match }) => <Blaze template="metaleadDepartmentView" _id={match.params.id} />)} />
         {/* FIXME needs to check for manager */}
-        <LoggedInRoute path="/manager/userform" component={memo(() => <Blaze template="managerUserForm" />)} />
         <LoggedInRoute path="/manager/eventSettings" component={memo(() => <Blaze template="managerEventSettings" />)} />
         <LoggedInRoute path="/manager/emailForms" component={memo(() => <Blaze template="managerEmailForms" />)} />
         <LoggedInRoute path="/manager/userList" component={memo(() => <Blaze template="managerUserList" page="ManagerUserPages" />)} />

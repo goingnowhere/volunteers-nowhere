@@ -1,7 +1,6 @@
 abate:autoform-components@0.0.1
 abate:autoform-datetimepicker@1.0.8
 abate:email-forms@0.0.1
-abate:formbuilder@0.0.1
 abate:meteor-user-profiles@0.0.1
 accounts-base@1.4.3
 accounts-password@1.5.1

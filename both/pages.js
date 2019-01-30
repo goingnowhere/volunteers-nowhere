@@ -7,8 +7,8 @@ Pages.NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
   fastRender: true,
   perPage: 20,
   sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
-  // filter only on users that agreed with the TOS
-  filters: { 'profile.terms': true },
+  // filter only on users that filled in their form
+  filters: { formFilled: true },
   fields: {
     profile: 1, emails: 1, createdAt: 1, roles: 1, status: 1,
   },

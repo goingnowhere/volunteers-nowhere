@@ -11,6 +11,7 @@
     "bootstrap-select": "^1.13.5",
     "chart.js": "^2.7.3",
     "flatpickr": "^4.5.2",
+    "formik": "^1.4.2",
     "jquery": "^3.3.1",
     "jquery-affix": "0.0.5",
     "magnific-popup": "^1.1.0",
@@ -22,6 +23,7 @@
     "react-dom": "^16.7.0",
     "react-fontawesome": "^1.6.1",
     "react-router-dom": "^4.3.1",
+    "react-select": "^2.3.0",
     "simpl-schema": "^0.3.2",
     "underscore": "^1.9.1",
     "webpack": "^3.12.0"

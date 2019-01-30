@@ -2,13 +2,14 @@ import { Accounts } from 'meteor/accounts-base'
 import { setUserLocale } from './locale'
 
 Accounts.config({
+  sendVerificationEmail: true,
   passwordEnrollTokenExpirationInDays: 60,
 })
 
 Accounts.ui.config({
   passwordSignupFields: 'EMAIL_ONLY',
   minimumPasswordLength: 6,
-  // requireEmailVerification
+  // requireEmailVerification: true,
   homeRoutePath: '/',
   profilePath: '/dashboard',
   loginPath: '/login',
@@ -16,7 +17,9 @@ Accounts.ui.config({
   resetPasswordPath: '/password-reset',
   changePasswordPath: '/password',
   // FIXME Forces page to reload. Either add <Redirect> route or mod accounts-ui
+  onEnrollAccountHook: () => { window.location.href = '/' },
   onSignedInHook: () => { window.location.href = '/dashboard' },
+  onVerifyEmailHook: () => { window.location.href = '/profile' },
 })
 
 Accounts.onLogin(() => {
@@ -33,26 +36,3 @@ Accounts.onLogin(() => {
   //   }
   // }
 })
-
-
-if (Meteor.isServer) {
-  Accounts.onCreateUser((options, user) => {
-    user.profile = options.profile
-    user.profile.ticketDate = new Date()
-    user.profile.ticketNumber = 0
-    user.profile.manualRegistration = true
-    user.profile.invitationSent = false
-    return user
-  })
-
-  Accounts.validateLoginAttempt((info) => {
-    const { user } = info
-    if (user) {
-      const hasIsBannedProperty = Object.prototype.hasOwnProperty.call(user, 'isBanned')
-      if (hasIsBannedProperty && user.isBanned) {
-        throw new Meteor.Error(403, 'You are banned')
-      }
-      return true
-    } return false
-  })
-}

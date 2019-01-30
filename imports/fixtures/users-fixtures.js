@@ -42,9 +42,6 @@ export const createUsers = (Volunteers) => {
       console.log('Create user ', options)
       options.profile = {
         firstName: options.name,
-        ticketNumber: 'Manual registration',
-        ticketDate: new Date(),
-        manualRegistration: true,
         nickname: options.name,
       }
       const userId = Accounts.createUser(options)

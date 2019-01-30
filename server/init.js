@@ -17,12 +17,6 @@ if (process.env.MANDRILL_API_USER) {
   Accounts.emailTemplates.headers = { 'X-MC-AutoText': true }
 }
 
-Meteor.startup(() => {
-  Meteor.users._ensureIndex({
-    terms: 1,
-  })
-})
-
 // startup function - MAIN
 Meteor.startup(() => {
   runFixtures(Volunteers)

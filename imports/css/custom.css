@@ -152,8 +152,13 @@ et injecter la typo */
   height: 48px;
 }
 
-/* Add red * to autoform required fields */
-[data-required] label:after {content: ' *'; color: red}
+/* Automatically add red * to autoform required fields */
+[data-required] label:after,
+/* Or using a class */
+.form-required:after {
+  content: ' *';
+  color: red;
+}
 
 /* Make Select2 boxes match Bootstrap heights: */
 .select2-selection__rendered {

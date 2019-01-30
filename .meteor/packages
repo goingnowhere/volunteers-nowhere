@@ -25,6 +25,7 @@ dynamic-import@0.5.0
 session@1.2.0
 dburles:collection-helpers
 fortawesome:fontawesome
+aldeed:collection2@3.0.0
 
 natestrauser:connection-banner
 
@@ -58,3 +59,4 @@ react-meteor-data
 underscore@1.0.10
 gadicc:blaze-react-component
 piemonkey:accounts-ui
+http

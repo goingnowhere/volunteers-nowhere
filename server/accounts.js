@@ -1,12 +1,67 @@
-import { MeteorProfile } from '../both/init'
+import { Accounts } from 'meteor/accounts-base'
+import { HTTP } from 'meteor/http'
 
+import { MeteorProfile } from '../both/init'
 import {
   isManagerMixin,
   ValidatedMethodWithMixin,
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
+import { config } from './config'
 
+const quicketTest = !Meteor.isProduction && !config.quicketApiKey
+  && !config.quicketEventId && !config.quicketUserToken
+
+// const extractAnswers = ({ questionAnswers }) => {
+
+// }
+
+Accounts.onCreateUser((options, user) => {
+  const { email } = options
+  let quicket
+  if (!quicketTest) {
+    const { data: { results } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/registrations`, {
+      query: `search=${email}`,
+      headers: {
+        api_key: config.quicketApiKey,
+        usertoken: config.quicketUserToken,
+        pageSize: 10,
+        page: 1,
+        seasortByrch: 'DateAdded',
+        sortDirection: 'DESC',
+      },
+    })
+    if (results.length !== 1 || results[0].email !== email) {
+      throw new Meteor.Error(404, 'Bio for that email does not exist. Try making one?')
+    }
+    [quicket] = results
+  } else {
+    quicket = {
+      fake: true,
+      registrationId: 90319,
+      userId: 937853,
+      email,
+    }
+  }
+  return {
+    ...user,
+    profile: {}, // extractAnswers(quicket),
+    quicket,
+  }
+})
+
+Accounts.validateLoginAttempt((info) => {
+  const { user } = info
+  if (user) {
+    if (user.isBanned) {
+      throw new Meteor.Error(403, 'You are banned')
+    }
+    return true
+  } return false
+})
+
+// TODO I don't think these are used any more
 export const userProfileRemoveUser =
   ValidatedMethodWithMixin(
     MeteorProfile.Methods.userProfileRemoveUser,

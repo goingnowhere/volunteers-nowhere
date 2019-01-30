@@ -4,7 +4,6 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/settings'
-import { Tickets, pendingUsers } from './importUsers'
 import { EmailLogs, getContext, WrapEmailSend } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,

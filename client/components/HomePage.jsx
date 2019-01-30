@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import Fa from 'react-fontawesome'
 
 export const HomePage = () => (
   <Fragment>
@@ -77,7 +78,7 @@ export const HomePage = () => (
     {/* Scroll to Top Button (Only visible on small and extra-small screen sizes) */}
     <div className="scroll-to-top d-lg-none position-fixed ">
       <a className="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-        <i className="fa fa-chevron-up" />
+        <Fa name="chevron-up" />
       </a>
     </div>
   </Fragment>

@@ -24,7 +24,11 @@ module.exports = {
   },
   rules: {
     semi: ['error', 'never'],
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ['error', {
+      anonymous: 'never',
+      named: 'never',
+      asyncArrow: 'always',
+    }],
     'no-underscore-dangle': ['error', {
         allow: [
           '_id',
@@ -34,6 +38,7 @@ module.exports = {
       },
     ],
     'no-param-reassign': ['error', { props: false }],
+    'implicit-arrow-linebreak': ['off'],
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'never', { js: 'never' }],
     'import/no-unresolved': ['error', {
@@ -47,6 +52,9 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
+    'jsx-a11y/label-has-associated-control': ['error', {
+      controlComponents: ['Field'],
+    }],
+    'jsx-a11y/label-has-for': 'off', // Deprecated for above
   },
 }

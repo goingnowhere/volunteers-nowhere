@@ -70,7 +70,6 @@ const LoggedInHeaderComponent = ({
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
               <NavLink to="/manager" className="dropdown-item"><T>dashboard</T></NavLink>
-              <NavLink to="/manager/userform" className="dropdown-item"><T>profile_form</T></NavLink>
               <NavLink to="/manager/eventSettings" className="dropdown-item"><T>event_settings</T></NavLink>
               <NavLink to="/manager/emailForms" className="dropdown-item"><T>email_templates</T></NavLink>
               <NavLink to="/manager/userList" className="dropdown-item"><T>all_users</T></NavLink>
