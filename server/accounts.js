@@ -21,18 +21,18 @@ Accounts.onCreateUser((options, user) => {
   const { email } = options
   let quicket
   if (!quicketTest) {
-    const { data: { results } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/registrations`, {
-      query: `search=${email}`,
-      headers: {
-        api_key: config.quicketApiKey,
-        usertoken: config.quicketUserToken,
-        pageSize: 10,
-        page: 1,
-        seasortByrch: 'DateAdded',
-        sortDirection: 'DESC',
-      },
-    })
-    if (results.length !== 1 || results[0].email !== email) {
+    // const { data: { results } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/registrations`, {
+    //   query: `search=${email}`,
+    //   headers: {
+    //     api_key: config.quicketApiKey,
+    //     usertoken: config.quicketUserToken,
+    //     pageSize: 10,
+    //     page: 1,
+    //     seasortByrch: 'DateAdded',
+    //     sortDirection: 'DESC',
+    //   },
+    // })
+    // if (results.length !== 1 || results[0].email !== email) {
       if (email.match(/@goingnowhere.org$/)) {
         quicket = {
           shadowyCabal: true,
@@ -41,9 +41,9 @@ Accounts.onCreateUser((options, user) => {
       } else {
         throw new Meteor.Error(404, 'Bio for that email does not exist. Try making one?')
       }
-    } else {
-      [quicket] = results
-    }
+    // } else {
+    //   [quicket] = results
+    // }
   } else {
     quicket = {
       fake: true,
