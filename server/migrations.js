@@ -35,8 +35,10 @@ Migrations.add({
   up() {
     [Volunteers.Collections.TeamShifts, Volunteers.Collections.Projects].forEach((collection) => {
       collection.find({}).map(thing => collection.update({ _id: thing._id }, {
-        start: moment(thing.start).add(1, 'year').add(6, 'days').toDate(),
-        end: moment(thing.end).add(1, 'year').add(6, 'days').toDate(),
+        $set: {
+          start: moment(thing.start).add(1, 'year').add(6, 'days').toDate(),
+          end: moment(thing.end).add(1, 'year').add(6, 'days').toDate(),
+        },
       }, { bypassCollection2: true }))
     })
   },
