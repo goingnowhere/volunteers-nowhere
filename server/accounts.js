@@ -10,7 +10,7 @@ import {
 } from '../both/authMixins'
 import { config } from './config'
 
-const quicketTest = !Meteor.isProduction && !config.quicketApiKey
+const quicketTest = Meteor.isDevelopment && !config.quicketApiKey
   && !config.quicketEventId && !config.quicketUserToken
 
 // const extractAnswers = ({ questionAnswers }) => {
@@ -33,7 +33,7 @@ Accounts.onCreateUser((options, user) => {
       },
     })
     if (results.length !== 1 || results[0].email !== email) {
-      if (/@goingnowhere.org$/.match(email)) {
+      if (email.match(/@goingnowhere.org$/)) {
         quicket = {
           shadowyCabal: true,
           email,

@@ -4,6 +4,9 @@ import { setUserLocale } from './locale'
 Accounts.config({
   sendVerificationEmail: true,
   passwordEnrollTokenExpirationInDays: 60,
+
+  // temporary
+  forbidClientAccountCreation: true,
 })
 
 Accounts.ui.config({
