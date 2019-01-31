@@ -33,9 +33,17 @@ Accounts.onCreateUser((options, user) => {
       },
     })
     if (results.length !== 1 || results[0].email !== email) {
-      throw new Meteor.Error(404, 'Bio for that email does not exist. Try making one?')
+      if (/@goingnowhere.org$/.match(email)) {
+        quicket = {
+          shadowyCabal: true,
+          email,
+        }
+      } else {
+        throw new Meteor.Error(404, 'Bio for that email does not exist. Try making one?')
+      }
+    } else {
+      [quicket] = results
     }
-    [quicket] = results
   } else {
     quicket = {
       fake: true,

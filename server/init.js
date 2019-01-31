@@ -18,8 +18,11 @@ if (process.env.MANDRILL_API_USER) {
 }
 
 // startup function - MAIN
+
 Meteor.startup(() => {
-  runFixtures(Volunteers)
+  if (Meteor.isDevelopment) {
+    runFixtures(Volunteers)
+  }
 })
 
 Meteor.startup(() => {

@@ -24,6 +24,7 @@ module.exports = {
   },
   rules: {
     semi: ['error', 'never'],
+    'semi-style': ['error', 'first'],
     'space-before-function-paren': ['error', {
       anonymous: 'never',
       named: 'never',

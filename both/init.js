@@ -3,7 +3,7 @@ import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
 import { initLocale } from './locale'
 
-export const Volunteers = new VolunteersClass('nowhere2018')
+export const Volunteers = new VolunteersClass('nowhere2019')
 
 const roles = ['admin', 'manager', 'user']
 roles.forEach(role => Roles.createRole(role, { unlessExists: true }))
