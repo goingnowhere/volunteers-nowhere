@@ -11,6 +11,12 @@ import {
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 
+Meteor.methods({
+  sendVerificationEmail() {
+    Accounts.sendVerificationEmail(this.userId)
+  },
+})
+
 const EnrollUserSchema = new SimpleSchema({
   email: String,
   profile: Object,
@@ -23,6 +29,7 @@ const enrollUserMethod = {
   name: 'Accounts.enrollUserCustom',
   validate: EnrollUserSchema.validator(),
   run(user) {
+    throw new Meteor.Error(501)
     const userId = Accounts.createUser(user)
     Accounts.sendEnrollmentEmail(userId)
   },
@@ -73,14 +80,6 @@ const sendNotificationEmailFunctionGeneric = (userId, template, selector, notifi
     if (user && (allSignups.length > 0)) {
       const doc = EmailForms.previewTemplate(template, user, getContext)
       WrapEmailSend(user, doc)
-      if (!user.profile.terms && !user.profile.invitationSent) {
-        try {
-          Accounts.sendEnrollmentEmail(userId)
-          Meteor.users.update({ _id: userId }, { $set: { 'profile.invitationSent': true } })
-        } catch (error) {
-          throw new Meteor.Error('500', 'Send Email Error ', error)
-        }
-      }
       allSignups.forEach((signup) => {
         const modifier = { $set: { notification: true } }
         switch (signup.type) {
@@ -171,6 +170,7 @@ const resetUserMethod = {
   name: 'Accounts.resetUser',
   validate: null,
   run(userId) {
+    throw new Meteor.Error(501, 'I don\'t think we should have this method')
     Meteor.users.update(
       userId,
       {

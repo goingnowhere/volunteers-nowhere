@@ -32,8 +32,8 @@ export const updateUserBio = new ValidatedMethod({
           nickname,
           language,
           picture,
+          formFilled: true,
         },
-        formFilled: true,
       },
     })
     Volunteers.Collections.VolunteerForm.upsert({ userId }, { $set: nonProfileData })

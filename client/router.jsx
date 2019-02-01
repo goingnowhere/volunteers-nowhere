@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-max-props-per-line, react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 import React, { Fragment, memo } from 'react'
 import {
   BrowserRouter,
   Route,
   Switch,
-  Redirect,
 } from 'react-router-dom'
-import { withTracker } from 'meteor/react-meteor-data'
 import Blaze from 'meteor/gadicc:blaze-react-component'
 import { HomePage } from './components/HomePage.jsx'
 import { Header } from './components/common/Header.jsx'
@@ -18,28 +16,8 @@ import {
   Password,
 } from './components/accounts/accountsUI/pages.jsx'
 import { VolunteerForm } from './components/volunteer/VolunteerForm.jsx'
-
-// TODO Add redirect to profile & require confirmation
-// hasAgreedTOS() {
-//   const user = Meteor.user()
-//   const f = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
-//   const t = user.profile.terms
-//   return (t && f)
-// },
-// TODO separate out component used as route arg
-const LoggedInRoute = ({ component: Component, ...routeProps }) => (
-  <Route
-    {...routeProps} component={withTracker(
-      navProps => ({ loggedIn: !!Meteor.userId(), navProps }),
-    )(
-      ({ loggedIn, navProps }) => (loggedIn ? (
-        <Component {...navProps} />
-      ) : (
-        <Redirect to={{ pathname: '/login', state: { from: navProps.location } }} />
-      )),
-    )}
-  />
-)
+import { LoggedInRoute } from './components/LoggedInRoute.jsx'
+import { VerifyEmail } from './components/VerifyEmail.jsx'
 
 const Dashboard = () => <Blaze template="userDashboard" />
 export const Routes = () => (
@@ -51,6 +29,7 @@ export const Routes = () => (
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/password-reset" component={Reset} />
+        <Route path="/verify-email" component={VerifyEmail} />
         <Route path="/volunteers-agreement" render={() => <Blaze template="volAgreement" />} />
         <LoggedInRoute path="/password" component={Password} />
         <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />

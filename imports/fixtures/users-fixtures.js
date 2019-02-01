@@ -49,7 +49,6 @@ export const createUsers = (Volunteers) => {
         $set: {
           'emails.0.verified': true,
           'profile.firstName': options.name,
-          'profile.terms': true,
         },
       })
       options.roles.forEach((role) => {

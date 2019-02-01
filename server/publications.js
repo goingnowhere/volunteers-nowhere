@@ -1,9 +1,9 @@
-import { check, Match } from 'meteor/check'
+import { check } from 'meteor/check'
 import { MeteorProfile, Volunteers } from '../both/init'
 
 /*  managers, leads and the user itself is authorized to see the picture. */
 Meteor.publish('meteor-user-profiles.ProfilePictures', function publishProfilePictures(userId = this.userId) {
-  check(userId, Match.Maybe(String))
+  check(userId, String)
   const authUserId = userId || this.userId
   if (authUserId === userId // the user asking for its picture
     || Volunteers.isManager() // manager or admin asking
@@ -13,9 +13,8 @@ Meteor.publish('meteor-user-profiles.ProfilePictures', function publishProfilePi
   return null
 })
 
-// TODO is there a meteor-y way to do this?
 Meteor.publish('user.extra', function publishUserExtra(userId = this.userId) {
-  check(userId, Match.Maybe(String))
+  check(userId, String)
   if (this.userId === userId // the user asking for its data
     || Volunteers.isManager() // manager or admin asking
     || Volunteers.isLead()) { // a lead or metalead asking

@@ -19,6 +19,7 @@ Template.earlyEntry.onCreated(function onCreated() {
   })
 })
 
+// TODO fix
 Template.earlyEntry.helpers({
   eeUsers: () => {
     const template = Template.instance()

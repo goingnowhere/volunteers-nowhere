@@ -4,9 +4,6 @@ import { setUserLocale } from './locale'
 Accounts.config({
   sendVerificationEmail: true,
   passwordEnrollTokenExpirationInDays: 60,
-
-  // temporary
-  forbidClientAccountCreation: true,
 })
 
 Accounts.ui.config({
@@ -29,13 +26,4 @@ Accounts.onLogin(() => {
   if (Meteor.isClient) {
     setUserLocale(Meteor.userId())
   }
-  // TODO Not sure why the below was put in - Rich
-  // if (Meteor.isServer) {
-  //   const user = Meteor.user()
-
-  //   // after the enrollment this address is not needed anymore
-  //   if (user.emails && (user.emails[0].address.indexOf('@email.invalid') > 0)) {
-  //     Meteor.users.update({ _id: user._id }, { $set: { emails: [] } })
-  //   }
-  // }
 })

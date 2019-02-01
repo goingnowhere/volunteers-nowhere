@@ -5,6 +5,17 @@ import { MeteorProfile, Volunteers } from './init'
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
 
+const profileSchema = MeteorProfile.Schemas.Profile
+profileSchema.extend({
+  // This might not be the most secure but it needs to be on profile for it to get published without
+  // delay waiting for a new subscription
+  formFilled: {
+    type: Boolean,
+    optional: true,
+    defaultValue: false,
+  },
+})
+
 // FIXME Should all of these be optional?
 export const userSchema = new SimpleSchema({
   emails: {
@@ -49,7 +60,7 @@ export const userSchema = new SimpleSchema({
     blackbox: true,
   },
   profile: {
-    type: MeteorProfile.Schemas.Profile,
+    type: profileSchema,
     optional: true,
   },
   // mizzao:userstatus
@@ -57,11 +68,6 @@ export const userSchema = new SimpleSchema({
     type: Object,
     optional: true,
     blackbox: true,
-  },
-  formFilled: {
-    type: Boolean,
-    optional: true,
-    defaultValue: false,
   },
   isBanned: {
     type: Boolean,
