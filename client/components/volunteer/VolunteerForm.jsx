@@ -129,7 +129,7 @@ const VolunteerFormComponent = ({
             </div>
           </div>
           <ImageUpload
-            label="Upload New File:"
+            label="Set a picture so we can recognise you:"
             onPicUploaded={pic => setFieldValue('picture', pic)}
           />
           <div className="form-group">

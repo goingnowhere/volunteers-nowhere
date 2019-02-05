@@ -5,6 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
+import { UserResponsibilities } from '../components/volunteer/UserResponsibilities.jsx'
 
 const { BookedTableContainer } = Volunteers.components
 
@@ -20,6 +21,7 @@ Template.userDashboard.onCreated(function onCreated() {
 
 Template.userDashboard.helpers({
   BookedTable: () => BookedTableContainer,
+  UserResponsibilities: () => UserResponsibilities,
   userId: () => Meteor.userId(),
   bookedMissions: () => {
     const sel = { status: { $in: ['confirmed', 'pending'] } }
@@ -35,47 +37,6 @@ Template.userDashboard.events({
   'click [data-action="edit_form"]': () => {
     // FIXME
     window.location.href = '/profile'
-  },
-})
-
-Template.userResponsibilities.onCreated(function OnCreated() {
-  const template = this
-  if ((template.data) && (template.data.userId)) {
-    template.userId = template.data.userId
-  } else {
-    template.userId = Meteor.userId()
-  }
-})
-
-Template.userResponsibilities.helpers({
-  leads: () => {
-    const { userId } = Template.instance()
-    const sl = Volunteers.Collections.LeadSignups.find({ userId, status: 'confirmed' }).fetch()
-    const l = sl.reduce((acc, s) => {
-      const t = Volunteers.Collections.Team.findOne(s.parentId)
-      if (t) { acc.push(t) }
-      return acc
-    }, [])
-    return l
-  },
-  metaleads: () => {
-    const { userId } = Template.instance()
-    const sl = Volunteers.Collections.LeadSignups.find({ userId }).fetch()
-    const l = sl.reduce((acc, s) => {
-      const t = Volunteers.Collections.Department.findOne(s.parentId)
-      if (t) { acc.push(t) }
-      return acc
-    }, [])
-    return l
-  },
-  isManager: () => {
-    const { userId } = Template.instance()
-    Volunteers.isManager(userId)
-  },
-  isNoInfo: () => {
-    const { userId } = Template.instance()
-    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-    return (noInfo != null) && Volunteers.isManagerOrLead(userId, [noInfo._id])
   },
 })
 

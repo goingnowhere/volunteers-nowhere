@@ -12,7 +12,7 @@
           <a href="/profile/settings">{{__ "add_picture"}}</a>
         {{/if}}
         <!-- <h5 class="mb-2 dark-text">{{__ "responsibilities"}} </h5> -->
-        {{> userResponsibilities }}
+        <div>{{> React component=UserResponsibilities }}</div>
         <br/>
         <button type="button" class="btn btn-light btn-sm" data-action="edit_form">
           {{__ "edit_user_info" }}
@@ -39,25 +39,6 @@
 <!-- {{else}}
   {{> loader }} -->
 {{/if}}
-</template>
-
-<template name="userResponsibilities">
-  <ul class="list-unstyled">
-    {{#if isManager }}<li><span class="mb-2 dark-text">{{__ "role"}}: </span>Manager</li>{{/if}}
-    {{#if isNoInfo }}<li><span class="mb-2 dark-text">{{__ "noInfo"}}: </span>Member</li>{{/if}}
-    {{#each team in leads}}
-      <li>
-        <span class="mb-2 dark-text">{{__ "lead"}}:</span>
-        <a href="/lead/team/{{team._id}}">{{team.name}}</a>
-      </li>
-    {{/each}}
-    {{#each dept in metaleads}}
-      <li>
-        <span class="mb-2 dark-text">{{__ "metalead"}}: </span>
-        <a href="/metalead/department/{{dept._id}}">{{dept.name}}</a>
-      </li>
-    {{/each}}
-  </ul>
 </template>
 
 <template name="filteredSignupsList">

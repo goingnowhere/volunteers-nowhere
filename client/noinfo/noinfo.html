@@ -264,15 +264,16 @@
           </table>
         </div>
         <p>
-        {{> formBuilderDisplay
+          Volunteer data goes here
+        <!-- {{> formBuilderDisplay
           formName=formName
           form=form
-          user=user}}
+          user=user}} -->
         </p>
       </div>
       <div class="col">
         <h5 class="mb-2 dark-text">{{__ "responsibilities"}} </h5>
-        {{> userResponsibilities userId=user._id }}
+        <div>{{> React component=UserResponsibilities userId=user._id }}</div>
         <h2 class="header">{{__ "shifts" }}</h2>
         <div>
           {{> React component=BookedTable userId=user._id }}

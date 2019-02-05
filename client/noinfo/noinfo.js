@@ -5,11 +5,12 @@ import { i18n } from 'meteor/universe:i18n'
 import { Bert } from 'meteor/themeteorchef:bert'
 import { Session } from 'meteor/session'
 import { SpacebarsCompiler } from 'meteor/spacebars-compiler'
-import flatpickr from 'flatpickr'
+import 'flatpickr'
 import 'flatpickr/dist/flatpickr.css'
 
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
+import { UserResponsibilities } from '../components/volunteer/UserResponsibilities.jsx'
 
 const { BookedTableContainer } = Volunteers.components
 
@@ -172,6 +173,7 @@ Template.noInfoUserProfile.onCreated(function onCreated() {
 
 Template.noInfoUserProfile.helpers({
   user: () => Template.instance().user.get(),
+  UserResponsibilities: () => UserResponsibilities,
   BookedTable: () => BookedTableContainer,
 })
 
