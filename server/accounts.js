@@ -1,5 +1,5 @@
+import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { HTTP } from 'meteor/http'
 
 import { MeteorProfile } from '../both/init'
 import {
@@ -8,54 +8,42 @@ import {
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
-import { config } from './config'
-
-const quicketTest = Meteor.isDevelopment && !config.quicketApiKey
-  && !config.quicketEventId && !config.quicketUserToken
-
-// const extractAnswers = ({ questionAnswers }) => {
-
-// }
+import { ticketsCollection } from '../both/collections/users'
 
 Accounts.onCreateUser((options, user) => {
   const { email } = options
-  let quicket
-  if (!quicketTest) {
-    // const { data: { results } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/registrations`, {
-    //   query: `search=${email}`,
-    //   headers: {
-    //     api_key: config.quicketApiKey,
-    //     usertoken: config.quicketUserToken,
-    //     pageSize: 10,
-    //     page: 1,
-    //     seasortByrch: 'DateAdded',
-    //     sortDirection: 'DESC',
-    //   },
-    // })
-    // if (results.length !== 1 || results[0].email !== email) {
-      if (email.match(/@goingnowhere.org$/)) {
-        quicket = {
-          shadowyCabal: true,
-          email,
-        }
+  let ticketId
+  let profile
+  if (Meteor.isProduction) {
+    // Temporarily only allow @gn signups
+    if (process.env.DISABLE_SIGNUPS && !/@goingnowhere.org$/.test(email)) {
+      throw new Meteor.Error(401, 'You can\'t sign up yet, come back on 1st March')
+    }
+    const ticket = ticketsCollection.findOne({ email })
+    if (!ticket) {
+      const alias = /([^@\s]+)@goingnowhere.org$/.exec(email)
+      if (alias) {
+        profile = { firstName: alias }
       } else {
-        throw new Meteor.Error(404, 'Bio for that email does not exist. Try making one?')
+        throw new Meteor.Error(404, 'You need a ticket to sign up. Please use the email your ticket is assigned to')
       }
-    // } else {
-    //   [quicket] = results
-    // }
+    } else {
+      ticketId = ticket._id
+      profile = {
+        firstName: ticket.firstName,
+        lastName: ticket.lastName,
+        nickname: ticket.nickname,
+      }
+    }
   } else {
-    quicket = {
-      fake: true,
-      registrationId: 90319,
-      userId: 937853,
-      email,
+    profile = {
+      firstName: 'Test',
     }
   }
   return {
     ...user,
-    profile: {}, // extractAnswers(quicket),
-    quicket,
+    ticketId,
+    profile,
   }
 })
 

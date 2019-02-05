@@ -4,7 +4,7 @@ import SimpleSchema from 'simpl-schema'
 import { check } from 'meteor/check'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import i18n from 'meteor/universe:i18n'
-import { isManagerMixin } from '../both/authMixins'
+import { isManagerMixin } from '../authMixins'
 
 SimpleSchema.defineValidationErrorTransform((error) => {
   const ddpError = new Meteor.Error(error.message)

@@ -9,12 +9,7 @@ export const HomePage = () => (
         <div className="row justify-content-center">
           <div className="col-lg-6">
             <p className="lead">
-              Nowhere is a collective experiment conceived,
-              built, experienced and returned to nothing by
-              a lot of nobodies just like YOU.<br />
-              So we need YOU to help set up the site, keep
-              things running smoothly during the event, and
-              pack up everything back to dust.
+              For Information and Scheduling of Teams
             </p>
           </div>
         </div>
@@ -34,16 +29,16 @@ export const HomePage = () => (
         <div className="row">
           <div className="col-lg-4 ml-auto">
             <p className="lead">
-              Nowhere is an experiment in creative freedom, participation and
-              cash-free community, conceived, built, experienced and returned
-              to nothing by YOU
+              Nowhere is a collective experiment conceived,
+              built, experienced and returned to nothing by
+              a lot of nobodies just like YOU.
             </p>
           </div>
           <div className="col-lg-4 mr-auto">
             <p className="lead">
-              We need lots of hands in a variety of roles to set up the site,
-              keep things running smoothly during the event, and then pack up
-              when the event is over.
+              So we need YOU to help set up the site, keep
+              things running smoothly during the event, and
+              pack up everything back to dust.
             </p>
           </div>
         </div>

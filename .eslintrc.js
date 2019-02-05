@@ -41,7 +41,7 @@ module.exports = {
     'no-param-reassign': ['error', { props: false }],
     'implicit-arrow-linebreak': ['off'],
     'import/prefer-default-export': 'off',
-    'import/extensions': ['error', 'never', { js: 'never' }],
+    'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {
       ignore: [
         'meteor',

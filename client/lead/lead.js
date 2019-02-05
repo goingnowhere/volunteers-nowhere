@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Session } from 'meteor/session'
-import { EventSettings } from '../../both/settings'
+import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 
 moment.tz.setDefault('Europe/Paris')

@@ -1,10 +1,9 @@
-import { SyncedCron } from 'meteor/percolate:synced-cron'
-import { Accounts } from 'meteor/accounts-base'
+import { SyncedCron } from 'meteor/littledata:synced-cron'
 import { EmailForms } from 'meteor/abate:email-forms'
 import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
-import { EventSettings } from '../both/settings'
-import { EmailLogs, getContext, WrapEmailSend } from './email'
+import { EventSettings } from '../both/collections/settings'
+import { getContext, WrapEmailSend } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
@@ -47,6 +46,7 @@ const signupsGC = (time) => {
 }
 
 const EnrollmentTask = (time) => {
+  // Notify volunteers who get signed up for things
   SyncedCron.add({
     name: 'EnrollmentNotifications',
     schedule(parser) {
@@ -70,6 +70,7 @@ const EnrollmentTask = (time) => {
 }
 
 const ReviewTask = (time) => {
+  // Notify volunteers who've had things they applied for approved/denied
   SyncedCron.add({
     name: 'ReviewNotifications',
     schedule(parser) {
@@ -95,69 +96,9 @@ const ReviewTask = (time) => {
   })
 }
 
-const MassEnrollmentTask = (time) => {
-  SyncedCron.add({
-    name: 'MassEnrollment',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job() {
-      const tid = EmailForms.Collections.EmailTemplate.findOne({ name: 'enrollAccount' })._id
-      const sel = {
-        'profile.terms': false,
-        'profile.invitationSent': false,
-        'profile.ticketNumber': { $ne: 0 },
-        'emails.0.address': { $not: /@email.invalid/ },
-      }
-      Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
-        if (!EmailLogs.findOne({ template: tid, userId: user._id })) {
-          try {
-            console.log(`Sending enrollment to ${user.emails[0].address}`)
-            Accounts.sendEnrollmentEmail(user._id)
-          } catch (error) {
-            console.log(`Error Sending enrollment to ${user.emails[0].address} : ${error}`)
-          }
-        } else {
-          // if there is an email log, let's make sure to update this field as well
-          Meteor.users.update(user._id, { $set: { 'profile.invitationSent': true } })
-        }
-      })
-    },
-  })
-}
-
-const MassEnrollmentInvalidEmailsTask = (time) => {
-  SyncedCron.add({
-    name: 'MassEnrollmentInvalidEmails',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job() {
-      const sel = {
-        'profile.terms': false,
-        'profile.invitationSent': false,
-        'emails.0.address': /@email.invalid/,
-      }
-      Meteor.users.find(sel, { limit: 10 }).forEach((fakeUser) => {
-        const fakeEmail = fakeUser.emails[0].address
-        const pendingUser = pendingUsers.findOne({ fakeEmail })
-        const mainUser = Accounts.findUserByEmail(pendingUser.Email)
-        if (pendingUser && mainUser) {
-          const doc = EmailForms.previewTemplate('enrollAccountInvalidEmail', mainUser, getContext)
-          try {
-            console.log(`Sending enrollment for ${fakeEmail} to ${pendingUser.Email}`)
-            WrapEmailSend(mainUser, doc)
-            Meteor.users.update(fakeUser._id, { $set: { 'profile.invitationSent': true } })
-          } catch (error) {
-            console.log(`Error Sending enrollment for ${fakeEmail} to ${pendingUser.Email} : ${error}`)
-          }
-        }
-      })
-    },
-  })
-}
-
+// TODO update and re-use for @gn email users who don't have linked tickets
 const EarlyAdopterEmailsTask = (time) => {
+  // Email users with no ticket to get them to link their ticket email
   SyncedCron.add({
     name: 'EarlyAdopterEmails',
     schedule(parser) {
@@ -178,6 +119,7 @@ const EarlyAdopterEmailsTask = (time) => {
   })
 }
 
+// TODO also re-use for @gn emails
 const EarlyAdopterFixTicketTask = (time) => {
   SyncedCron.add({
     name: 'EarlyAdopterFixTicket',
@@ -202,10 +144,6 @@ const EarlyAdopterFixTicketTask = (time) => {
   })
 }
 
-SyncedCron.config({
-  log: false,
-})
-
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
@@ -213,11 +151,9 @@ const cronActivate = ({ cronFrequency }) => {
 
     EnrollmentTask('every 10 mins')
     ReviewTask('every 12 mins')
-    MassEnrollmentTask('every 1 mins')
 
-    MassEnrollmentInvalidEmailsTask('every 17 mins')
-    // EarlyAdopterEmailsTask('every 1 mins')
-    // EarlyAdopterFixTicketTask('every 1 mins')
+    // EarlyAdopterEmailsTask('every 30 mins')
+    // EarlyAdopterFixTicketTask('every 30 mins')
     signupsGC('every 10 days')
     SyncedCron.start()
   } else {

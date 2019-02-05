@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating'
 import moment from 'moment-timezone'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from '../../both/init'
-import { EventSettings } from '../../both/settings'
+import { EventSettings } from '../../both/collections/settings'
 
 moment.tz.setDefault('Europe/Paris')
 

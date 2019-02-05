@@ -3,7 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import SimpleSchema from 'simpl-schema'
 import { isSameUserOrManagerMixin } from './authMixins'
 import { MeteorProfile, Volunteers } from './init'
-import { volunteerFormSchema } from './users'
+import { volunteerFormSchema } from './collections/users'
 
 const userBioSchema = new SimpleSchema({
   userId: { type: String },

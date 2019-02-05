@@ -1,5 +1,5 @@
 import { EmailForms } from 'meteor/abate:email-forms'
-import { EventSettings } from '../../both/settings'
+import { EventSettings } from '../../both/collections/settings'
 
 const settings = {
   buildPeriod: { start: new Date(2018, 6, 11), end: new Date(2018, 7, 1) },

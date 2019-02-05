@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
 import { Migrations } from 'meteor/percolate:migrations'
 import { Accounts } from 'meteor/accounts-base'
@@ -82,5 +83,13 @@ Migrations.add({
       Roles.createRole(beansId)
       Roles.addRolesToParent(beansId, finance._id)
     }
+  },
+})
+
+// Move around ticket data on existing users
+Migrations.add({
+  version: 4,
+  up() {
+    Meteor.users.update({}, { $unset: { quicket: '' } }, { multi: true })
   },
 })

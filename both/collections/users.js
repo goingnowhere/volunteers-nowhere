@@ -1,6 +1,8 @@
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
 import SimpleSchema from 'simpl-schema'
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
-import { MeteorProfile, Volunteers } from './init'
+import { MeteorProfile, Volunteers } from '../init'
 
 checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
@@ -55,9 +57,9 @@ export const userSchema = new SimpleSchema({
     optional: true,
     blackbox: true,
   },
-  quicket: {
-    type: Object,
-    blackbox: true,
+  ticketId: {
+    type: Number,
+    optional: true,
   },
   profile: {
     type: profileSchema,
@@ -140,3 +142,8 @@ export const volunteerFormSchema = new SimpleSchema({
 
 volunteerFormSchema.extend(Volunteers.Schemas.VolunteerForm)
 Volunteers.Collections.VolunteerForm.attachSchema(volunteerFormSchema)
+
+export const ticketsCollection = new Mongo.Collection('tickets')
+if (Meteor.isServer) {
+  ticketsCollection._ensureIndex({ email: 1 })
+}

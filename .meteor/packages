@@ -52,7 +52,6 @@ mdg:validated-method
 mizzao:user-status
 abate:email-forms
 spacebars-compiler
-percolate:synced-cron
 ostrio:logger
 react-template-helper
 react-meteor-data
@@ -60,3 +59,4 @@ underscore@1.0.10
 gadicc:blaze-react-component
 piemonkey:accounts-ui
 http
+littledata:synced-cron

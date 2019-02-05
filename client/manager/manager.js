@@ -1,8 +1,9 @@
+import { Meteor } from 'meteor/meteor'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Template } from 'meteor/templating'
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
-import { EventSettings } from '../../both/settings'
+import { EventSettings } from '../../both/collections/settings'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
@@ -37,9 +38,8 @@ Template.managerView.events({
     const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
   },
-  'click [data-action="applications"]': (event, template) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
-    AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
+  'click [data-action="sync-quicket"]': (event, template) => {
+    Meteor.call('ticketList.sync')
   },
 })
 
