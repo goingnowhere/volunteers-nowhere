@@ -21,9 +21,9 @@ Accounts.onCreateUser((options, user) => {
     }
     const ticket = ticketsCollection.findOne({ email })
     if (!ticket) {
-      const alias = /([^@\s]+)@goingnowhere.org$/.exec(email)
-      if (alias) {
-        profile = { firstName: alias }
+      const match = /([^@\s]+)@goingnowhere.org$/.exec(email)
+      if (match && match[1]) {
+        profile = { firstName: match[1] }
       } else {
         throw new Meteor.Error(404, 'You need a ticket to sign up. Please use the email your ticket is assigned to')
       }
