@@ -84,6 +84,21 @@ export const userSchema = new SimpleSchema({
 
 Meteor.users.attachSchema(userSchema, { replace: true })
 
+export const volunteerFormQs = {
+  about: 'How can you help?',
+  experience: 'Do you have experience as a volunteer at any burns?',
+  skills: 'What skills can you contribute?',
+  quirks: 'What do you look for in a shift?',
+  gender: 'Gender',
+  food: 'Food preference for if we feed you on shifts',
+  allergies: 'Grave Allergies',
+  intolerances: 'Food Intolerances',
+  medical: 'Any medical conditions you think we should be aware of?',
+  languages: 'Which languages do you speak?',
+  emergencyContact: 'Emergency contact information',
+  anything: 'Anything Else?',
+}
+
 export const volunteerFormSchema = new SimpleSchema({
   about: {
     type: String,

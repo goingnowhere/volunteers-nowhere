@@ -11,6 +11,7 @@ import {
 import { Volunteers } from '../../../both/init'
 import { setLocale } from '../../../both/locale'
 import { updateUserBio } from '../../../both/methods'
+import { volunteerFormQs } from '../../../both/collections/users'
 import { ImageUpload } from './volunteerForm/ImageUpload.jsx'
 import { MultiSelect } from './volunteerForm/MultiSelect.jsx'
 
@@ -133,7 +134,7 @@ const VolunteerFormComponent = ({
             onPicUploaded={pic => setFieldValue('picture', pic)}
           />
           <div className="form-group">
-            <label htmlFor="about">How can you help?</label>
+            <label htmlFor="about">{volunteerFormQs.about}</label>
             <Field
               id="about"
               component="textarea"
@@ -146,7 +147,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="experience">Do you have experience as a volunteer at any burns?</label>
+            <label htmlFor="experience">{volunteerFormQs.experience}</label>
             <Field
               id="experience"
               component="textarea"
@@ -156,7 +157,7 @@ const VolunteerFormComponent = ({
             />
           </div>
           <div className="form-group">
-            <label htmlFor="skills">What skills can you contribute?</label>
+            <label htmlFor="skills">{volunteerFormQs.skills}</label>
             <MultiSelect
               id="skills"
               options={skills}
@@ -165,7 +166,7 @@ const VolunteerFormComponent = ({
             />
           </div>
           <div className="form-group">
-            <label htmlFor="skills">What do you look for in a shift?</label>
+            <label htmlFor="skills">{volunteerFormQs.quirks}</label>
             <MultiSelect
               id="quirks"
               options={quirks}
@@ -174,7 +175,7 @@ const VolunteerFormComponent = ({
             />
           </div>
           <div className="form-group">
-            <p>Gender</p>
+            <p>{volunteerFormQs.gender}</p>
             <div className="form-check">
               <label className="form-check-label">
                 <Field
@@ -219,7 +220,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <p>Which languages do you speak?</p>
+            <p>{volunteerFormQs.languages}</p>
             <FieldArray
               name="languages"
               render={arrayHelpers => languageOptions.map(([langVal, langLabel]) => (
@@ -241,7 +242,7 @@ const VolunteerFormComponent = ({
             />
           </div>
           <div className="form-group">
-            <p className="mb-2">Food preference for if we feed you on shifts</p>
+            <p className="mb-2">{volunteerFormQs.food}</p>
             {foodOptions.map(([foodVal, foodLabel]) => (
               <div key={foodVal} className="form-check">
                 <label className="form-check-label">
@@ -263,7 +264,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <p>Grave Allergies</p>
+            <p>{volunteerFormQs.allergies}</p>
             <FieldArray
               name="allergies"
               render={arrayHelpers => allergyOptions.map(([allergyVal, allergyLabel]) => (
@@ -289,7 +290,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <p>Food Intolerances</p>
+            <p>{volunteerFormQs.intolerances}</p>
             <FieldArray
               name="intolerances"
               render={arrayHelpers => intoleranceOptions.map(([intolVal, intolLabel]) => (
@@ -317,7 +318,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="medical">Emergency contact information</label>
+            <label htmlFor="medical">{volunteerFormQs.medical}</label>
             <Field
               id="medical"
               name="medical"
@@ -331,7 +332,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="emergencyContact" className="form-required">Emergency contact information</label>
+            <label htmlFor="emergencyContact" className="form-required">{volunteerFormQs.emergencyContact}</label>
             <Field
               id="emergencyContact"
               type="text"
@@ -345,7 +346,7 @@ const VolunteerFormComponent = ({
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="anything">Anything Else?</label>
+            <label htmlFor="anything">{volunteerFormQs.anything}</label>
             <Field
               id="anything"
               name="anything"

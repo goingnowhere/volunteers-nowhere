@@ -228,60 +228,7 @@
 </template>
 
 <template name="noInfoUserProfile">
-  {{#if Template.subscriptionsReady}}
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div class="raw">
-          <div class="col-md-3 col-lg-3 " align="center">
-            {{#if user.profile.picture}}
-              <img src="{{imageFileLink user.profile.picture}}" class="rounded-circle header-avatar img-fluid">
-            {{else}}
-              <!-- XXX this picture should be part of this module -->
-              <img src="/img/mr_nobody.jpg" class="rounded-circle header-avatar">
-            {{/if}}
-          </div>
-        </div>
-        <div class="row">
-          <table class="table table-user-information">
-            <tbody>
-              <tr><td>{{__ "name"}}</td><td>{{getUserName user._id}}
-                {{#if status.online}}<span class="text-success"> {{fa "circle"}}</span>{{/if}}
-              </td></tr>
-              <tr><td>{{__ "real_name"}}</td><td>{{user.profile.firstName}} {{user.profile.lastName}}</td></tr>
-              <tr><td>{{__ "ticket_number"}}</td><td>{{user.profile.ticketNumber}}</td></tr>
-              <tr><td>{{__ "email"}} </td>
-                <td>
-                  {{user.emails.[0].address}}
-                  {{#if user.emails.[0].verified}}
-                    <span class="text-success">{{fa 'check'}}</span>
-                  {{else}}
-                    <span class="text-danger">{{fa 'warning'}}</span>
-                  {{/if}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Volunteer data goes here
-        <!-- {{> formBuilderDisplay
-          formName=formName
-          form=form
-          user=user}} -->
-        </p>
-      </div>
-      <div class="col">
-        <h5 class="mb-2 dark-text">{{__ "responsibilities"}} </h5>
-        <div>{{> React component=UserResponsibilities userId=user._id }}</div>
-        <h2 class="header">{{__ "shifts" }}</h2>
-        <div>
-          {{> React component=BookedTable userId=user._id }}
-        </div>
-      </div>
-    </div>
-  </div>
-  {{/if}}
+  <div>{{> React component=NoInfoUserProfile userId=userId }}</div>
 </template>
 
 <template name="doubleBookingError">

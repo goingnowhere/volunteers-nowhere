@@ -4,21 +4,12 @@ import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { i18n } from 'meteor/universe:i18n'
 import { Bert } from 'meteor/themeteorchef:bert'
 import { Session } from 'meteor/session'
-import { SpacebarsCompiler } from 'meteor/spacebars-compiler'
 import 'flatpickr'
 import 'flatpickr/dist/flatpickr.css'
 
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
-import { UserResponsibilities } from '../components/volunteer/UserResponsibilities.jsx'
-
-const { BookedTableContainer } = Volunteers.components
-
-const applyContext = (function applyContext(body, context) {
-  const compiled = SpacebarsCompiler.compile(body, { isBody: true })
-  const content = Blaze.toHTML(Blaze.With(context, eval(compiled)))
-  return content
-})
+import { NoInfoUserProfile } from '../components/noinfo/NoInfoUserProfile.jsx'
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   const template = this
@@ -59,7 +50,7 @@ Template.noInfoUserList.helpers({
   userStats: () => Template.instance().userStats.get(),
 })
 
-const textSearch = (function textSearch(value, page, event) {
+const textSearch = (function textSearch(value, page) {
   const pages = Pages[page]
   // do this if you want to comulate multuple filters
   // let filters = pages.get("filters")
@@ -118,7 +109,7 @@ Template.userSearch.events({
 })
 
 Template.noInfoUserList.events({
-  'click [data-action="new_user"]': (event, template) => {
+  'click [data-action="new_user"]': () => {
     AutoFormComponents.ModalShowWithTemplate(
       'noInfoUser',
       this, 'User Form', 'lg',
@@ -127,12 +118,9 @@ Template.noInfoUserList.events({
 
   'click [data-action="user_form"]': (event, template) => {
     const userId = template.$(event.currentTarget).data('userid')
-    const form = Volunteers.Collections.VolunteerForm.findOne({ userId })
-    const user = Meteor.users.findOne(userId)
-    const userform = { formName: 'VolunteerForm', form, user }
     AutoFormComponents.ModalShowWithTemplate(
       'noInfoUserProfile',
-      userform, 'User Form', 'lg',
+      { userId }, 'User Form', 'lg',
     )
   },
 })
@@ -140,12 +128,9 @@ Template.noInfoUserList.events({
 Template.noInfoUserProfileLink.events({
   'click [data-action="user_form"]': (event, template) => {
     const userId = template.$(event.currentTarget).data('userid')
-    const form = Volunteers.Collections.VolunteerForm.findOne({ userId })
-    const user = Meteor.users.findOne(userId)
-    const userform = { formName: 'VolunteerForm', form, user }
     AutoFormComponents.ModalShowWithTemplate(
       'noInfoUserProfile',
-      userform, 'User Form', 'lg',
+      { userId }, 'User Form', 'lg',
     )
   },
 })
@@ -153,28 +138,11 @@ Template.noInfoUserProfileLink.events({
 Template.noInfoUser.onCreated(function onCreated() {
   const template = this
   const userId = template.data._id
-  template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
-})
-
-Template.noInfoUserProfile.onCreated(function onCreated() {
-  // const userform = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
-  // template.userform = new ReactiveVar()
-  const template = this
-  const { userId } = template.data
-  template.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
-  template.subscribe('meteor-user-profiles.ProfilePictures', userId)
-  template.user = new ReactiveVar()
-  template.autorun(() => {
-    const user = Meteor.users.findOne(userId)
-    template.user.set(user)
-  })
 })
 
 Template.noInfoUserProfile.helpers({
-  user: () => Template.instance().user.get(),
-  UserResponsibilities: () => UserResponsibilities,
-  BookedTable: () => BookedTableContainer,
+  NoInfoUserProfile: () => NoInfoUserProfile,
 })
 
 Template.noInfoUserProfileLink.onCreated(function onCreated() {
