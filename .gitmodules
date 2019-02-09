@@ -1,9 +1,6 @@
 [submodule "packages/meteor-autoform-components"]
 	path = packages/meteor-autoform-components
 	url = git@gitlab.com:abate/meteor-autoform-components.git
-[submodule "packages/meteor-formbuilder"]
-	path = packages/meteor-formbuilder
-	url = git@gitlab.com:abate/meteor-formbuilder.git
 [submodule "packages/meteor-roles"]
 	path = packages/meteor-roles
 	url = https://github.com/piemonkey/meteor-roles.git
@@ -15,7 +12,7 @@
 	url = git@github.com:abate/meteor-autoform-datetimepicker.git
 [submodule "packages/meteor-user-profiles"]
 	path = packages/meteor-user-profiles
-	url = git@gitlab.com:abate/meteor-user-profiles.git
+	url = git@gitlab.com:piemonkey/meteor-user-profiles.git
 [submodule "packages/meteor-mandrill"]
 	path = packages/meteor-mandrill
 	url = https://github.com/StorytellerCZ/meteor-mandrill.git
