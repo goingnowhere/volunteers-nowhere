@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import SimpleSchema from 'simpl-schema'
-import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions'
 import { MeteorProfile, Volunteers } from '../init'
 
-checkNpmVersions({ 'simpl-schema': '0.3.x' }, 'abate:meteor-user-profile')
 SimpleSchema.extendOptions(['autoform'])
 
 const profileSchema = MeteorProfile.Schemas.Profile
