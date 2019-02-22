@@ -8,7 +8,7 @@ import { T } from '../common/i18n'
 import { UserResponsibilities } from '../volunteer/UserResponsibilities.jsx'
 import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
 
-const { BookedTableContainer: BookedTable } = Volunteers.components
+const { BookedTable } = Volunteers.components
 const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
   <div className="container-fluid">
     {user && (

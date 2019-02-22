@@ -7,7 +7,7 @@ import { AutoForm } from 'meteor/aldeed:autoform'
 import { Volunteers } from '../../both/init'
 import { UserResponsibilities } from '../components/volunteer/UserResponsibilities.jsx'
 
-const { BookedTableContainer } = Volunteers.components
+const { BookedTable } = Volunteers.components
 
 Template.userDashboard.onCreated(function onCreated() {
   const template = this
@@ -20,7 +20,7 @@ Template.userDashboard.onCreated(function onCreated() {
 })
 
 Template.userDashboard.helpers({
-  BookedTable: () => BookedTableContainer,
+  BookedTable: () => BookedTable,
   UserResponsibilities: () => UserResponsibilities,
   userId: () => Meteor.userId(),
   bookedMissions: () => {

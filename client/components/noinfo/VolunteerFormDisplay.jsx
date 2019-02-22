@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { volunteerFormQs } from '../../../both/collections/users'
 
 const displayAnswer = answer => (answer instanceof Array
-  ? (<ul>{answer.map(ans => <li>{ans}</li>)}</ul>)
+  ? (<ul>{answer.map(ans => <li key={ans}>{ans}</li>)}</ul>)
   : answer
 )
 

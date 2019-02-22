@@ -40,6 +40,8 @@ module.exports = {
     ],
     'no-param-reassign': ['error', { props: false }],
     'implicit-arrow-linebreak': ['off'],
+    // Remove if we replace confirms with something better
+    'no-alert': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {

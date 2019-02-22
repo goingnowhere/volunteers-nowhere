@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 import React, { Component } from 'react'
