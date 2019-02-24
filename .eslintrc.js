@@ -30,11 +30,12 @@ module.exports = {
       named: 'never',
       asyncArrow: 'always',
     }],
-    'no-underscore-dangle': ['error', {
+    'no-underscore-dangle': ['off', {
         allow: [
           '_id',
           '_ensureIndex',
           '__',
+          '_name',
         ],
       },
     ],

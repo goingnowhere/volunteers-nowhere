@@ -160,17 +160,30 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
     (err, signupId) => {
       if (err) {
         switch (err.error) {
-          case 409:
-            Bert.alert({
-              hideDelay: 6500,
-              title: i18n.__('goingnowhere:volunteers', 'double_booking'),
-              /* XXX: add details of the other bookings stored in err.details */
-              /* message: applyContext(templatebody, err),  */
-              message: i18n.__('goingnowhere:volunteers', 'double_booking_msg'),
-              type: 'warning',
-              style: 'growl-top-right',
-            })
+          case 409: {
+            if (err.message === 'Double Booking') {
+              console.log('double booking')
+              Bert.alert({
+                hideDelay: 6500,
+                title: i18n.__('goingnowhere:volunteers', 'double_booking'),
+                /* XXX: add details of the other bookings stored in err.details */
+                /* message: applyContext(templatebody, err),  */
+                message: i18n.__('goingnowhere:volunteers', 'double_booking_msg'),
+                type: 'warning',
+                style: 'growl-top-right',
+              })
+            } else {
+              console.log('shift full')
+              Bert.alert({
+                hideDelay: 6500,
+                title: i18n.__('goingnowhere:volunteers', 'shift_full'),
+                message: i18n.__('goingnowhere:volunteers', 'shift_full_msg'),
+                type: 'warning',
+                style: 'growl-top-right',
+              })
+            }
             break
+          }
           default:
             Bert.alert({
               hideDelay: 6500,
@@ -184,13 +197,9 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
         if (duty === 'lead') {
           Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, signupId)
         } else {
-          Meteor.call(`${Volunteers.eventName}.Volunteers.${duty}Signups.update`, {
-            _id: signupId,
-            modifier: {
-              $set: {
-                status: 'confirmed',
-              },
-            },
+          Meteor.call(`${Volunteers.eventName}.Volunteers.${duty}Signups.setStatus`, {
+            id: signupId,
+            status: 'confirmed',
           })
         }
       }
