@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
+import moment from 'moment-timezone'
 
 import { MeteorProfile } from '../both/init'
 import {
@@ -9,15 +10,19 @@ import {
   isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
 import { ticketsCollection } from '../both/collections/users'
+import { EventSettings } from '../both/collections/settings'
+
+moment.tz.setDefault('Europe/Paris')
 
 Accounts.onCreateUser((options, user) => {
   const { email } = options
   let ticketId
   let profile
   if (Meteor.isProduction) {
+    const { fistOpenDate } = EventSettings.findOne()
     // Temporarily only allow @gn signups
-    if (process.env.DISABLE_SIGNUPS && !/@goingnowhere.org$/.test(email)) {
-      throw new Meteor.Error(401, 'You can\'t sign up yet, come back on 1st March')
+    if (moment(fistOpenDate).isAfter() && !/@goingnowhere.org$/.test(email)) {
+      throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)
     }
     const ticket = ticketsCollection.findOne({ email })
     if (!ticket) {

@@ -16,7 +16,6 @@ SimpleSchema.defineValidationErrorTransform((error) => {
 export const EventSettings = new Mongo.Collection('settings')
 
 const SettingsSchema = new SimpleSchema({
-
   buildPeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
     autoform: {
@@ -65,11 +64,21 @@ const SettingsSchema = new SimpleSchema({
     },
   },
 
+  fistOpenDate: {
+    type: Date,
+    autoform: {
+      type: 'flatpicker',
+      opts: {
+        altInput: true,
+        altFormat: 'F j, Y',
+      },
+    },
+  },
+
   cronFrequency: {
     type: String,
     optional: true,
     label: () => i18n.__('cron_frequency'),
-
   },
 
 }, { check })

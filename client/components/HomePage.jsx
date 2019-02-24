@@ -56,8 +56,8 @@ export const HomePage = () => (
           </div>
           <div className="col-md-4">
             <h4 className="text-uppercase mb-4">About this website</h4>
-            <p className="lead mb-0">Made with love
-              <a href="https://github.com/goingnowhere/volunteers-nowhere">See the Code</a>.
+            <p className="lead mb-0">
+              Made with love <a href="https://github.com/goingnowhere/volunteers-nowhere">See the Code</a>.
             </p>
           </div>
         </div>
