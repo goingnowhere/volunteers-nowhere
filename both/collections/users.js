@@ -84,7 +84,7 @@ Meteor.users.attachSchema(userSchema, { replace: true })
 
 export const volunteerFormQs = {
   about: 'How can you help?',
-  experience: 'Do you have experience as a volunteer at any burns?',
+  experience: 'What experience do you have as a volunteer at burn events?',
   skills: 'What skills can you contribute?',
   quirks: 'What do you look for in a shift?',
   gender: 'Gender',
