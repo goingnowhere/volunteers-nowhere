@@ -152,6 +152,8 @@ Template.noInfoUserProfileLink.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
+// TODO This duplicates logic from meteor-volunteers apply code and confirmation should happen in
+// the method not in the frontend
 const enrollEventCall = (function enrollEventCall(doc, enrollment) {
   const { duty, policy, ...rest } = doc
   const insert = { ...rest, ...enrollment, enrolled: true }

@@ -39,7 +39,7 @@ const HomePageComponent = ({ loaded, openDate }) => {
                     </button>
                   </Fragment>
                 ) : (
-                  <Link className="" to="/signup" className="btn btn-secondary">
+                  <Link to="/signup" className="btn btn-secondary">
                     Register now
                   </Link>
                 )
@@ -109,7 +109,6 @@ const HomePageComponent = ({ loaded, openDate }) => {
 export const HomePage = withTracker(() => {
   const settingsSub = Meteor.subscribe('eventSettings')
   const settings = EventSettings.findOne()
-  console.log({settings})
   return {
     loaded: settingsSub.ready(),
     openDate: settings && settings.fistOpenDate,
