@@ -11,7 +11,7 @@ import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
 const { BookedTable } = Volunteers.components
 const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
   <div className="container-fluid">
-    {user && (
+    {user && user.profile && (
       <div className="row">
         <div className="col">
           <div className="raw">
@@ -66,7 +66,7 @@ export const NoInfoUserProfile = withTracker(({ userId }) => {
   Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId)
   Meteor.subscribe('user.extra', userId)
   const user = Meteor.users.findOne(userId)
-  const picture = user && user.profile.picture
+  const picture = user && user.profile && user.profile.picture
     && MeteorProfile.ProfilePictures.findOne(user.profile.picture)
 
   return {
