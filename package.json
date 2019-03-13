@@ -21,6 +21,7 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-fontawesome": "^1.6.1",
+    "react-modal": "^3.8.1",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.3.0",
     "simpl-schema": "^1.5.5",
