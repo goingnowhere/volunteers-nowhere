@@ -19,7 +19,6 @@ module.exports = {
     ]
   },
   globals: {
-    Meteor: true,
     "_": false
   },
   rules: {

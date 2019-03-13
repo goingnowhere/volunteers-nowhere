@@ -5,6 +5,10 @@ html {
   scroll-behavior: smooth;
 }
 
+#react-root {
+  height: 100vh;
+}
+
 /* FONTS */
 h1, h2, h3 {
   font-family: 'Unica One' /*'Roboto Condensed'*/;
