@@ -12,8 +12,6 @@ const topLevelDivision = 'NOrg 2018'
 Template.managerView.onCreated(function onCreated() {
   const template = this
   template.divisionId = Volunteers.Collections.Division.findOne({ name: topLevelDivision })
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.Manager`)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.Manager`)
   template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.Manager`)
 })
 
@@ -38,47 +36,9 @@ Template.managerView.events({
     const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
   },
-  'click [data-action="sync-quicket"]': (event, template) => {
+  'click [data-action="sync-quicket"]': () => {
     Meteor.call('ticketList.sync')
   },
-})
-
-Template.managerView.helpers({
-  leads: () => {
-    const sel = { parentId: Template.instance().divisionId }
-    const deptIds = Volunteers.Collections.Department.find(sel).map(d => d._id)
-    return Volunteers.Collections.LeadSignups.find({ status: 'confirmed', parentId: { $in: deptIds } })
-  },
-  metaleads: () =>
-    Volunteers.Collections.LeadSignups.find({
-      status: 'confirmed',
-      parentId: Template.instance().divisionId,
-    }),
-  teamsNumber: deptId => Volunteers.Collections.Team.find({ parentId: deptId }).count(),
-  shiftsDept: (deptId) => {
-    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
-      const wanted = Volunteers.Collections.TeamShifts.find({ parentId: team._id }).count()
-      const covered = Volunteers.Collections.ShiftSignups.find({ parentId: team._id, status: 'confirmed' }).count()
-      return { wanted, covered }
-    })
-    return _.reduce(l, (s, acc) => ({
-      wanted: s.wanted + acc.wanted,
-      covered: s.covered + acc.covered,
-    }), { wanted: 0, covered: 0 })
-  },
-  allLeads: (deptId) => {
-    const l = Volunteers.Collections.Team.find({ parentId: deptId }).map((team) => {
-      const wanted = Volunteers.Collections.Lead.find({ parentId: team._id }).count()
-      const covered = Volunteers.Collections.LeadSignups.find({ parentId: team._id, status: 'confirmed' }).count()
-      return { wanted, covered }
-    })
-    return _.reduce(l, (s, acc) => ({
-      wanted: s.wanted + acc.wanted,
-      covered: s.covered + acc.covered,
-    }), { wanted: 0, covered: 0 })
-  },
-  allTeams: deptId => Volunteers.Collections.Team.find({ parentId: deptId }),
-  shiftsTeam: teamId => ({ wanted: 0, covered: 0 }),
 })
 
 Template.managerEventSettings.onCreated(function onCreated() {
