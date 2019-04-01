@@ -17,7 +17,7 @@ export const Button = memo(({
   disabled = false,
   className = '',
   onClick,
-}) => (type === 'link' ? (
+}) => (type === 'link' && href ? (
   <div className="at-signup-link">
     <p>
       {buttonTexts[id] && `${buttonTexts[id]} `}

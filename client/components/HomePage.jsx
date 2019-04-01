@@ -4,6 +4,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import moment from 'moment-timezone'
+import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 
 import { EventSettings } from '../../both/collections/settings'
 
@@ -106,7 +107,9 @@ const HomePageComponent = ({ loaded, openDate }) => {
   )
 }
 
-export const HomePage = withTracker(() => {
+export const HomePage = withTracker((props) => {
+  // Allows accounts-ui to redirect based on hashes such as for password resets
+  setRouterHistory(props.history)
   const settingsSub = Meteor.subscribe('eventSettings')
   const settings = EventSettings.findOne()
   return {
