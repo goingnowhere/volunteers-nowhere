@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -51,7 +52,11 @@ Template.metaleadDepartmentView.events({
   },
   'click [data-action="delete_team"]': (event, template) => {
     const teamId = template.$(event.currentTarget).data('id')
-    Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, teamId)
+    const team = Volunteers.Collections.Team.findOne(teamId)
+    // TODO translate
+    if (window.confirm(`Are you sure you want to delete the ${team.name} team entirely?`)) {
+      Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, teamId)
+    }
   },
   'click [data-action="enroll_lead"]': (event, template) => {
     const shiftId = template.$(event.currentTarget).data('shiftid')
