@@ -1,7 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
-export const HomeHeader = () => (
+export const HomeHeader = withRouter(() => (
   <nav className="navbar navbar-expand-lg bg-primary sticky-top text-uppercase" id="mainNav">
     <a className="navbar-brand" href="/">
       <img src="/img/compass.svg" className="img-fluid header-avatar" alt="" />
@@ -42,4 +42,4 @@ export const HomeHeader = () => (
       </ul>
     </div>
   </nav>
-)
+))
