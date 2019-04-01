@@ -12,6 +12,8 @@
       </div>
     </div>
     <h3 class="pt-2">{{__ "shifts_in_this_team"}}</h3>
-    {{> signupsListTeam team=team }}
+    {{#if Template.subscriptionsReady}}
+      {{> signupsListTeam team=team }}
+    {{/if}}
   </div>
   </template>
