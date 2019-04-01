@@ -5,6 +5,7 @@ const settings = {
   buildPeriod: { start: new Date(2018, 6, 11), end: new Date(2018, 7, 1) },
   eventPeriod: { start: new Date(2018, 7, 2), end: new Date(2018, 7, 8) },
   strikePeriod: { start: new Date(2018, 7, 9), end: new Date(2018, 7, 15) },
+  fistOpenDate: new Date(2018, 6, 31),
   earlyEntryMax: 120,
   barriosArrivalDate: new Date(2018, 6, 31),
   cronFrequency: 'every 15 mins',
