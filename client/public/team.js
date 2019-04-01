@@ -4,16 +4,16 @@ import { Volunteers } from '../../both/init'
 
 Template.publicTeamView.onCreated(function onCreated() {
   const template = this
-  const { _id: did, _teamId } = template.data
+  const { _teamId } = template.data
   template.team = new ReactiveVar({})
   const subs = [
-    template.subscribe(`${Volunteers.eventName}.Volunteers.department`, { _id: did }),
+    template.subscribe(`${Volunteers.eventName}.Volunteers.team`, { _id: _teamId }),
     // Period currently isn't used
     // template.subscribe('eventSettings').ready(),
   ]
-  template.subscribe(`${Volunteers.eventName}.ShiftSignups.byTeam`, did)
-  template.subscribe(`${Volunteers.eventName}.ProjectSignups.byTeam`, did)
-  template.subscribe(`${Volunteers.eventName}.LeadSignups.byTeam`, did)
+  template.subscribe(`${Volunteers.eventName}.ShiftSignups.byTeam`, _teamId)
+  template.subscribe(`${Volunteers.eventName}.ProjectSignups.byTeam`, _teamId)
+  template.subscribe(`${Volunteers.eventName}.LeadSignups.byTeam`, _teamId)
   template.autorun(() => {
     if (subs.every(sub => sub.ready())) {
       // const settings = EventSettings.findOne()
