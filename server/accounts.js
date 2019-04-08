@@ -19,7 +19,7 @@ Accounts.onCreateUser((options, user) => {
   let ticketId
   let profile
   if (Meteor.isProduction) {
-    const { fistOpenDate } = EventSettings.findOne()
+    const { fistOpenDate } = EventSettings.findOne() || {}
     // Temporarily only allow @gn signups
     if (moment(fistOpenDate).isAfter() && !/@goingnowhere.org$/.test(email)) {
       throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)

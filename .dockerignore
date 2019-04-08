@@ -1,2 +1,7 @@
+# Generic Meteor stuff
+.git
+.meteor/local
 node_modules/
+
+# Project specific
 server/env.json
