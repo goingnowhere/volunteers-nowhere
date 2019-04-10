@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
@@ -11,6 +12,7 @@ import { getContext, WrapEmailSend } from './email'
 import {
   isManagerMixin,
   isNoInfoMixin,
+  isSameUserOrManagerMixin,
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 import { config } from './config'
@@ -53,8 +55,9 @@ const ChangePasswordSchema = new SimpleSchema({
   password_again: String,
 })
 
-const adminChangeUserPasswordMethod = {
+export const adminChangeUserPassword = new ValidatedMethod({
   name: 'Accounts.adminChangeUserPassword',
+  mixins: [isSameUserOrManagerMixin],
   validate: ChangePasswordSchema.validator(),
   run(doc) {
     if (doc.password === doc.password_again) {
@@ -63,13 +66,7 @@ const adminChangeUserPasswordMethod = {
       throw new Meteor.Error('userError', "Passwords don't match")
     }
   },
-}
-
-export const adminChangeUserPassword =
-  ValidatedMethodWithMixin(
-    adminChangeUserPasswordMethod,
-    [isNoInfoMixin],
-  )
+})
 
 const sendNotificationEmailFunctionGeneric = (userId, template, selector, notification = false) => {
   if (userId) {

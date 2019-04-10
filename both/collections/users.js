@@ -13,6 +13,9 @@ profileSchema.extend({
     type: Boolean,
     optional: true,
     defaultValue: false,
+    autoform: {
+      omit: true,
+    },
   },
 })
 
