@@ -67,11 +67,13 @@ export const isManagerMixin = ({ run, ...methodOptions }) => ({
 
 export const isManagerOrLeadMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(...args) {
-    if (!Volunteers.isManagerOrLead()) {
+  run(first, ...args) {
+    // Check if lead of parentId from first argument if it has it
+    const teamId = first && typeof first === 'object' ? first.parentId : first
+    if (!Volunteers.isManagerOrLead(this.userId, teamId)) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(...args)
+    return run(first, ...args)
   },
 })
 

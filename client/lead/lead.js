@@ -6,6 +6,7 @@ import { AutoForm } from 'meteor/aldeed:autoform'
 import { Session } from 'meteor/session'
 import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
+import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 
 moment.tz.setDefault('Europe/Paris')
 
@@ -32,6 +33,7 @@ Template.leadTeamView.onRendered(() => {
 })
 
 Template.leadTeamView.helpers({
+  CsvExportButton: () => CsvExportButton,
   name: () => Template.instance().name.get(),
   parentId: () => Template.instance().parentId.get(),
   teamStats: () => {

@@ -211,3 +211,13 @@ export const syncQuicketTicketList = new ValidatedMethod({
     })
   },
 })
+
+export const teamRotaData = new ValidatedMethod({
+  name: 'team.rota',
+  mixins: [isManagerOrLeadMixin],
+  validate: null,
+  run(teamId) {
+    const shifts = Volunteers.Collections.TeamShifts.find({ parentId: teamId }).fetch()
+    return shifts
+  },
+})
