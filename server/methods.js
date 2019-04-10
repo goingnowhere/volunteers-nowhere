@@ -3,7 +3,6 @@ import { Accounts } from 'meteor/accounts-base'
 import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
-import { Roles } from 'meteor/piemonkey:roles'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { HTTP } from 'meteor/http'
 import { _ } from 'meteor/underscore'
@@ -13,7 +12,7 @@ import {
   isManagerMixin,
   isNoInfoMixin,
   isSameUserOrManagerMixin,
-  ValidatedMethodWithMixin,
+  isManagerOrLeadMixin,
 } from '../both/authMixins'
 import { config } from './config'
 import { ticketsCollection } from '../both/collections/users'
@@ -32,22 +31,17 @@ const EnrollUserSchema = new SimpleSchema({
   'profile.ticketNumber': String,
 })
 
-const enrollUserMethod = {
+export const enrollUser = ({
   name: 'Accounts.enrollUserCustom',
   validate: EnrollUserSchema.validator(),
-  run(user) {
+  mixins: [isManagerMixin],
+  run() {
+  // run(user) {
     throw new Meteor.Error(501)
-    const userId = Accounts.createUser(user)
-    Accounts.sendEnrollmentEmail(userId)
+    // const userId = Accounts.createUser(user)
+    // Accounts.sendEnrollmentEmail(userId)
   },
-}
-
-// create a new user and send an enrollment message
-export const enrollUser =
-  ValidatedMethodWithMixin(
-    enrollUserMethod,
-    [isManagerMixin],
-  )
+})
 
 const ChangePasswordSchema = new SimpleSchema({
   userId: String,
@@ -106,33 +100,24 @@ export const sendEnrollmentNotificationEmailFunction = userId =>
 export const sendReviewNotificationEmailFunction = userId =>
   sendNotificationEmailFunctionGeneric(userId, 'reviewed', { reviewed: true })
 
-const sendEnrollmentNotificationEmailMethod = {
+export const sendEnrollmentNotificationEmail = new ValidatedMethod({
   name: 'email.sendEnrollmentNotifications',
   validate: null,
+  mixins: [isNoInfoMixin],
   run: userId => sendNotificationEmailFunctionGeneric(userId, 'shiftReminder', {}, null),
-}
+})
 
-export const sendNotificationEmail =
-ValidatedMethodWithMixin(
-  sendEnrollmentNotificationEmailMethod,
-  [isNoInfoMixin],
-)
-
-const sendReviewNotificationEmailMethod = {
+export const sendReviewNotificationEmail = new ValidatedMethod({
   name: 'email.sendReviewNotifications',
   validate: null,
+  mixins: [isNoInfoMixin],
   run: sendReviewNotificationEmailFunction,
-}
+})
 
-export const sendReviewNotificationEmail =
-ValidatedMethodWithMixin(
-  sendReviewNotificationEmailMethod,
-  [isNoInfoMixin],
-)
-
-const userStatsMethod = {
+export const userStats = ({
   name: 'users.stats',
   validate: null,
+  mixins: [isNoInfoMixin],
   run() {
     const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 0 } }).count()
     const enrollmentSent = Meteor.users.find({ 'profile.invitationSent': true }).count()
@@ -160,45 +145,7 @@ const userStatsMethod = {
       online,
     }
   },
-}
-
-export const userStats =
-  ValidatedMethodWithMixin(
-    userStatsMethod,
-    [isNoInfoMixin],
-  )
-
-const resetUserMethod = {
-  name: 'Accounts.resetUser',
-  validate: null,
-  run(userId) {
-    throw new Meteor.Error(501, 'I don\'t think we should have this method')
-    Meteor.users.update(
-      userId,
-      {
-        $set: {
-          'profile.firstName': 'test',
-          'profile.ticketNumber': 12345678,
-          'profile.terms': false,
-          'profile.lastName': '',
-          'profile.nickname': '',
-        },
-      },
-    )
-    Volunteers.Collections.VolunteerForm.remove({ userId })
-    Volunteers.Collections.ShiftSignups.remove({ userId })
-    Volunteers.Collections.ProjectSignups.remove({ userId })
-    Volunteers.Collections.LeadSignups.remove({ userId })
-    Volunteers.Collections.TaskSignups.remove({ userId })
-    Roles.removeUsersFromRoles(userId, Roles.getRolesForUser(userId))
-  },
-}
-
-export const resetUser =
-  ValidatedMethodWithMixin(
-    resetUserMethod,
-    [isManagerMixin],
-  )
+})
 
 const prepTicketData = (guest) => {
   const ticketInfo = guest.TicketInformation
@@ -216,7 +163,7 @@ const prepTicketData = (guest) => {
 export const syncQuicketTicketList = new ValidatedMethod({
   name: 'ticketList.sync',
   mixins: [isManagerMixin],
-  validate: () => {},
+  validate: null,
   run() {
     const { statusCode, data: { results, pages } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/guests`, {
       headers: {
