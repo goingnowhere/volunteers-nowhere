@@ -6,6 +6,7 @@ import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { HTTP } from 'meteor/http'
 import { _ } from 'meteor/underscore'
+import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { getContext, WrapEmailSend } from './email'
 import {
@@ -16,6 +17,8 @@ import {
 } from '../both/authMixins'
 import { config } from './config'
 import { ticketsCollection } from '../both/collections/users'
+
+moment.tz.setDefault('Europe/Paris')
 
 Meteor.methods({
   sendVerificationEmail() {
@@ -177,7 +180,8 @@ export const syncQuicketTicketList = new ValidatedMethod({
     })
     if (statusCode !== 200) throw new Meteor.Error(500, 'Problem calling Quicket')
     if (pages !== 0) throw new Meteor.Error(501, 'Need to implement pagination')
-    // const guestsByTicketId = results.reduce((map, guest) => map.set(guest.TicketId, guest), new Map()), 'TicketId')
+    // const guestsByTicketId = results.reduce((map, guest) =>
+    // map.set(guest.TicketId, guest), new Map()), 'TicketId')
     const guestsByTicketId = _.indexBy(results, 'TicketId')
     const ticketChanges = ticketsCollection.find({}, {
       barcode: true,
@@ -212,12 +216,63 @@ export const syncQuicketTicketList = new ValidatedMethod({
   },
 })
 
+const mapCsvExport = {
+  shift({ shift, user }) {
+    return {
+      shift: shift.title,
+      start: moment(shift.start).format('DD/MM/YYYY HH:mm'),
+      end: moment(shift.end).format('DD/MM/YYYY HH:mm'),
+      name: user.profile.nickname || user.profile.firstName,
+      email: user.emails[0].address,
+      fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
+    }
+  },
+  project({ shift, user, ...signup }) {
+    return {
+      shift: shift.title,
+      start: moment(signup.start).format('DD/MM/YYYY'),
+      end: moment(signup.end).format('DD/MM/YYYY'),
+      name: user.profile.nickname || user.profile.firstName,
+      email: user.emails[0].address,
+      fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
+    }
+  },
+}
+
 export const teamRotaData = new ValidatedMethod({
   name: 'team.rota',
   mixins: [isManagerOrLeadMixin],
   validate: null,
   run(teamId) {
-    const shifts = Volunteers.Collections.TeamShifts.find({ parentId: teamId }).fetch()
-    return shifts
+    return _.flatten([
+      'shift',
+      'project',
+      // 'task',
+    ].map(type => Volunteers.Collections.signupCollections[type].aggregate([
+      {
+        $match: {
+          parentId: teamId,
+          status: 'confirmed',
+        },
+      },
+      {
+        $lookup: {
+          from: Meteor.users._name,
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: { path: '$user' } },
+      {
+        $lookup: {
+          from: Volunteers.Collections.dutiesCollections[type]._name,
+          localField: 'shiftId',
+          foreignField: '_id',
+          as: 'shift',
+        },
+      },
+      { $unwind: { path: '$shift' } },
+    ]).map(mapCsvExport[type])))
   },
 })
