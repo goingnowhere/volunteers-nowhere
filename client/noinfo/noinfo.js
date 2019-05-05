@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -163,8 +164,7 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
       if (err) {
         switch (err.error) {
           case 409: {
-            if (err.message === 'Double Booking') {
-              console.log('double booking')
+            if (err.reason === 'Double Booking') {
               Bert.alert({
                 hideDelay: 6500,
                 title: i18n.__('goingnowhere:volunteers', 'double_booking'),
@@ -175,7 +175,6 @@ const enrollEventCall = (function enrollEventCall(doc, enrollment) {
                 style: 'growl-top-right',
               })
             } else {
-              console.log('shift full')
               Bert.alert({
                 hideDelay: 6500,
                 title: i18n.__('goingnowhere:volunteers', 'shift_full'),
