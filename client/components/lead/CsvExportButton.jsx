@@ -10,7 +10,7 @@ const rotaCsv = teamId => () => Meteor.call('team.rota', teamId, (err, shifts) =
   if (err) {
     console.error(err)
   } else {
-    const csv = parse(shifts)
+    const csv = parse(shifts, { withBOM: true })
     saveAs(new Blob([csv], { type: 'text/csv;charset=utf-8' }), 'rota.csv')
   }
 })
