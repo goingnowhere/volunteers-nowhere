@@ -1,4 +1,5 @@
 import React from 'react'
+import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 // import { Link } from 'react-router-dom'
 import { Volunteers } from '../../../both/init'
@@ -29,7 +30,7 @@ export const UserResponsibilitiesComponent = ({
   </ul>
 )
 
-export const UserResponsibilities = withTracker(({ userIdIn }) => {
+export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
   const userId = userIdIn || Meteor.userId()
   const isManager = Volunteers.isManager(userId)
   const leadSignupTeamIds = Volunteers.Collections.LeadSignups.find({ userId, status: 'confirmed' })
