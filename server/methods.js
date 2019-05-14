@@ -235,6 +235,7 @@ const mapCsvExport = {
       end: moment(signup.end).format('DD/MM/YYYY'),
       name: user.profile.nickname || user.profile.firstName,
       email: user.emails[0].address,
+      ticket: user.ticketId || '',
       fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
     }
   },
