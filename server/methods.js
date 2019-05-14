@@ -224,6 +224,7 @@ const mapCsvExport = {
       end: moment(shift.end).format('DD/MM/YYYY HH:mm'),
       name: user.profile.nickname || user.profile.firstName,
       email: user.emails[0].address,
+      ticket: user.ticketId || '',
       fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
     }
   },
@@ -239,40 +240,53 @@ const mapCsvExport = {
   },
 }
 
+const getTeamRotaCsv = teamId => _.flatten([
+  'shift',
+  'project',
+  // 'task',
+].map(type => Volunteers.Collections.signupCollections[type].aggregate([
+  {
+    $match: {
+      parentId: teamId,
+      status: 'confirmed',
+    },
+  },
+  {
+    $lookup: {
+      from: Meteor.users._name,
+      localField: 'userId',
+      foreignField: '_id',
+      as: 'user',
+    },
+  },
+  { $unwind: { path: '$user' } },
+  {
+    $lookup: {
+      from: Volunteers.Collections.dutiesCollections[type]._name,
+      localField: 'shiftId',
+      foreignField: '_id',
+      as: 'shift',
+    },
+  },
+  { $unwind: { path: '$shift' } },
+]).map(mapCsvExport[type])))
+
 export const teamRotaData = new ValidatedMethod({
   name: 'team.rota',
   mixins: [isManagerOrLeadMixin],
   validate: null,
-  run(teamId) {
-    return _.flatten([
-      'shift',
-      'project',
-      // 'task',
-    ].map(type => Volunteers.Collections.signupCollections[type].aggregate([
-      {
-        $match: {
-          parentId: teamId,
-          status: 'confirmed',
-        },
-      },
-      {
-        $lookup: {
-          from: Meteor.users._name,
-          localField: 'userId',
-          foreignField: '_id',
-          as: 'user',
-        },
-      },
-      { $unwind: { path: '$user' } },
-      {
-        $lookup: {
-          from: Volunteers.Collections.dutiesCollections[type]._name,
-          localField: 'shiftId',
-          foreignField: '_id',
-          as: 'shift',
-        },
-      },
-      { $unwind: { path: '$shift' } },
-    ]).map(mapCsvExport[type])))
+  run: getTeamRotaCsv,
+})
+
+export const deptRotaData = new ValidatedMethod({
+  name: 'dept.rota',
+  mixins: [isManagerOrLeadMixin],
+  validate: null,
+  run(deptId) {
+    return _.flatten(
+      Volunteers.Collections.Team.find({ parentId: deptId })
+        .map(team => getTeamRotaCsv(team._id).map(rotaItem => ({ ...rotaItem, team: team.name }))),
+      true,
+    )
   },
 })

@@ -6,7 +6,7 @@ import { parse } from 'json2csv'
 
 import { T } from '../common/i18n'
 
-const rotaCsv = teamId => () => Meteor.call('team.rota', teamId, (err, shifts) => {
+const rotaCsv = (teamId, unitType) => () => Meteor.call(`${unitType}.rota`, teamId, (err, shifts) => {
   if (err) {
     console.error(err)
   } else {
@@ -15,8 +15,8 @@ const rotaCsv = teamId => () => Meteor.call('team.rota', teamId, (err, shifts) =
   }
 })
 
-export const CsvExportButton = ({ teamId }) => (
-  <button type="button" className="btn btn-light btn-sm" onClick={rotaCsv(teamId)}>
+export const CsvExportButton = ({ teamId, unitType = 'team' }) => (
+  <button type="button" className="btn btn-light btn-sm" onClick={rotaCsv(teamId, unitType)}>
     <Fa name="file" /> <T>rota_export</T>
   </button>
 )

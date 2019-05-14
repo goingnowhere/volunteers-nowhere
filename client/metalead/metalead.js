@@ -4,6 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
+import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 
 Template.metaleadDepartmentView.onCreated(function onCreated() {
   const template = this
@@ -86,6 +87,7 @@ Template.metaleadDepartmentView.events({
 })
 
 Template.metaleadDepartmentView.helpers({
+  CsvExportButton: () => CsvExportButton,
   name: () => Template.instance().name.get(),
   dept: () => {
     const parentId = Template.currentData()._id
