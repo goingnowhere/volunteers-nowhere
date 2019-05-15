@@ -21,6 +21,7 @@ Accounts.ui.config({
   onSignedInHook: '/dashboard',
   onVerifyEmailHook: '/profile',
   onResetPasswordHook: '/password',
+  emailPattern: /[^@]+@[A-Za-z0-9-]{1,63}\.[A-Za-z0-9-]+/,
 })
 
 Accounts.onLogin(() => {
