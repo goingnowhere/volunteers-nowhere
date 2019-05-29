@@ -41,7 +41,7 @@
         <button type="button" class="btn btn-light btn-sm" data-action="early_entry">
           {{fa "calendar"}} {{__ "early_entry" }}
         </button>
-        <div>{{> React component=CsvExportButton teamId=_id unitType="dept" }}</div>
+        <div>{{> React component=CsvExportButton method="dept.rota" buttonText="rota_export" filename="rota" deptId=_id }}</div>
       </div>
       <div class="{{#if $eq pendingLeadRequests 0}}col{{else}}col-6{{/if}}">
         <h2 class="header">{{__ "all_teams"}}</h2>

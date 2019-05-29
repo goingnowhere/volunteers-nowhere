@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating'
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
 import { EventSettings } from '../../both/collections/settings'
+import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
@@ -17,6 +18,10 @@ Template.managerView.onCreated(function onCreated() {
 
 Template.managerView.onRendered(() => {
   this.$('[data-toggle="tooltip"]').tooltip()
+})
+
+Template.managerView.helpers({
+  CsvExportButton: () => CsvExportButton,
 })
 
 Template.managerView.events({

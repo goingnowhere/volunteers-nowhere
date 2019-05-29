@@ -6,17 +6,22 @@ import { parse } from 'json2csv'
 
 import { T } from '../common/i18n'
 
-const rotaCsv = (teamId, unitType) => () => Meteor.call(`${unitType}.rota`, teamId, (err, shifts) => {
+const callForCsv = (method, filename, args) => () => Meteor.call(method, args, (err, data) => {
   if (err) {
     console.error(err)
   } else {
-    const csv = parse(shifts, { withBOM: true })
-    saveAs(new Blob([csv], { type: 'text/csv;charset=utf-8' }), 'rota.csv')
+    const csv = parse(data, { withBOM: true })
+    saveAs(new Blob([csv], { type: 'text/csv;charset=utf-8' }), filename)
   }
 })
 
-export const CsvExportButton = ({ teamId, unitType = 'team' }) => (
-  <button type="button" className="btn btn-light btn-sm" onClick={rotaCsv(teamId, unitType)}>
-    <Fa name="file" /> <T>rota_export</T>
+export const CsvExportButton = ({
+  method = 'team.rota',
+  buttonText,
+  filename,
+  ...args
+}) => (
+  <button type="button" className="btn btn-light btn-sm" onClick={callForCsv(method, filename, args)}>
+    <Fa name="file" /> <T>{buttonText}</T>
   </button>
 )

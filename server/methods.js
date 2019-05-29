@@ -6,7 +6,8 @@ import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { HTTP } from 'meteor/http'
 import { _ } from 'meteor/underscore'
-import moment from 'moment-timezone'
+import Moment from 'moment-timezone'
+import { extendMoment } from 'moment-range'
 import { Volunteers } from '../both/init'
 import { getContext, WrapEmailSend } from './email'
 import {
@@ -16,8 +17,10 @@ import {
   isManagerOrLeadMixin,
 } from '../both/authMixins'
 import { config } from './config'
-import { ticketsCollection } from '../both/collections/users'
+import { ticketsCollection, allergies, intolerances } from '../both/collections/users'
+import { EventSettings } from '../both/collections/settings'
 
+const moment = extendMoment(Moment)
 moment.tz.setDefault('Europe/Paris')
 
 Meteor.methods({
@@ -241,7 +244,7 @@ const mapCsvExport = {
   },
 }
 
-const getTeamRotaCsv = teamId => _.flatten([
+const getTeamRotaCsv = ({ teamId }) => _.flatten([
   'shift',
   'project',
   // 'task',
@@ -283,11 +286,69 @@ export const deptRotaData = new ValidatedMethod({
   name: 'dept.rota',
   mixins: [isManagerOrLeadMixin],
   validate: null,
-  run(deptId) {
+  run({ deptId }) {
     return _.flatten(
       Volunteers.Collections.Team.find({ parentId: deptId })
-        .map(team => getTeamRotaCsv(team._id).map(rotaItem => ({ ...rotaItem, team: team.name }))),
+        .map(team => getTeamRotaCsv({ teamId: team._id })
+          .map(rotaItem => ({ ...rotaItem, team: team.name }))),
       true,
     )
+  },
+})
+
+export const cantinaSetupData = new ValidatedMethod({
+  name: 'cantina.setup',
+  mixins: [isManagerMixin], // TODO allow cantina lead?
+  validate: null,
+  run() {
+    const { buildPeriod } = EventSettings.findOne()
+    const signups = Volunteers.Collections.ProjectSignups.aggregate([
+      {
+        $match: {
+          status: 'confirmed',
+          start: {
+            $lte: buildPeriod.end,
+          },
+          end: {
+            $gte: buildPeriod.start,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: Volunteers.Collections.VolunteerForm._name,
+          localField: 'userId',
+          foreignField: 'userId',
+          as: 'user',
+        },
+      },
+      { $unwind: { path: '$user' } },
+    ])
+    const buildRange = moment.range(buildPeriod.start, buildPeriod.end)
+    return Array.from(buildRange.by('days')).map((day) => {
+      const dailyVolunteers = signups
+        .filter(signup => day.isSameOrAfter(signup.start) && day.isSameOrBefore(signup.end))
+        .map(signup => signup.user)
+      const groups = _.groupBy(dailyVolunteers, 'food')
+      const allergyCounts = {}
+      allergies.forEach((allergy) => {
+        allergyCounts[`${allergy} allergy`] = dailyVolunteers
+          .filter(vol => vol.allergies.includes(allergy)).length
+      })
+      const intoleranceCounts = {}
+      intolerances.forEach((intolerance) => {
+        intoleranceCounts[`${intolerance} intolerance`] = dailyVolunteers
+          .filter(vol => vol.intolerances.includes(intolerance)).length
+      })
+      return {
+        date: day.format('DD/MM/YYYY'),
+        omnivore: (groups.omnivore || []).length,
+        vegetarian: (groups.vegetarian || []).length,
+        vegan: (groups.vegan || []).length,
+        fish: (groups.fish || []).length,
+        ...allergyCounts,
+        ...intoleranceCounts,
+      }
+    })
   },
 })

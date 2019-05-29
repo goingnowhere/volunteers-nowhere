@@ -100,6 +100,10 @@ export const volunteerFormQs = {
   anything: 'Anything Else?',
 }
 
+export const dietGroups = ['omnivore', 'vegetarian', 'vegan', 'fish']
+export const allergies = ['celiac', 'shellfish', 'nuts/peanuts', 'treenuts', 'soy', 'egg']
+export const intolerances = ['gluten', 'peppers', 'shellfish', 'nuts', 'egg', 'lactose', 'other']
+
 export const volunteerFormSchema = new SimpleSchema({
   about: {
     type: String,
@@ -116,7 +120,7 @@ export const volunteerFormSchema = new SimpleSchema({
   },
   food: {
     type: String,
-    allowedValues: ['omnivore', 'vegetarian', 'vegan', 'fish'],
+    allowedValues: dietGroups,
     optional: true,
   },
   allergies: {
@@ -125,7 +129,7 @@ export const volunteerFormSchema = new SimpleSchema({
   },
   'allergies.$': {
     type: String,
-    allowedValues: ['celiac', 'shellfish', 'nuts/peanuts', 'treenuts', 'soy', 'egg'],
+    allowedValues: allergies,
   },
   intolerances: {
     type: Array,
@@ -133,7 +137,7 @@ export const volunteerFormSchema = new SimpleSchema({
   },
   'intolerances.$': {
     type: String,
-    allowedValues: ['gluten', 'peppers', 'shellfish', 'nuts', 'egg', 'lactose', 'other'],
+    allowedValues: intolerances,
   },
   medical: {
     type: String,
