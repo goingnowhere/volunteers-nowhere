@@ -16,6 +16,7 @@ import {
   Password,
 } from './components/accounts/accountsUI/pages.jsx'
 import { VolunteerForm } from './components/volunteer/VolunteerForm.jsx'
+import { ManagerDashboard } from './components/manager/ManagerDashboard.jsx'
 import { LoggedInRoute } from './components/LoggedInRoute.jsx'
 import { VerifyEmail } from './components/VerifyEmail.jsx'
 
@@ -45,7 +46,7 @@ export const Routes = () => (
         <LoggedInRoute path="/manager/eventSettings" component={memo(() => <Blaze template="managerEventSettings" />)} />
         <LoggedInRoute path="/manager/emailForms" component={memo(() => <Blaze template="managerEmailForms" />)} />
         <LoggedInRoute path="/manager/userList" component={memo(() => <Blaze template="managerUserList" page="ManagerUserPages" />)} />
-        <LoggedInRoute path="/manager" component={memo(() => <Blaze template="managerView" />)} />
+        <LoggedInRoute path="/manager" component={ManagerDashboard} />
         {/* FIXME needs to check for NoInfo lead */}
         <LoggedInRoute path="/noinfo/newuser" component={memo(() => <Blaze template="noInfoNewUser" />)} />
         <LoggedInRoute path="/noinfo/userList" component={memo(() => <Blaze template="noInfoUserList" page="NoInfoUserPages" />)} />

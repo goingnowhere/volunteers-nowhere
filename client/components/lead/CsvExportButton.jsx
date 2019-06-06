@@ -11,7 +11,7 @@ const callForCsv = (method, filename, args) => () => Meteor.call(method, args, (
     console.error(err)
   } else {
     const csv = parse(data, { withBOM: true })
-    saveAs(new Blob([csv], { type: 'text/csv;charset=utf-8' }), filename)
+    saveAs(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `${filename}.csv`)
   }
 })
 

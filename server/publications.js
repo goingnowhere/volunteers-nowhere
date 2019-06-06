@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { MeteorProfile, Volunteers } from '../both/init'
 
@@ -23,6 +24,8 @@ Meteor.publish('user.extra', function publishUserExtra(userId = this.userId) {
     || Volunteers.isLead()) { // a lead or metalead asking
     return Meteor.users.find({ _id: userId }, {
       fields: {
+        emails: true,
+        profile: true,
         ticketId: true,
         status: true,
         isBanned: true,

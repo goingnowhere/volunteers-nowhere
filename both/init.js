@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
