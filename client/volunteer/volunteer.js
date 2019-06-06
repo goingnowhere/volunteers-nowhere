@@ -1,13 +1,13 @@
 import 'bootstrap'
 import 'bootstrap-select'
 import 'bootstrap-select/dist/css/bootstrap-select.css'
+import { Meteor } from 'meteor/meteor'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { BookedTable } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../../both/init'
 import { UserResponsibilities } from '../components/volunteer/UserResponsibilities.jsx'
-
-const { BookedTable } = Volunteers.components
 
 Template.userDashboard.onCreated(function onCreated() {
   const template = this
@@ -26,9 +26,9 @@ Template.userDashboard.helpers({
   bookedMissions: () => {
     const sel = { status: { $in: ['confirmed', 'pending'] } }
     return (
-      (Volunteers.Collections.ShiftSignups.find(sel).count() > 0) ||
-      (Volunteers.Collections.ProjectSignups.find(sel).count() > 0) ||
-      (Volunteers.Collections.TaskSignups.find(sel).count() > 0)
+      (Volunteers.Collections.ShiftSignups.find(sel).count() > 0)
+      || (Volunteers.Collections.ProjectSignups.find(sel).count() > 0)
+      || (Volunteers.Collections.TaskSignups.find(sel).count() > 0)
     )
   },
 })
@@ -79,8 +79,8 @@ Template.filteredSignupsList.helpers({
   quirks: Volunteers.getQuirksList,
   signupsListProps: () => {
     const instance = Template.instance()
-    const { quirks, skills } =
-      Volunteers.Collections.VolunteerForm.findOne({ userId: Meteor.userId() }) || {}
+    const { quirks, skills } = Volunteers.Collections.VolunteerForm
+      .findOne({ userId: Meteor.userId() }) || {}
     return {
       dutyType: instance.type.get(),
       filters: {

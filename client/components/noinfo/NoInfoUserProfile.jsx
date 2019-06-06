@@ -3,12 +3,12 @@ import React from 'react'
 import Fa from 'react-fontawesome'
 import { withTracker } from 'meteor/react-meteor-data'
 import { displayName } from 'meteor/abate:meteor-user-profiles'
+import { BookedTable } from 'meteor/goingnowhere:volunteers'
 import { Volunteers, MeteorProfile } from '../../../both/init'
 import { T } from '../common/i18n'
 import { UserResponsibilities } from '../volunteer/UserResponsibilities.jsx'
 import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
 
-const { BookedTable } = Volunteers.components
 const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
   <div className="container-fluid">
     {user && user.profile && (
