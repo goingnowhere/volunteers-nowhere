@@ -120,34 +120,23 @@ export const sendReviewNotificationEmail = new ValidatedMethod({
   run: sendReviewNotificationEmailFunction,
 })
 
-export const userStats = ({
+export const userStats = new ValidatedMethod({
   name: 'users.stats',
   validate: null,
   mixins: [isNoInfoMixin],
   run() {
-    const ticketHolders = Meteor.users.find({ 'profile.ticketNumber': { $ne: 0 } }).count()
-    const enrollmentSent = Meteor.users.find({ 'profile.invitationSent': true }).count()
-    const enrollmentAck = Meteor.users.find({
-      'profile.invitationSent': true,
-      'profile.terms': true,
-      'profile.ticketNumber': { $ne: 0 },
-    }).count()
-    const manualRegistration = Meteor.users.find({
-      'profile.ticketNumber': 0,
-      'profile.terms': true,
-    }).count()
+    const volunteers = Meteor.users.find().count()
+    const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
+    const leads = Meteor.users.find({ ticketId: { $exists: false } }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
-    const profileFilled = Volunteers.Collections.VolunteerForm.find().count()
     const withDuties = Promise.await(Volunteers.Collections.ShiftSignups.rawCollection().distinct('userId'))
     const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
     return {
-      ticketHolders,
-      enrollmentSent,
-      enrollmentAck,
-      profileFilled,
+      volunteers,
+      bioFilled,
       withDuties: withDuties.length,
       withPicture,
-      manualRegistration,
+      leads,
       online,
     }
   },
