@@ -1,15 +1,17 @@
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
 import { SyncedCron } from 'meteor/littledata:synced-cron'
-import { EmailForms } from 'meteor/abate:email-forms'
 import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/collections/settings'
-import { getContext, WrapEmailSend } from './email'
 import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
 } from './methods'
 
 moment.tz.setDefault('Europe/Paris')
+
+const signupGcBackup = new Mongo.Collection('signupGcBackup')
 
 const signupsGC = (time) => {
   SyncedCron.add({
@@ -18,28 +20,31 @@ const signupsGC = (time) => {
       return parser.text(time)
     },
     job() {
-      const today = moment().subtract(7, 'days').startOf('day').toDate()
-      const sel = { status: { $in: ['bailed'] }, createdAt: { $lt: today } }
-      Volunteers.Collections.ShiftSignups.find(sel).forEach((signup) => {
-        console.log('remove signup (bailed): GC ', signup)
-        Volunteers.Collections.ShiftSignups.remove(signup._id)
-      })
-      Volunteers.Collections.ShiftSignups.find().forEach((signup) => {
-        const user = Meteor.users.findOne({ _id: signup.userId })
-        if (!user) {
-          console.log('remove signup: user not found', signup)
-          Volunteers.Collections.ShiftSignups.remove(signup._id)
-        }
-        const shift = Volunteers.Collections.TeamShifts.findOne({ _id: signup.shiftId })
-        if (!shift) {
-          console.log('remove signup: shift not found', signup)
-          Volunteers.Collections.ShiftSignups.remove(signup._id)
-        }
-        const team = Volunteers.Collections.Team.findOne({ _id: signup.parentId })
-        if (!team) {
-          console.log('remove signup: team not found', signup)
-          Volunteers.Collections.ShiftSignups.remove(signup._id)
-        }
+      ['lead', 'shift', 'project'].forEach((duty) => {
+        Volunteers.Collections.signupCollections[duty].aggregate([{
+          $match: {
+            status: {
+              $in: ['confirmed', 'pending'],
+            },
+          },
+        }, {
+          $lookup: {
+            from: Volunteers.Collections.dutiesCollections[duty]._name,
+            localField: 'shiftId',
+            foreignField: '_id',
+            as: 'shift',
+          },
+        }, {
+          $match: {
+            shift: {
+              $size: 0,
+            },
+          },
+        }]).forEach((signup) => {
+          console.log(`remove signup: ${duty} not found`, signup)
+          signupGcBackup.insert({ duty, signup })
+          Volunteers.Collections.signupCollections[duty].remove(signup._id)
+        })
       })
     },
   })
@@ -96,65 +101,15 @@ const ReviewTask = (time) => {
   })
 }
 
-// TODO update and re-use for @gn email users who don't have linked tickets
-const EarlyAdopterEmailsTask = (time) => {
-  // Email users with no ticket to get them to link their ticket email
-  SyncedCron.add({
-    name: 'EarlyAdopterEmails',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job() {
-      const sel = { 'profile.ticketNumber': 0 }
-      Meteor.users.find(sel, { limit: 10 }).forEach((user) => {
-        const doc = EmailForms.previewTemplate('earlyAdoptersEmail', user, getContext)
-        try {
-          console.log(`Sending early adopters remident for ${user.emails[0].address}`)
-          WrapEmailSend(user, doc)
-        } catch (error) {
-          console.log(`Sending early adopters remident for ${user.emails[0].address}: ${error}`)
-        }
-      })
-    },
-  })
-}
-
-// TODO also re-use for @gn emails
-const EarlyAdopterFixTicketTask = (time) => {
-  SyncedCron.add({
-    name: 'EarlyAdopterFixTicket',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job() {
-      const sel = { 'profile.ticketNumber': 0 }
-      Meteor.users.find(sel).forEach((user) => {
-        const emails = user.emails.map(email => _.pluck(email, 'address'))
-        emails.forEach((address) => {
-          const tickets = Tickets.find({ email: address }).fetch()
-          if (tickets.length === 1) {
-            console.log(`fix ticker numer for ${emails[0]}`)
-            Meteor.users.update(user._id, { $set: { 'profile.ticketNumber': tickets[0].ticketNumber } })
-          } else if (tickets.length > 1) {
-            console.log('Double snowflake ', emails, tickets)
-          }
-        })
-      })
-    },
-  })
-}
-
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
 
-    EnrollmentTask('every 10 mins')
-    ReviewTask('every 12 mins')
+    // EnrollmentTask('every 10 mins')
+    // ReviewTask('every 12 mins')
 
-    // EarlyAdopterEmailsTask('every 30 mins')
-    // EarlyAdopterFixTicketTask('every 30 mins')
-    signupsGC('every 10 days')
+    signupsGC('every 3 days')
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
