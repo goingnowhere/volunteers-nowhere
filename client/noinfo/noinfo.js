@@ -59,14 +59,14 @@ const textSearch = (function textSearch(value, page) {
   if ((value) && (value.length > 3)) { // && (event.keyCode == 13)) {
     filters = _.extend(
       _.clone(filters),
-      // TODO : I' really like to have full search someday ...
+      // TODO : Add a text index so we can do text search
       // {"$text": {"$search": value}}
       {
         $or: [
-          { 'profile.nickname': { $regex: value } },
-          { 'profile.firstName': { $regex: value } },
-          { 'profile.lastName': { $regex: value } },
-          { 'emails.0.address': { $regex: value } },
+          { 'profile.nickname': { $regex: value, $options: 'ix' } },
+          { 'profile.firstName': { $regex: value, $options: 'ix' } },
+          { 'profile.lastName': { $regex: value, $options: 'ix' } },
+          { 'emails.0.address': { $regex: value, $options: 'ix' } },
         ],
       },
     )
@@ -93,17 +93,7 @@ Template.userSearch.events({
     const page = template.$(event.currentTarget).data('page')
     const pages = Pages[page]
     let filters = {}
-    filters = { 'profile.ticketNumber': Number(value) }
-    pages.set('filters', filters)
-    pages.reload()
-  },
-  'change [name="terms"]': (event, template) => {
-    event.preventDefault()
-    const value = event.currentTarget.checked
-    const page = template.$(event.currentTarget).data('page')
-    const pages = Pages[page]
-    let filters = {}
-    filters = { 'profile.terms': value }
+    filters = { ticketId: Number(value) }
     pages.set('filters', filters)
     pages.reload()
   },
