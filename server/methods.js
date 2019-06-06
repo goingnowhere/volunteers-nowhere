@@ -17,7 +17,12 @@ import {
   isManagerOrLeadMixin,
 } from '../both/authMixins'
 import { config } from './config'
-import { ticketsCollection, allergies, intolerances } from '../both/collections/users'
+import {
+  ticketsCollection,
+  dietGroups,
+  allergies,
+  intolerances,
+} from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
 
 const moment = extendMoment(Moment)
@@ -291,7 +296,7 @@ export const cantinaSetupData = new ValidatedMethod({
   validate: null,
   run() {
     const { buildPeriod } = EventSettings.findOne()
-    const signups = Volunteers.Collections.ProjectSignups.aggregate([
+    const projectSignups = Volunteers.Collections.ProjectSignups.aggregate([
       {
         $match: {
           status: 'confirmed',
@@ -313,28 +318,137 @@ export const cantinaSetupData = new ValidatedMethod({
       },
       { $unwind: { path: '$user' } },
     ])
+
+    const dietCountFacetStep = {
+      total: [{
+        $group: {
+          _id: { month: '$_id.month', day: '$_id.day' },
+          count: { $sum: 1 },
+        },
+      }],
+    }
+    dietGroups.forEach((dietGroup) => {
+      dietCountFacetStep[dietGroup] = [
+        {
+          $match: {
+            'user.food': dietGroup,
+          },
+        },
+        {
+          $group: {
+            _id: { month: '$_id.month', day: '$_id.day' },
+            count: { $sum: 1 },
+          },
+        },
+      ]
+    })
+    allergies.forEach((allergy) => {
+      dietCountFacetStep[`${allergy} allergy`] = [
+        {
+          $match: {
+            'user.allergies': { $elemMatch: { $eq: allergy } },
+          },
+        },
+        {
+          $group: {
+            _id: { month: '$_id.month', day: '$_id.day' },
+            count: { $sum: 1 },
+          },
+        },
+      ]
+    })
+    intolerances.forEach((intolerance) => {
+      dietCountFacetStep[`${intolerance} intolerance`] = [
+        {
+          $match: {
+            'user.intolerances': { $elemMatch: { $eq: intolerance } },
+          },
+        },
+        {
+          $group: {
+            _id: { month: '$_id.month', day: '$_id.day' },
+            count: { $sum: 1 },
+          },
+        },
+      ]
+    })
+    const shiftSignups = Volunteers.Collections.TeamShifts.aggregate([
+      {
+        $match: {
+          start: {
+            // Work around all dates needing a time which messes with days compared to common usage
+            $lte: moment(buildPeriod.end).add(1, 'day').toDate(),
+          },
+          end: {
+            $gte: buildPeriod.start,
+          },
+        },
+      }, {
+        $lookup: {
+          from: Volunteers.Collections.ShiftSignups._name,
+          localField: '_id',
+          foreignField: 'shiftId',
+          as: 'signup',
+        },
+      },
+      { $unwind: { path: '$signup' } },
+      { $match: { 'signup.status': 'confirmed' } },
+      { $addFields: { hours: { $divide: [{ $subtract: ['$end', '$start'] }, 1000 * 60 * 60] } } },
+      // Filter number of hours per shift here?
+      {
+        // Count up hours per day per volunteer
+        $group: {
+          _id: { month: { $month: '$start' }, day: { $dayOfMonth: '$start' }, userId: '$signup.userId' },
+          hours: { $sum: '$hours' },
+        },
+      },
+      // Filter total number of hours per day here?
+      {
+        $lookup: {
+          from: Volunteers.Collections.VolunteerForm._name,
+          localField: '_id.userId',
+          foreignField: 'userId',
+          as: 'user',
+        },
+      },
+      { $unwind: { path: '$user' } },
+      { $facet: dietCountFacetStep },
+    ])[0]
+
     const buildRange = moment.range(buildPeriod.start, buildPeriod.end)
     return Array.from(buildRange.by('days')).map((day) => {
-      const dailyVolunteers = signups
+      const date = day.date()
+      const month = day.month() + 1
+      const dailyShiftData = _.object(Object.entries(shiftSignups).map(([dietType, dayCounts]) => {
+        const data = dayCounts.find(daily => daily._id.month === month && daily._id.day === date)
+        return [dietType, data ? data.count : 0]
+      }))
+
+      const dailyProjectVols = projectSignups
         .filter(signup => day.isSameOrAfter(signup.start) && day.isSameOrBefore(signup.end))
         .map(signup => signup.user)
-      const groups = _.groupBy(dailyVolunteers, 'food')
+      const projectGroups = _.groupBy(dailyProjectVols, 'food')
       const allergyCounts = {}
       allergies.forEach((allergy) => {
-        allergyCounts[`${allergy} allergy`] = dailyVolunteers
+        const allergyName = `${allergy} allergy`
+        allergyCounts[allergyName] = dailyProjectVols
           .filter(vol => vol.allergies.includes(allergy)).length
+          + dailyShiftData[allergyName]
       })
       const intoleranceCounts = {}
       intolerances.forEach((intolerance) => {
-        intoleranceCounts[`${intolerance} intolerance`] = dailyVolunteers
+        const intoleranceName = `${intolerance} intolerance`
+        intoleranceCounts[intoleranceName] = dailyProjectVols
           .filter(vol => vol.intolerances.includes(intolerance)).length
+          + dailyShiftData[intoleranceName]
       })
       return {
         date: day.format('DD/MM/YYYY'),
-        omnivore: (groups.omnivore || []).length,
-        vegetarian: (groups.vegetarian || []).length,
-        vegan: (groups.vegan || []).length,
-        fish: (groups.fish || []).length,
+        total: dailyProjectVols.length + dailyShiftData.total,
+        omnivore: (projectGroups.omnivore || []).length + dailyShiftData.omnivore,
+        vegetarian: (projectGroups.vegetarian || []).length + dailyShiftData.vegetarian,
+        vegan: (projectGroups.vegan || []).length + dailyShiftData.vegan,
+        fish: (projectGroups.fish || []).length + dailyShiftData.fish,
         ...allergyCounts,
         ...intoleranceCounts,
       }
