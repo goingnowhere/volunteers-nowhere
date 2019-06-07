@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { Accounts } from 'meteor/accounts-base'
 import { Email } from 'meteor/email'
@@ -54,29 +56,6 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
   if (!user) { return context }
   cntxlist.forEach((cntx) => {
     switch (cntx.name) {
-      case 'VolProfile': {
-        const volform = Volunteers.Collections.VolunteerForm.findOne({ userId: user._id })
-        context[`${cntx.namespace}`] = {
-          playaName: volform.playaName,
-        }
-        break
-      }
-      // case 'Tickets': {
-      //   /* the Tickets context is run for a user and pulls all the
-      //      pending users email associated with his principal
-      //      email address. Use we the pending user profile to generate
-      //      the enrollment link */
-      //   const email = user.emails[0].address
-      //   const {
-      //     FirstName, LastName, TicketId, fakeEmail,
-      //   } = pendingUsers.findOne({ Email: { $regex: new RegExp(email, 'i') } })
-      //   const pendingUser = Accounts.findUserByEmail(fakeEmail)
-      //   const enrollmentLink = generateEnrollmentLink(pendingUser._id, fakeEmail)
-      //   context[`${cntx.namespace}`] = {
-      //     enrollmentLink, LastName, FirstName, TicketId,
-      //   }
-      //   break
-      // }
       case 'UserTeams': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
         const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
@@ -217,13 +196,9 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
 })
 
 
-/* Accounts.onEnrollmentLink((token, done) => {
-
-  }) */
-
 // Defaults
-Accounts.emailTemplates.from = 'VMS <vms-support@goingnowhere.org>'
-Accounts.emailTemplates.siteName = 'VMS goingnowhere 2018'
+Accounts.emailTemplates.from = 'FIST <fist@goingnowhere.org>'
+Accounts.emailTemplates.siteName = 'FIST Nowhere 2019'
 
 Accounts.emailTemplates.enrollAccount.from = () => EmailForms.getFrom('enrollAccount')
 Accounts.emailTemplates.enrollAccount.subject = (user) => {

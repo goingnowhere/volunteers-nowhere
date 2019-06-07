@@ -40,19 +40,38 @@
   </li>
 </template>
 
+<template name="shiftReviewUserAction">
+  <li class="dropdown-item">
+    <a data-action="send-review">
+      {{fa "envelope"}} Send review summary
+    </a>
+  </li>
+</template>
+
 <template name="managerUser">
 {{#if Template.subscriptionsReady}}
   {{#allUsersProfile}}
     {{#usersProfileActions}}
       <!-- {{> makeAdminUserAction user=this}} -->
+      {{> enrollUserAction callback=callbackEnrollment user=this }}
+      {{> shiftReviewUserAction callback=callbackReview user=this }}
+      {{> notificationsUserAction callback=callbackNotification user=this }}
+      {{> editProfileUserAction user=this }}
+      {{> editEmailUserAction user=this }}
+      {{> changePwdUserAction user=this }}
       {{> makeManageUserAction user=this}}
       {{> makeUserUserAction user=this}}
-      {{> removeUserAction user=this}}
-      {{> resetUserAction user=this}}
+      <!-- {{> removeUserAction user=this}}
+      {{> resetUserAction user=this}} -->
       <!-- TODO -->
       <!-- {{> banUserAction user=this}} -->
       <!-- {{> unBanUserAction user=this}} -->
     {{/usersProfileActions}}
+    <br/>
+    <button type="button" class="btn btn-light btn-sm"
+      data-action="user_form" data-userid="{{_id}}" >
+      {{__ "user_form" }}
+    </button>
   {{/allUsersProfile}}
 {{/if}}
 </template>
