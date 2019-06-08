@@ -53,7 +53,7 @@
         <button type="button" class="btn btn-light btn-sm" data-id="{{_id}}" data-action="show_rota">
           {{fa "calendar"}} {{__ "rota"}}
         </button>
-        <div>{{> React component=CsvExportButton method="team.rota" buttonText="rota_export" filename="rota" teamId=_id }}</div>
+        <div>{{> React component=CsvExportButton method="team.rota" buttonText="rota_export" filename="rota" parentId=_id }}</div>
       </div>
       <div class="
         {{#if $gt ($len teamStats.pendingRequests) 0}}

@@ -238,14 +238,14 @@ const mapCsvExport = {
   },
 }
 
-const getTeamRotaCsv = ({ teamId }) => _.flatten([
+const getTeamRotaCsv = ({ parentId }) => _.flatten([
   'shift',
   'project',
   // 'task',
 ].map(type => Volunteers.Collections.signupCollections[type].aggregate([
   {
     $match: {
-      parentId: teamId,
+      parentId,
       status: 'confirmed',
     },
   },
@@ -280,10 +280,10 @@ export const deptRotaData = new ValidatedMethod({
   name: 'dept.rota',
   mixins: [isManagerOrLeadMixin],
   validate: null,
-  run({ deptId }) {
+  run({ parentId }) {
     return _.flatten(
-      Volunteers.Collections.Team.find({ parentId: deptId })
-        .map(team => getTeamRotaCsv({ teamId: team._id })
+      Volunteers.Collections.Team.find({ parentId })
+        .map(team => getTeamRotaCsv({ parentId: team._id })
           .map(rotaItem => ({ ...rotaItem, team: team.name }))),
       true,
     )
