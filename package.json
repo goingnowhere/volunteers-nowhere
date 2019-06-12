@@ -6,14 +6,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
     "bcrypt": "^3.0.6",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.10",
     "chart.js": "^2.8.0",
     "file-saver": "^2.0.2",
-    "flatpickr": "^4.5.7",
-    "formik": "^1.5.4",
+    "flatpickr": "^4.6.1",
+    "formik": "^1.5.7",
     "jquery": "^3.4.1",
     "json2csv": "^4.5.1",
     "magnific-popup": "^1.1.0",
@@ -26,11 +26,11 @@
     "react-dom": "^16.8.6",
     "react-fontawesome": "^1.6.1",
     "react-modal": "^3.8.1",
-    "react-router-dom": "^5.0.0",
-    "react-select": "^2.4.3",
+    "react-router-dom": "^5.0.1",
+    "react-select": "^2.4.4",
     "simpl-schema": "^1.5.5",
     "underscore": "^1.9.1",
-    "webpack": "^4.31.0"
+    "webpack": "^4.33.0"
   },
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
@@ -39,7 +39,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-import-resolver-meteor": "^0.4.0",
-    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-meteor": "^5.1.0",
     "eslint-plugin-react": "^7.13.0",

@@ -2,7 +2,7 @@ abate:autoform-components@0.0.1
 abate:autoform-datetimepicker@1.0.8
 abate:email-forms@0.0.1
 abate:meteor-user-profiles@0.0.1
-accounts-base@1.4.3
+accounts-base@1.4.4
 accounts-password@1.5.1
 aldeed:autoform@6.3.0
 aldeed:autoform-select2@3.0.1
@@ -36,7 +36,7 @@ deps@1.0.12
 diff-sequence@1.1.1
 drewy:datetimepicker@1.0.3
 dynamic-import@0.5.1
-ecmascript@0.12.6
+ecmascript@0.12.7
 ecmascript-runtime@0.7.0
 ecmascript-runtime-client@0.8.0
 ecmascript-runtime-server@0.7.1
@@ -46,7 +46,7 @@ es5-shim@4.8.0
 fastclick@1.0.13
 fetch@0.1.1
 fortawesome:fontawesome@4.7.0
-fourseven:scss@4.10.0
+fourseven:scss@4.12.0
 gadicc:blaze-react-component@1.4.2
 geojson-utils@1.0.10
 goingnowhere:volunteers@0.0.2
@@ -133,9 +133,9 @@ tmeasday:check-npm-versions@0.3.2
 tracker@1.2.0
 ui@1.0.13
 underscore@1.0.10
-universe:i18n@1.20.1
+universe:i18n@1.30.0
 universe:i18n-blaze@1.5.1
 url@1.2.0
-webapp@1.7.3
+webapp@1.7.4
 webapp-hashing@1.0.9
 wylio:mandrill@1.1.0
