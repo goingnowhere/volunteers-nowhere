@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import moment from 'moment-timezone'
 import i18n from 'meteor/universe:i18n'
 

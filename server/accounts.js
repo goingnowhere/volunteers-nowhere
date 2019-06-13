@@ -12,8 +12,6 @@ import {
 import { ticketsCollection } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
 
-moment.tz.setDefault('Europe/Paris')
-
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()
   let ticketId

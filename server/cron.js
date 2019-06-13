@@ -1,15 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { SyncedCron } from 'meteor/littledata:synced-cron'
-import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/collections/settings'
 import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
 } from './methods'
-
-moment.tz.setDefault('Europe/Paris')
 
 const signupGcBackup = new Mongo.Collection('signupGcBackup')
 

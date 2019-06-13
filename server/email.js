@@ -11,8 +11,6 @@ import {
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 
-moment.tz.setDefault('Europe/Paris')
-
 export const EmailLogs = new Mongo.Collection('emailLogs')
 export const WrapEmailSend = (user, doc) => {
   if (doc) {

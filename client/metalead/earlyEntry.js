@@ -4,8 +4,6 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { Volunteers } from '../../both/init'
 import { EventSettings } from '../../both/collections/settings'
 
-moment.tz.setDefault('Europe/Paris')
-
 Template.earlyEntry.onCreated(function onCreated() {
   const template = this
   template.departmentId = template.data._id

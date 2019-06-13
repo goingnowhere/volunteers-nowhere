@@ -3,8 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
 import $ from 'jquery'
 
-moment.tz.setDefault('Europe/Paris')
-
 Template.weekstrip.onCreated(function onCreated() {
   const template = this
   template.day = new ReactiveVar()
@@ -37,7 +35,8 @@ Template.weekstrip.helpers({
         .weekday(0)
         .startOf('day')
       return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
-    } []
+    }
+    return []
   },
   displayDay: date => date.format('ddd Do'),
   displayMonth: date => date.format('MMM'),

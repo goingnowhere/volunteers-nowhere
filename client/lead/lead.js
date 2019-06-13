@@ -8,8 +8,6 @@ import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 
-moment.tz.setDefault('Europe/Paris')
-
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
   const { _id: teamId } = template.data

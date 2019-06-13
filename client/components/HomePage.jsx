@@ -8,8 +8,6 @@ import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 
 import { EventSettings } from '../../both/collections/settings'
 
-moment.tz.setDefault('Europe/Paris')
-
 const HomePageComponent = ({ loaded, openDate }) => {
   const openMoment = moment(openDate)
   const [seconds, setSeconds] = useState()

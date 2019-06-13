@@ -26,7 +26,6 @@ import {
 import { EventSettings } from '../both/collections/settings'
 
 const moment = extendMoment(Moment)
-moment.tz.setDefault('Europe/Paris')
 
 Meteor.methods({
   sendVerificationEmail() {
