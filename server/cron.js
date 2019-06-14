@@ -63,9 +63,8 @@ const EnrollmentTask = (time) => {
 
       Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
         const user = Meteor.users.findOne(userId)
-        console.log('send EnrollmentNotification to ', user.emails[0].address)
-
-        sendEnrollmentNotificationEmailFunction(userId)
+        console.log('Would have sent EnrollmentNotification to ', user.emails[0].address)
+        // sendEnrollmentNotificationEmailFunction(userId)
       })
     },
   })
@@ -91,8 +90,8 @@ const ReviewTask = (time) => {
 
       Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
         const user = Meteor.users.findOne(userId)
-        console.log('Send Review Notification ', user.emails[0].address)
-        sendReviewNotificationEmailFunction(userId)
+        console.log('Would have Sent Review Notification ', user.emails[0].address)
+        // sendReviewNotificationEmailFunction(userId)
       })
     },
   })
@@ -103,8 +102,8 @@ const cronActivate = ({ cronFrequency }) => {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
 
-    // EnrollmentTask('every 10 mins')
-    // ReviewTask('every 12 mins')
+    EnrollmentTask(`every ${cronFrequency}`)
+    ReviewTask(`every ${cronFrequency}`)
 
     signupsGC('every 3 days')
     SyncedCron.start()

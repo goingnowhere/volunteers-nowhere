@@ -315,7 +315,7 @@ const callbackNotice = function callback(title, message) {
 Template.notificationsUserAction.events({
   'click [data-action="send-notification"]': (event, template) => {
     const { callback, user } = template.data
-    Meteor.call('email.sendEnrollmentNotifications', user._id, (err, res) => {
+    Meteor.call('email.sendShiftReminder', user._id, (err, res) => {
       if (callback) { callback(err, res) }
     })
   },

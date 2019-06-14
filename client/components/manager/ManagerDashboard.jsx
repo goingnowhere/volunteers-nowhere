@@ -19,6 +19,11 @@ const addDepartment = () => {
 const syncQuicket = () => {
   Meteor.call('ticketList.sync')
 }
+const sendMassReminders = () => {
+  if (window.confirm('This will send emails to everyone, even if they already got one. Continue?')) {
+    Meteor.call('email.sendMassShiftReminder')
+  }
+}
 // These were on this before but should exist on the dept rows when they exist
 // 'click [data-action="edit_department"]': (event, template) => {
 //   const deptId = template.$(event.currentTarget).data('id')
@@ -60,6 +65,9 @@ export const ManagerDashboard = () => (
           Sync Quicket guestlist
         </button>
         <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
+        <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
+          Send Reminders to everyone
+        </button>
       </div>
       <div className="col-md-5">
         <h2 className="header"><T>departments</T></h2>
