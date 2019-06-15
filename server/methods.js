@@ -130,8 +130,14 @@ export const sendMassShiftReminderEmail = new ValidatedMethod({
   validate: null,
   mixins: [isManagerMixin],
   run() {
-    Meteor.users.find({ isBanned: false, 'profile.formFilled': true }).map(user =>
-      sendNotificationEmailFunctionGeneric({ user, template: 'shiftReminder', isBulk: true }))
+    const users = Meteor.users.find({ isBanned: false, 'profile.formFilled': true }).fetch()
+    const interval = Meteor.setInterval(() => {
+      const user = users.pop()
+      sendNotificationEmailFunctionGeneric({ user, template: 'shiftReminder', isBulk: true })
+      if (users.length <= 0) {
+        Meteor.clearInterval(interval)
+      }
+    }, 5000)
   },
 })
 
