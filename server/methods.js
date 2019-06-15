@@ -77,11 +77,15 @@ const sendNotificationEmailFunctionGeneric = ({
   userId,
   template,
   selector = {},
+  isBulk = false,
 }) => {
   const recipient = user || Meteor.users.findOne(userId)
   if (recipient) {
     const sel = {
       ...selector, userId, status: { $in: ['confirmed', 'pending'] },
+    }
+    if (template === 'reviewed') {
+      sel.status.$in.push('refused')
     }
     const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
     const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
@@ -89,7 +93,7 @@ const sendNotificationEmailFunctionGeneric = ({
     const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
     if (recipient && (allSignups.length > 0)) {
       const doc = EmailForms.previewTemplate(template, recipient, getContext)
-      WrapEmailSend(recipient, doc)
+      WrapEmailSend(recipient, doc, isBulk)
       allSignups.forEach((signup) => {
         const modifier = { $set: { notification: true } }
         switch (signup.type) {
@@ -110,7 +114,7 @@ const sendNotificationEmailFunctionGeneric = ({
 }
 
 export const sendEnrollmentNotificationEmailFunction = userId =>
-  sendNotificationEmailFunctionGeneric({ userId, template: 'voluntell', selector: { enrolled: true } })
+  sendNotificationEmailFunctionGeneric({ userId, template: 'voluntell', selector: { enrolled: true }, isBulk: true })
 export const sendReviewNotificationEmailFunction = userId =>
   sendNotificationEmailFunctionGeneric({ userId, template: 'reviewed', selector: { reviewed: true } })
 
@@ -127,7 +131,7 @@ export const sendMassShiftReminderEmail = new ValidatedMethod({
   mixins: [isManagerMixin],
   run() {
     Meteor.users.find({ isBanned: false, 'profile.formFilled': true }).map(user =>
-      sendNotificationEmailFunctionGeneric({ user, template: 'shiftReminder' }))
+      sendNotificationEmailFunctionGeneric({ user, template: 'shiftReminder', isBulk: true }))
   },
 })
 

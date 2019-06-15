@@ -11,38 +11,85 @@ import {
   ValidatedMethodWithMixin,
 } from '../both/authMixins'
 
-export const EmailLogs = new Mongo.Collection('emailLogs')
-export const WrapEmailSend = (user, doc) => {
-  if (doc) {
-    Email.send(doc, (err) => {
-      if (!err) {
-        EmailLogs.insert({
-          userId: user._id,
-          template: doc.templateId,
-          sent: Date(),
+const EmailCache = new Mongo.Collection('emailCache')
+const EmailLogs = new Mongo.Collection('emailLogs')
+const EmailFails = new Mongo.Collection('emailFails')
+
+const sendEmail = ({
+  _id,
+  email,
+  userId,
+  retries,
+}) => {
+  if (email) {
+    try {
+      Email.send(email)
+      EmailLogs.insert({
+        userId,
+        template: email.templateId,
+        sent: new Date(),
+        retries,
+      })
+      EmailCache.remove({ _id })
+    } catch (error) {
+      console.error('Error sending mail', error)
+      if (retries < 5) {
+        EmailCache.update({ _id }, { $inc: { retries: 1 } })
+      } else {
+        EmailFails.insert({
+          email,
+          userId,
+          retries,
+          errorName: error.name,
+          errorMsg: error.message,
         })
+        EmailCache.remove({ _id })
       }
-    })
+    }
   }
 }
 
-export const insertEmailTemplateMethod =
-  ValidatedMethodWithMixin(
-    EmailForms.insertEmailTemplate,
-    [isManagerMixin],
-  )
+let emailLock = false
+export const sendCachedEmails = () => {
+  // A bit ugly but prevent this function running twice at a time, e.g. through the cron trigger
+  if (!emailLock) {
+    emailLock = true
+    EmailCache.find({}, {
+      sort: { added: 1 },
+      limit: 150,
+    }).map(cachedEmail => sendEmail(cachedEmail))
+    emailLock = false
+  }
+}
 
-export const updateEmailTemplateMethod =
-  ValidatedMethodWithMixin(
-    EmailForms.updateEmailTemplate,
-    [isManagerMixin],
-  )
+export const WrapEmailSend = (user, email, isBulk) => {
+  if (email) {
+    EmailCache.insert({
+      userId: user._id,
+      email,
+      retries: 0,
+      added: new Date(),
+    })
+    if (!isBulk) {
+      sendCachedEmails()
+    }
+  }
+}
 
-export const removeEmailTemplateMethod =
-  ValidatedMethodWithMixin(
-    EmailForms.removeEmailTemplate,
-    [isManagerMixin],
-  )
+export const insertEmailTemplateMethod = ValidatedMethodWithMixin(
+  EmailForms.insertEmailTemplate,
+  [isManagerMixin],
+)
+
+export const updateEmailTemplateMethod = ValidatedMethodWithMixin(
+  EmailForms.updateEmailTemplate,
+  [isManagerMixin],
+)
+
+export const removeEmailTemplateMethod = ValidatedMethodWithMixin(
+  EmailForms.removeEmailTemplate,
+  [isManagerMixin],
+)
 
 // const generateEnrollmentLink = (userId, fakeEmail) => {
 //   const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
@@ -137,6 +184,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
             }
           } return null
         }).filter(Boolean)
+          .sort((a, b) => (a.start.isBefore(b.start) ? -1 : 1))
 
         const newShiftEnrollments = allShifts.filter(s => (
           s.enrolled && (!s.notification) && (s.status === 'confirmed')))
@@ -152,7 +200,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
       }
       case 'Projects': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-        const list = Volunteers.Collections.ProjectSignups.find(sel)
+        const list = Volunteers.Collections.ProjectSignups.find(sel, { sort: { start: 1 } })
         const allProjects = list.map((s) => {
           const duty = Volunteers.Collections.Projects.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)

@@ -7,6 +7,7 @@ import {
   sendEnrollmentNotificationEmailFunction,
   sendReviewNotificationEmailFunction,
 } from './methods'
+import { sendCachedEmails } from './email'
 
 const signupGcBackup = new Mongo.Collection('signupGcBackup')
 
@@ -97,6 +98,17 @@ const ReviewTask = (time) => {
   })
 }
 
+const emailSend = (time) => {
+  // Send cached emails
+  SyncedCron.add({
+    name: 'EmailCache',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job: sendCachedEmails,
+  })
+}
+
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
@@ -105,6 +117,7 @@ const cronActivate = ({ cronFrequency }) => {
     EnrollmentTask(`every ${cronFrequency}`)
     ReviewTask(`every ${cronFrequency}`)
 
+    emailSend('every 5 minutes')
     signupsGC('every 3 days')
     SyncedCron.start()
   } else {
