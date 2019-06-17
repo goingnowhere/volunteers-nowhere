@@ -2,12 +2,13 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import { EventSettings } from '../../both/collections/settings'
 
 const settings = {
-  buildPeriod: { start: new Date(2018, 6, 11), end: new Date(2018, 7, 1) },
-  eventPeriod: { start: new Date(2018, 7, 2), end: new Date(2018, 7, 8) },
-  strikePeriod: { start: new Date(2018, 7, 9), end: new Date(2018, 7, 15) },
+  buildPeriod: { start: new Date(2019, 6, 11), end: new Date(2019, 7, 1) },
+  eventPeriod: { start: new Date(2019, 7, 2), end: new Date(2019, 7, 8) },
+  strikePeriod: { start: new Date(2019, 7, 9), end: new Date(2019, 7, 15) },
   earlyEntryMax: 120,
-  barriosArrivalDate: new Date(2018, 6, 31),
+  barriosArrivalDate: new Date(2019, 6, 31),
   cronFrequency: 'every 15 mins',
+  fistOpenDate: new Date(2019, 2, 1),
 }
 
 export const createSettings = () => {
