@@ -115,8 +115,8 @@ const sendNotificationEmailFunctionGeneric = ({
 
 export const sendEnrollmentNotificationEmailFunction = userId =>
   sendNotificationEmailFunctionGeneric({ userId, template: 'voluntell', selector: { enrolled: true }, isBulk: true })
-export const sendReviewNotificationEmailFunction = userId =>
-  sendNotificationEmailFunctionGeneric({ userId, template: 'reviewed', selector: { reviewed: true } })
+export const sendReviewNotificationEmailFunction = (userId, isBulk = false) =>
+  sendNotificationEmailFunctionGeneric({ userId, template: 'reviewed', selector: { reviewed: true }, isBulk })
 
 export const sendShiftReminderEmail = new ValidatedMethod({
   name: 'email.sendShiftReminder',

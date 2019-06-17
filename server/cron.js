@@ -64,8 +64,7 @@ const EnrollmentTask = (time) => {
 
       Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
         const user = Meteor.users.findOne(userId)
-        console.log('Would have sent EnrollmentNotification to ', user.emails[0].address)
-        // sendEnrollmentNotificationEmailFunction(userId)
+        sendEnrollmentNotificationEmailFunction(userId)
       })
     },
   })
@@ -91,8 +90,7 @@ const ReviewTask = (time) => {
 
       Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
         const user = Meteor.users.findOne(userId)
-        console.log('Would have Sent Review Notification ', user.emails[0].address)
-        // sendReviewNotificationEmailFunction(userId)
+        sendReviewNotificationEmailFunction(userId, true)
       })
     },
   })
