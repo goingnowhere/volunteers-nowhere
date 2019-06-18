@@ -4,7 +4,6 @@ import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
-import { HTTP } from 'meteor/http'
 import { _ } from 'meteor/underscore'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
@@ -16,14 +15,13 @@ import {
   isSameUserOrManagerMixin,
   isManagerOrLeadMixin,
 } from '../both/authMixins'
-import { config } from './config'
 import {
-  ticketsCollection,
   dietGroups,
   allergies,
   intolerances,
 } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
+import { syncQuicketTicketList } from './quicket'
 
 const moment = extendMoment(Moment)
 
@@ -114,9 +112,19 @@ const sendNotificationEmailFunctionGeneric = ({
 }
 
 export const sendEnrollmentNotificationEmailFunction = userId =>
-  sendNotificationEmailFunctionGeneric({ userId, template: 'voluntell', selector: { enrolled: true }, isBulk: true })
+  sendNotificationEmailFunctionGeneric({
+    userId,
+    template: 'voluntell',
+    selector: { enrolled: true },
+    isBulk: true,
+  })
 export const sendReviewNotificationEmailFunction = (userId, isBulk = false) =>
-  sendNotificationEmailFunctionGeneric({ userId, template: 'reviewed', selector: { reviewed: true }, isBulk })
+  sendNotificationEmailFunctionGeneric({
+    userId,
+    template: 'reviewed',
+    selector: { reviewed: true },
+    isBulk,
+  })
 
 export const sendShiftReminderEmail = new ValidatedMethod({
   name: 'email.sendShiftReminder',
@@ -170,70 +178,11 @@ export const userStats = new ValidatedMethod({
   },
 })
 
-const prepTicketData = (guest) => {
-  const ticketInfo = guest.TicketInformation
-  return {
-    _id: guest.TicketId,
-    barcode: guest.Barcode,
-    email: ticketInfo.Email.toLowerCase(),
-    firstName: ticketInfo['First name'],
-    lastName: ticketInfo.Surname,
-    nickname: ticketInfo['What is your playa name (if you have one)?'],
-    rawGuestInfo: guest,
-  }
-}
-
-export const syncQuicketTicketList = new ValidatedMethod({
+export const syncQuicketTicketListMethod = new ValidatedMethod({
   name: 'ticketList.sync',
   mixins: [isManagerMixin],
   validate: null,
-  run() {
-    const { statusCode, data: { results, pages } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/guests`, {
-      headers: {
-        api_key: config.quicketApiKey,
-        usertoken: config.quicketUserToken,
-        pageSize: 10,
-        page: 1,
-        seasortByrch: 'DateAdded',
-        sortDirection: 'DESC',
-      },
-    })
-    if (statusCode !== 200) throw new Meteor.Error(500, 'Problem calling Quicket')
-    if (pages !== 0) throw new Meteor.Error(501, 'Need to implement pagination')
-    // const guestsByTicketId = results.reduce((map, guest) =>
-    // map.set(guest.TicketId, guest), new Map()), 'TicketId')
-    const guestsByTicketId = _.indexBy(results, 'TicketId')
-    const ticketChanges = ticketsCollection.find({}, {
-      barcode: true,
-      email: true,
-    }).map((ticket) => {
-      const guest = guestsByTicketId[ticket._id]
-      if (!guest) {
-        ticketsCollection.remove({ _id: ticket._id })
-        return null
-      }
-      const guestEmail = guest.TicketInformation.Email.toLowerCase()
-      if (guestEmail !== ticket.email) {
-        delete guestsByTicketId[ticket._id]
-        return prepTicketData(guest)
-      }
-      if (!guest.TicketInformation.rawGuestInfo) {
-        delete guestsByTicketId[ticket._id]
-        return {
-          _id: guest.TicketId,
-          $set: {
-            rawGuestInfo: guest,
-          },
-        }
-      }
-      return null
-    }).filter(ticket => ticket)
-    ticketChanges.concat(
-      Object.keys(guestsByTicketId).map(ticketId => prepTicketData(guestsByTicketId[ticketId])),
-    ).forEach(({ _id, ...update }) => {
-      ticketsCollection.upsert({ _id }, update)
-    })
-  },
+  run: syncQuicketTicketList,
 })
 
 const mapCsvExport = {

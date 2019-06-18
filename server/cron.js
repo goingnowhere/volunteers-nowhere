@@ -8,6 +8,7 @@ import {
   sendReviewNotificationEmailFunction,
 } from './methods'
 import { sendCachedEmails } from './email'
+import { syncQuicketTicketList } from './quicket'
 
 const signupGcBackup = new Mongo.Collection('signupGcBackup')
 
@@ -63,7 +64,6 @@ const EnrollmentTask = (time) => {
       const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
       Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
-        const user = Meteor.users.findOne(userId)
         sendEnrollmentNotificationEmailFunction(userId)
       })
     },
@@ -89,7 +89,6 @@ const ReviewTask = (time) => {
       const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
 
       Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
-        const user = Meteor.users.findOne(userId)
         sendReviewNotificationEmailFunction(userId, true)
       })
     },
@@ -107,6 +106,17 @@ const emailSend = (time) => {
   })
 }
 
+const quicketSync = (time) => {
+  // Sync list of tickets with Quicket
+  SyncedCron.add({
+    name: 'QuicketSync',
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job: syncQuicketTicketList,
+  })
+}
+
 const cronActivate = ({ cronFrequency }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
@@ -117,6 +127,9 @@ const cronActivate = ({ cronFrequency }) => {
 
     emailSend('every 5 minutes')
     signupsGC('every 3 days')
+    if (Meteor.isProduction) {
+      quicketSync('every 6 minutes')
+    }
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
