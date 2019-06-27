@@ -128,7 +128,7 @@ const cronActivate = ({ cronFrequency }) => {
     emailSend('every 5 minutes')
     signupsGC('every 3 days')
     if (Meteor.isProduction) {
-      quicketSync('every 6 minutes')
+      quicketSync('every 30 minutes')
     }
     SyncedCron.start()
   } else {

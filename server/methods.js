@@ -427,3 +427,49 @@ export const cantinaSetupData = new ValidatedMethod({
     })
   },
 })
+
+export const getEmptyShifts = new ValidatedMethod({
+  name: 'shifts.empty',
+  mixins: [isNoInfoMixin],
+  validate: null,
+  run(day) {
+    return Volunteers.Collections.TeamShifts.aggregate([
+      {
+        $match: {
+          end: { $gt: day },
+        },
+      }, {
+        $sort: { start: 1 },
+      }, {
+        $lookup: {
+          from: Volunteers.Collections.ShiftSignups._name,
+          localField: '_id',
+          foreignField: 'shiftId',
+          as: 'signups',
+        },
+      }, {
+        $match: {
+          $expr: {
+            $lt: [
+              { $size: '$signups' },
+              '$max',
+            ],
+          },
+        },
+      }, {
+        $limit: 10,
+      }, {
+        $lookup: {
+          from: Volunteers.Collections.Team._name,
+          localField: 'parentId',
+          foreignField: '_id',
+          as: 'team',
+        },
+      }, {
+        $unwind: { path: '$team' },
+      }, {
+        $addFields: { type: 'shift' },
+      },
+    ])
+  },
+})
