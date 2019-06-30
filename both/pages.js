@@ -1,7 +1,10 @@
+import { Meteor } from 'meteor/meteor'
+import { Volunteers } from './init'
 
 export const Pages = {}
 
 Pages.NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
+  auth: (skip, subscription) => Volunteers.isManagerOrLead(subscription.userId, 'LRHhAJRs27ZJpKuZx'),
   itemTemplate: 'noInfoUser',
   templateName: 'noInfoUserList',
   fastRender: true,
@@ -19,6 +22,7 @@ Pages.NoInfoUserPages = new Meteor.Pagination(Meteor.users, {
 })
 
 Pages.ManagerUserPages = new Meteor.Pagination(Meteor.users, {
+  auth: () => Volunteers.isManager(),
   itemTemplate: 'managerUser',
   templateName: 'managerUserList',
   fastRender: true,
@@ -34,6 +38,7 @@ Pages.ManagerUserPages = new Meteor.Pagination(Meteor.users, {
 })
 
 Pages.ShiftEnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
+  auth: () => Volunteers.isLead(),
   itemTemplate: 'shiftEnrollTableRow',
   templateName: 'shiftEnrollUsersTable',
   fastRender: true,
@@ -52,6 +57,7 @@ Pages.ShiftEnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
 })
 
 Pages.ProjectEnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
+  auth: () => Volunteers.isLead(),
   itemTemplate: 'projectEnrollTableRow',
   templateName: 'projectEnrollUsersTable',
   fastRender: true,
@@ -70,6 +76,7 @@ Pages.ProjectEnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
 })
 
 Pages.LeadEnrollUserSearchPages = new Meteor.Pagination(Meteor.users, {
+  auth: () => Volunteers.isLead(),
   itemTemplate: 'leadEnrollTableRow',
   templateName: 'leadEnrollUsersTable',
   fastRender: true,
