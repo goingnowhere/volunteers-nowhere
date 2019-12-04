@@ -34,7 +34,7 @@ services:
       - traefik.port=3000
       - traefik.docker.network=traefik
     volumes:
-      - user_data:/app/programs/server/profilePictures
+      - user_data:/opt/meteor/dist/bundle/programs/server/profilePictures
 
   mongo:
     image: mongo:4.0-xenial
