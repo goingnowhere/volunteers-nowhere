@@ -96,12 +96,7 @@
 </template>
 
 <template name="leadEnrollUsersTable">
-  {{> userSearch }}
-  {{> pages }}
-  {{> pagesNav }}
-  <button class="btn btn-primary pull-right" data-action="enroll">
-    {{__ 'enroll'}}
-  </button>
+  <div>{{> React component=EnrollUserList data=data }}</div>
 </template>
 
 <template name="leadEnrollTableRow">
@@ -118,12 +113,7 @@
 </template>
 
 <template name="shiftEnrollUsersTable">
-  {{> userSearch }}
-  {{> pages }}
-  {{> pagesNav }}
-  <button class="btn btn-primary pull-right" data-action="enroll">
-    {{__ 'enroll'}}
-  </button>
+  <div>{{> React component=EnrollUserList data=data }}</div>
 </template>
 
 <template name="shiftEnrollTableRow">
@@ -136,12 +126,7 @@
 </template>
 
 <template name="projectEnrollUsersTable">
-  {{> userSearch }}
-  {{> pages data=this}}
-  {{> pagesNav }}
-  <button class="btn btn-primary pull-right" data-action="enroll">
-    {{__ 'enroll'}}
-  </button>
+  <div>{{> React component=EnrollUserList data=data }}</div>
 </template>
 
 <template name="projectEnrollTableRow">

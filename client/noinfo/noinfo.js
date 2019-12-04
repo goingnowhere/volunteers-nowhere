@@ -11,6 +11,7 @@ import 'flatpickr/dist/flatpickr.css'
 import { Volunteers } from '../../both/init'
 import { Pages } from '../../both/pages'
 import { NoInfoUserProfile } from '../components/noinfo/NoInfoUserProfile.jsx'
+import { EnrollUserList } from '../components/lead/search/EnrollUserList.jsx'
 
 Template.noInfoDashboard.onCreated(function onCreated() {
   const template = this
@@ -143,89 +144,18 @@ Template.noInfoUserProfileLink.onCreated(function onCreated() {
   template.subscribe('meteor-user-profiles.ProfilePictures', userId)
 })
 
-// TODO This duplicates logic from meteor-volunteers apply code and confirmation should happen in
-// the method not in the frontend
-const enrollEventCall = (function enrollEventCall(doc, enrollment) {
-  const { duty, policy, ...rest } = doc
-  const insert = { ...rest, ...enrollment, enrolled: true }
-  Meteor.call(
-    `${Volunteers.eventName}.Volunteers.${duty}Signups.insert`, insert,
-    (err, signupId) => {
-      if (err) {
-        switch (err.error) {
-          case 409: {
-            if (err.reason === 'Double Booking') {
-              Bert.alert({
-                hideDelay: 6500,
-                title: i18n.__('goingnowhere:volunteers', 'double_booking'),
-                /* XXX: add details of the other bookings stored in err.details */
-                /* message: applyContext(templatebody, err),  */
-                message: i18n.__('goingnowhere:volunteers', 'double_booking_msg'),
-                type: 'warning',
-                style: 'growl-top-right',
-              })
-            } else {
-              Bert.alert({
-                hideDelay: 6500,
-                title: i18n.__('goingnowhere:volunteers', 'shift_full'),
-                message: i18n.__('goingnowhere:volunteers', 'shift_full_msg'),
-                type: 'warning',
-                style: 'growl-top-right',
-              })
-            }
-            break
-          }
-          default:
-            Bert.alert({
-              hideDelay: 6500,
-              title: i18n.__('goingnowhere:volunteers', 'error'),
-              message: err.reason,
-              type: 'danger',
-              style: 'growl-top-right',
-            })
-        }
-      } if (signupId && (policy === 'requireApproval' || policy === 'adminOnly')) {
-        if (duty === 'lead') {
-          Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, signupId)
-        } else {
-          Meteor.call(`${Volunteers.eventName}.Volunteers.${duty}Signups.setStatus`, {
-            id: signupId,
-            status: 'confirmed',
-          })
-        }
-      }
-    },
-  )
+Template.shiftEnrollUsersTable.helpers({
+  EnrollUserList: () => EnrollUserList,
+  data: () => Template.currentData().data,
 })
-
-const enrollEvent = {
-  'click [data-action=enroll]': () => {
-    const doc = Template.currentData().data
-    // this is the only place where I use a session variable.
-    // can't find a better way.
-    // eslint-disable-next-line meteor/no-session
-    const enrollments = Session.get('enrollments')
-    // cleanup the enrollment list and close the modal
-    AutoFormComponents.modalHide()
-    // eslint-disable-next-line meteor/no-session
-    Session.set('enrollments', [])
-    enrollments.forEach(enrollment => enrollEventCall(doc, enrollment))
-  },
-}
-
-Template.shiftEnrollUsersTable.onRendered(() => {
-  Pages.ShiftEnrollUserSearchPages.requestPage(1)
+Template.projectEnrollUsersTable.helpers({
+  EnrollUserList: () => EnrollUserList,
+  data: () => Template.currentData().data,
 })
-Template.projectEnrollUsersTable.onRendered(() => {
-  Pages.ProjectEnrollUserSearchPages.requestPage(1)
+Template.leadEnrollUsersTable.helpers({
+  EnrollUserList: () => EnrollUserList,
+  data: () => Template.currentData().data,
 })
-Template.leadEnrollUsersTable.onRendered(() => {
-  Pages.LeadEnrollUserSearchPages.requestPage(1)
-})
-
-Template.shiftEnrollUsersTable.events(enrollEvent)
-Template.projectEnrollUsersTable.events(enrollEvent)
-Template.leadEnrollUsersTable.events(enrollEvent)
 
 const enrollOnCreated = function onCreated() {
   const template = this

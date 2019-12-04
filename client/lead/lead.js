@@ -3,7 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
-import { Session } from 'meteor/session'
 import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
@@ -118,12 +117,9 @@ const enrollEvent = {
     const policy = template.$(event.currentTarget).data('policy')
     switch (type) {
       case 'shift': {
-        // eslint-disable-next-line meteor/no-session
-        Session.set('enrollments', [])
         AutoFormComponents.ModalShowWithTemplate('shiftEnrollUsersTable', {
-          page: 'ShiftEnrollUserSearchPages',
           data: {
-            parentId,
+            teamId: parentId,
             shiftId: id,
             duty: type,
             policy,
@@ -134,9 +130,8 @@ const enrollEvent = {
       case 'project': {
         const { start, end } = Volunteers.Collections.Projects.findOne(id)
         AutoFormComponents.ModalShowWithTemplate('projectEnrollUsersTable', {
-          page: 'ProjectEnrollUserSearchPages',
           data: {
-            parentId,
+            teamId: parentId,
             shiftId: id,
             duty: type,
             policy,

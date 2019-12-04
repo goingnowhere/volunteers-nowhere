@@ -158,8 +158,8 @@ export const sendReviewNotificationEmail = new ValidatedMethod({
 
 export const userStats = new ValidatedMethod({
   name: 'users.stats',
-  validate: null,
   mixins: [isNoInfoMixin],
+  validate: null,
   run() {
     const volunteers = Meteor.users.find().count()
     const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
@@ -175,6 +175,28 @@ export const userStats = new ValidatedMethod({
       leads,
       online,
     }
+  },
+})
+
+export const userList = new ValidatedMethod({
+  name: 'users.paged',
+  mixins: [isNoInfoMixin],
+  validate: () => {},
+  run({ search = {}, page, perPage = 20 }) {
+    const usersCursor = Meteor.users.find(search, {
+      sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
+      skip: (page - 1) * perPage,
+      limit: perPage,
+      fields: {
+        profile: true,
+        emails: true,
+        isBanned: true,
+        status: true,
+        createdAt: true,
+        roles: true,
+      },
+    })
+    return { count: usersCursor.count(), users: usersCursor.fetch() }
   },
 })
 

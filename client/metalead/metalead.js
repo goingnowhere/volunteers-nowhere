@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
-import { Session } from 'meteor/session'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 
@@ -61,14 +60,12 @@ Template.metaleadDepartmentView.events({
   },
   'click [data-action="enroll_lead"]': (event, template) => {
     const shiftId = template.$(event.currentTarget).data('shiftid')
-    const parentId = template.$(event.currentTarget).data('parentid')
+    const teamId = template.$(event.currentTarget).data('parentid')
     const policy = template.$(event.currentTarget).data('policy')
-    // eslint-disable-next-line meteor/no-session
-    Session.set('enrollments', [])
     AutoFormComponents.ModalShowWithTemplate('leadEnrollUsersTable', {
       page: 'LeadEnrollUserSearchPages',
       data: {
-        parentId, shiftId, duty: 'lead', policy,
+        teamId, shiftId, duty: 'lead', policy,
       },
     })
   },
@@ -120,23 +117,25 @@ Template.metaleadDepartmentView.helpers({
     return teams
   },
   leadsTeam: (team) => {
-    const leadShift = Volunteers.Collections.Lead.find({ parentId: team._id })
-    const leadShiftWithSignups = leadShift.map((lead) => {
-      const sel = { status: 'confirmed', shiftId: lead._id }
-      let leadSignup = Volunteers.Collections.LeadSignups.findOne(sel)
-      if (leadSignup) {
-        leadSignup = _.extend(leadSignup, { title: lead.title })
-      } else {
-        leadSignup = {
-          title: lead.title,
-          shiftId: lead._id,
-          parentId: lead.parentId,
-          policy: lead.policy,
-          userId: null,
-        }
-      }
-      return leadSignup
-    })
-    if (leadShiftWithSignups) { return leadShiftWithSignups } return []
+    if (team && team._id) {
+      return Volunteers.Collections.Lead.find({ parentId: team._id })
+        .map((lead) => {
+          const sel = { status: 'confirmed', shiftId: lead._id }
+          let leadSignup = Volunteers.Collections.LeadSignups.findOne(sel)
+          if (leadSignup) {
+            leadSignup = _.extend(leadSignup, { title: lead.title })
+          } else {
+            leadSignup = {
+              title: lead.title,
+              shiftId: lead._id,
+              parentId: lead.parentId,
+              policy: lead.policy,
+              userId: null,
+            }
+          }
+          return leadSignup
+        })
+    }
+    return []
   },
 })
