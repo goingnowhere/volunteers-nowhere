@@ -44,7 +44,6 @@ universe:i18n-blaze
 
 fourseven:scss
 seba:minifiers-autoprefixer
-alethes:pages
 abate:autoform-components
 wylio:mandrill
 email@1.2.3

@@ -51,8 +51,8 @@ export const Routes = () => (
         <LoggedInRoute path="/manager/userList" component={ManagerUserList} />
         <LoggedInRoute path="/manager" component={ManagerDashboard} />
         {/* FIXME needs to check for NoInfo lead */}
-        <LoggedInRoute path="/noinfo/newuser" component={memo(() => <Blaze template="noInfoNewUser" />)} />
         <LoggedInRoute path="/noinfo/userList" component={NoInfoUserList} />
+        {/* <LoggedInRoute path="/noinfo/user/:_id" component={memo(({ match }) => <Blaze template="noInfoUserProfile" userId={match._id} />)} /> */}
         <LoggedInRoute path="/noinfo" component={NoInfoDashboard} />
         <Route component={NotFound} />
       </Switch>

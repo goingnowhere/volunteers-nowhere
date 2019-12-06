@@ -8,7 +8,6 @@ aldeed:autoform@6.3.0
 aldeed:autoform-select2@3.0.1
 aldeed:collection2@3.0.2
 aldeed:template-extension@4.1.0
-alethes:pages@1.8.6
 allow-deny@1.1.0
 autoupdate@1.6.0
 babel-compiler@7.3.4
@@ -43,7 +42,6 @@ ecmascript-runtime-server@0.7.1
 ejson@1.1.0
 email@1.2.3
 es5-shim@4.8.0
-fastclick@1.0.13
 fetch@0.1.1
 fortawesome:fontawesome@4.7.0
 fourseven:scss@4.12.0
@@ -69,7 +67,6 @@ markdown@1.0.12
 mdg:validated-method@1.2.0
 meteor@1.9.3
 meteor-base@1.4.0
-meteor-platform@1.2.6
 minifier-css@1.4.2
 minifier-js@2.4.1
 minimongo@1.4.5

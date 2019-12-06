@@ -69,7 +69,7 @@ const LoggedInHeaderComponent = ({
               <T>manager</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-              <NavLink to="/manager" className="dropdown-item"><T>dashboard</T></NavLink>
+              <NavLink to="/manager" exact className="dropdown-item"><T>dashboard</T></NavLink>
               <NavLink to="/manager/eventSettings" className="dropdown-item"><T>event_settings</T></NavLink>
               <NavLink to="/manager/emailForms" className="dropdown-item"><T>email_templates</T></NavLink>
               <NavLink to="/manager/userList" className="dropdown-item"><T>all_users</T></NavLink>
@@ -90,7 +90,7 @@ const LoggedInHeaderComponent = ({
               <T>noinfo</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
-              <NavLink to="/noinfo" className="dropdown-item"><T>dashboard</T></NavLink>
+              <NavLink to="/noinfo" exact className="dropdown-item"><T>dashboard</T></NavLink>
               <NavLink to="/noinfo/userList" className="dropdown-item"><T>all_users</T></NavLink>
             </div>
           </li>
@@ -148,7 +148,7 @@ const LoggedInHeaderComponent = ({
             <T>welcome</T> {name}
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-            <NavLink to="/profile" className="dropdown-item"><T>volunteer_form</T></NavLink>
+            <NavLink to="/profile" exact className="dropdown-item"><T>volunteer_form</T></NavLink>
             <NavLink to="/password" className="dropdown-item"><T>change_password</T></NavLink>
             <NavLink to="/profile/settings" className="dropdown-item"><T>user_details</T></NavLink>
             {roles.isImpersonating
