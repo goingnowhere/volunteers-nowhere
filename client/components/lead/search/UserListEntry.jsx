@@ -18,6 +18,7 @@ export const UserListEntry = ({
     fistRoles,
   },
   Controls,
+  showUser,
 }) => (
   // TODO fix the layout
   <div className="card">
@@ -26,7 +27,7 @@ export const UserListEntry = ({
         <div className="col-md-3 col-lg-3 " align="center">
           <ProfilePicture userId={_id} id={profile.picture} />
           <div className="row">
-            <Controls userId={_id} />
+            <Controls userId={_id} showUser={showUser} />
           </div>
         </div>
         <div className="col">

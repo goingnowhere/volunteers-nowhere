@@ -69,15 +69,17 @@ const UserSearchListComponent = ({
   setSearch,
   page,
   changePage,
+  showUser,
 }) => (
   <Fragment>
     <SearchBox setSearch={setSearch} />
-    {users.map(user => <ResultItem key={user._id} user={user} Controls={Controls} />)}
+    {users.map(user =>
+      <ResultItem key={user._id} user={user} Controls={Controls} showUser={showUser} />)}
     <PagesPicker totalPages={Math.ceil(userCount / PER_PAGE)} page={page} changePage={changePage} />
   </Fragment>
 )
 
-export const UserSearchList = ({ component, Controls }) => {
+export const UserSearchList = ({ component, Controls, showUser }) => {
   const [users, setList] = useState([])
   const [userCount, setUserCount] = useState(0)
   const [search, setSearch] = useState({})
@@ -102,6 +104,7 @@ export const UserSearchList = ({ component, Controls }) => {
       setSearch={setSearch}
       page={page}
       changePage={changePage}
+      showUser={showUser}
     />
   )
 }

@@ -1,15 +1,7 @@
 import React, { Fragment } from 'react'
 import Fa from 'react-fontawesome'
 import { Meteor } from 'meteor/meteor'
-import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { T } from '../common/i18n'
-
-// TODO move to react after figuring out modal strategy
-const showUserProfileModal = userId =>
-  AutoFormComponents.ModalShowWithTemplate(
-    'noInfoUserProfile',
-    { userId }, 'User Form', 'lg',
-  )
 
 // TODO Just copied over from module, need to rethink available actions
 const makeManager = userId => Meteor.call('Accounts.changeUserRole', userId, 'manager')
@@ -18,7 +10,7 @@ const sendEnrollment = userId => Meteor.call('Accounts.sendEnrollment', userId)
 const sendReview = userId => Meteor.call('email.sendReviewNotifications', userId)
 const sendNotification = userId => Meteor.call('email.sendShiftReminder', userId)
 
-export const UserListControls = ({ userId }) => (
+export const UserListControls = ({ userId, showUser }) => (
   <Fragment>
     <div className="btn-group">
       <button
@@ -97,7 +89,7 @@ export const UserListControls = ({ userId }) => (
     <button
       type="button"
       className="btn btn-light btn-sm"
-      onClick={() => showUserProfileModal(userId)}
+      onClick={() => showUser(userId)}
     >
       <T>user_details</T>
     </button>

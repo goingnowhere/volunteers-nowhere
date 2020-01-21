@@ -1,17 +1,16 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
-import { T } from '../common/i18n'
-import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
-
-export const UserProfileModal = ({
-  userId,
+export const Modal = ({
+  isOpen,
   closeModal,
+  title,
+  children,
 }) => {
   ReactModal.setAppElement('#react-root')
   return (
     <ReactModal
-      isOpen={!!userId}
+      isOpen={isOpen}
       className="modal-dialog modal-lg"
       // We need to force Bootstrap to behave
       style={{ overlay: { zIndex: 1030, backgroundColor: '#0008', overflowY: 'auto' } }}
@@ -19,13 +18,14 @@ export const UserProfileModal = ({
     >
       <div className="modal-content">
         <div className="modal-header">
-          <T>user_details</T>
+          {title}
           <button type="button" className="close" onClick={closeModal}>
             <span aria-hidden="true">&times;</span> <span className="sr-only">Close</span>
           </button>
         </div>
         <div className="modal-body">
-          {userId && <NoInfoUserProfile userId={userId} />}
+          {/* Works around extra re-render when closing */}
+          {isOpen && children}
         </div>
       </div>
     </ReactModal>

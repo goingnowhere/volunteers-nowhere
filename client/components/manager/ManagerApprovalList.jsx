@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor'
 import React, { Fragment, useEffect, useState } from 'react'
 import { SignupApproval } from 'meteor/goingnowhere:volunteers'
 
-import { UserProfileModal } from './UserProfileModal.jsx'
+import { Modal } from '../common/Modal.jsx'
+import { t } from '../common/i18n'
+import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 
 // Should probably be in meteor-volunteers but hooks don't work there because Meteor
 // TODO can probably generalise this for any dept/team
@@ -21,7 +23,13 @@ export const ManagerApprovalList = () => {
   }, [])
   return (
     <Fragment>
-      <UserProfileModal userId={modalUserId} closeModal={() => setModalUserId('')} />
+      <Modal
+        title={t('user_details')}
+        isOpen={!!modalUserId}
+        closeModal={() => setModalUserId('')}
+      >
+        <NoInfoUserProfile userId={modalUserId} />
+      </Modal>
       <ul className="list-group">
         {allSignups.map(signup => (
           <SignupApproval
