@@ -7,9 +7,9 @@ Template.publicDepartmentView.onCreated(function onCreated() {
   const did = template.data._id
   template.dep = new ReactiveVar({})
   const depSub = template.subscribe(`${Volunteers.eventName}.Volunteers.department`, { _id: did })
-  template.subscribe(`${Volunteers.eventName}.ShiftSignups.byDepartment`, did)
-  template.subscribe(`${Volunteers.eventName}.ProjectSignups.byDepartment`, did)
-  template.subscribe(`${Volunteers.eventName}.LeadSignups.byDepartment`, did)
+  template.subscribe(`${Volunteers.eventName}.Signups.byDept`, did, 'shift')
+  template.subscribe(`${Volunteers.eventName}.Signups.byDept`, did, 'project')
+  template.subscribe(`${Volunteers.eventName}.Signups.byDept`, did, 'lead')
   template.autorun(() => {
     if (depSub.ready()) {
       const dep = Volunteers.Collections.Department.findOne(did)

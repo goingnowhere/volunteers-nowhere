@@ -85,28 +85,13 @@ const sendNotificationEmailFunctionGeneric = ({
     if (template === 'reviewed') {
       sel.status.$in.push('refused')
     }
-    const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
-    const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
-    const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
-    const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
-    if (recipient && (allSignups.length > 0)) {
+    // Use raw distinct?
+    const signupIds = Volunteers.Collections.signups.find(sel).map(signup => signup._id)
+    if (recipient && (signupIds.length > 0)) {
       const doc = EmailForms.previewTemplate(template, recipient, getContext)
       WrapEmailSend(recipient, doc, isBulk)
-      allSignups.forEach((signup) => {
-        const modifier = { $set: { notification: true } }
-        switch (signup.type) {
-          case 'shift':
-            Volunteers.Collections.ShiftSignups.update(signup._id, modifier)
-            break
-          case 'project':
-            Volunteers.Collections.ProjectSignups.update(signup._id, modifier)
-            break
-          case 'lead':
-            Volunteers.Collections.LeadSignups.update(signup._id, modifier)
-            break
-          default:
-        }
-      })
+      Volunteers.Collections.signups.update({ _id: { $in: signupIds } },
+        { $set: { notification: true } })
     }
   }
 }
@@ -165,7 +150,7 @@ export const userStats = new ValidatedMethod({
     const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
     const leads = Meteor.users.find({ ticketId: { $exists: false } }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
-    const withDuties = Promise.await(Volunteers.Collections.ShiftSignups.rawCollection().distinct('userId'))
+    const withDuties = Promise.await(Volunteers.Collections.signups.rawCollection().distinct('userId'))
     const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
     return {
       volunteers,
@@ -207,40 +192,45 @@ export const syncQuicketTicketListMethod = new ValidatedMethod({
   run: syncQuicketTicketList,
 })
 
-const mapCsvExport = {
-  shift({ shift, user }) {
-    return {
-      shift: shift.title,
-      start: moment(shift.start).format('DD/MM/YYYY HH:mm'),
-      end: moment(shift.end).format('DD/MM/YYYY HH:mm'),
-      name: user.profile.nickname || user.profile.firstName,
-      email: user.emails[0].address,
-      ticket: user.ticketId || '',
-      fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
-    }
-  },
-  project({ shift, user, ...signup }) {
-    return {
-      shift: shift.title,
-      start: moment(signup.start).format('DD/MM/YYYY'),
-      end: moment(signup.end).format('DD/MM/YYYY'),
-      name: user.profile.nickname || user.profile.firstName,
-      email: user.emails[0].address,
-      ticket: user.ticketId || '',
-      fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
-    }
-  },
+const mapCsvExport = ({
+  shift,
+  project,
+  user,
+  ...signup
+}) => {
+  let title, start, end
+  if (shift) {
+    ({ title } = shift)
+    start = moment(shift.start).format('DD/MM/YYYY HH:mm')
+    end = moment(shift.end).format('DD/MM/YYYY HH:mm')
+  } else {
+    ({ title } = project)
+    start = moment(signup.start).format('DD/MM/YYYY')
+    end = moment(signup.end).format('DD/MM/YYYY')
+  }
+  return {
+    shift: title,
+    start,
+    end,
+    name: user.profile.nickname || user.profile.firstName,
+    email: user.emails[0].address,
+    ticket: user.ticketId || '',
+    fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
+  }
 }
 
-const getTeamRotaCsv = ({ parentId }) => _.flatten([
-  'shift',
-  'project',
-  // 'task',
-].map(type => Volunteers.Collections.signupCollections[type].aggregate([
+const getTeamRotaCsv = ({ parentId }) => Volunteers.Collections.signups.aggregate([
   {
     $match: {
       parentId,
       status: 'confirmed',
+      type: {
+        $in: [
+          'shift',
+          'project',
+          // 'task',
+        ],
+      },
     },
   },
   {
@@ -254,14 +244,33 @@ const getTeamRotaCsv = ({ parentId }) => _.flatten([
   { $unwind: { path: '$user' } },
   {
     $lookup: {
-      from: Volunteers.Collections.dutiesCollections[type]._name,
+      from: Volunteers.Collections.dutiesCollections.shift._name,
       localField: 'shiftId',
       foreignField: '_id',
       as: 'shift',
     },
   },
-  { $unwind: { path: '$shift' } },
-]).map(mapCsvExport[type])))
+  {
+    $unwind: {
+      path: '$shift',
+      preserveNullAndEmptyArrays: true,
+    },
+  },
+  {
+    $lookup: {
+      from: Volunteers.Collections.dutiesCollections.project._name,
+      localField: 'shiftId',
+      foreignField: '_id',
+      as: 'project',
+    },
+  },
+  {
+    $unwind: {
+      path: '$project',
+      preserveNullAndEmptyArrays: true,
+    },
+  },
+]).map(mapCsvExport)
 
 export const teamRotaData = new ValidatedMethod({
   name: 'team.rota',
@@ -290,9 +299,10 @@ export const cantinaSetupData = new ValidatedMethod({
   validate: null,
   run() {
     const { buildPeriod } = EventSettings.findOne()
-    const projectSignups = Volunteers.Collections.ProjectSignups.aggregate([
+    const projectSignups = Volunteers.Collections.signups.aggregate([
       {
         $match: {
+          type: 'project',
           status: 'confirmed',
           start: {
             $lte: buildPeriod.end,
@@ -379,7 +389,7 @@ export const cantinaSetupData = new ValidatedMethod({
         },
       }, {
         $lookup: {
-          from: Volunteers.Collections.ShiftSignups._name,
+          from: Volunteers.Collections.signups._name,
           localField: '_id',
           foreignField: 'shiftId',
           as: 'signup',
@@ -464,7 +474,7 @@ export const getEmptyShifts = new ValidatedMethod({
         $sort: { start: 1 },
       }, {
         $lookup: {
-          from: Volunteers.Collections.ShiftSignups._name,
+          from: Volunteers.Collections.signups._name,
           localField: '_id',
           foreignField: 'shiftId',
           as: 'signups',

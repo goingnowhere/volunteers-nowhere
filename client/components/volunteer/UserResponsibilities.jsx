@@ -33,7 +33,7 @@ export const UserResponsibilitiesComponent = ({
 export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
   const userId = userIdIn || Meteor.userId()
   const isManager = Volunteers.isManager(userId)
-  const leadSignupTeamIds = Volunteers.Collections.LeadSignups.find({ userId, status: 'confirmed' })
+  const leadSignupTeamIds = Volunteers.Collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
     .map(signup => signup.parentId)
   return {
     leads: Volunteers.Collections.Team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),

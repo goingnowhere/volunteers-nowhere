@@ -10,7 +10,7 @@ Template.metaleadDepartmentView.onCreated(function onCreated() {
   template.departmentId = template.data._id
   template.name = new ReactiveVar()
   const deptSub = template.subscribe(`${Volunteers.eventName}.Volunteers.department`, { _id: template.data._id })
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byDepartment`, template.departmentId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byDept`, template.departmentId, 'lead')
   template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byDepartment`, template.departmentId)
   template.autorun(() => {
     if (deptSub.ready()) {
@@ -71,12 +71,12 @@ Template.metaleadDepartmentView.events({
   },
   'click [data-action="remove_lead"]': (event, template) => {
     const signupId = template.$(event.currentTarget).data('id')
-    Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.remove`, signupId)
+    Meteor.call(`${Volunteers.eventName}.Volunteers.signups.remove`, signupId)
   },
-  'click [data-action="applications"]': (event, template) => {
-    const dept = Volunteers.Collections.Department.findOne(template.departmentId)
-    AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
-  },
+  // 'click [data-action="applications"]': (event, template) => {
+  //   const dept = Volunteers.Collections.Department.findOne(template.departmentId)
+  //   AutoFormComponents.ModalShowWithTemplate('deptSignupsList', dept)
+  // },
   'click [data-action="early_entry"]': (event, template) => {
     const dept = Volunteers.Collections.Department.findOne(template.departmentId)
     AutoFormComponents.ModalShowWithTemplate('earlyEntry', dept, 'Early Entries')
@@ -106,8 +106,8 @@ Template.metaleadDepartmentView.helpers({
   },
   leadsDept: () => {
     const parentId = Template.currentData()._id
-    const sel = { status: 'confirmed', parentId }
-    return Volunteers.Collections.LeadSignups.find(sel)
+    const sel = { status: 'confirmed', parentId, type: 'lead' }
+    return Volunteers.Collections.signups.find(sel)
   },
   allTeams: () => {
     const parentId = Template.currentData()._id
@@ -120,8 +120,8 @@ Template.metaleadDepartmentView.helpers({
     if (team && team._id) {
       return Volunteers.Collections.Lead.find({ parentId: team._id })
         .map((lead) => {
-          const sel = { status: 'confirmed', shiftId: lead._id }
-          let leadSignup = Volunteers.Collections.LeadSignups.findOne(sel)
+          const sel = { status: 'confirmed', shiftId: lead._id, type: 'lead' }
+          let leadSignup = Volunteers.Collections.signups.findOne(sel)
           if (leadSignup) {
             leadSignup = _.extend(leadSignup, { title: lead.title })
           } else {

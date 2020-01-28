@@ -20,8 +20,9 @@ const signupsGC = (time) => {
     },
     job() {
       ['lead', 'shift', 'project'].forEach((duty) => {
-        Volunteers.Collections.signupCollections[duty].aggregate([{
+        Volunteers.Collections.signups.aggregate([{
           $match: {
+            type: duty,
             status: {
               $in: ['confirmed', 'pending'],
             },
@@ -42,7 +43,7 @@ const signupsGC = (time) => {
         }]).forEach((signup) => {
           console.log(`remove signup: ${duty} not found`, signup)
           signupGcBackup.insert({ duty, signup })
-          Volunteers.Collections.signupCollections[duty].remove(signup._id)
+          Volunteers.Collections.signups.remove(signup._id)
         })
       })
     },
@@ -58,12 +59,10 @@ const EnrollmentTask = (time) => {
     },
     job() {
       const sel = { enrolled: true, notification: false, status: 'confirmed' }
-      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'shift' }))
-      const leadSignups = Volunteers.Collections.LeadSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'lead' }))
-      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'project' }))
-      const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
+      const signups = Volunteers.Collections.signups.find(sel, { limit: 30 }).fetch()
 
-      Object.entries(_.groupBy(allSignups, 'userId')).forEach(([userId]) => {
+      // TODO the logic of the limits here seems a little weird
+      Object.entries(_.groupBy(signups, 'userId')).forEach(([userId]) => {
         sendEnrollmentNotificationEmailFunction(userId)
       })
     },
@@ -83,12 +82,9 @@ const ReviewTask = (time) => {
         reviewed: true,
         status: { $in: ['confirmed', 'refused'] },
       }
-      const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'shift' }))
-      const leadSignups = Volunteers.Collections.LeadSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'lead' }))
-      const projectSignups = Volunteers.Collections.ProjectSignups.find(sel, { limit: 10 }).map(s => _.extend(s, { type: 'project' }))
-      const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
-
-      Object.keys(_.groupBy(allSignups, 'userId')).forEach((userId) => {
+      const signups = Volunteers.Collections.signups.find(sel, { limit: 30 }).fetch()
+      // TODO the logic of the limits here seems a little weird
+      Object.keys(_.groupBy(signups, 'userId')).forEach((userId) => {
         sendReviewNotificationEmailFunction(userId, true)
       })
     },

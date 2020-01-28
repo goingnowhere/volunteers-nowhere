@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
@@ -12,7 +13,7 @@ Template.leadTeamView.onCreated(function onCreated() {
   const { _id: teamId } = template.data
   const teamSub = template.subscribe(`${Volunteers.eventName}.Volunteers.team`, { _id: teamId })
   template.teamStats = Volunteers.teamStats(teamId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byTeam`, teamId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byTeam`, teamId, 'lead')
   template.subscribe(`${Volunteers.eventName}.Volunteers.unitAggregation.byTeam`, teamId)
   template.name = new ReactiveVar()
   template.parentId = new ReactiveVar()
@@ -39,8 +40,8 @@ Template.leadTeamView.helpers({
     if (stats) { return stats } return null
   },
   allLeads: () => {
-    const parentId = Template.currentData().teamId
-    return Volunteers.Collections.LeadSignups.find({ parentId, status: 'confirmed' })
+    const parentId = Template.currentData()._id
+    return Volunteers.Collections.signups.find({ parentId, type: 'lead', status: 'confirmed' })
   },
   signupListContext: () => {
     const data = Template.currentData()
@@ -70,10 +71,11 @@ Template.leadTeamView.events({
     const team = Volunteers.Collections.Team.findOne(template.data._id)
     AutoFormComponents.ModalShowWithTemplate('addProject', { team })
   },
-  'click [data-action="show_rota"]': (event, template) => {
-    const team = Volunteers.Collections.Team.findOne(template.data._id)
-    Router.go('leadTeamRota', {_id: template.data._id})
-  },
+  // TODO Fix
+  // 'click [data-action="show_rota"]': (event, template) => {
+  //   const team = Volunteers.Collections.Team.findOne(template.data._id)
+  //   Router.go('leadTeamRota', {_id: template.data._id})
+  // },
 })
 
 Template.leadTeamTabs.onCreated(function onCreated() {

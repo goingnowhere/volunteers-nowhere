@@ -11,9 +11,9 @@ Template.publicTeamView.onCreated(function onCreated() {
     // Period currently isn't used
     // template.subscribe('eventSettings').ready(),
   ]
-  template.subscribe(`${Volunteers.eventName}.ShiftSignups.byTeam`, _teamId)
-  template.subscribe(`${Volunteers.eventName}.ProjectSignups.byTeam`, _teamId)
-  template.subscribe(`${Volunteers.eventName}.LeadSignups.byTeam`, _teamId)
+  template.subscribe(`${Volunteers.eventName}.Signups.byTeam`, _teamId, 'shift')
+  template.subscribe(`${Volunteers.eventName}.Signups.byTeam`, _teamId, 'project')
+  template.subscribe(`${Volunteers.eventName}.Signups.byTeam`, _teamId, 'lead')
   template.autorun(() => {
     if (subs.every(sub => sub.ready())) {
       // const settings = EventSettings.findOne()

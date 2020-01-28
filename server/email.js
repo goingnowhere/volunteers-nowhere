@@ -103,11 +103,8 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
     switch (cntx.name) {
       case 'UserTeams': {
         const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-        const shiftSignups = Volunteers.Collections.ShiftSignups.find(sel).map(s => _.extend(s, { type: 'shift' }))
-        const leadSignups = Volunteers.Collections.LeadSignups.find(sel).map(s => _.extend(s, { type: 'lead' }))
-        const projectSignups = Volunteers.Collections.ProjectSignups.find(sel).map(s => _.extend(s, { type: 'project' }))
-        const allSignups = shiftSignups.concat(leadSignups).concat(projectSignups)
-        const emails = Object.keys(_.groupBy(allSignups, 'parentId')).map((parentId) => {
+        const signups = Volunteers.Collections.signups.find(sel).fetch()
+        const emails = Object.keys(_.groupBy(signups, 'parentId')).map((parentId) => {
           let unit = Volunteers.Collections.Team.findOne(parentId)
           if (!unit) {
             unit = Volunteers.Collections.Department.findOne(parentId)
@@ -124,8 +121,8 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Leads': {
-        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-        const list = Volunteers.Collections.LeadSignups.find(sel)
+        const sel = { userId: user._id, type: 'lead', status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.signups.find(sel)
         const allLeads = list.map((s) => {
           const duty = Volunteers.Collections.Lead.findOne(s.shiftId)
           let unit = Volunteers.Collections.Team.findOne(s.parentId)
@@ -160,8 +157,8 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Shifts': {
-        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-        const list = Volunteers.Collections.ShiftSignups.find(sel)
+        const sel = { userId: user._id, type: 'shift', status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.signups.find(sel)
         const allShifts = list.map((s) => {
           const duty = Volunteers.Collections.TeamShifts.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)
@@ -199,8 +196,8 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
         break
       }
       case 'Projects': {
-        const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-        const list = Volunteers.Collections.ProjectSignups.find(sel, { sort: { start: 1 } })
+        const sel = { userId: user._id, type: 'project', status: { $in: ['confirmed', 'pending', 'refused'] } }
+        const list = Volunteers.Collections.signups.find(sel, { sort: { start: 1 } })
         const allProjects = list.map((s) => {
           const duty = Volunteers.Collections.Projects.findOne(s.shiftId)
           const team = Volunteers.Collections.Team.findOne(s.parentId)

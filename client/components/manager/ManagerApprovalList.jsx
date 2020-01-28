@@ -11,7 +11,7 @@ import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 export const ManagerApprovalList = () => {
   const [allSignups, setSignups] = useState([])
   const [modalUserId, setModalUserId] = useState('')
-  const reloadSignups = () => Meteor.call('LeadSignups.list.manager', (err, leads) => {
+  const reloadSignups = () => Meteor.call('signups.list.manager', 'lead', (err, leads) => {
     if (err) {
       console.error(err)
     } else {

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import moment from 'moment-timezone'
 import { ReactiveVar } from 'meteor/reactive-var'
@@ -8,7 +9,7 @@ Template.earlyEntry.onCreated(function onCreated() {
   const template = this
   template.departmentId = template.data._id
   template.buildPeriod = new ReactiveVar({})
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byDepartment`, template.departmentId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byDept`, template.departmentId, 'project')
   template.autorun(() => {
     if (template.subscribe('eventSettings').ready()) {
       const settings = EventSettings.findOne()
@@ -27,6 +28,8 @@ Template.earlyEntry.helpers({
       const teams = Volunteers.Collections.Team.find({ parentId }).fetch()
       const teamIds = _.pluck(teams, '_id')
       const sel = {
+        // TODO Can we include shifts? We'd need to aggregate in shifts for start time
+        type: 'project',
         start: {
           $gte: moment(start).startOf('day').toDate(),
           $lt: moment(end).endOf('day').toDate(),
@@ -34,7 +37,7 @@ Template.earlyEntry.helpers({
         parentId: { $in: teamIds },
         status: 'confirmed',
       }
-      const projects = Volunteers.Collections.ProjectSignups.find(sel).fetch()
+      const projects = Volunteers.Collections.signups.find(sel).fetch()
       return _.chain(projects).map((pr) => {
         const { profile, emails } = Meteor.users.findOne(pr.userId)
         const { name } = Volunteers.Collections.Team.findOne(pr.parentId)

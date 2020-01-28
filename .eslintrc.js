@@ -42,6 +42,8 @@ module.exports = {
     'implicit-arrow-linebreak': ['off'],
     // Remove if we replace confirms with something better
     'no-alert': 'off',
+    'one-var': 'off',
+    'one-var-declaration-per-line': ['error', 'initializations'],
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {

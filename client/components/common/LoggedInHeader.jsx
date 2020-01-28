@@ -165,7 +165,7 @@ const LoggedInHeaderComponent = ({
 export const LoggedInHeader = withRouter(withTracker(({ history }) => {
   const { _id: userId, profile = {} } = Meteor.user() || {}
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
-  Meteor.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
+  Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, userId, ['lead'])
   const isManager = Volunteers.isManager()
   const userTeamSearch = isManager ? {} : {
     _id: {

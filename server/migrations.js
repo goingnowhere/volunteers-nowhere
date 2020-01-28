@@ -93,3 +93,17 @@ Migrations.add({
     Meteor.users.update({}, { $unset: { quicket: '' } }, { multi: true })
   },
 })
+
+Migrations.add({
+  version: 5,
+  up() {
+    Volunteers.Collections.ShiftSignups.find().map(signup =>
+      Volunteers.Collections.signups.insert({ ...signup, type: 'shift' }))
+    Volunteers.Collections.TaskSignups.find().map(signup =>
+      Volunteers.Collections.signups.insert({ ...signup, type: 'task' }))
+    Volunteers.Collections.ProjectSignups.find().map(signup =>
+      Volunteers.Collections.signups.insert({ ...signup, type: 'project' }))
+    Volunteers.Collections.LeadSignups.find().map(signup =>
+      Volunteers.Collections.signups.insert({ ...signup, type: 'lead' }))
+  },
+})

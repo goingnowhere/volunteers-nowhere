@@ -12,10 +12,7 @@ import { UserResponsibilities } from '../components/volunteer/UserResponsibiliti
 Template.userDashboard.onCreated(function onCreated() {
   const template = this
   const userId = Meteor.userId()
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ShiftSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.TaskSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.ProjectSignups.byUser`, userId)
-  template.subscribe(`${Volunteers.eventName}.Volunteers.LeadSignups.byUser`, userId)
+  template.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, userId)
   template.subscribe(`${Volunteers.eventName}.Volunteers.team`)
 })
 
@@ -24,12 +21,8 @@ Template.userDashboard.helpers({
   UserResponsibilities: () => UserResponsibilities,
   userId: () => Meteor.userId(),
   bookedMissions: () => {
-    const sel = { status: { $in: ['confirmed', 'pending'] } }
-    return (
-      (Volunteers.Collections.ShiftSignups.find(sel).count() > 0)
-      || (Volunteers.Collections.ProjectSignups.find(sel).count() > 0)
-      || (Volunteers.Collections.TaskSignups.find(sel).count() > 0)
-    )
+    const sel = { status: { $in: ['confirmed', 'pending'] }, type: { $ne: 'lead' } }
+    return Volunteers.Collections.signups.find(sel).count() > 0
   },
 })
 

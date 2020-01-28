@@ -7,7 +7,7 @@ import 'flatpickr/dist/flatpickr.css'
 import { Volunteers } from '../../../../both/init'
 import { T, t } from '../../common/i18n'
 
-const enroll = ({
+const enroll = (type, {
   duty,
   policy,
   teamId: parentId,
@@ -16,8 +16,9 @@ const enroll = ({
 // TODO This duplicates logic from meteor-volunteers apply code and confirmation should happen in
 // the method not in the frontend
   Meteor.call(
-    `${Volunteers.eventName}.Volunteers.${duty}Signups.insert`, {
+    `${Volunteers.eventName}.Volunteers.signups.insert`, {
       ...details,
+      type,
       parentId,
       enrolled: true,
     },
@@ -56,14 +57,7 @@ const enroll = ({
             })
         }
       } if (signupId && (policy === 'requireApproval' || policy === 'adminOnly')) {
-        if (duty === 'lead') {
-          Meteor.call(`${Volunteers.eventName}.Volunteers.leadSignups.confirm`, signupId)
-        } else {
-          Meteor.call(`${Volunteers.eventName}.Volunteers.${duty}Signups.setStatus`, {
-            id: signupId,
-            status: 'confirmed',
-          })
-        }
+        Meteor.call(`${Volunteers.eventName}.Volunteers.signups.confirm`, signupId)
       }
     },
   )
@@ -74,7 +68,7 @@ export const ShiftEnrollButton = details => (
   <button
     type="button"
     className="btn btn-primary fl"
-    onClick={() => enroll(details)}
+    onClick={() => enroll('shift', details)}
   >
     <T>enroll</T>
   </button>
@@ -103,7 +97,7 @@ export const ProjectEnrollButton = ({
         type="button"
         className="btn btn-primary float-right"
         disabled={!startEnroll || !endEnroll}
-        onClick={() => enroll({ start: startEnroll, end: endEnroll, ...details })}
+        onClick={() => enroll('project', { start: startEnroll, end: endEnroll, ...details })}
       >
         <T>enroll</T>
       </button>
