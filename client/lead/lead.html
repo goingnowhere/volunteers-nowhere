@@ -67,7 +67,7 @@
       {{#if $gt teamStats.pendingRequests 0}}
         <div class="col-sm-12 col-md-5 pl-1 user-top">
           <h2 class="header">{{__ "applications" }}</h2>
-          {{> teamSignupsList signupListContext }}
+          <div>{{> React component=SignupApprovalList query=signupListContext }}</div>
         </div>
       {{/if}}
     </div>

@@ -7,20 +7,19 @@ import { t } from '../common/i18n'
 import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 
 // Should probably be in meteor-volunteers but hooks don't work there because Meteor
-// TODO can probably generalise this for any dept/team
-export const ManagerApprovalList = () => {
+export const SignupApprovalList = ({ query = {} }) => {
   const [allSignups, setSignups] = useState([])
   const [modalUserId, setModalUserId] = useState('')
-  const reloadSignups = () => Meteor.call('signups.list.manager', 'lead', (err, leads) => {
+  const reloadSignups = () => Meteor.call('signups.list', query, (err, signups) => {
     if (err) {
       console.error(err)
     } else {
-      setSignups(leads)
+      setSignups(signups)
     }
   })
   useEffect(() => {
     reloadSignups()
-  }, [])
+  }, [query])
   return (
     <Fragment>
       <Modal
@@ -35,7 +34,6 @@ export const ManagerApprovalList = () => {
           <SignupApproval
             key={signup._id}
             signup={signup}
-            isTeam={false}
             openUserModal={setModalUserId}
             reloadSignups={reloadSignups}
           />

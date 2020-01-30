@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { T } from '../common/i18n'
 import { CsvExportButton } from '../lead/CsvExportButton.jsx'
 import { Volunteers } from '../../../both/init'
-import { ManagerApprovalList } from './ManagerApprovalList.jsx'
+import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
@@ -77,7 +77,7 @@ export const ManagerDashboard = () => (
       </div>
       <div className="col-md-5">
         <h2 className="header"><T>pending_metalead_requests</T></h2>
-        <ManagerApprovalList />
+        <SignupApprovalList query={{ type: 'lead', status: 'pending' }} />
       </div>
     </div>
   </div>

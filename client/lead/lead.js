@@ -7,6 +7,7 @@ import { AutoForm } from 'meteor/aldeed:autoform'
 import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
+import { SignupApprovalList } from '../components/lead/SignupApprovalList.jsx'
 
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
@@ -32,6 +33,7 @@ Template.leadTeamView.onRendered(() => {
 
 Template.leadTeamView.helpers({
   CsvExportButton: () => CsvExportButton,
+  SignupApprovalList: () => SignupApprovalList,
   name: () => Template.instance().name.get(),
   parentId: () => Template.instance().parentId.get(),
   teamStats: () => {
@@ -44,9 +46,8 @@ Template.leadTeamView.helpers({
     return Volunteers.Collections.signups.find({ parentId, type: 'lead', status: 'confirmed' })
   },
   signupListContext: () => {
-    const data = Template.currentData()
-    data.userInfoTemplate = 'noInfoUserProfileLink'
-    return data
+    const { _id: teamId } = Template.currentData()
+    return { parentId: teamId, status: 'pending' }
   },
 })
 
