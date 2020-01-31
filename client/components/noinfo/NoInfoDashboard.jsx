@@ -10,7 +10,6 @@ export const NoInfoDashboard = () => {
   useEffect(() => {
     Meteor.call('shifts.empty', moment().toDate(), (err, res) => {
       if (err) console.error(err)
-      console.log({res})
       setTodayShifts(res || [])
     })
   }, [])

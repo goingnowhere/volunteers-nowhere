@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
@@ -8,6 +7,7 @@ import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 import { SignupApprovalList } from '../components/lead/SignupApprovalList.jsx'
+import { WeekStrip } from '../components/common/WeekStrip.jsx'
 
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
@@ -85,10 +85,9 @@ Template.leadTeamTabs.onCreated(function onCreated() {
   template.shownDay = new ReactiveVar()
   template.currentDay = new ReactiveVar()
   template.autorun(() => {
-    if (Meteor.subscribe('eventSettings').ready()) {
+    if (template.subscribe('eventSettings').ready()) {
       const settings = EventSettings.findOne()
       template.shownDay.set(moment(settings.eventPeriod.start))
-      template.currentDay.set(moment(settings.eventPeriod.start))
     }
   })
 
@@ -104,8 +103,11 @@ Template.leadTeamTabs.onCreated(function onCreated() {
 })
 
 Template.leadTeamTabs.helpers({
+  WeekStrip: () => WeekStrip,
   currentDay: () => Template.instance().currentDay.get(),
   shownDay: () => Template.instance().shownDay.get(),
+  initialWeekNumber: () => Template.instance().shownDay.get().week(),
+  year: () => Template.instance().shownDay.get().year(),
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
     return (day => cd.set(day))

@@ -93,7 +93,7 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="shifts">
       <div class="pt-2">
-        {{> weekstrip day=currentDay shownDay=shownDay callback=updateCurrentDay }}
+        <div>{{> React component=WeekStrip currentDay=currentDay initialWeekNumber=initialWeekNumber year=year setDay=updateCurrentDay }}</div>
         {{# teamShiftsTable _id=_id date=currentDay userInfoTemplate="noInfoUserProfileLink" }}
           {{> shiftSignupEnrollAction }}
         {{/teamShiftsTable}}
