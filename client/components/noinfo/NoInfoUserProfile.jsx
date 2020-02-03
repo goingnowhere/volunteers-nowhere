@@ -27,7 +27,7 @@ const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
                 <tr>
                   <td><T>name</T></td>
                   <td>{displayName(user)}
-                    {user.status.online && <span className="text-success"> <Fa name="circle" /></span>}
+                    {user.status && user.status.online && <span className="text-success"> <Fa name="circle" /></span>}
                   </td>
                 </tr>
                 <tr>
