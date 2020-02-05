@@ -55,6 +55,7 @@ module.exports = {
       "templateInstanceParamName": "template",
     }],
     'react/jsx-one-expression-per-line': 'off',
+    'react/jsx-fragments': ['warn', 'element'],
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/label-has-associated-control': ['error', {

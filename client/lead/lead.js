@@ -3,11 +3,14 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { TeamShiftsTable } from 'meteor/goingnowhere:volunteers'
+
 import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
 import { CsvExportButton } from '../components/lead/CsvExportButton.jsx'
 import { SignupApprovalList } from '../components/lead/SignupApprovalList.jsx'
 import { WeekStrip } from '../components/common/WeekStrip.jsx'
+import { NoInfoUserProfile } from '../components/noinfo/NoInfoUserProfile.jsx'
 
 Template.leadTeamView.onCreated(function onCreated() {
   const template = this
@@ -104,6 +107,9 @@ Template.leadTeamTabs.onCreated(function onCreated() {
 
 Template.leadTeamTabs.helpers({
   WeekStrip: () => WeekStrip,
+  TeamShiftsTable: () => TeamShiftsTable,
+  NoInfoUserProfile: () => NoInfoUserProfile,
+  teamId: () => Template.currentData()._id,
   currentDay: () => Template.instance().currentDay.get(),
   shownDay: () => Template.instance().shownDay.get(),
   initialWeekNumber: () => Template.instance().shownDay.get().week(),
@@ -151,7 +157,6 @@ const enrollEvent = {
   },
 }
 
-Template.shiftSignupEnrollAction.events(enrollEvent)
 Template.projectSignupEnrollAction.events(enrollEvent)
 
 AutoForm.addHooks([

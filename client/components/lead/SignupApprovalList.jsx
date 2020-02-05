@@ -30,7 +30,7 @@ export const SignupApprovalList = ({ query = {} }) => {
         <NoInfoUserProfile userId={modalUserId} />
       </Modal>
       <ul className="list-group">
-        {allSignups.map(signup => (
+        {allSignups.map((signup) => (
           <SignupApproval
             key={signup._id}
             signup={signup}

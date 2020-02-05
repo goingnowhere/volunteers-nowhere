@@ -94,9 +94,7 @@
     <div role="tabpanel" class="tab-pane active" id="shifts">
       <div class="pt-2">
         <div>{{> React component=WeekStrip currentDay=currentDay initialWeekNumber=initialWeekNumber year=year setDay=updateCurrentDay }}</div>
-        {{# teamShiftsTable _id=_id date=currentDay userInfoTemplate="noInfoUserProfileLink" }}
-          {{> shiftSignupEnrollAction }}
-        {{/teamShiftsTable}}
+        <div>{{> React component=TeamShiftsTable teamId=teamId date=currentDay UserInfoComponent=NoInfoUserProfile }}</div>
       </div>
     </div>
     <!-- Projects -->
@@ -107,20 +105,6 @@
     </div>
   </div>
   {{/if}}
-</template>
-
-<template name="shiftSignupEnrollAction">
-  <button
-    class="btn btn-sm btn-circle"
-    href="#"
-    data-action="enroll"
-    data-id="{{shift._id}}"
-    data-team="{{shift.parentId}}"
-    data-type="shift"
-    data-policy="{{shift.policy}}"
-  >
-    {{fa "user-plus"}}
-  </button>
 </template>
 
 <template name="projectSignupEnrollAction">
