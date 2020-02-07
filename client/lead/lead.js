@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment-timezone'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
-import { TeamShiftsTable } from 'meteor/goingnowhere:volunteers'
+import { TeamShiftsTable, TeamProjectsTable } from 'meteor/goingnowhere:volunteers'
 
 import { EventSettings } from '../../both/collections/settings'
 import { Volunteers } from '../../both/init'
@@ -108,6 +108,7 @@ Template.leadTeamTabs.onCreated(function onCreated() {
 Template.leadTeamTabs.helpers({
   WeekStrip: () => WeekStrip,
   TeamShiftsTable: () => TeamShiftsTable,
+  TeamProjectsTable: () => TeamProjectsTable,
   NoInfoUserProfile: () => NoInfoUserProfile,
   teamId: () => Template.currentData()._id,
   currentDay: () => Template.instance().currentDay.get(),
@@ -116,48 +117,9 @@ Template.leadTeamTabs.helpers({
   year: () => Template.instance().shownDay.get().year(),
   updateCurrentDay: () => {
     const cd = Template.instance().currentDay
-    return (day => cd.set(day))
+    return cd.set
   },
 })
-
-const enrollEvent = {
-  'click [data-action="enroll"]': (event, template) => {
-    const id = template.$(event.currentTarget).data('id')
-    const type = template.$(event.currentTarget).data('type')
-    const parentId = template.$(event.currentTarget).data('team')
-    const policy = template.$(event.currentTarget).data('policy')
-    switch (type) {
-      case 'shift': {
-        AutoFormComponents.ModalShowWithTemplate('shiftEnrollUsersTable', {
-          data: {
-            teamId: parentId,
-            shiftId: id,
-            duty: type,
-            policy,
-          },
-        })
-        break
-      }
-      case 'project': {
-        const { start, end } = Volunteers.Collections.Projects.findOne(id)
-        AutoFormComponents.ModalShowWithTemplate('projectEnrollUsersTable', {
-          data: {
-            teamId: parentId,
-            shiftId: id,
-            duty: type,
-            policy,
-            start,
-            end,
-          },
-        })
-        break
-      }
-      default:
-    }
-  },
-}
-
-Template.projectSignupEnrollAction.events(enrollEvent)
 
 AutoForm.addHooks([
   'UpdateTeamShiftsFormId', 'InsertTeamShiftsFormId',

@@ -9,11 +9,3 @@
 <template name="projectEnrollUsersTable">
   <div>{{> React component=EnrollUserList data=data }}</div>
 </template>
-
-<template name="noInfoUserProfileLink">
-  <a href="#" data-action="user_form" data-userid="{{userId}}">{{getUserName userId}}</a>
-</template>
-
-<template name="noInfoUserProfile">
-  <div>{{> React component=NoInfoUserProfile userId=userId }}</div>
-</template>

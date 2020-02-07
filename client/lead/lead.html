@@ -99,24 +99,8 @@
     </div>
     <!-- Projects -->
     <div role="tabpanel" class="tab-pane fade" id="projects">
-      {{# teamProjectsTable _id=_id userInfoTemplate="noInfoUserProfileLink" }}
-        {{> projectSignupEnrollAction }}
-      {{/teamProjectsTable}}
+      {{> React component=TeamProjectsTable teamId=teamId UserInfoComponent=NoInfoUserProfile }}
     </div>
   </div>
   {{/if}}
-</template>
-
-<template name="projectSignupEnrollAction">
-  <button
-    class="btn btn-sm btn-circle"
-    href="#"
-    data-action="enroll"
-    data-id="{{project._id}}"
-    data-team="{{project.parentId}}"
-    data-type="project"
-    data-policy="{{project.policy}}"
-  >
-    {{fa "user-plus"}}
-  </button>
 </template>
