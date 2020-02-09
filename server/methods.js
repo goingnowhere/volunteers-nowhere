@@ -31,6 +31,12 @@ Meteor.methods({
   },
 })
 
+export const getEventSettings = new ValidatedMethod({
+  name: 'eventSettings',
+  validate : null,
+  run: () => EventSettings.findOne(),
+})
+
 const EnrollUserSchema = new SimpleSchema({
   email: String,
   profile: Object,

@@ -21,7 +21,7 @@ export const CsvExportButton = ({
   filename,
   ...args
 }) => (
-  <button type="button" className="btn btn-light btn-sm" onClick={callForCsv(method, filename, args)}>
+  <button type="button" className="btn btn-light btn-sm d-block" onClick={callForCsv(method, filename, args)}>
     <Fa name="file" /> <T>{buttonText}</T>
   </button>
 )

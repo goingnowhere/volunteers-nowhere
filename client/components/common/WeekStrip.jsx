@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react'
 import moment from 'moment-timezone'
 
-const generateWeek = (year, weekNumber) => {
+const generateWeek = (year, week) => {
+  if (!year || !week) return []
   const start = moment()
     .year(year)
-    .week(weekNumber)
+    .week(week)
     .weekday(0)
     .startOf('day')
-  return [...Array(7).keys()].map(i => start.clone().add(i, 'days'))
+  return [...Array(7).keys()].map((i) => start.clone().add(i, 'days'))
 }
 
 // Display a horizontal strip containing the days of the week
@@ -16,12 +17,12 @@ const generateWeek = (year, weekNumber) => {
 //         - callback: function (date) -> {} executed when on day is selected
 export const WeekStrip = ({
   year,
-  initialWeekNumber,
+  initialWeek,
   currentDay,
   setDay,
 }) => {
-  const [weekNumber, setWeekNumber] = useState(initialWeekNumber)
-  const week = useMemo(() => generateWeek(year, weekNumber), [year, weekNumber])
+  const [week, setWeekNumber] = useState(initialWeek)
+  const weekDays = useMemo(() => generateWeek(year, week || initialWeek), [year, week, initialWeek])
   return (
     <nav>
       <ul className="pagination justify-content-center">
@@ -30,13 +31,13 @@ export const WeekStrip = ({
             type="button"
             className="page-link h-100"
             title="Previous week"
-            onClick={() => setWeekNumber(weekNumber - 1)}
+            onClick={() => setWeekNumber((week || initialWeek) - 1)}
           >
             <span aria-hidden="true">&laquo;</span>
             <span className="sr-only">Previous</span>
           </button>
         </li>
-        {week.map((day) => {
+        {weekDays.map((day) => {
           const isCurrentDay = day.isSame(currentDay, 'day')
           return (
             <li key={day.dayOfYear()} className={`page-item${isCurrentDay ? ' active' : ''}`}>
@@ -56,7 +57,7 @@ export const WeekStrip = ({
             type="button"
             className="page-link h-100"
             title="Next week"
-            onClick={() => setWeekNumber(weekNumber + 1)}
+            onClick={() => setWeekNumber((week || initialWeek) + 1)}
           >
             <span aria-hidden="true">&raquo;</span>
             <span className="sr-only">Next</span>

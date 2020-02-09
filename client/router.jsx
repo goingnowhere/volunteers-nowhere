@@ -22,6 +22,7 @@ import { LoggedInRoute } from './components/LoggedInRoute.jsx'
 import { VerifyEmail } from './components/VerifyEmail.jsx'
 import { NoInfoDashboard } from './components/noinfo/NoInfoDashboard.jsx'
 import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
+import { LeadDashboard } from './components/lead/LeadDashboard.jsx'
 
 const Dashboard = () => <Blaze template="userDashboard" />
 export const Routes = () => (
@@ -39,10 +40,11 @@ export const Routes = () => (
         <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />
         <LoggedInRoute path="/profile" component={VolunteerForm} />
         <LoggedInRoute path="/dashboard" component={Dashboard} />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <LoggedInRoute path="/department/:_id/team/:_teamId/:_period?" component={memo(({ match }) => <Blaze template="publicTeamView" {...match.params} />)} />
         <LoggedInRoute path="/department/:id" component={memo(({ match }) => <Blaze template="publicDepartmentView" _id={match.params.id} />)} />
         {/* FIXME needs to check for lead */}
-        <LoggedInRoute path="/lead/team/:id" component={memo(({ match }) => <Blaze template="leadTeamView" _id={match.params.id} />)} />
+        <LoggedInRoute path="/lead/team/:teamId" component={LeadDashboard} />
         {/* FIXME needs to check for metalead */}
         <LoggedInRoute path="/metalead/department/:id" component={memo(({ match }) => <Blaze template="metaleadDepartmentView" _id={match.params.id} />)} />
         {/* FIXME needs to check for manager */}

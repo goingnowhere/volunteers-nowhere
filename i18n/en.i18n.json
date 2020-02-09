@@ -85,5 +85,8 @@
   "team": "Team",
   "status": "Status",
   "leads": "Leads",
-  "with_picture": "With Picture"
+  "with_picture": "With Picture",
+  "wanted": "Spaces",
+  "needed": "Needed",
+  "confirmed": "Confirmed"
 }
