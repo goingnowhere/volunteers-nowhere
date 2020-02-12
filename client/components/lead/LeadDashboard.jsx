@@ -17,7 +17,8 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
     AutoFormComponents.ModalShowWithTemplate('teamEditDetails', team)
   }
   const addShiftGroup = () => {
-    AutoFormComponents.ModalShowWithTemplate('addShiftGroup', { parentId: teamId })
+    AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+      { form: { collection: Volunteers.Collections.rotas }, data: { parentId: teamId } }, '', 'lg')
   }
   const addProject = () => {
     AutoFormComponents.ModalShowWithTemplate('addProject', { team })

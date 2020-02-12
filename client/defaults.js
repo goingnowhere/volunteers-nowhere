@@ -7,6 +7,9 @@ Bert.defaults = {
   style: 'fixed-top',
   type: 'default',
 }
+Object.entries(Bert.icons).forEach(([key, icon]) => {
+  Bert.icons[key] = icon.replace('fas ', 'fa ')
+})
 
 AutoForm.addHooks(null, {
   onError(operation, error) {

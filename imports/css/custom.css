@@ -178,3 +178,8 @@ et injecter la typo */
     page-break-before: always;
   }
 }
+
+.bert-alert {
+  /* Screw you bootstrap */
+  z-index: 2000;
+}

@@ -62,5 +62,17 @@ module.exports = {
       controlComponents: ['Field'],
     }],
     'jsx-a11y/label-has-for': 'off', // Deprecated for above
+    // Below added to workaround babel-eslint bug github.com/babel/babel-eslint/issues/799
+    "indent": [
+      "error",
+      2,
+      {
+          "ignoredNodes": [
+              "TemplateLiteral"
+          ]
+      }
+    ],
+    "template-curly-spacing": ["off", "never"],
+    // end bugfix
   },
 }
