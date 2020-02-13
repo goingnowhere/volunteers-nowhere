@@ -8,7 +8,7 @@ import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 
 import { EventSettings } from '../../both/collections/settings'
 
-const HomePageComponent = ({ loaded, openDate }) => {
+const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
   const openMoment = moment(openDate)
   const [seconds, setSeconds] = useState()
   useEffect(() => {
@@ -24,25 +24,36 @@ const HomePageComponent = ({ loaded, openDate }) => {
           <h1 className="home-title">Co-Create Nowhere 2019</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
-              <p className="lead">
-                For Information and Scheduling of Teams
-              </p>
               { loaded && seconds > 0
                 ? (
                   <Fragment>
                     <p className="lead">
                       You can help make Nowhere happen from {openMoment.format('Do MMMM')}:
                     </p>
-                    <button type="button" className="btn btn-secondary" disabled>
-                      {seconds} seconds
-                    </button>
+                    <div className="row">
+                      <button type="button" className="col btn btn-secondary m-1" disabled>
+                        {seconds} seconds
+                      </button>
+                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
+                        {loggedIn ? 'I want to be a lead!' : 'Volunteer!'}
+                      </a>
+                    </div>
                   </Fragment>
                 ) : (
-                  <Link to="/signup" className="btn btn-secondary">
-                    Register now
-                  </Link>
-                )
-              }
+                  <Fragment>
+                    <p className="lead">
+                      For Information and Scheduling of Teams
+                    </p>
+                    <div className="row">
+                      <Link to="/signup" className="col btn btn-secondary m-1">
+                        Register now
+                      </Link>
+                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
+                        I want to be a lead!
+                      </a>
+                    </div>
+                  </Fragment>
+                )}
             </div>
           </div>
         </div>
@@ -51,22 +62,42 @@ const HomePageComponent = ({ loaded, openDate }) => {
       <section className="home bg-secondary mb-0" id="about">
         <div className="container">
           <h2 className="text-center text-uppercase">About</h2>
-          <div className="row">
-            <div className="col-lg-4 ml-auto">
-              <p className="lead">
-                Nowhere is a collective experiment conceived,
-                built, experienced and returned to nothing by
-                a lot of nobodies just like YOU.
-              </p>
+          {loggedIn ? (
+            <div className="row">
+              <div className="col-lg-4 ml-auto">
+                <p className="lead">
+                  You&apos;ve been here before so we&apos;re not going to
+                  bore you with the usual speech about what Nowhere is.
+                  You can just sit here and enjoy the fun countdown.
+                </p>
+              </div>
+              <div className="col-lg-4 mr-auto">
+                <p className="lead">
+                  If you get restless though, there&apos;s plenty to
+                  get stuck into right now, so why wait? Head on over
+                  to <a href="https://www.goingnowhere.org/get-involved/volunteering/">the website</a> to
+                  find out what Nowhere needs most.
+                </p>
+              </div>
             </div>
-            <div className="col-lg-4 mr-auto">
-              <p className="lead">
-                So we need YOU to help set up the site, keep
-                things running smoothly during the event, and
-                pack up everything back to dust.
-              </p>
+          ) : (
+            <div className="row">
+              <div className="col-lg-4 ml-auto">
+                <p className="lead">
+                  Nowhere is an experiment in creative freedom,
+                  participation and cash-free community. Conceived,
+                  built, experienced and returned to nothing by YOU.
+                </p>
+              </div>
+              <div className="col-lg-4 mr-auto">
+                <p className="lead">
+                  It&lsquo;s people like YOU who set up the site, keep
+                  things running smoothly during the event, and pack up
+                  everything back to dust, so you&lsquo;ve come to the right place
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -105,13 +136,14 @@ const HomePageComponent = ({ loaded, openDate }) => {
   )
 }
 
-export const HomePage = withTracker((props) => {
+export const HomePage = withTracker(({ history }) => {
   // Allows accounts-ui to redirect based on hashes such as for password resets
-  setRouterHistory(props.history)
+  setRouterHistory(history)
   const settingsSub = Meteor.subscribe('eventSettings')
   const settings = EventSettings.findOne()
   return {
     loaded: settingsSub.ready(),
     openDate: settings && settings.fistOpenDate,
+    loggedIn: !!Meteor.userId(),
   }
 })(HomePageComponent)
