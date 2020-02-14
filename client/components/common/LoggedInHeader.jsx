@@ -48,7 +48,7 @@ const LoggedInHeaderComponent = ({
             <T>explore</T>
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-            {allDepartments.map(dept => (
+            {allDepartments.map((dept) => (
               <NavLink key={dept._id} to={`/department/${dept._id}`} className="dropdown-item">
                 {dept.name}
               </NavLink>
@@ -109,7 +109,7 @@ const LoggedInHeaderComponent = ({
               <T>metalead</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-              {userDepartments.map(dept => (
+              {userDepartments.map((dept) => (
                 <NavLink key={dept._id} to={`/metalead/department/${dept._id}`} className="dropdown-item">{dept.name}</NavLink>
               ))}
             </div>
@@ -129,7 +129,7 @@ const LoggedInHeaderComponent = ({
               <T>lead</T>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-              {userTeams.map(team => (
+              {userTeams.map((team) => (
                 <NavLink key={team._id} to={`/lead/team/${team._id}`} className="dropdown-item">{team.name}</NavLink>
               ))}
             </div>
@@ -152,8 +152,7 @@ const LoggedInHeaderComponent = ({
             <NavLink to="/password" className="dropdown-item"><T>change_password</T></NavLink>
             <NavLink to="/profile/settings" className="dropdown-item"><T>user_details</T></NavLink>
             {roles.isImpersonating
-              && <a className="dropdown-item" data-action="unimpersonate"><T>impersonate</T></a>
-            }
+              && <a className="dropdown-item" data-action="unimpersonate"><T>impersonate</T></a>}
             <a className="dropdown-item" role="button" href="#" onClick={logout}><T>logout</T></a>
           </div>
         </li>
@@ -186,12 +185,13 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
       history.push('/')
     },
     allDepartments,
-    userDepartments: Volunteers.Collections.Department.find(userTeamSearch).fetch(),
-    userTeams: Volunteers.Collections.Team.find(userTeamSearch).fetch(),
+    userDepartments:
+      Volunteers.Collections.Department.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
+    userTeams: Volunteers.Collections.Team.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
     roles: {
       isManager,
       isManagerOrLead: Volunteers.isManager() || Volunteers.isLead(),
-      isManagerOrMetaLead: Volunteers.isManagerOrLead(userId, allDepartments.map(d => d._id)),
+      isManagerOrMetaLead: Volunteers.isManagerOrLead(userId, allDepartments.map((d) => d._id)),
       isNoInfo,
     },
   }

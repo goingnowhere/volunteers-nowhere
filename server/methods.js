@@ -154,7 +154,7 @@ export const userStats = new ValidatedMethod({
   run() {
     const volunteers = Meteor.users.find().count()
     const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
-    const leads = Meteor.users.find({ ticketId: { $exists: false } }).count()
+    const leads = Volunteers.Collections.signups.find({ type: 'lead', status: 'confirmed' }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
     const withDuties = Promise.await(Volunteers.Collections.signups.rawCollection().distinct('userId'))
     const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
