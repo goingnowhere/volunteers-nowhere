@@ -241,7 +241,7 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
 
 // Defaults
 Accounts.emailTemplates.from = 'FIST <fist@goingnowhere.org>'
-Accounts.emailTemplates.siteName = 'FIST Nowhere 2019'
+Accounts.emailTemplates.siteName = 'FIST Nowhere 2020'
 
 Accounts.emailTemplates.enrollAccount.from = () => EmailForms.getFrom('enrollAccount')
 Accounts.emailTemplates.enrollAccount.subject = (user) => {

@@ -21,7 +21,7 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
     <Fragment>
       <header id="page-top" className="masthead bg-primary text-white text-center">
         <div className="container">
-          <h1 className="home-title">Co-Create Nowhere 2019</h1>
+          <h1 className="home-title">Co-Create Nowhere 2020</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
               { loaded && seconds > 0

@@ -4,10 +4,10 @@ import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/piemonkey:roles'
 import { initLocale } from './locale'
 
-export const Volunteers = new VolunteersClass('nowhere2019')
+export const Volunteers = new VolunteersClass('nowhere2020')
 
 const roles = ['admin', 'manager', 'user']
-roles.forEach(role => Roles.createRole(role, { unlessExists: true }))
+roles.forEach((role) => Roles.createRole(role, { unlessExists: true }))
 // establish a hierarchy among roles
 if (Meteor.isServer) {
   Roles.addRolesToParent('manager', 'admin')
