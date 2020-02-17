@@ -7,18 +7,20 @@ import { t } from '../common/i18n'
 import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 
 // Should probably be in meteor-volunteers but hooks don't work there because Meteor
-export const SignupApprovalList = ({ query = {} }) => {
-  const [allSignups, setSignups] = useState([])
+export const SignupApprovalList = ({ query = {}, signups }) => {
+  const [allSignups, setSignups] = useState(signups || [])
   const [modalUserId, setModalUserId] = useState('')
-  const reloadSignups = () => Meteor.call('signups.list', query, (err, signups) => {
+  const reloadSignups = () => Meteor.call('signups.list', query, (err, signupList) => {
     if (err) {
       console.error(err)
     } else {
-      setSignups(signups)
+      setSignups(signupList)
     }
   })
   useEffect(() => {
-    reloadSignups()
+    if (!signups) {
+      reloadSignups()
+    }
   }, [query])
   return (
     <Fragment>

@@ -23,6 +23,7 @@ import { VerifyEmail } from './components/VerifyEmail.jsx'
 import { NoInfoDashboard } from './components/noinfo/NoInfoDashboard.jsx'
 import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
 import { LeadDashboard } from './components/lead/LeadDashboard.jsx'
+import { DeptDashboard } from './components/lead/DeptDashboard.jsx'
 
 const Dashboard = () => <Blaze template="userDashboard" />
 export const Routes = () => (
@@ -46,7 +47,7 @@ export const Routes = () => (
         {/* FIXME needs to check for lead */}
         <LoggedInRoute path="/lead/team/:teamId" component={LeadDashboard} />
         {/* FIXME needs to check for metalead */}
-        <LoggedInRoute path="/metalead/department/:id" component={memo(({ match }) => <Blaze template="metaleadDepartmentView" _id={match.params.id} />)} />
+        <LoggedInRoute path="/metalead/department/:deptId" component={DeptDashboard} />
         {/* FIXME needs to check for manager */}
         <LoggedInRoute path="/manager/eventSettings" component={memo(() => <Blaze template="managerEventSettings" />)} />
         <LoggedInRoute path="/manager/emailForms" component={memo(() => <Blaze template="managerEmailForms" />)} />

@@ -26,36 +26,36 @@ const enroll = (type, {
     (err, signupId) => {
       if (err) {
         switch (err.error) {
-          case 409: {
-            if (err.reason === 'Double Booking') {
-              Bert.alert({
-                hideDelay: 6500,
-                title: t('double_booking'),
-                /* XXX: add details of the other bookings stored in err.details */
-                /* message: applyContext(templatebody, err),  */
-                message: t('double_booking_msg'),
-                type: 'warning',
-                style: 'growl-top-right',
-              })
-            } else {
-              Bert.alert({
-                hideDelay: 6500,
-                title: t('shift_full'),
-                message: t('shift_full_msg'),
-                type: 'warning',
-                style: 'growl-top-right',
-              })
-            }
-            break
-          }
-          default:
+        case 409: {
+          if (err.reason === 'Double Booking') {
             Bert.alert({
               hideDelay: 6500,
-              title: t('error'),
-              message: err.reason,
-              type: 'danger',
+              title: t('double_booking'),
+              /* XXX: add details of the other bookings stored in err.details */
+              /* message: applyContext(templatebody, err),  */
+              message: t('double_booking_msg'),
+              type: 'warning',
               style: 'growl-top-right',
             })
+          } else {
+            Bert.alert({
+              hideDelay: 6500,
+              title: t('shift_full'),
+              message: t('shift_full_msg'),
+              type: 'warning',
+              style: 'growl-top-right',
+            })
+          }
+          break
+        }
+        default:
+          Bert.alert({
+            hideDelay: 6500,
+            title: t('error'),
+            message: err.reason,
+            type: 'danger',
+            style: 'growl-top-right',
+          })
         }
       } if (signupId && (policy === 'requireApproval' || policy === 'adminOnly')) {
         Meteor.call(`${Volunteers.eventName}.Volunteers.signups.confirm`, signupId)
@@ -69,7 +69,7 @@ export const ShiftEnrollButton = (details) => (
   <button
     type="button"
     className="btn btn-primary fl"
-    onClick={() => enroll('shift', details)}
+    onClick={() => enroll(details.duty, details)}
   >
     <T>enroll</T>
   </button>
