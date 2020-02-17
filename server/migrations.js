@@ -144,3 +144,19 @@ Migrations.add({
     Meteor.users.update({}, { $unset: { ticketId: true } }, { multi: true })
   },
 })
+
+// Forgot to adjust rota dates
+Migrations.add({
+  version: 9,
+  up() {
+    [Volunteers.Collections.TeamShifts, Volunteers.Collections.rotas].forEach((collection) => {
+      collection.find({ start: { $lt: new Date('2020-01-01') } })
+        .map((thing) => collection.update({ _id: (thing)._id }, {
+          $set: {
+            start: moment((thing).start).add(1, 'year').subtract(2, 'days').toDate(),
+            end: moment((thing).end).add(1, 'year').subtract(2, 'days').toDate(),
+          },
+        }, { bypassCollection2: true }))
+    })
+  },
+})
