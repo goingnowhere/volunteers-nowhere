@@ -15,13 +15,13 @@ export const UserResponsibilitiesComponent = ({
   <ul className="list-unstyled">
     {isManager && <li><span className="mb-2 dark-text"><T>role</T>: </span>Manager</li>}
     {isNoInfo && <li><span className="mb-2 dark-text"><T>noInfo</T>: </span>Member</li>}
-    {leads.map(team => (
+    {leads.map((team) => (
       <li key={team._id}>
         <span className="mb-2 dark-text"><T>lead</T>: </span>
         <Link to={`/lead/team/${team._id}`}>{team.name}</Link>
       </li>
     ))}
-    {metaleads.map(dept => (
+    {metaleads.map((dept) => (
       <li key={dept._id}>
         <span className="mb-2 dark-text"><T>metalead</T>: </span>
         <Link to={`/metalead/department/${dept._id}`}>{dept.name}</Link>
@@ -32,9 +32,10 @@ export const UserResponsibilitiesComponent = ({
 
 export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
   const userId = userIdIn || Meteor.userId()
-  const isManager = Volunteers.isManager(userId)
+  const isManager = Volunteers.auth.isManager(userId)
+  // TODO use roles?
   const leadSignupTeamIds = Volunteers.Collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
-    .map(signup => signup.parentId)
+    .map((signup) => signup.parentId)
   return {
     leads: Volunteers.Collections.Team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
     metaleads: Volunteers.Collections.Department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),

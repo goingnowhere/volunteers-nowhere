@@ -12,7 +12,7 @@ export const ValidatedMethodWithMixin = (function add(method, mixins, name) {
 /* Check if the current user is a Manager or Volunteer part of no Info */
 const isNoInfo = () => {
   const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' })
-  return ((noInfo) && Volunteers.isManagerOrLead(Meteor.userId(), [noInfo._id]))
+  return ((noInfo) && Volunteers.auth.isLead(Meteor.userId(), [noInfo._id]))
 }
 
 /* check if the first argument is a String and compares it with the current user Id
@@ -20,79 +20,90 @@ const isNoInfo = () => {
    Or if the first argument is an object with a field _id  */
 export const isSameUserMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(first, ...rest) {
+  run(args) {
     // if the current user is not part of noInfo, then
     // the doc must belong to the user
-    if (!this.userId || (![first, first.userId, first._id].includes(this.userId))) {
+    if (!this.userId || (![args, args.userId, args._id].includes(this.userId))) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(first, ...rest)
+    return run(args)
   },
 })
 
 export const isSameUserOrManagerMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(first, ...rest) {
+  run(args) {
     // if the current user is not part of noInfo, then
     // the doc must belong to the user
     if (!this.userId
-      || (![first, first.userId, first._id].includes(this.userId) && !Volunteers.isManager())) {
+      || (![args, args.userId, args._id].includes(this.userId) && !Volunteers.auth.isManager())) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(first, ...rest)
+    return run(args)
   },
 })
 
 export const isSameUserOrNoInfoMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(first, ...rest) {
+  run(args) {
     // if the current user is not part of noInfo, then
     // the doc must belong to the user
-    if (!this.userId || (![first, first.userId, first._id].includes(this.userId) && !isNoInfo())) {
+    if (!this.userId || (![args, args.userId, args._id].includes(this.userId) && !isNoInfo())) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(first, ...rest)
+    return run(args)
   },
 })
 
 export const isManagerMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(...args) {
-    if (!Volunteers.isManager()) {
+  run(args) {
+    if (!Volunteers.auth.isManager()) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(...args)
+    return run(args)
   },
 })
 
-export const isManagerOrLeadMixin = ({ run, ...methodOptions }) => ({
+export const isLeadMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(first, ...args) {
-    // Check if lead of parentId from first argument if it has it
-    const teamId = first && typeof first === 'object' ? first.parentId : first
-    if (!Volunteers.isManagerOrLead(this.userId, teamId)) {
+  run(args) {
+    // Check if lead of parentId from args if it has it
+    const teamId = typeof args === 'object' ? args.parentId : args
+    if (!Volunteers.auth.isLead(this.userId, [teamId])) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(first, ...args)
+    return run(args)
+  },
+})
+
+// Specific mixin to allow any lead not just ones for a specific team
+export const isAnyLeadMixin = ({ run, ...methodOptions }) => ({
+  ...methodOptions,
+  run(args) {
+    if (!Volunteers.auth.isLead(this.userId)) {
+      throw new Meteor.Error('403', "You don't have permission for this operation")
+    }
+    return run(args)
   },
 })
 
 export const isLoggedInMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(...args) {
+  run(args) {
     if (!this.userId) {
       throw new Meteor.Error('401', 'You need to be logged in for this operation')
     }
-    return run(...args)
+    return run(args)
   },
 })
 
 export const isNoInfoMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
-  run(...args) {
+  run(args) {
     if (!isNoInfo()) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
-    return run(...args)
+    return run(args)
   },
 })

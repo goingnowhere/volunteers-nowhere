@@ -50,11 +50,13 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
       <h2 className="header"><T>all_teams</T></h2>
       <table className="table">
         <thead>
-          <th><T>name</T></th>
-          <th><T>leads</T></th>
-          <th><T>status</T></th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <th />
+          <tr>
+            <th><T>name</T></th>
+            <th><T>leads</T></th>
+            <th><T>status</T></th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <th />
+          </tr>
         </thead>
         <tbody>
           {teams.map((team) => (

@@ -17,7 +17,7 @@ const LoggedInRouteComponent = ({
   if (typeof user === 'undefined') return null
   if (user) {
     if (!user.emails.some((email) => email.verified)) return <Redirect to="/verify-email" />
-    if (moment().isBefore(openDate) && !Volunteers.isLead()) {
+    if (moment().isBefore(openDate) && !Volunteers.auth.isLead()) {
       // FIST is closed for now
       return <Redirect to="/" />
     }

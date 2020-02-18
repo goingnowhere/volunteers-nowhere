@@ -115,7 +115,7 @@ const LoggedInHeaderComponent = ({
             </div>
           </li>
         )}
-        {roles.isManagerOrLead && (
+        {roles.isLead && (
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
@@ -165,19 +165,18 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
   const { _id: userId, profile = {} } = Meteor.user() || {}
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, userId, ['lead'])
-  const isManager = Volunteers.isManager()
+  const isManager = Volunteers.auth.isManager()
   const userTeamSearch = isManager ? {} : {
     _id: {
       $in: Roles.getRolesForUser(userId, Volunteers.eventName),
     },
   }
   const allDepartments = Volunteers.Collections.Department.find().fetch()
-  let isNoInfo = isManager
-  if (!isManager) {
-    // TODO replace with 'coordinator' role
-    const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' }) || {}
-    isNoInfo = Volunteers.isManagerOrLead(userId, [noInfo._id])
-  }
+
+  //   // TODO replace with 'coordinator' role
+  const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' }) || {}
+  const isNoInfo = Volunteers.auth.isLead(userId, [noInfo._id])
+
   return {
     name: profile.nickname || profile.firstName,
     logout: () => {
@@ -190,8 +189,8 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
     userTeams: Volunteers.Collections.Team.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
     roles: {
       isManager,
-      isManagerOrLead: Volunteers.isManager() || Volunteers.isLead(),
-      isManagerOrMetaLead: Volunteers.isManagerOrLead(userId, allDepartments.map((d) => d._id)),
+      isLead: Volunteers.auth.isLead(),
+      isManagerOrMetaLead: Volunteers.auth.isLead(userId, allDepartments.map((d) => d._id)),
       isNoInfo,
     },
   }

@@ -13,7 +13,8 @@ import {
   isManagerMixin,
   isNoInfoMixin,
   isSameUserOrManagerMixin,
-  isManagerOrLeadMixin,
+  isLeadMixin,
+  isAnyLeadMixin,
 } from '../both/authMixins'
 import {
   dietGroups,
@@ -33,7 +34,7 @@ Meteor.methods({
 
 export const getEventSettings = new ValidatedMethod({
   name: 'eventSettings',
-  validate : null,
+  validate: null,
   run: () => EventSettings.findOne(),
 })
 
@@ -92,7 +93,7 @@ const sendNotificationEmailFunctionGeneric = ({
       sel.status.$in.push('refused')
     }
     // Use raw distinct?
-    const signupIds = Volunteers.Collections.signups.find(sel).map(signup => signup._id)
+    const signupIds = Volunteers.Collections.signups.find(sel).map((signup) => signup._id)
     if (recipient && (signupIds.length > 0)) {
       const doc = EmailForms.previewTemplate(template, recipient, getContext)
       WrapEmailSend(recipient, doc, isBulk)
@@ -102,7 +103,7 @@ const sendNotificationEmailFunctionGeneric = ({
   }
 }
 
-export const sendEnrollmentNotificationEmailFunction = userId =>
+export const sendEnrollmentNotificationEmailFunction = (userId) =>
   sendNotificationEmailFunctionGeneric({
     userId,
     template: 'voluntell',
@@ -121,7 +122,7 @@ export const sendShiftReminderEmail = new ValidatedMethod({
   name: 'email.sendShiftReminder',
   validate: null,
   mixins: [isManagerMixin],
-  run: userId => sendNotificationEmailFunctionGeneric({ userId, template: 'shiftReminder' }),
+  run: (userId) => sendNotificationEmailFunctionGeneric({ userId, template: 'shiftReminder' }),
 })
 
 export const sendMassShiftReminderEmail = new ValidatedMethod({
@@ -171,7 +172,7 @@ export const userStats = new ValidatedMethod({
 
 export const userList = new ValidatedMethod({
   name: 'users.paged',
-  mixins: [isNoInfoMixin],
+  mixins: [isAnyLeadMixin],
   validate: () => {},
   run({ search = {}, page, perPage = 20 }) {
     const usersCursor = Meteor.users.find(search, {
@@ -280,20 +281,20 @@ const getTeamRotaCsv = ({ parentId }) => Volunteers.Collections.signups.aggregat
 
 export const teamRotaData = new ValidatedMethod({
   name: 'team.rota',
-  mixins: [isManagerOrLeadMixin],
+  mixins: [isLeadMixin],
   validate: null,
   run: getTeamRotaCsv,
 })
 
 export const deptRotaData = new ValidatedMethod({
   name: 'dept.rota',
-  mixins: [isManagerOrLeadMixin],
+  mixins: [isLeadMixin],
   validate: null,
   run({ parentId }) {
     return _.flatten(
       Volunteers.Collections.Team.find({ parentId })
-        .map(team => getTeamRotaCsv({ parentId: team._id })
-          .map(rotaItem => ({ ...rotaItem, team: team.name }))),
+        .map((team) => getTeamRotaCsv({ parentId: team._id })
+          .map((rotaItem) => ({ ...rotaItem, team: team.name }))),
       true,
     )
   },
@@ -430,26 +431,26 @@ export const cantinaSetupData = new ValidatedMethod({
       const date = day.date()
       const month = day.month() + 1
       const dailyShiftData = _.object(Object.entries(shiftSignups).map(([dietType, dayCounts]) => {
-        const data = dayCounts.find(daily => daily._id.month === month && daily._id.day === date)
+        const data = dayCounts.find((daily) => daily._id.month === month && daily._id.day === date)
         return [dietType, data ? data.count : 0]
       }))
 
       const dailyProjectVols = projectSignups
-        .filter(signup => day.isSameOrAfter(signup.start) && day.isSameOrBefore(signup.end))
-        .map(signup => signup.user)
+        .filter((signup) => day.isSameOrAfter(signup.start) && day.isSameOrBefore(signup.end))
+        .map((signup) => signup.user)
       const projectGroups = _.groupBy(dailyProjectVols, 'food')
       const allergyCounts = {}
       allergies.forEach((allergy) => {
         const allergyName = `${allergy} allergy`
         allergyCounts[allergyName] = dailyProjectVols
-          .filter(vol => vol.allergies.includes(allergy)).length
+          .filter((vol) => vol.allergies.includes(allergy)).length
           + dailyShiftData[allergyName]
       })
       const intoleranceCounts = {}
       intolerances.forEach((intolerance) => {
         const intoleranceName = `${intolerance} intolerance`
         intoleranceCounts[intoleranceName] = dailyProjectVols
-          .filter(vol => vol.intolerances.includes(intolerance)).length
+          .filter((vol) => vol.intolerances.includes(intolerance)).length
           + dailyShiftData[intoleranceName]
       })
       return {

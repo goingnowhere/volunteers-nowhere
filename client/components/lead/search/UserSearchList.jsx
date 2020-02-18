@@ -12,7 +12,7 @@ const debouncedSearch = _.debounce((setSearch, text, ticketNumber) => {
   let search = []
   if (text) {
     search = ['profile.nickname', 'profile.firstName', 'profile.lastName', 'emails.0.address']
-      .map(field => ({ [field]: { $regex: text, $options: 'ix' } }))
+      .map((field) => ({ [field]: { $regex: text, $options: 'ix' } }))
   }
   // Should we only search when it could be a valid ticket number? e.g. by length
   if (ticketNumber) {
@@ -20,6 +20,8 @@ const debouncedSearch = _.debounce((setSearch, text, ticketNumber) => {
   }
   if (search.length > 0) {
     setSearch({ $or: search })
+  } else {
+    setSearch({})
   }
 }, 1000)
 
@@ -40,7 +42,7 @@ const SearchBox = ({ setSearch }) => {
             className="form-control"
             placeholder={t('name_or_email')}
             value={text}
-            onChange={event => setText(event.target.value)}
+            onChange={(event) => setText(event.target.value)}
           />
         </div>
       </div>
@@ -53,7 +55,7 @@ const SearchBox = ({ setSearch }) => {
             className="form-control"
             placeholder={t('ticket_number_search')}
             value={ticketNumber}
-            onChange={event => setTicketNumber(parseInt(event.target.value, 10))}
+            onChange={(event) => setTicketNumber(parseInt(event.target.value, 10))}
           />
         </div>
       </div>
@@ -73,7 +75,7 @@ const UserSearchListComponent = ({
 }) => (
   <Fragment>
     <SearchBox setSearch={setSearch} />
-    {users.map(user =>
+    {users.map((user) =>
       <ResultItem key={user._id} user={user} Controls={Controls} showUser={showUser} />)}
     <PagesPicker totalPages={Math.ceil(userCount / PER_PAGE)} page={page} changePage={changePage} />
   </Fragment>
@@ -88,9 +90,9 @@ export const UserSearchList = ({ component, Controls, showUser }) => {
     if (err) {
       console.error(err)
     } else {
-      setList(res.map(user => ({
+      setList(res.map((user) => ({
         ...user,
-        fistRoles: Roles.getRolesForUser(user._id, Volunteers.eventName).filter(role => ['admin', 'manager'].includes(role)),
+        fistRoles: Roles.getRolesForUser(user._id, Volunteers.eventName).filter((role) => ['admin', 'manager'].includes(role)),
       })))
       setUserCount(count)
     }

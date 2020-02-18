@@ -1,5 +1,5 @@
 import React from 'react'
-import { displayName } from 'meteor/abate:meteor-user-profiles'
+import { displayName } from '../../common/utils'
 
 import { ProfilePicture } from '../../common/ProfilePicture.jsx'
 
