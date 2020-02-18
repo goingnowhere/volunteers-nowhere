@@ -43,9 +43,9 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
           </h3>
           <h5 className="mb-2 dark-text"><T>leads</T></h5>
           <ul>
-            {/* {{#each lead in allLeads}}
-              <li>{{getUserName lead.userId}}</li>
-            {{/each}} */}
+            {team.leads && team.leads.map((lead) => (
+              <li key={lead._id}>{lead.profile.nickname || lead.profile.firstName}</li>
+            ))}
           </ul>
           <h5 className="mb-2 dark-text"><T>information</T></h5>
           <ul>

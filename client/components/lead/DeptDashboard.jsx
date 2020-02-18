@@ -40,6 +40,8 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
     },
   })
 
+  const thisTeam = dept.teams && dept.teams.find((team) => team._id === deptId)
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -54,9 +56,9 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
           </h3>
           <h5 className="mb-2 dark-text"><T>leads</T></h5>
           <ul>
-            {/* {{#each lead in allLeads}}
-              <li>{{getUserName lead.userId}}</li>
-            {{/each}} */}
+            {thisTeam && thisTeam.leads.map((lead) => (
+              <li key={lead._id}>{lead.profile.nickname || lead.profile.firstName}</li>
+            ))}
           </ul>
           <h5 className="mb-2 dark-text"><T>information</T></h5>
           <ul>
