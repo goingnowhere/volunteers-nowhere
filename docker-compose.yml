@@ -11,7 +11,7 @@ networks:
 
 services:
   fist:
-    image: piemonkey/volunteers-nowhere:2019-02-28
+    image: piemonkey/volunteers-nowhere:2020-02-18
     restart: always
     links:
       - mongo
@@ -34,7 +34,7 @@ services:
       - traefik.port=3000
       - traefik.docker.network=traefik
     volumes:
-      - user_data:/opt/meteor/dist/bundle/programs/server/profilePictures
+      - user_data:/home/node/app/bundle/programs/server/profilePictures
 
   mongo:
     image: mongo:4.0-xenial
