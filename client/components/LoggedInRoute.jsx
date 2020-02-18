@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
 import moment from 'moment-timezone'
 import { EventSettings } from '../../both/collections/settings'
+import { Volunteers } from '../../both/init'
 
 const LoggedInRouteComponent = ({
   user,
@@ -16,7 +17,7 @@ const LoggedInRouteComponent = ({
   if (typeof user === 'undefined') return null
   if (user) {
     if (!user.emails.some((email) => email.verified)) return <Redirect to="/verify-email" />
-    if (moment().isBefore(openDate) && !user.emails.some((email) => /@goingnowhere.org$/.test(email.address))) {
+    if (moment().isBefore(openDate) && !Volunteers.isLead()) {
       // FIST is closed for now
       return <Redirect to="/" />
     }
