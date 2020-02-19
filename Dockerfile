@@ -8,15 +8,14 @@ ENV TMP_DIR /home/node/tmp
 USER node:node
 
 RUN mkdir -p $SRC_DIR $BUNDLE_DIR $TMP_DIR
-COPY --chown=node:node . $SRC_DIR
-
 RUN curl -o $TMP_DIR/meteor.sh 'https://install.meteor.com?release=1.9'; sh $TMP_DIR/meteor.sh
 
 ENV PATH="/home/node/.meteor:${PATH}"
+COPY --chown=node:node . $SRC_DIR
 WORKDIR $SRC_DIR
-RUN meteor npm install --production
-RUN meteor build --server-only --directory $BUNDLE_DIR
-RUN cd ${BUNDLE_DIR}/bundle/programs/server && npm install
+RUN meteor npm install --production \
+  && meteor build --server-only --directory $BUNDLE_DIR \
+  && cd ${BUNDLE_DIR}/bundle/programs/server && npm install
 
 FROM node:12.14.0-slim
 
