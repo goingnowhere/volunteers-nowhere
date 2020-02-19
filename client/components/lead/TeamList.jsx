@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Meteor } from 'meteor/meteor'
 import Fa from 'react-fontawesome'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 
 import { Volunteers } from '../../../both/init'
 import { T, t } from '../common/i18n'
+import { Modal } from '../common/Modal.jsx'
+import { MoveTeam } from './MoveTeam.jsx'
 
 const leadName = (leads, userId) => {
   const { profile } = leads.find((lead) => lead._id === userId) || {}
@@ -36,6 +38,8 @@ const enrollLead = (teamId, shiftId, policy) =>
   })
 
 export const TeamList = ({ deptId, teams = [], reload }) => {
+  const [moveTeam, setMoveTeam] = useState()
+
   AutoForm.addHooks([
     'InsertTeamFormId',
     'UpdateTeamFormId',
@@ -47,6 +51,13 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
   })
   return (
     <Fragment>
+      <Modal
+        title={t('move_team')}
+        isOpen={!!moveTeam}
+        closeModal={() => setMoveTeam()}
+      >
+        <MoveTeam team={moveTeam} close={() => { setMoveTeam(); reload() }} />
+      </Modal>
       <h2 className="header"><T>all_teams</T></h2>
       <table className="table">
         <thead>
@@ -110,17 +121,29 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                     type="button"
                     className="btn btn-sm btn-circle"
                     onClick={() => editTeam(team)}
+                    title={t('edit')}
                   >
                     <Fa name="pencil-square-o" />
                   </button>
                   {team._id !== deptId && (
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-circle"
-                      onClick={() => deleteTeam(team, reload)}
-                    >
-                      <Fa name="trash-o" />
-                    </button>
+                    <Fragment>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-circle"
+                        onClick={() => setMoveTeam(team)}
+                        title={t('move_team')}
+                      >
+                        <Fa name="arrows-alt" />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-circle"
+                        onClick={() => deleteTeam(team, reload)}
+                        title={t('remove')}
+                      >
+                        <Fa name="trash-o" />
+                      </button>
+                    </Fragment>
                   )}
                 </div>
               </td>
