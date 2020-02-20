@@ -16,7 +16,7 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
   const [{ dept, pendingLeadRequests }, setStats] = useState({ dept: {}, pendingLeadRequests: [] })
 
   const editDept = () =>
-    AutoFormComponents.ModalShowWithTemplate('teamEditDetails', dept)
+    AutoFormComponents.ModalShowWithTemplate('departmentEditDetails', dept)
   const addTeam = () =>
     AutoFormComponents.ModalShowWithTemplate('addTeam', { departmentId: deptId })
   const earlyEntry = () =>
@@ -33,6 +33,8 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
   AutoForm.addHooks([
     'InsertTeamFormId',
     'UpdateTeamFormId',
+    'InsertDepartmentFormId',
+    'UpdateDepartmentFormId',
   ], {
     onSuccess() {
       reloadStats()

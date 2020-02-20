@@ -21,7 +21,8 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
       { form: { collection: Volunteers.Collections.rotas }, data: { parentId: teamId } }, '', 'lg')
   }
   const addProject = () => {
-    AutoFormComponents.ModalShowWithTemplate('addProject', { team })
+    AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+      { form: { collection: Volunteers.Collections.Projects }, data: { parentId: teamId } }, '', 'lg')
   }
   useEffect(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId }, (err, teamStats) => {
     if (err) console.error(err)

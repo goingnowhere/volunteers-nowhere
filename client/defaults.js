@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { i18n } from 'meteor/universe:i18n'
 import { Bert } from 'meteor/themeteorchef:bert'
@@ -13,6 +14,7 @@ Object.entries(Bert.icons).forEach(([key, icon]) => {
 
 AutoForm.addHooks(null, {
   onError(operation, error) {
+    if (Meteor.isDevelopment) console.error(error, operation)
     if (error && error.error === 409 && error.message === 'Double Booking') {
       Bert.alert({
         hideDelay: 6500,
