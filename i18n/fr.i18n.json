@@ -64,5 +64,9 @@
   "volunteer_form_help": "Parle nous de toi ! Nous avons besoin de cette information pour te conseiller le shift qui conviendra le mieux à tes compétences et te garder en sécurité.",
   "wanted": "recherché",
   "needed": "Espaces",
-  "confirmed": "Confirmé"
+  "confirmed": "Confirmé",
+  "move_team": "Move Team",
+  "email_manual_check": "Manually approve emails",
+  "email": "Email",
+  "to_send": "To Send"
 }

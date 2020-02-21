@@ -96,9 +96,9 @@ const sendNotificationEmailFunctionGeneric = ({
     const signupIds = Volunteers.Collections.signups.find(sel).map((signup) => signup._id)
     if (recipient && (signupIds.length > 0)) {
       const doc = EmailForms.previewTemplate(template, recipient, getContext)
-      WrapEmailSend(recipient, doc, isBulk)
+      WrapEmailSend(recipient, doc, isBulk, { userId: recipient._id, template, selector })
       Volunteers.Collections.signups.update({ _id: { $in: signupIds } },
-        { $set: { notification: true } })
+        { $set: { notification: true } }, { multi: true })
     }
   }
 }

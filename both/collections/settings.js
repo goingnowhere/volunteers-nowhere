@@ -81,6 +81,11 @@ const SettingsSchema = new SimpleSchema({
     label: () => i18n.__('cron_frequency'),
   },
 
+  emailManualCheck: {
+    type: Boolean,
+    defaultValue: false,
+    label: () => i18n.__('email_manual_check'),
+  },
 }, { check })
 
 EventSettings.attachSchema(SettingsSchema)

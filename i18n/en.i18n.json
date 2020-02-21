@@ -89,5 +89,8 @@
   "wanted": "Spaces",
   "needed": "Needed",
   "confirmed": "Confirmed",
-  "move_team": "Move Team"
+  "move_team": "Move Team",
+  "email_manual_check": "Manually approve emails",
+  "email": "Email",
+  "to_send": "To Send"
 }

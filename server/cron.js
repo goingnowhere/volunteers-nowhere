@@ -113,7 +113,7 @@ const quicketSync = (time) => {
   })
 }
 
-const cronActivate = ({ cronFrequency }) => {
+const cronActivate = ({ cronFrequency, emailManualCheck }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
@@ -121,7 +121,9 @@ const cronActivate = ({ cronFrequency }) => {
     EnrollmentTask(`every ${cronFrequency}`)
     ReviewTask(`every ${cronFrequency}`)
 
-    emailSend('every 5 minutes')
+    if (!emailManualCheck) {
+      emailSend('every 5 minutes')
+    }
     signupsGC('every 3 days')
     if (Meteor.isProduction) {
       quicketSync('every 30 minutes')
@@ -134,6 +136,6 @@ const cronActivate = ({ cronFrequency }) => {
 }
 // Reactive observer to enable / disable enrollment emails
 EventSettings.find({}).observe({
-  added: doc => cronActivate(doc),
-  changed: doc => cronActivate(doc),
+  added: cronActivate,
+  changed: cronActivate,
 })
