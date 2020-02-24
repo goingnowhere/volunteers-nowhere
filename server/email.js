@@ -5,6 +5,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { Email } from 'meteor/email'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { check } from 'meteor/check'
+import { Promise } from 'meteor/promise'
 import moment from 'moment-timezone'
 
 import { Volunteers } from '../both/init'
@@ -65,7 +66,7 @@ export const sendCachedEmails = () => {
   }
 }
 
-export const WrapEmailSend = (user, email, isBulk, sendArgs) => {
+const WrapEmailSend = (user, email, isBulk, sendArgs) => {
   if (email) {
     EmailCache.insert({
       userId: user._id,
@@ -83,47 +84,8 @@ export const WrapEmailSend = (user, email, isBulk, sendArgs) => {
   }
 }
 
-export const getCachedEmails = new ValidatedMethod({
-  name: 'emailCache.get',
-  mixins: [isManagerMixin],
-  validate: null,
-  run() {
-    return EmailCache.find().fetch()
-  },
-})
-export const sendCachedEmail = new ValidatedMethod({
-  name: 'emailCache.send',
-  mixins: [isManagerMixin],
-  validate({ emailId }) {
-    check(emailId, String)
-  },
-  run({ emailId }) {
-    return EmailCache.find({ _id: emailId }).map(sendEmail)
-  },
-})
-
-export const insertEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
-  ...EmailForms.insertEmailTemplate,
-})
-
-export const updateEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
-  ...EmailForms.updateEmailTemplate,
-})
-
-export const removeEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
-  ...EmailForms.removeEmailTemplate,
-})
-
-// const generateEnrollmentLink = (userId, fakeEmail) => {
-//   const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
-//   return Accounts.urls.enrollAccount(token)
-// }
-
 /* Here we add application specific contexts for the emails-forms package */
-export const getContext = (function getContext(cntxlist, user, context = {}) {
+const getContext = (cntxlist, user, context = {}) => {
   if (!user) { return context }
   cntxlist.forEach((cntx) => {
     switch (cntx.name) {
@@ -262,6 +224,144 @@ export const getContext = (function getContext(cntxlist, user, context = {}) {
     }
   })
   return context
+}
+
+const sendNotificationEmail = ({
+  user,
+  userId,
+  template,
+  selector = {},
+  isBulk = false,
+}) => {
+  const recipient = user || Meteor.users.findOne(userId)
+  if (recipient) {
+    const sel = {
+      ...selector, userId: recipient._id, status: { $in: ['confirmed', 'pending'] },
+    }
+    if (template === 'reviewed') {
+      sel.status.$in.push('refused')
+    }
+    const signupIds = Volunteers.Collections.signups.find(sel).map((signup) => signup._id)
+    if (recipient && (signupIds.length > 0)) {
+      const doc = EmailForms.previewTemplate(template, recipient, getContext)
+      WrapEmailSend(recipient, doc, isBulk, { userId: recipient._id, template, selector })
+      Volunteers.Collections.signups.update({ _id: { $in: signupIds } },
+        { $set: { notification: true } }, { multi: true })
+    }
+  }
+}
+
+export const getCachedEmailsMethod = new ValidatedMethod({
+  name: 'emailCache.get',
+  mixins: [isManagerMixin],
+  validate: null,
+  run() {
+    return EmailCache.find().fetch()
+  },
+})
+export const sendCachedEmailMethod = new ValidatedMethod({
+  name: 'emailCache.send',
+  mixins: [isManagerMixin],
+  validate({ emailId }) {
+    check(emailId, String)
+  },
+  run({ emailId }) {
+    return EmailCache.find({ _id: emailId }).map(sendEmail)
+  },
+})
+export const deleteCachedEmailMethod = new ValidatedMethod({
+  name: 'emailCache.delete',
+  mixins: [isManagerMixin],
+  validate({ emailId }) {
+    check(emailId, String)
+  },
+  run({ emailId }) {
+    return EmailCache.remove({ _id: emailId })
+  },
+})
+export const reGenerateCachedEmailMethod = new ValidatedMethod({
+  name: 'emailCache.reGenerate',
+  mixins: [isManagerMixin],
+  validate({ emailId }) {
+    check(emailId, String)
+  },
+  run({ emailId }) {
+    const old = EmailCache.findOne({ _id: emailId })
+    const { userId, template, selector } = old.sendArgs
+    sendNotificationEmail({ userId, template, selector })
+    return EmailCache.remove({ _id: emailId })
+  },
+})
+
+export const insertEmailTemplateMethod = new ValidatedMethod({
+  mixins: [isManagerMixin],
+  ...EmailForms.insertEmailTemplate,
+})
+
+export const updateEmailTemplateMethod = new ValidatedMethod({
+  mixins: [isManagerMixin],
+  ...EmailForms.updateEmailTemplate,
+})
+
+export const removeEmailTemplateMethod = new ValidatedMethod({
+  mixins: [isManagerMixin],
+  ...EmailForms.removeEmailTemplate,
+})
+
+// const generateEnrollmentLink = (userId, fakeEmail) => {
+//   const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
+//   return Accounts.urls.enrollAccount(token)
+// }
+
+export const sendEnrollmentEmail = (userId) =>
+  sendNotificationEmail({
+    userId,
+    template: 'voluntell',
+    selector: { enrolled: true },
+    isBulk: true,
+  })
+export const sendReviewEmail = (userId, isBulk = false) =>
+  sendNotificationEmail({
+    userId,
+    template: 'reviewed',
+    selector: { reviewed: true },
+    isBulk,
+  })
+
+export const sendShiftReminderEmail = new ValidatedMethod({
+  name: 'email.sendShiftReminder',
+  validate(userId) {
+    check(userId, String)
+  },
+  mixins: [isManagerMixin],
+  run: (userId) => sendNotificationEmail({ userId, template: 'shiftReminder' }),
+})
+
+export const sendMassShiftReminderEmail = new ValidatedMethod({
+  name: 'email.sendMassShiftReminder',
+  validate: null,
+  mixins: [isManagerMixin],
+  run() {
+    const userIds = Promise.await(Volunteers.Collections.signups.rawCollection().distinct('userId', {
+      status: { $in: ['confirmed', 'pending'] },
+    }))
+    const interval = Meteor.setInterval(() => {
+      const userId = userIds.pop()
+      sendNotificationEmail({ userId, template: 'shiftReminder', isBulk: true })
+      if (userIds.length <= 0) {
+        Meteor.clearInterval(interval)
+      }
+    }, 2000)
+  },
+})
+
+export const sendReviewNotificationEmail = new ValidatedMethod({
+  name: 'email.sendReviewNotifications',
+  validate(userId) {
+    check(userId, String)
+  },
+  mixins: [isManagerMixin],
+  run: sendReviewEmail,
 })
 
 

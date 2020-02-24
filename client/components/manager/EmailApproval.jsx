@@ -8,7 +8,6 @@ export const EmailApproval = () => {
   const reload = () => {
     Meteor.call('emailCache.get', (err, res) => {
       if (err) console.error(err)
-      console.log(res)
       setEmails(res)
     })
   }
@@ -16,6 +15,18 @@ export const EmailApproval = () => {
 
   const send = (emailId) => {
     Meteor.call('emailCache.send', { emailId }, (err) => {
+      if (err) console.error(err)
+      reload()
+    })
+  }
+  const del = (emailId) => {
+    Meteor.call('emailCache.delete', { emailId }, (err) => {
+      if (err) console.error(err)
+      reload()
+    })
+  }
+  const reGen = (emailId) => {
+    Meteor.call('emailCache.reGenerate', { emailId }, (err) => {
       if (err) console.error(err)
       reload()
     })
@@ -38,6 +49,12 @@ export const EmailApproval = () => {
                 </pre>
                 <button type="button" className="btn btn-primary" onClick={() => send(emailId)}>
                   <T>send</T>
+                </button>
+                <button type="button" className="btn btn-primary" onClick={() => del(emailId)}>
+                  <T>remove</T>
+                </button>
+                <button type="button" className="btn btn-primary" onClick={() => reGen(emailId)}>
+                  <T>re-generate</T>
                 </button>
               </div>
             </div>

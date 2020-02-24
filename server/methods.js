@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { EmailForms } from 'meteor/abate:email-forms'
 import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
@@ -8,7 +7,6 @@ import { _ } from 'meteor/underscore'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
 import { Volunteers } from '../both/init'
-import { getContext, WrapEmailSend } from './email'
 import {
   isManagerMixin,
   isNoInfoMixin,
@@ -75,77 +73,6 @@ export const adminChangeUserPassword = new ValidatedMethod({
       throw new Meteor.Error('userError', "Passwords don't match")
     }
   },
-})
-
-const sendNotificationEmailFunctionGeneric = ({
-  user,
-  userId,
-  template,
-  selector = {},
-  isBulk = false,
-}) => {
-  const recipient = user || Meteor.users.findOne(userId)
-  if (recipient) {
-    const sel = {
-      ...selector, userId, status: { $in: ['confirmed', 'pending'] },
-    }
-    if (template === 'reviewed') {
-      sel.status.$in.push('refused')
-    }
-    // Use raw distinct?
-    const signupIds = Volunteers.Collections.signups.find(sel).map((signup) => signup._id)
-    if (recipient && (signupIds.length > 0)) {
-      const doc = EmailForms.previewTemplate(template, recipient, getContext)
-      WrapEmailSend(recipient, doc, isBulk, { userId: recipient._id, template, selector })
-      Volunteers.Collections.signups.update({ _id: { $in: signupIds } },
-        { $set: { notification: true } }, { multi: true })
-    }
-  }
-}
-
-export const sendEnrollmentNotificationEmailFunction = (userId) =>
-  sendNotificationEmailFunctionGeneric({
-    userId,
-    template: 'voluntell',
-    selector: { enrolled: true },
-    isBulk: true,
-  })
-export const sendReviewNotificationEmailFunction = (userId, isBulk = false) =>
-  sendNotificationEmailFunctionGeneric({
-    userId,
-    template: 'reviewed',
-    selector: { reviewed: true },
-    isBulk,
-  })
-
-export const sendShiftReminderEmail = new ValidatedMethod({
-  name: 'email.sendShiftReminder',
-  validate: null,
-  mixins: [isManagerMixin],
-  run: (userId) => sendNotificationEmailFunctionGeneric({ userId, template: 'shiftReminder' }),
-})
-
-export const sendMassShiftReminderEmail = new ValidatedMethod({
-  name: 'email.sendMassShiftReminder',
-  validate: null,
-  mixins: [isManagerMixin],
-  run() {
-    const users = Meteor.users.find({ isBanned: false, 'profile.formFilled': true }).fetch()
-    const interval = Meteor.setInterval(() => {
-      const user = users.pop()
-      sendNotificationEmailFunctionGeneric({ user, template: 'shiftReminder', isBulk: true })
-      if (users.length <= 0) {
-        Meteor.clearInterval(interval)
-      }
-    }, 5000)
-  },
-})
-
-export const sendReviewNotificationEmail = new ValidatedMethod({
-  name: 'email.sendReviewNotifications',
-  validate: null,
-  mixins: [isManagerMixin],
-  run: sendReviewNotificationEmailFunction,
 })
 
 export const userStats = new ValidatedMethod({

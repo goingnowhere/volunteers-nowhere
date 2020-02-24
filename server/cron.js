@@ -4,10 +4,10 @@ import { SyncedCron } from 'meteor/littledata:synced-cron'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/collections/settings'
 import {
-  sendEnrollmentNotificationEmailFunction,
-  sendReviewNotificationEmailFunction,
-} from './methods'
-import { sendCachedEmails } from './email'
+  sendEnrollmentEmail,
+  sendReviewEmail,
+  sendCachedEmails,
+} from './email'
 import { syncQuicketTicketList } from './quicket'
 
 const signupGcBackup = new Mongo.Collection('signupGcBackup')
@@ -63,7 +63,7 @@ const EnrollmentTask = (time) => {
 
       // TODO the logic of the limits here seems a little weird
       Object.entries(_.groupBy(signups, 'userId')).forEach(([userId]) => {
-        sendEnrollmentNotificationEmailFunction(userId)
+        sendEnrollmentEmail(userId)
       })
     },
   })
@@ -79,13 +79,15 @@ const ReviewTask = (time) => {
     job() {
       const sel = {
         notification: false,
+        // Don't pick up voluntold people as they get the enrollment email
+        enrolled: false,
         reviewed: true,
         status: { $in: ['confirmed', 'refused'] },
       }
       const signups = Volunteers.Collections.signups.find(sel, { limit: 30 }).fetch()
       // TODO the logic of the limits here seems a little weird
       Object.keys(_.groupBy(signups, 'userId')).forEach((userId) => {
-        sendReviewNotificationEmailFunction(userId, true)
+        sendReviewEmail(userId, true)
       })
     },
   })
