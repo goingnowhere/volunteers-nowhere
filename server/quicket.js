@@ -17,7 +17,6 @@ const prepTicketData = (guest) => {
 }
 
 export const syncQuicketTicketList = () => {
-  console.log('syncing')
   const { statusCode, data: { results, pages } } = HTTP.call('GET', `https://api.quicket.co.za/api/events/${config.quicketEventId}/guests`, {
     headers: {
       api_key: config.quicketApiKey,
@@ -30,24 +29,45 @@ export const syncQuicketTicketList = () => {
   })
   if (statusCode !== 200) throw new Meteor.Error(500, 'Problem calling Quicket')
   if (pages !== 0) throw new Meteor.Error(501, 'Need to implement pagination')
-  // const guestsByTicketId = results.reduce((map, guest) =>
-  // map.set(guest.TicketId, guest), new Map()), 'TicketId')
+
   const guestsByTicketId = _.indexBy(results, 'TicketId')
+  const guestsByEmail = _.indexBy(results, (res) => res.TicketInformation.Email.toLowerCase())
+
+  // Find users without tickets and try to match them to guests
+  // eslint-disable-next-line array-callback-return
+  Meteor.users.find({ ticketId: { $exists: false } }).map((user) => {
+    const userEmailIndex = user.emails.findIndex((email) => guestsByEmail[email.address])
+    if (userEmailIndex > -1) {
+      const guest = guestsByEmail[user.emails[userEmailIndex].address]
+      Meteor.users.update({ _id: user._id }, {
+        $set: {
+          ticketId: guest.TicketId,
+        },
+      })
+    }
+  })
+
   const ticketChanges = ticketsCollection.find({}, {
-    barcode: true,
-    email: true,
+    fields: {
+      barcode: true,
+      email: true,
+      rawGuestInfo: true,
+    },
   }).map((ticket) => {
     const guest = guestsByTicketId[ticket._id]
     if (!guest) {
+      // There's nobody on the guestlist for this ticket id so it must have been transfered, etc
       ticketsCollection.remove({ _id: ticket._id })
       return null
     }
     const guestEmail = guest.TicketInformation.Email.toLowerCase()
     if (guestEmail !== ticket.email) {
+      // The email address on the ticket has changed so update our record
       delete guestsByTicketId[ticket._id]
       return prepTicketData(guest)
     }
-    if (!guest.TicketInformation.rawGuestInfo) {
+    if (!ticket.rawGuestInfo) {
+      // We don't have rawGuestInfo stored so add it
       delete guestsByTicketId[ticket._id]
       return {
         _id: guest.TicketId,
@@ -56,10 +76,14 @@ export const syncQuicketTicketList = () => {
         },
       }
     }
+    if (ticket.barcode === guest.Barcode) {
+      // Our copy of the ticket matches so we don't need to update anything
+      delete guestsByTicketId[ticket._id]
+    }
     return null
-  }).filter(ticket => ticket)
+  }).filter((ticket) => ticket)
   ticketChanges.concat(
-    Object.keys(guestsByTicketId).map(ticketId => prepTicketData(guestsByTicketId[ticketId])),
+    Object.keys(guestsByTicketId).map((ticketId) => prepTicketData(guestsByTicketId[ticketId])),
   ).forEach(({ _id, ...update }) => {
     ticketsCollection.upsert({ _id }, update)
   })
