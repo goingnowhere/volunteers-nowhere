@@ -387,7 +387,7 @@ export const VolunteerForm = withRouter(withTracker(({ history, location }) => {
 
   const skills = Volunteers.getSkillsList()
   const quirks = Volunteers.getQuirksList()
-  const { _id, ...existing } = Volunteers.Collections.VolunteerForm.findOne({ userId }) || {}
+  const { _id, ...existing } = Volunteers.Collections.volunteerForm.findOne({ userId }) || {}
   return {
     userId,
     ready,

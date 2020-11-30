@@ -12,7 +12,7 @@ Template.publicDepartmentView.onCreated(function onCreated() {
   template.subscribe(`${Volunteers.eventName}.Signups.byDept`, did, 'lead')
   template.autorun(() => {
     if (depSub.ready()) {
-      const dep = Volunteers.Collections.Department.findOne(did)
+      const dep = Volunteers.Collections.department.findOne(did)
       template.dep.set(dep)
     }
   })
@@ -22,6 +22,6 @@ Template.publicDepartmentView.helpers({
   dep: () => Template.instance().dep.get(),
   teams: () => {
     const depId = Template.currentData()._id
-    return Volunteers.Collections.Team.find({ parentId: depId })
+    return Volunteers.Collections.team.find({ parentId: depId })
   },
 })

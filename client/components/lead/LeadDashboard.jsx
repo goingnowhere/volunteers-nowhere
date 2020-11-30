@@ -22,7 +22,7 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
   }
   const addProject = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.Projects }, data: { parentId: teamId } }, '', 'lg')
+      { form: { collection: Volunteers.Collections.project }, data: { parentId: teamId } }, '', 'lg')
   }
   useEffect(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId }, (err, teamStats) => {
     if (err) console.error(err)
@@ -35,7 +35,7 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
       <div className="row">
         <div className="col-md-2 bg-grey">
           <h3>
-            { team.name }
+            {team.name}
             <small>
               <Link to={`/department/${team.parentId}/team/${teamId}`} title={t('public_link')}>
                 <Fa name="link" />
@@ -89,9 +89,8 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
           </button> */}
           <CsvExportButton method="team.rota" buttonText="rota_export" filename="rota" parentId={teamId} />
         </div>
-        <div className={`${
-          pendingRequests > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
-        } pl-1 user-top`}
+        <div className={`${pendingRequests > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
+          } pl-1 user-top`}
         >
           <TabbedDutySummary teamId={teamId} />
         </div>

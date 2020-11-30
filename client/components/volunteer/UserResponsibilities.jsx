@@ -37,10 +37,10 @@ export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
   const leadSignupTeamIds = Volunteers.Collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
     .map((signup) => signup.parentId)
   return {
-    leads: Volunteers.Collections.Team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
-    metaleads: Volunteers.Collections.Department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
+    leads: Volunteers.Collections.team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
+    metaleads: Volunteers.Collections.department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
     isManager,
     isNoInfo: isManager
-      || !!Volunteers.Collections.Team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
+      || !!Volunteers.Collections.team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
   }
 })(UserResponsibilitiesComponent)

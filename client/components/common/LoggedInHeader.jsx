@@ -171,10 +171,10 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
       $in: Roles.getRolesForUser(userId, Volunteers.eventName),
     },
   }
-  const allDepartments = Volunteers.Collections.Department.find().fetch()
+  const allDepartments = Volunteers.Collections.department.find().fetch()
 
   //   // TODO replace with 'coordinator' role
-  const noInfo = Volunteers.Collections.Team.findOne({ name: 'NoInfo' }) || {}
+  const noInfo = Volunteers.Collections.team.findOne({ name: 'NoInfo' }) || {}
   const isNoInfo = Volunteers.auth.isLead(userId, [noInfo._id])
 
   return {
@@ -185,8 +185,8 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
     },
     allDepartments,
     userDepartments:
-      Volunteers.Collections.Department.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
-    userTeams: Volunteers.Collections.Team.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
+      Volunteers.Collections.department.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
+    userTeams: Volunteers.Collections.team.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
     roles: {
       isManager,
       isLead: Volunteers.auth.isLead(),

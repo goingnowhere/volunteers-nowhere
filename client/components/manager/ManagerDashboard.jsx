@@ -13,7 +13,7 @@ import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
 const topLevelDivision = 'NOrg 2018'
 
 const addDepartment = () => {
-  const { _id: divisionId } = Volunteers.Collections.Division.findOne({ name: topLevelDivision })
+  const { _id: divisionId } = Volunteers.Collections.division.findOne({ name: topLevelDivision })
   AutoFormComponents.ModalShowWithTemplate('addDepartment', { divisionId })
 }
 const syncQuicket = () => {

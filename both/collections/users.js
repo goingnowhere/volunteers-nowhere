@@ -161,7 +161,7 @@ export const volunteerFormSchema = new SimpleSchema({
 })
 
 volunteerFormSchema.extend(Volunteers.schemas.volunteerForm)
-Volunteers.Collections.VolunteerForm.attachSchema(volunteerFormSchema)
+Volunteers.Collections.volunteerForm.attachSchema(volunteerFormSchema)
 
 export const ticketsCollection = new Mongo.Collection('tickets')
 if (Meteor.isServer) {

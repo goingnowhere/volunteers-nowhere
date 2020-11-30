@@ -93,9 +93,9 @@ const getContext = (cntxlist, user, context = {}) => {
       const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
       const signups = Volunteers.Collections.signups.find(sel).fetch()
       const emails = Object.keys(_.groupBy(signups, 'parentId')).map((parentId) => {
-        let unit = Volunteers.Collections.Team.findOne(parentId)
+        let unit = Volunteers.Collections.team.findOne(parentId)
         if (!unit) {
-          unit = Volunteers.Collections.Department.findOne(parentId)
+          unit = Volunteers.Collections.department.findOne(parentId)
         }
         if (unit) { return { email: unit.email, name: unit.name } }
         return { name: unit.name }
@@ -112,10 +112,10 @@ const getContext = (cntxlist, user, context = {}) => {
       const sel = { userId: user._id, type: 'lead', status: { $in: ['confirmed', 'pending', 'refused'] } }
       const list = Volunteers.Collections.signups.find(sel)
       const allLeads = list.map((s) => {
-        const duty = Volunteers.Collections.Lead.findOne(s.shiftId)
-        let unit = Volunteers.Collections.Team.findOne(s.parentId)
+        const duty = Volunteers.Collections.lead.findOne(s.shiftId)
+        let unit = Volunteers.Collections.team.findOne(s.parentId)
         if (!unit) {
-          unit = Volunteers.Collections.Department.findOne(s.parentId)
+          unit = Volunteers.Collections.department.findOne(s.parentId)
         }
         if (duty && unit) {
           const {
@@ -148,8 +148,8 @@ const getContext = (cntxlist, user, context = {}) => {
       const sel = { userId: user._id, type: 'shift', status: { $in: ['confirmed', 'pending', 'refused'] } }
       const list = Volunteers.Collections.signups.find(sel)
       const allShifts = list.map((s) => {
-        const duty = Volunteers.Collections.TeamShifts.findOne(s.shiftId)
-        const team = Volunteers.Collections.Team.findOne(s.parentId)
+        const duty = Volunteers.Collections.shift.findOne(s.shiftId)
+        const team = Volunteers.Collections.team.findOne(s.parentId)
         /* duty and team should always exists for a signup. If not the GC should
             remove these signups */
         if (duty && team) {
@@ -187,8 +187,8 @@ const getContext = (cntxlist, user, context = {}) => {
       const sel = { userId: user._id, type: 'project', status: { $in: ['confirmed', 'pending', 'refused'] } }
       const list = Volunteers.Collections.signups.find(sel, { sort: { start: 1 } })
       const allProjects = list.map((s) => {
-        const duty = Volunteers.Collections.Projects.findOne(s.shiftId)
-        const team = Volunteers.Collections.Team.findOne(s.parentId)
+        const duty = Volunteers.Collections.project.findOne(s.shiftId)
+        const team = Volunteers.Collections.team.findOne(s.parentId)
         if (duty && team) {
           const {
             enrolled, notification, status, reviewed,

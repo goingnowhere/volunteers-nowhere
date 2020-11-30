@@ -219,7 +219,7 @@ export const deptRotaData = new ValidatedMethod({
   validate: null,
   run({ parentId }) {
     return _.flatten(
-      Volunteers.Collections.Team.find({ parentId })
+      Volunteers.Collections.team.find({ parentId })
         .map((team) => getTeamRotaCsv({ parentId: team._id })
           .map((rotaItem) => ({ ...rotaItem, team: team.name }))),
       true,
@@ -248,7 +248,7 @@ export const cantinaSetupData = new ValidatedMethod({
       },
       {
         $lookup: {
-          from: Volunteers.Collections.VolunteerForm._name,
+          from: Volunteers.Collections.volunteerForm._name,
           localField: 'userId',
           foreignField: 'userId',
           as: 'user',
@@ -310,7 +310,7 @@ export const cantinaSetupData = new ValidatedMethod({
         },
       ]
     })
-    const shiftSignups = Volunteers.Collections.TeamShifts.aggregate([
+    const shiftSignups = Volunteers.Collections.shift.aggregate([
       {
         $match: {
           start: {
@@ -343,7 +343,7 @@ export const cantinaSetupData = new ValidatedMethod({
       // Filter total number of hours per day here?
       {
         $lookup: {
-          from: Volunteers.Collections.VolunteerForm._name,
+          from: Volunteers.Collections.volunteerForm._name,
           localField: '_id.userId',
           foreignField: 'userId',
           as: 'user',
@@ -399,7 +399,7 @@ export const getEmptyShifts = new ValidatedMethod({
   mixins: [isNoInfoMixin],
   validate: null,
   run(day) {
-    return Volunteers.Collections.TeamShifts.aggregate([
+    return Volunteers.Collections.shift.aggregate([
       {
         $match: {
           end: { $gt: day },
@@ -426,7 +426,7 @@ export const getEmptyShifts = new ValidatedMethod({
         $limit: 10,
       }, {
         $lookup: {
-          from: Volunteers.Collections.Team._name,
+          from: Volunteers.Collections.team._name,
           localField: 'parentId',
           foreignField: '_id',
           as: 'team',

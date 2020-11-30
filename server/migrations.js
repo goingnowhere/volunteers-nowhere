@@ -33,7 +33,7 @@ Migrations.add({
     const oldProjects = new Meteor.Collection('nowhere2019.Volunteers.projects')
     // TODO filter anything?
     oldProjects.find({}).map(({ groupId, ...project }) =>
-      Volunteers.Collections.Projects.insert({
+      Volunteers.Collections.project.insert({
         ...project,
         start: moment(project.start).add(1, 'year').subtract(2, 'days').toDate(),
         end: moment(project.end).add(1, 'year').subtract(2, 'days').toDate(),
@@ -72,7 +72,7 @@ const createShifts = ({
     if (shiftEnd.isBefore(shiftStart)) {
       shiftEnd.add(1, 'day')
     }
-    return Volunteers.Collections.TeamShifts.insert({
+    return Volunteers.Collections.shift.insert({
       ...details,
       min,
       max,
@@ -149,7 +149,7 @@ Migrations.add({
 Migrations.add({
   version: 9,
   up() {
-    [Volunteers.Collections.TeamShifts, Volunteers.Collections.rotas].forEach((collection) => {
+    [Volunteers.Collections.shift, Volunteers.Collections.rotas].forEach((collection) => {
       collection.find({ start: { $lt: new Date('2020-01-01') } })
         .map((thing) => collection.update({ _id: (thing)._id }, {
           $set: {

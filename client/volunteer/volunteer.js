@@ -72,7 +72,7 @@ Template.filteredSignupsList.helpers({
   quirks: Volunteers.getQuirksList,
   signupsListProps: () => {
     const instance = Template.instance()
-    const { quirks, skills } = Volunteers.Collections.VolunteerForm
+    const { quirks, skills } = Volunteers.Collections.volunteerForm
       .findOne({ userId: Meteor.userId() }) || {}
     return {
       dutyType: instance.type.get(),
