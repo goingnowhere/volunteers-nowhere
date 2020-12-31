@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { Mandrill } from 'meteor/wylio:mandrill'
 import { Accounts } from 'meteor/accounts-base'
 import { Migrations } from 'meteor/percolate:migrations'

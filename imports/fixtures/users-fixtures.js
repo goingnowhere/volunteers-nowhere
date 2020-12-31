@@ -1,38 +1,25 @@
+import { Meteor } from 'meteor/meteor'
 import { Roles } from 'meteor/piemonkey:roles'
 import { Accounts } from 'meteor/accounts-base'
-import { enrollUser } from '../../server/methods'
 
 const defaultUsers = [
   {
     name: 'manager',
     email: 'manager@example.com',
-    password: 'apple1',
+    password: 'testtest',
     roles: ['manager'],
   },
   {
     name: 'admin',
     email: 'admin@example.com',
-    password: 'apple1',
+    password: 'testtest',
     roles: ['admin'],
   },
   {
     name: 'normal user',
     email: 'normal@example.com',
-    password: 'apple1',
+    password: 'testtest',
     roles: ['user'],
-  },
-]
-
-const enrolledUsers = [
-  {
-    email: 'enrolled@example.com',
-    profile: {
-      firstName: 'enrolled',
-      lastName: 'test',
-      ticketNumber: '435575677',
-      ticketDate: new Date(),
-      manualRegistration: false,
-    },
   },
 ]
 
@@ -60,18 +47,4 @@ export const createUsers = (Volunteers) => {
       })
     }
   })
-
-  /* _.each(enrolledUsers, (options) => {
-    if (!Meteor.users.findOne({ 'emails.address': options.email })) {
-      console.log('Eroll user ', options)
-      enrollUser.call({ email: options.email, profile: options.profile })
-    }
-  }) */
 }
-
-// _.each(enrolledUsers, (options) => {
-//   // if (!Meteor.users.findOne({ 'emails.address': options.email })) {
-//   console.log('Eroll user ', options)
-//   enrollUser.call({ email: options.email, profile: options.profile })
-//   // }
-// })

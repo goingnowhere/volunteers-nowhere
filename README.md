@@ -6,8 +6,8 @@ This project aims to be a complete volunteer management system for the [Nowhere]
 
 When running, the volunteer facing site is at http://localhost:3000/
 
-The admin password is admin@example.com / apple1
-A normal user account is created with normal@example.com / apple1
+The admin password is admin@example.com / testtest
+A normal user account is created with normal@example.com / testtest
 
 It was originally written in Coffeescript using Blaze as the view layer. In order to increase the pool of potential contributors and to escape the poor development experience of Blaze it is currently being ported to React and Javascript. This leads to some odd behaviour at the moment as it's currently using both technologies at the same time.
 

@@ -46,6 +46,7 @@ module.exports = {
     'one-var-declaration-per-line': ['error', 'initializations'],
     'no-new': 'off', // Commonly used in Meteor
     'object-shorthand': ['error', 'always'],
+    'arrow-parens': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {

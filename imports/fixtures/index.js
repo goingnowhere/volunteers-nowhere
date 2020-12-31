@@ -10,9 +10,9 @@ export const runFixtures = (Volunteers) => {
   if (shouldRun) {
     console.log('Run fixtures')
     createEmailTemplates()
-    createSettings()
+    const settings = createSettings()
     createUnits(Volunteers)
-    createShifts(Volunteers)
+    createShifts(Volunteers, settings)
     createUsers(Volunteers)
   }
 }

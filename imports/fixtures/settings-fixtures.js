@@ -1,21 +1,41 @@
+import moment from 'moment'
 import { EmailForms } from 'meteor/abate:email-forms'
 import { EventSettings } from '../../both/collections/settings'
 
+// Event is on second Sunday in July so 8th is always in that week (0 is Sunday)
+const nextEventStart = moment({ month: 6, day: 8 }).day(2)
+if (nextEventStart.isBefore(moment())) {
+  nextEventStart.add(1, 'year')
+}
+
+// .day() flows over by weeks so 7 is the next Sunday after a day
 const settings = {
-  buildPeriod: { start: new Date(2019, 6, 11), end: new Date(2019, 7, 1) },
-  eventPeriod: { start: new Date(2019, 7, 2), end: new Date(2019, 7, 8) },
-  strikePeriod: { start: new Date(2019, 7, 9), end: new Date(2019, 7, 15) },
+  buildPeriod: {
+    start: moment(nextEventStart).day(1).subtract(3, 'weeks').toDate(),
+    end: moment(nextEventStart).day(1).toDate(),
+  },
+  eventPeriod: {
+    start: moment(nextEventStart).toDate(),
+    end: moment(nextEventStart).day(7).toDate(),
+  },
+  strikePeriod: {
+    start: moment(nextEventStart).day(8).toDate(),
+    end: moment(nextEventStart).day(14).toDate(),
+  },
   earlyEntryMax: 120,
-  barriosArrivalDate: new Date(2019, 6, 31),
+  barriosArrivalDate: moment(nextEventStart).day(-1).subtract(1, 'weeks').toDate(),
   cronFrequency: 'every 15 mins',
-  fistOpenDate: new Date(2019, 2, 1),
+  fistOpenDate: moment(nextEventStart).month(0).date(1).toDate(),
 }
 
 export const createSettings = () => {
-  if (EventSettings.find().count() === 0) {
+  const existing = EventSettings.find().fetch()
+  if (existing.length === 0) {
     console.log('Create Settings')
     EventSettings.insert(settings)
+    return settings
   }
+  return existing
 }
 
 const emailTemplates = [{
