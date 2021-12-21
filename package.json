@@ -10,7 +10,7 @@
     "bcrypt": "^3.0.7",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "file-saver": "^2.0.2",
     "flatpickr": "^4.6.3",
     "formik": "^2.1.3",
