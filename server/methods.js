@@ -227,6 +227,28 @@ export const deptRotaData = new ValidatedMethod({
   },
 })
 
+export const allRotaExport = new ValidatedMethod({
+  name: 'rota.all.export',
+  mixins: [isManagerMixin],
+  validate: null,
+  run() {
+    const department = Volunteers.Collections.department.find().fetch()
+    const team = Volunteers.Collections.team.find().fetch()
+    const rotas = Volunteers.Collections.rotas.find().fetch()
+    const shift = Volunteers.Collections.shift.find().fetch()
+    const project = Volunteers.Collections.project.find().fetch()
+    const lead = Volunteers.Collections.lead.find().fetch()
+    return {
+      department,
+      team,
+      rotas,
+      shift,
+      project,
+      lead,
+    }
+  },
+})
+
 export const cantinaSetupData = new ValidatedMethod({
   name: 'cantina.setup',
   mixins: [isManagerMixin], // TODO allow cantina lead?

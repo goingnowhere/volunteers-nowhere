@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { T } from '../common/i18n'
 import { CsvExportButton } from '../lead/CsvExportButton.jsx'
+import { JsonExportButton } from '../lead/JsonExportButton.jsx'
 import { Volunteers } from '../../../both/init'
 import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
 
@@ -65,6 +66,7 @@ export const ManagerDashboard = () => (
           Sync Quicket guestlist
         </button>
         <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
+        <JsonExportButton method="rota.all.export" buttonText="rota_all_export" filename="rotas" />
         <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
           Send Reminders to everyone
         </button>

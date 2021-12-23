@@ -6,6 +6,7 @@ module.exports = {
   plugins: [
     'meteor',
     'underscore',
+    'react-hooks',
   ],
   extends: [
     '@meteorjs/eslint-config-meteor',
@@ -65,6 +66,8 @@ module.exports = {
       controlComponents: ['Field'],
     }],
     'jsx-a11y/label-has-for': 'off', // Deprecated for above
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
     // Below added to workaround babel-eslint bug github.com/babel/babel-eslint/issues/799
     "indent": [
       "error",

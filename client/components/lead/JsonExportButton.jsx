@@ -1,13 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import React, { useCallback } from 'react'
-import { parse } from 'json2csv'
 
 import { ExportButton } from './ExportButton.jsx'
 
-const parseToCsv = js => parse(js, { withBOM: true })
+const parse = js => JSON.stringify(js, undefined, 2)
 
-export const CsvExportButton = ({
-  method = 'team.rota',
+export const JsonExportButton = ({
+  method,
   buttonText,
   filename,
   methodArgs,
@@ -19,8 +18,8 @@ export const CsvExportButton = ({
       method={method}
       buttonText={buttonText}
       filename={filename}
-      parse={parseToCsv}
-      extension="csv"
+      parse={parse}
+      extension="json"
       generate={generate}
     />
   )
