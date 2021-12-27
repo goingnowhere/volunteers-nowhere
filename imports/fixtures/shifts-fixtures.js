@@ -1,6 +1,6 @@
 import { Random } from 'meteor/random'
 
-export const createShifts = (Volunteers, settings) => {
+export const createShiftFixtures = (Volunteers, settings) => {
   if (Volunteers.Collections.shift.find().count() === 0) {
     // Volunteers.Collections.team.find({ name: 'Build Crew' }).forEach(team => {
     //   methodBodies.projects

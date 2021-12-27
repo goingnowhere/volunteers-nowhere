@@ -6,6 +6,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { _ } from 'meteor/underscore'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
+import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../both/init'
 import {
   isManagerMixin,
@@ -227,18 +228,28 @@ export const deptRotaData = new ValidatedMethod({
   },
 })
 
+/**
+ * Export team structure, rotas and settings as JSON so they can be updated for the next
+ * year and re-imported.
+ */
 export const allRotaExport = new ValidatedMethod({
   name: 'rota.all.export',
   mixins: [isManagerMixin],
   validate: null,
-  run() {
-    const department = Volunteers.Collections.department.find().fetch()
-    const team = Volunteers.Collections.team.find().fetch()
-    const rotas = Volunteers.Collections.rotas.find().fetch()
-    const shift = Volunteers.Collections.shift.find().fetch()
-    const project = Volunteers.Collections.project.find().fetch()
-    const lead = Volunteers.Collections.lead.find().fetch()
+  run({ eventName }) {
+    const sourceEvent = new VolunteersClass(eventName, true)
+    // This is weird as this one isn't part of the 'volunteers' class, so we can't
+    // migrate it easily. Either some of the settings should be pulled in or there
+    // should be a better migration strategy
+    const settings = EventSettings.findOne()
+    const department = sourceEvent.Collections.department.find().fetch()
+    const team = sourceEvent.Collections.team.find().fetch()
+    const rotas = sourceEvent.Collections.rotas.find().fetch()
+    const shift = sourceEvent.Collections.shift.find().fetch()
+    const project = sourceEvent.Collections.project.find().fetch()
+    const lead = sourceEvent.Collections.lead.find().fetch()
     return {
+      settings,
       department,
       team,
       rotas,

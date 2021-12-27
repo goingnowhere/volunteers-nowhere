@@ -66,7 +66,13 @@ export const ManagerDashboard = () => (
           Sync Quicket guestlist
         </button>
         <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
-        <JsonExportButton method="rota.all.export" buttonText="rota_all_export" filename="rotas" />
+        <JsonExportButton
+          method="rota.all.export"
+          buttonText="rota_all_export"
+          filename="rotas"
+          // Hack to avoid having to make a form, etc.
+          methodArgs={{ eventName: 'nowhere2020' }}
+        />
         <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
           Send Reminders to everyone
         </button>

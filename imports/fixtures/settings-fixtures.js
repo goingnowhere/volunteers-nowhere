@@ -28,7 +28,7 @@ const settings = {
   fistOpenDate: moment(nextEventStart).month(0).date(1).toDate(),
 }
 
-export const createSettings = () => {
+export const createSettingFixtures = () => {
   const existing = EventSettings.find().fetch()
   if (existing.length === 0) {
     console.log('Create Settings')
@@ -54,7 +54,7 @@ const emailTemplates = [{
 },
 ]
 
-export const createEmailTemplates = () => {
+export const createEmailTemplateFixtures = () => {
   // if (!EmailForms.Collections.EmailTemplate.find({ name: { $in: ['enrollAccount', 'verifyEmail'] } }) === 0) {
   console.log('creating email templates')
   emailTemplates.forEach(doc =>

@@ -231,7 +231,7 @@ const leadDefaults = {
   policy: 'requireApproval',
 }
 
-export const createUnits = (Volunteers) => {
+export const createUnitFixtures = (Volunteers) => {
   if (Volunteers.Collections.division.find().count() === 0) {
     units.divisions.forEach((doc) => {
       console.log(`creating division ${doc.name}`)

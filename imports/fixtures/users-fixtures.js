@@ -23,7 +23,7 @@ const defaultUsers = [
   },
 ]
 
-export const createUsers = (Volunteers) => {
+export const createUserFixtures = (Volunteers) => {
   _.each(defaultUsers, (options) => {
     if (!Meteor.users.findOne({ 'emails.address': options.email })) {
       console.log('Create user ', options)
