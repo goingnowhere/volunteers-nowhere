@@ -4,6 +4,8 @@ import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { _ } from 'meteor/underscore'
+import { Match } from 'meteor/check'
+import { Roles } from 'meteor/piemonkey:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
@@ -248,15 +250,195 @@ export const allRotaExport = new ValidatedMethod({
     const shift = sourceEvent.Collections.shift.find().fetch()
     const project = sourceEvent.Collections.project.find().fetch()
     const lead = sourceEvent.Collections.lead.find().fetch()
+
+    const deptNames = department.map(({ name }) => name)
+    if (new Set(deptNames).size !== deptNames.length) {
+      throw new Error('Non-unique department names exist')
+    }
+    const teamNames = team.map(({ name }) => name)
+    if (new Set(teamNames).size !== teamNames.length) {
+      throw new Error('Non-unique team names exist')
+    }
+    const rotaNames = rotas.map(({ title }) => title)
+    if (new Set(rotaNames).size !== rotaNames.length) {
+      throw new Error('Non-unique rota names exist')
+    }
+
     return {
       settings,
-      department,
-      team,
-      rotas,
-      shift,
-      project,
-      lead,
+      departments: department.map(({ _id, parentId, ...rest }) => rest),
+      teams: team.map(({ _id: __, parentId, ...rest }) => ({
+        ...rest,
+        department: department.find(({ _id }) => _id === parentId).name,
+      })),
+      rotas: rotas.map(({ _id: __, parentId, ...rest }) => ({
+        ...rest,
+        team: team.find(({ _id }) => _id === parentId).name,
+      })),
+      shifts: shift.map(({
+        _id: __,
+        rotaId,
+        parentId,
+        ...rest
+      }) => ({
+        ...rest,
+        rota: rotas.find(({ _id }) => _id === rotaId)?.title,
+        team: team.find(({ _id }) => _id === parentId).name,
+      })),
+      projects: project.map(({ _id: __, parentId, ...rest }) => ({
+        ...rest,
+        team: team.find(({ _id }) => _id === parentId).name,
+      })),
+      leads: lead.map(({ _id: __, parentId, ...rest }) => ({
+        ...rest,
+        team: team.find(({ _id }) => _id === parentId)?.name || '',
+        department: department.find(({ _id }) => _id === parentId)?.name || '',
+      })),
     }
+  },
+})
+
+export const allRotaImport = new ValidatedMethod({
+  name: 'rota.all.import',
+  mixins: [isManagerMixin],
+  validate: ({ rotaJson }) => {
+    try {
+      JSON.parse(rotaJson)
+    } catch (err) {
+      console.warn('Error while parsing rota json', err)
+      throw new Match.Error('JSON is not valid')
+    }
+  },
+  run({ rotaJson }) {
+    const wholeRota = JSON.parse(rotaJson)
+    // TODO Add backup of old tables
+    const {
+      departments,
+      teams,
+      leads,
+      rotas,
+      shifts,
+      projects,
+      settings,
+    } = wholeRota
+    const oldSettings = EventSettings.findOne()
+    const eventStartDiff = moment(settings.eventPeriod.start)
+      .diff(oldSettings.eventPeriod.start, 'days')
+
+    const divId = Volunteers.Collections.division.findOne()._id
+
+    const deptIds = {}
+    Volunteers.Collections.department.remove({})
+    departments.forEach(dept => {
+      const deptId = Volunteers.Collections.department.insert({
+        ...dept,
+        parentId: divId,
+      })
+      Roles.createRole(deptId)
+      Roles.addRolesToParent(deptId, divId)
+      deptIds[dept.name] = deptId
+    })
+
+    const teamIds = {}
+    Volunteers.Collections.team.remove({})
+    teams.forEach(({ department, ...rest }) => {
+      const parentId = deptIds[department]
+      if (!parentId) {
+        throw new Error(`Department does not exist: ${department}`)
+      }
+      const teamId = Volunteers.Collections.team.insert({
+        ...rest,
+        parentId,
+      })
+      Roles.createRole(teamId)
+      Roles.addRolesToParent(teamId, parentId)
+      teamIds[rest.name] = teamId
+    })
+
+    const rotaIds = {}
+    Volunteers.Collections.rotas.remove({})
+    rotas.forEach(({
+      _id,
+      team,
+      start,
+      end,
+      ...rest
+    }) => {
+      const parentId = teamIds[team]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${team}`)
+      }
+      const rotaId = Volunteers.Collections.rotas.insert({
+        ...rest,
+        parentId,
+        start: moment(start).add(eventStartDiff, 'days').toDate(),
+        end: moment(end).add(eventStartDiff, 'days').toDate(),
+      })
+      rotaIds[rest.title] = rotaId
+    })
+
+    Volunteers.Collections.shift.remove({})
+    shifts.forEach(({
+      _id,
+      rota,
+      team,
+      start,
+      end,
+      ...rest
+    }) => {
+      const rotaId = rotaIds[rota]
+      const parentId = teamIds[team]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${team}`)
+      }
+      if (!rotaId) {
+        throw new Error(`Rota does not exist: ${rota}`)
+      }
+      Volunteers.Collections.shift.insert({
+        ...rest,
+        rotaId,
+        parentId,
+        start: moment(start).add(eventStartDiff, 'days').toDate(),
+        end: moment(end).add(eventStartDiff, 'days').toDate(),
+      })
+    })
+
+    Volunteers.Collections.project.remove({})
+    projects.forEach(({
+      _id,
+      team,
+      start,
+      end,
+      ...rest
+    }) => {
+      const parentId = teamIds[team]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${team}`)
+      }
+      Volunteers.Collections.project.insert({
+        ...rest,
+        parentId,
+        start: moment(start).add(eventStartDiff, 'days').toDate(),
+        end: moment(end).add(eventStartDiff, 'days').toDate(),
+      })
+    })
+
+    Volunteers.Collections.lead.remove({})
+    leads.forEach(({
+      _id,
+      team,
+      department,
+      ...rest
+    }) => {
+      const parentId = teamIds[team] || deptIds[department]
+      if (!parentId) {
+        throw new Error(`Team or department does not exist: ${team}, ${department}`)
+      }
+      Volunteers.Collections.lead.insert({
+        ...rest,
+        parentId,
+      })
+    })
   },
 })
 

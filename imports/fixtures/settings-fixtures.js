@@ -35,7 +35,7 @@ export const createSettingFixtures = () => {
     EventSettings.insert(settings)
     return settings
   }
-  return existing
+  return existing[0]
 }
 
 const emailTemplates = [{

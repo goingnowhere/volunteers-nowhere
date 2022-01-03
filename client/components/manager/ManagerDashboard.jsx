@@ -8,6 +8,7 @@ import { CsvExportButton } from '../lead/CsvExportButton.jsx'
 import { JsonExportButton } from '../lead/JsonExportButton.jsx'
 import { Volunteers } from '../../../both/init'
 import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
+import { RotaImport } from './RotaImport'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
@@ -73,6 +74,7 @@ export const ManagerDashboard = () => (
           // Hack to avoid having to make a form, etc.
           methodArgs={{ eventName: 'nowhere2020' }}
         />
+        <RotaImport />
         <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
           Send Reminders to everyone
         </button>
