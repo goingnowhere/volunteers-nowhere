@@ -259,9 +259,21 @@ export const allRotaExport = new ValidatedMethod({
     if (new Set(teamNames).size !== teamNames.length) {
       throw new Error('Non-unique team names exist')
     }
-    const rotaNames = rotas.map(({ title }) => title)
-    if (new Set(rotaNames).size !== rotaNames.length) {
-      throw new Error('Non-unique rota names exist')
+    const rotaNames = []
+    const nonUniqueRotaNames = []
+    // eslint-disable-next-line no-restricted-syntax
+    for (const rota of rotas) {
+      if (rotaNames.includes(rota.title) && !nonUniqueRotaNames.includes(rota.title)) {
+        nonUniqueRotaNames.push(rota.title)
+      }
+      rotaNames.push(rota.title)
+    }
+    const findRotaName = id => {
+      const name = rotas.find(({ _id }) => _id === id)?.title
+      if (nonUniqueRotaNames.includes(name)) {
+        return `${name}-${id}`
+      }
+      return name
     }
 
     return {
@@ -271,8 +283,15 @@ export const allRotaExport = new ValidatedMethod({
         ...rest,
         department: department.find(({ _id }) => _id === parentId).name,
       })),
-      rotas: rotas.map(({ _id: __, parentId, ...rest }) => ({
+      rotas: rotas.map(({
+        _id: rotaId,
+        parentId,
+        title,
+        ...rest
+      }) => ({
         ...rest,
+        ...nonUniqueRotaNames.includes(title) ? { _id: rotaId } : {},
+        title,
         team: team.find(({ _id }) => _id === parentId).name,
       })),
       shifts: shift.map(({
@@ -282,7 +301,7 @@ export const allRotaExport = new ValidatedMethod({
         ...rest
       }) => ({
         ...rest,
-        rota: rotas.find(({ _id }) => _id === rotaId)?.title,
+        rota: findRotaName(rotaId),
         team: team.find(({ _id }) => _id === parentId).name,
       })),
       projects: project.map(({ _id: __, parentId, ...rest }) => ({
