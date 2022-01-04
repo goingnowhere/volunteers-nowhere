@@ -292,7 +292,7 @@ export const allRotaExport = new ValidatedMethod({
         ...rest,
         ...nonUniqueRotaNames.includes(title) ? { _id: rotaId } : {},
         title,
-        team: team.find(({ _id }) => _id === parentId).name,
+        team: team.find(({ _id }) => _id === parentId)?.name || parentId,
       })),
       shifts: shift.map(({
         _id: __,
@@ -302,11 +302,11 @@ export const allRotaExport = new ValidatedMethod({
       }) => ({
         ...rest,
         rota: findRotaName(rotaId),
-        team: team.find(({ _id }) => _id === parentId).name,
+        team: team.find(({ _id }) => _id === parentId)?.name || parentId,
       })),
       projects: project.map(({ _id: __, parentId, ...rest }) => ({
         ...rest,
-        team: team.find(({ _id }) => _id === parentId).name,
+        team: team.find(({ _id }) => _id === parentId)?.name || parentId,
       })),
       leads: lead.map(({ _id: __, parentId, ...rest }) => ({
         ...rest,
