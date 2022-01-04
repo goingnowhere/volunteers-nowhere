@@ -1,6 +1,11 @@
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+} from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import moment from 'moment-timezone'
@@ -9,19 +14,19 @@ import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 import { EventSettings } from '../../both/collections/settings'
 
 const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
-  const openMoment = moment(openDate)
+  const openMoment = useMemo(() => moment(openDate), [openDate])
   const [seconds, setSeconds] = useState()
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds(openMoment.diff(moment(), 'seconds'))
     }, 1000)
     return () => clearInterval(interval)
-  }, [loaded, openDate])
+  }, [loaded, openMoment])
   return (
     <Fragment>
       <header id="page-top" className="masthead bg-primary text-white text-center">
         <div className="container">
-          <h1 className="home-title">Co-Create Nowhere 2020</h1>
+          <h1 className="home-title">Co-Create Nowhere 2022</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
               { loaded && seconds > 0
