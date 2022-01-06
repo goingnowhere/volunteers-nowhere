@@ -374,6 +374,7 @@ export const allRotaImport = new ValidatedMethod({
       teamIds[rest.name] = teamId
     })
 
+    const nonUniqueRotaNames = {}
     const rotaIds = {}
     Volunteers.Collections.rotas.remove({})
     rotas.forEach(({
@@ -394,6 +395,10 @@ export const allRotaImport = new ValidatedMethod({
         end: moment(end).add(eventStartDiff, 'days').toDate(),
       })
       rotaIds[rest.title] = rotaId
+      if (_id) {
+        // _id only exists if there are non-unique rota names. We need to keep it for lookups.
+        nonUniqueRotaNames[`${rest.title}-${_id}`] = rotaId
+      }
     })
 
     Volunteers.Collections.shift.remove({})
@@ -405,13 +410,16 @@ export const allRotaImport = new ValidatedMethod({
       end,
       ...rest
     }) => {
-      const rotaId = rotaIds[rota]
+      let rotaId = rotaIds[rota]
       const parentId = teamIds[team]
       if (!parentId) {
         throw new Error(`Team does not exist: ${team}`)
       }
       if (!rotaId) {
-        throw new Error(`Rota does not exist: ${rota}`)
+        rotaId = nonUniqueRotaNames[rota]
+        if (!rotaId) {
+          throw new Error(`Rota does not exist: ${rota}`)
+        }
       }
       Volunteers.Collections.shift.insert({
         ...rest,
@@ -458,6 +466,10 @@ export const allRotaImport = new ValidatedMethod({
         parentId,
       })
     })
+
+    EventSettings.remove({})
+    const { _id, ...newSettings } = settings
+    EventSettings.insert(newSettings)
   },
 })
 
