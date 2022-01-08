@@ -45,7 +45,6 @@ universe:i18n-blaze
 fourseven:scss
 seba:minifiers-autoprefixer
 abate:autoform-components
-wylio:mandrill
 email@1.2.3
 mdg:validated-method
 mizzao:user-status@1.0.0

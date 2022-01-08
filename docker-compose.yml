@@ -11,7 +11,7 @@ networks:
 
 services:
   fist:
-    image: piemonkey/volunteers-nowhere:2020-02-18
+    image: piemonkey/volunteers-nowhere:2022-01-06
     restart: always
     links:
       - mongo
@@ -21,18 +21,22 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo/volunteers
       - ROOT_URL=https://fist.goingnowhere.org
-      - MANDRILL_API_USER=
-      - MANDRILL_API_KEY=
+      - MAIL_URL=smtp://USER:PASSWORD@mail.euroburners.net:587
       - QUICKET_API_KEY=
       - QUICKET_USER_TOKEN=
       - QUICKET_EVENT_ID=
       - NODE_ENV=production
     labels:
-      - traefik.frontend.rule=Host:fist.goingnowhere.org
-      - traefik.frontend.entryPoints=https
       - traefik.enable=true
-      - traefik.port=3000
-      - traefik.docker.network=traefik
+      - traefik.http.routers.fist.rule=Host(`fist.goingnowhere.org`)
+      - traefik.http.routers.fist.entrypoints=web
+      - traefik.http.routers.fist.middlewares=SwitchToHttps
+      - traefik.http.routers.fist-ssl.rule=Host(`fist.goingnowhere.org`)
+      - traefik.http.routers.fist-ssl.entrypoints=web-secure
+      - traefik.http.routers.fist-ssl.tls.certresolver=burner
+      - traefik.http.routers.fist-ssl.tls=true
+      - traefik.http.middlewares.SwitchToHttps.redirectscheme.scheme=https
+      - traefik.http.services.app-fist.loadbalancer.server.port=3000
     volumes:
       - user_data:/home/node/app/bundle/programs/server/profilePictures
 
@@ -40,6 +44,8 @@ services:
     image: mongo:4.0-xenial
     command: mongod --storageEngine=wiredTiger
     restart: always
+    networks:
+      - default
     volumes:
       - mongo_dbdata:/data/db
     labels:
@@ -54,7 +60,7 @@ services:
     environment:
       - DB_HOST=mongo
       - DB_DUMP_FREQ=720
-      - DB_DUMP_BEGIN=0000
+      - DB_DUMP_BEGIN=0300
       - DB_CLEANUP_TIME=8640
       - MD5=TRUE
       - COMPRESSION=XZ

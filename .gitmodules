@@ -13,9 +13,6 @@
 [submodule "packages/meteor-user-profiles"]
 	path = packages/meteor-user-profiles
 	url = https://gitlab.com/piemonkey/meteor-user-profiles.git
-[submodule "packages/meteor-mandrill"]
-	path = packages/meteor-mandrill
-	url = https://github.com/StorytellerCZ/meteor-mandrill.git
 [submodule "packages/meteor-autoform"]
 	path = packages/meteor-autoform
 	url = https://github.com/abate/meteor-autoform.git
