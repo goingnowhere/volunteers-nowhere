@@ -109,6 +109,8 @@ export const userList = new ValidatedMethod({
       sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
       skip: (page - 1) * perPage,
       limit: perPage,
+      // TODO We shouldn't need much here, now that the methods are separated we should remove
+      // what we don't need
       fields: {
         profile: true,
         emails: true,
@@ -119,6 +121,36 @@ export const userList = new ValidatedMethod({
       },
     })
     return { count: usersCursor.count(), users: usersCursor.fetch() }
+  },
+})
+
+export const userListManager = new ValidatedMethod({
+  name: 'users.paged.manager',
+  mixins: [isManagerMixin],
+  validate: () => {},
+  run({ search = {}, page, perPage = 20 }) {
+    const usersCursor = Meteor.users.find(search, {
+      sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
+      skip: (page - 1) * perPage,
+      limit: perPage,
+      fields: {
+        profile: true,
+        emails: true,
+        isBanned: true,
+        status: true,
+        createdAt: true,
+        roles: true,
+      },
+    })
+    return {
+      count: usersCursor.count(),
+      users: usersCursor.fetch(),
+      extras:
+        Object.fromEntries(usersCursor.map(user => [
+          user._id,
+          { roles: Roles.getRolesForUser(user._id, { scope: Volunteers.eventName }) },
+        ])),
+    }
   },
 })
 

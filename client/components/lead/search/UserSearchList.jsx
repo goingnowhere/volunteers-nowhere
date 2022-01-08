@@ -1,9 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Fragment, useState, useEffect } from 'react'
 import { _ } from 'meteor/underscore'
-import { Roles } from 'meteor/piemonkey:roles'
 import { t } from '../../common/i18n'
-import { Volunteers } from '../../../../both/init'
 import { PagesPicker } from './PagesPicker.jsx'
 
 const PER_PAGE = 10
@@ -30,7 +28,7 @@ const SearchBox = ({ setSearch }) => {
   const [ticketNumber, setTicketNumber] = useState('')
   useEffect(() => {
     debouncedSearch(setSearch, text, ticketNumber)
-  }, [text, ticketNumber])
+  }, [text, ticketNumber, setSearch])
   return (
     <div className="row">
       <div className="col-sm-6">
@@ -81,22 +79,28 @@ const UserSearchListComponent = ({
   </Fragment>
 )
 
-export const UserSearchList = ({ component, Controls, showUser }) => {
+export const UserSearchList = ({
+  component,
+  Controls,
+  showUser,
+  getManagerDetails,
+}) => {
   const [users, setList] = useState([])
   const [userCount, setUserCount] = useState(0)
   const [search, setSearch] = useState({})
   const [page, changePage] = useState(1)
-  useEffect(() => Meteor.call('users.paged', { search, page, perPage: PER_PAGE }, (err, { users: res, count }) => {
+  const method = getManagerDetails ? 'users.paged.manager' : 'users.paged'
+  useEffect(() => Meteor.call(method, { search, page, perPage: PER_PAGE }, (err, res) => {
     if (err) {
       console.error(err)
     } else {
-      setList(res.map((user) => ({
+      setList(res.users.map((user) => ({
         ...user,
-        fistRoles: Roles.getRolesForUser(user._id, Volunteers.eventName).filter((role) => ['admin', 'manager'].includes(role)),
+        fistRoles: res.extras?.[user._id].roles,
       })))
-      setUserCount(count)
+      setUserCount(res.count)
     }
-  }), [search, page])
+  }), [search, page, getManagerDetails, method])
   return (
     <UserSearchListComponent
       ResultItem={component}

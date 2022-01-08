@@ -37,6 +37,7 @@ export const ManagerUserListComponent = ({
             component={UserListEntry}
             Controls={UserListControls}
             showUser={userId => setModalUserId(userId)}
+            getManagerDetails
           />
         </div>
       </div>
