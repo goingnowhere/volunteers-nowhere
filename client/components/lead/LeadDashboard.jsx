@@ -87,7 +87,12 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
             data-action="show_rota">
             <Fa name="calendar" /> <T>rota</T>
           </button> */}
-          <CsvExportButton method="team.rota" buttonText="rota_export" filename="rota" parentId={teamId} />
+          <CsvExportButton
+            method="team.rota"
+            buttonText="rota_export"
+            filename="rota"
+            methodArgs={{ parentId: teamId }}
+          />
         </div>
         <div className={`${pendingRequests > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
           } pl-1 user-top`}

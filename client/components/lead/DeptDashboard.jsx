@@ -99,7 +99,12 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
           <button type="button" className="btn btn-light btn-sm d-block" onClick={earlyEntry}>
             <Fa name="wrench" /> <T>early_entry</T>
           </button>
-          <CsvExportButton method="dept.rota" buttonText="rota_export" filename="rota" parentId={deptId} />
+          <CsvExportButton
+            method="dept.rota"
+            buttonText="rota_export"
+            filename="rota"
+            methodArgs={{ parentId: deptId }}
+          />
         </div>
         <div className={`${
           pendingLeadRequests.length > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
