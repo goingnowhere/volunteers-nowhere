@@ -36,7 +36,7 @@ export const UserListEntry = ({
               <tr>
                 <td><T>name</T></td>
                 <td>{displayName({ profile, emails })}
-                  {status.online && <span className="text-success"> <Fa name="circle" /></span>}
+                  {status?.online && <span className="text-success"> <Fa name="circle" /></span>}
                 </td>
               </tr>
               <tr><td><T>email</T> </td>
@@ -57,7 +57,7 @@ export const UserListEntry = ({
                 </td>
               </tr>
               <tr><td><T>createdAt</T></td><td>{formatDateTime(createdAt)}</td></tr>
-              {status.lastLogin && (
+              {status?.lastLogin && (
                 <tr><td><T>last_login</T></td><td>{formatDateTime(status.lastLogin.date)}</td></tr>
               )}
               {fistRoles.length > 0 && (
