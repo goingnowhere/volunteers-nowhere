@@ -11,11 +11,7 @@ A normal user account is created with normal@example.com / testtest
 
 It was originally written in Coffeescript using Blaze as the view layer. In order to increase the pool of potential contributors and to escape the poor development experience of Blaze it is currently being ported to React and Javascript. This leads to some odd behaviour at the moment as it's currently using both technologies at the same time.
 
-## Testing (TODO)
-
-   meteor test --driver-package practicalmeteor:mocha --port 3100
-
-   meteor test-packages --driver-package practicalmeteor:mocha --port 3100
+## Installing
 
 ### Git submodule install
 
@@ -29,9 +25,9 @@ meteor npm install
 meteor
 ```
 
-### Non-SSH install
+### Non-submodule install
 
-You'll need to clone each dependency in turn and tell Meteor where to find them when you run it:
+If for some reason you don't want to use submodules, you'll need to clone each dependency in turn and tell Meteor where to find them when you run it:
 
 ``` bash
 mkdir nowhere-volunteers
@@ -42,7 +38,6 @@ git clone https://github.com/goingnowhere/meteor-volunteers.git
 # dependencies
 git clone https://gitlab.com/abate/meteor-autoform-components.git
 git clone https://github.com/abate/meteor-autoform-datetimepicker.git
-git clone https://github.com/piemonkey/meteor-roles.git
 git clone https://gitlab.com/piemonkey/meteor-user-profiles.git
 git clone https://github.com/abate/meteor-autoform.git
 git clone https://github.com/piemonkey/emailForms.git
@@ -54,10 +49,10 @@ meteor npm install
 METEOR_PACKAGE_DIRS=../ meteor
 ```
 
-update all submodules to master except meteor-roles
+update all submodules to master
 
 ```
-git submodule foreach '[ "$path" = "packages/meteor-roles" ] || git pull origin master'
+git submodule foreach 'git pull origin master'
 ```
 
 restore all the backup data for testing

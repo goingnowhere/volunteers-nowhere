@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
-import { Roles } from 'meteor/piemonkey:roles'
+import { Roles } from 'meteor/alanning:roles'
 import { initLocale } from './locale'
 
 export const Volunteers = new VolunteersClass('nowhere2022')

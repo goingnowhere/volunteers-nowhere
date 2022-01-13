@@ -1,18 +1,12 @@
 [submodule "packages/meteor-autoform-components"]
 	path = packages/meteor-autoform-components
 	url = https://gitlab.com/abate/meteor-autoform-components.git
-[submodule "packages/meteor-roles"]
-	path = packages/meteor-roles
-	url = https://github.com/piemonkey/meteor-roles.git
 [submodule "packages/meteor-volunteers"]
 	path = packages/meteor-volunteers
 	url = https://github.com/goingnowhere/meteor-volunteers.git
 [submodule "packages/meteor-autoform-datetimepicker"]
 	path = packages/meteor-autoform-datetimepicker
 	url = https://github.com/piemonkey/meteor-autoform-datetimepicker.git
-[submodule "packages/meteor-user-profiles"]
-	path = packages/meteor-user-profiles
-	url = https://gitlab.com/piemonkey/meteor-user-profiles.git
 [submodule "packages/meteor-autoform"]
 	path = packages/meteor-autoform
 	url = https://github.com/abate/meteor-autoform.git

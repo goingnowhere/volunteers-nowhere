@@ -1,4 +1,4 @@
-import { Roles } from 'meteor/piemonkey:roles'
+import { Roles } from 'meteor/alanning:roles'
 
 const units = {
   divisions: [

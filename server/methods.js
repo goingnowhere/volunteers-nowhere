@@ -5,7 +5,7 @@ import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { _ } from 'meteor/underscore'
 import { Match } from 'meteor/check'
-import { Roles } from 'meteor/piemonkey:roles'
+import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
@@ -146,10 +146,17 @@ export const userListManager = new ValidatedMethod({
       count: usersCursor.count(),
       users: usersCursor.fetch(),
       extras:
-        Object.fromEntries(usersCursor.map(user => [
+      Object.fromEntries(usersCursor.map(user => {
+        const allRoles = Roles.getRolesForUser(user._id, { scope: Volunteers.eventName })
+        const roles = [
+          ...allRoles.filter(role => ['manager', 'admin'].includes(role)),
+          allRoles.some(role => !['manager', 'admin', 'user'].includes(role)) ? 'lead' : undefined,
+        ]
+        return [
           user._id,
-          { roles: Roles.getRolesForUser(user._id, { scope: Volunteers.eventName }) },
-        ])),
+          { roles },
+        ]
+      })),
     }
   },
 })

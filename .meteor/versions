@@ -4,6 +4,7 @@ abate:email-forms@0.0.1
 abate:meteor-user-profiles@0.0.1
 accounts-base@1.9.0
 accounts-password@1.7.0
+alanning:roles@2.2.0
 aldeed:autoform@6.3.0
 aldeed:autoform-select2@3.0.1
 aldeed:collection2@3.0.6
@@ -14,7 +15,7 @@ babel-compiler@7.7.0
 babel-runtime@1.5.0
 base64@1.0.12
 binary-heap@1.0.11
-blaze@2.4.0
+blaze@2.5.0
 blaze-html-templates@1.1.2
 blaze-tools@1.1.0
 boilerplate-generator@1.7.1
@@ -95,7 +96,6 @@ ostrio:logger@2.0.8
 peppelg:bootstrap-3-modal@1.0.4
 percolate:migrations@1.0.2
 piemonkey:accounts-ui@1.3.1
-piemonkey:roles@2.0.0
 promise@0.11.2
 raix:eventemitter@1.0.0
 random@1.2.0

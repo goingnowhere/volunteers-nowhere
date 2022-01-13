@@ -33,7 +33,7 @@ percolate:migrations
 sacha:spin
 
 goingnowhere:volunteers
-piemonkey:roles
+alanning:roles@2.2.0 # v3 exists but requires migration
 
 abate:meteor-user-profiles
 markdown@1.0.12
