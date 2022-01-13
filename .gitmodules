@@ -1,6 +1,6 @@
 [submodule "packages/meteor-autoform-components"]
 	path = packages/meteor-autoform-components
-	url = https://gitlab.com/abate/meteor-autoform-components.git
+	url = https://gitlab.com/piemonkey/meteor-autoform-components.git
 [submodule "packages/meteor-volunteers"]
 	path = packages/meteor-volunteers
 	url = https://github.com/goingnowhere/meteor-volunteers.git
