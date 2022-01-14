@@ -165,5 +165,5 @@ Volunteers.Collections.volunteerForm.attachSchema(volunteerFormSchema)
 
 export const ticketsCollection = new Mongo.Collection('tickets')
 if (Meteor.isServer) {
-  ticketsCollection._ensureIndex({ email: 1 })
+  ticketsCollection.createIndex({ email: 1 })
 }

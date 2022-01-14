@@ -8,7 +8,7 @@ import { CsvExportButton } from '../lead/CsvExportButton.jsx'
 import { JsonExportButton } from '../lead/JsonExportButton.jsx'
 import { Volunteers } from '../../../both/init'
 import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
-import { RotaImport } from './RotaImport'
+import { RotaImport } from './RotaImport.jsx'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division

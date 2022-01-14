@@ -33,7 +33,6 @@ module.exports = {
     'no-underscore-dangle': ['off', {
         allow: [
           '_id',
-          '_ensureIndex',
           '__',
           '_name',
         ],
