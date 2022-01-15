@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { Meteor } from 'meteor/meteor'
-import Fa from 'react-fontawesome'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { Volunteers } from '../../../both/init'
 import { T, t } from '../common/i18n'
@@ -16,14 +16,24 @@ const leadName = (leads, userId) => {
 }
 
 const editTeam = (team) =>
-  AutoFormComponents.ModalShowWithTemplate('teamEdit', team)
+  AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+    { form: { collection: Volunteers.Collections.team }, data: team }, '', 'lg')
 const deleteTeam = (team, reload) => {
   if (window.confirm(`Are you sure you want to delete the ${team.name} team entirely?`)) {
     Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, team._id)
     reload()
   }
 }
-const removeLead = (signupId, reload) => {
+const editLead = (lead) =>
+  AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+    { form: { collection: Volunteers.Collections.lead }, data: lead }, '', 'lg')
+const removeLead = (leadId, reload) => {
+  if (window.confirm('Are you sure you want to remove this lead position?')) {
+    Meteor.call(`${Volunteers.eventName}.Volunteers.lead.remove`, leadId)
+    reload()
+  }
+}
+const removeLeadSignup = (signupId, reload) => {
   if (window.confirm('Are you sure you want to remove this lead?')) {
     Meteor.call(`${Volunteers.eventName}.Volunteers.signups.remove`, signupId)
     reload()
@@ -50,13 +60,19 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
     },
   })
   return (
-    <Fragment>
+    <>
       <Modal
         title={t('move_team')}
         isOpen={!!moveTeam}
         closeModal={() => setMoveTeam()}
       >
-        <MoveTeam team={moveTeam} close={() => { setMoveTeam(); reload() }} />
+        <MoveTeam
+          team={moveTeam}
+          close={() => {
+            setMoveTeam()
+            reload()
+          }}
+        />
       </Modal>
       <h2 className="header"><T>all_teams</T></h2>
       <table className="table">
@@ -78,37 +94,62 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                 )}
               </td>
               <td>
-                <small>
-                  <ul className="list-unstyled">
-                    {team.leadRoles.map((leadRole) => (
-                      <li key={leadRole._id}>
-                        {leadRole.title}:
-                        {leadRole.confirmed > 0 ? (
-                          <Fragment>
-                            {leadName(team.leads, leadRole.volunteers[0])}
-                            <button
-                              type="button"
-                              className="btn btn-link"
-                              onClick={() => removeLead(leadRole.signups[0]._id)}
-                            >
-                              (<T>remove</T>)
-                            </button>
-                          </Fragment>
-                        ) : (
-                          <small>
+                <ul className="list-unstyled">
+                  {team.leadRoles.map((leadRole) => (
+                    <li key={leadRole._id}>
+                      {leadRole.confirmed === 0 && (
+                        <button
+                          type="button"
+                          className="btn btn-link btn-sm p-0"
+                          onClick={() => removeLead(leadRole._id)}
+                        >
+                          <FontAwesomeIcon icon="trash-alt" className="text-danger" />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        className="btn btn-link btn-sm p-0"
+                        onClick={() => editLead(leadRole)}
+                      >
+                        {leadRole.title}
+                      </button>
+                      {leadRole.confirmed > 0 ? (
+                        <>
+                          <span className="align-middle">
+                            : {leadName(team.leads, leadRole.volunteers[0])}
+                          </span>
+                          <button
+                            type="button"
+                            className="btn btn-link btn-sm p-0"
+                            onClick={() => removeLeadSignup(leadRole.signups[0]._id)}
+                          >
+                            (<T>remove</T>)
+                          </button>
+                        </>
+                      ) : (
+                          <>
+                            :
                             <button
                               type="button"
                               className="btn btn-sm btn-circle"
                               onClick={() => enrollLead(team._id, leadRole._id, leadRole.policy)}
                             >
-                              <Fa name="user-plus" />
+                              <FontAwesomeIcon icon="user-plus" />
                             </button>
-                          </small>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </small>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      type="button"
+                      className="btn btn-link btn-sm p-0"
+                      onClick={() => editLead()}
+                    >
+                      <FontAwesomeIcon icon="plus-square" className="" />
+                    </button>
+                  </li>
+                </ul>
               </td>
               <td>
                 <span className="badge badge-pill badge-primary" title={`${t('confirmed')}/${t('needed')}`}>
@@ -123,17 +164,17 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                     onClick={() => editTeam(team)}
                     title={t('edit')}
                   >
-                    <Fa name="pencil-square-o" />
+                    <FontAwesomeIcon icon="edit" />
                   </button>
                   {team._id !== deptId && (
-                    <Fragment>
+                    <>
                       <button
                         type="button"
                         className="btn btn-sm btn-circle"
                         onClick={() => setMoveTeam(team)}
                         title={t('move_team')}
                       >
-                        <Fa name="arrows-alt" />
+                        <FontAwesomeIcon icon="arrows-alt" />
                       </button>
                       <button
                         type="button"
@@ -141,9 +182,9 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                         onClick={() => deleteTeam(team, reload)}
                         title={t('remove')}
                       >
-                        <Fa name="trash-o" />
+                        <FontAwesomeIcon icon="trash-alt" />
                       </button>
-                    </Fragment>
+                    </>
                   )}
                 </div>
               </td>
@@ -151,6 +192,6 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
           ))}
         </tbody>
       </table>
-    </Fragment>
+    </>
   )
 }

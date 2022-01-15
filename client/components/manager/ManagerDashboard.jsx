@@ -12,11 +12,14 @@ import { RotaImport } from './RotaImport.jsx'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
-const topLevelDivision = 'NOrg 2018'
+const topLevelDivision = 'NOrg'
 
 const addDepartment = () => {
   const { _id: divisionId } = Volunteers.Collections.division.findOne({ name: topLevelDivision })
-  AutoFormComponents.ModalShowWithTemplate('addDepartment', { divisionId })
+  AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate', {
+    form: { collection: Volunteers.Collections.department },
+    data: { parentId: divisionId },
+  }, '', 'lg')
 }
 const syncQuicket = () => {
   Meteor.call('ticketList.sync')

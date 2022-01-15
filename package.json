@@ -7,6 +7,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.7",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.6.1",
     "bootstrap-select": "^1.13.18",

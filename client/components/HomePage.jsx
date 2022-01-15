@@ -17,10 +17,17 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
   const openMoment = useMemo(() => moment(openDate), [openDate])
   const [seconds, setSeconds] = useState()
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds(openMoment.diff(moment(), 'seconds'))
-    }, 1000)
-    return () => clearInterval(interval)
+    let interval
+    if (loaded) {
+      const secondsNow = openMoment.diff(moment(), 'seconds')
+      setSeconds(secondsNow)
+      if (secondsNow > 0) {
+        interval = setInterval(() => {
+          setSeconds(openMoment.diff(moment(), 'seconds'))
+        }, 1000)
+      }
+    }
+    return () => interval && clearInterval(interval)
   }, [loaded, openMoment])
   return (
     <Fragment>
@@ -29,7 +36,11 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
           <h1 className="home-title">Co-Create Nowhere 2022</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
-              { loaded && seconds > 0
+              {!loaded || !openDate ? (
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              ) : seconds > 0
                 ? (
                   <Fragment>
                     <p className="lead">

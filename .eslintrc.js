@@ -47,6 +47,7 @@ module.exports = {
     'no-new': 'off', // Commonly used in Meteor
     'object-shorthand': ['error', 'always'],
     'arrow-parens': 'off',
+    'no-nested-ternary': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {
@@ -58,7 +59,8 @@ module.exports = {
       "templateInstanceParamName": "template",
     }],
     'react/jsx-one-expression-per-line': 'off',
-    'react/jsx-fragments': ['warn', 'element'],
+    'react/jsx-fragments': ['warn', 'shorthand'],
+    'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/label-has-associated-control': ['error', {

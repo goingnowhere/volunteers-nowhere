@@ -16,9 +16,11 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
   const [{ dept, pendingLeadRequests }, setStats] = useState({ dept: {}, pendingLeadRequests: [] })
 
   const editDept = () =>
-    AutoFormComponents.ModalShowWithTemplate('departmentEditDetails', dept)
+    AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+      { form: { collection: Volunteers.Collections.department }, data: dept }, '', 'lg')
   const addTeam = () =>
-    AutoFormComponents.ModalShowWithTemplate('addTeam', { departmentId: deptId })
+    AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
+      { form: { collection: Volunteers.Collections.team }, data: { parentId: deptId } }, '', 'lg')
   const earlyEntry = () =>
     AutoFormComponents.ModalShowWithTemplate('earlyEntry', dept, 'Early Entries')
 
