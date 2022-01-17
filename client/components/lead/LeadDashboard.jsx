@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
+import { AutoForm } from 'meteor/aldeed:autoform'
 
 import { T, t } from '../common/i18n'
 import { TabbedDutySummary } from './TabbedDutySummary.jsx'
@@ -25,12 +26,33 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
       { form: { collection: Volunteers.Collections.project }, data: { parentId: teamId } }, '', 'lg')
   }
-  useEffect(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId }, (err, teamStats) => {
-    if (err) console.error(err)
-    else {
-      setStats(teamStats)
+
+  const reload = () => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId },
+    (err, teamStats) => {
+      if (err) console.error(err)
+      else {
+        setStats(teamStats)
+      }
     }
-  }), [teamId])
+  )
+  useEffect(reload, [teamId])
+
+  useEffect(() => {
+    AutoForm.addHooks([
+      'InsertTeamFormId',
+      'UpdateTeamFormId',
+      'InsertRotasFormId',
+      'UpdateRotasFormId',
+      'InsertProjectsFormId',
+      'UpdateProjectsFormId',
+    ], {
+      onSuccess() {
+        reload()
+        AutoFormComponents.modalHide()
+      },
+    })
+  }, [])
+
   return (
     <div className="container-fluid">
       <div className="row">
