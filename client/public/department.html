@@ -29,7 +29,7 @@
     </div>
     <h3 class="pt-2">{{__ "teams_in_this_department"}}</h3>
     {{#each team in teams}}
-      {{> signupsListTeam team=team }}
+      <div>{{> React component=SignupsListTeam team=team }}</div>
     {{/each}}
   </div>
   </template>

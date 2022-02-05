@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
+import { SignupsListTeam } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../../both/init'
 
 Template.publicDepartmentView.onCreated(function onCreated() {
@@ -19,6 +20,7 @@ Template.publicDepartmentView.onCreated(function onCreated() {
 })
 
 Template.publicDepartmentView.helpers({
+  SignupsListTeam: () => SignupsListTeam,
   dep: () => Template.instance().dep.get(),
   teams: () => {
     const depId = Template.currentData()._id

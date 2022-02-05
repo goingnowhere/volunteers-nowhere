@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
+import { SignupsListTeam } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../../both/init'
 
 Template.publicTeamView.onCreated(function onCreated() {
@@ -36,5 +37,6 @@ Template.publicTeamView.onCreated(function onCreated() {
 })
 
 Template.publicTeamView.helpers({
+  SignupsListTeam: () => SignupsListTeam,
   team: () => Template.instance().team.get(),
 })
