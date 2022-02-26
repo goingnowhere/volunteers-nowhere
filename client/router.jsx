@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Fragment, memo } from 'react'
+import React, { memo } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -25,11 +25,11 @@ import { NoInfoDashboard } from './components/noinfo/NoInfoDashboard.jsx'
 import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
 import { LeadDashboard } from './components/lead/LeadDashboard.jsx'
 import { DeptDashboard } from './components/lead/DeptDashboard.jsx'
+import { UserDashboard } from './components/volunteer/UserDashboard.jsx'
 
-const Dashboard = () => <Blaze template="userDashboard" />
 export const Routes = () => (
   <BrowserRouter>
-    <Fragment>
+    <>
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -41,7 +41,7 @@ export const Routes = () => (
         <LoggedInRoute path="/password" component={Password} />
         <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />
         <LoggedInRoute path="/profile" component={VolunteerForm} />
-        <LoggedInRoute path="/dashboard" component={Dashboard} />
+        <LoggedInRoute path="/dashboard" component={UserDashboard} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <LoggedInRoute path="/department/:_id/team/:_teamId/:_period?" component={memo(({ match }) => <Blaze template="publicTeamView" {...match.params} />)} />
         <LoggedInRoute path="/department/:id" component={memo(({ match }) => <Blaze template="publicDepartmentView" _id={match.params.id} />)} />
@@ -60,7 +60,7 @@ export const Routes = () => (
         <LoggedInRoute path="/noinfo" component={NoInfoDashboard} />
         <Route component={NotFound} />
       </Switch>
-    </Fragment>
+    </>
   </BrowserRouter>
 )
 
