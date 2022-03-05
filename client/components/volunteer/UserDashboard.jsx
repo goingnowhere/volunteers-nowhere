@@ -52,19 +52,19 @@ export function UserDashboard() {
         </div>
         {bookedMissions ? (
           <>
-            <div className="col-sm-12 col-md-5 pl-1 pr-1">
+            <div className="col-sm-12 col-md-5 px-1">
               <h2 className="header"><T>booked_missions</T></h2>
               <div>
                 <BookedTable />
               </div>
             </div>
-            <div className="col-sm-12 col-md-5 pl-1">
+            <div className="col-sm-12 col-md-5 px-1">
               <h2 className="header"><T>shift_need_help</T></h2>
               <FilteredSignupList />
             </div>
           </>
         ) : (
-          <div className="col-sm-6 col-md-10 pl-1">
+          <div className="col-sm-12 col-md-10 px-1">
             <FilteredSignupList />
           </div>
         )}
