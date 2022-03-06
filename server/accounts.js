@@ -12,31 +12,30 @@ import {
 import { ticketsCollection } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
 
+import { devConfig } from './config'
+import { lookupUserTicket } from './quicket'
+
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()
   let ticketId
-  let profile
-  if (Meteor.isProduction) {
+  let profile = {}
+  let ticket
+  if (Meteor.isProduction || devConfig.testTicketApi) {
     const { fistOpenDate } = EventSettings.findOne() || {}
     // Temporarily only allow @gn signups
     if (moment(fistOpenDate).isAfter() && !/@goingnowhere.org$/.test(email)) {
       throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)
     }
-    const ticket = ticketsCollection.findOne({ email })
+    ticket = lookupUserTicket(email)
     if (!ticket) {
       const match = /([^@\s]+)@goingnowhere.org$/.exec(email)
       if (match && match[1]) {
-        profile = { firstName: match[1] }
+        profile = { nickname: match[1] }
       } else {
         throw new Meteor.Error(404, 'You need a ticket to sign up. Please use the email your ticket is assigned to')
       }
     } else {
-      ticketId = ticket._id
-      profile = {
-        firstName: ticket.firstName,
-        lastName: ticket.lastName,
-        nickname: ticket.nickname,
-      }
+      ticketId = ticket.TicketId
     }
   } else {
     profile = {
@@ -47,6 +46,7 @@ Accounts.onCreateUser((options, user) => {
     ...user,
     ticketId,
     profile,
+    rawTicketInfo: ticket,
   }
 })
 

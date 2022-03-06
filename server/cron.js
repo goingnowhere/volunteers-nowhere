@@ -104,16 +104,16 @@ const emailSend = (time) => {
   })
 }
 
-const quicketSync = (time) => {
-  // Sync list of tickets with Quicket
-  SyncedCron.add({
-    name: 'QuicketSync',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job: syncQuicketTicketList,
-  })
-}
+// const quicketSync = (time) => {
+//   // Sync list of tickets with Quicket
+//   SyncedCron.add({
+//     name: 'QuicketSync',
+//     schedule(parser) {
+//       return parser.text(time)
+//     },
+//     job: syncQuicketTicketList,
+//   })
+// }
 
 const cronActivate = ({ cronFrequency, emailManualCheck }) => {
   if (cronFrequency) {
@@ -127,9 +127,9 @@ const cronActivate = ({ cronFrequency, emailManualCheck }) => {
       emailSend('every 5 minutes')
     }
     signupsGC('every 3 days')
-    if (Meteor.isProduction) {
-      quicketSync('every 30 minutes')
-    }
+    // if (Meteor.isProduction) {
+    //   quicketSync('every 30 minutes')
+    // }
     SyncedCron.start()
   } else {
     console.log('Disable Cron')

@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { HTTP } from 'meteor/http'
+import { fetch } from 'meteor/fetch'
+import { wrapAsync } from 'meteor/goingnowhere:volunteers'
 import { ticketsCollection } from '../both/collections/users'
 import { config } from './config'
 
@@ -88,3 +90,27 @@ export const syncQuicketTicketList = () => {
     ticketsCollection.upsert({ _id }, update)
   })
 }
+
+export const lookupUserTicket = wrapAsync(async (email) => {
+  const response = await fetch(`${config.noonerHuntApi}?key=${config.noonerHuntKey}&nooner=${email}`, {
+    method: 'GET',
+  })
+  if (!response.ok) {
+    if (response.status >= 500) {
+      console.error('Error retrieving ticket', response)
+      throw new Meteor.Error(500, 'Problem calling ticket API')
+    } else {
+      console.log('Failed to find ticket', response.status, email)
+      return false
+    }
+  } else {
+    const tickets = await response.json()
+    if (tickets.length >= 1) {
+      if (tickets.length > 1) {
+        console.error('Got more than one ticket', email, tickets)
+      }
+      return tickets[0]
+    }
+    return false
+  }
+})
