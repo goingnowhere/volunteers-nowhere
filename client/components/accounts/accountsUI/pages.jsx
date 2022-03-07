@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react'
 import { Accounts, STATES } from 'meteor/piemonkey:accounts-ui'
 
 const authForm = state => props => (
   <div className="container">
     <div className="row">
-      <div className="col-md-6 col-md-offset-3">
+      <div className="col-md-12 col-md-offset-3">
         <Accounts.ui.LoginForm formState={state} {...props} />
       </div>
     </div>

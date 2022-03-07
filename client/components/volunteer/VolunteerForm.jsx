@@ -95,39 +95,19 @@ const VolunteerFormComponent = ({
           </div>
           <div className="form-group">
             <p className="mb-2">Language</p>
-            <div className="form-check form-check-inline">
-              <Field
-                id="lang-en"
-                type="radio"
-                name="language"
-                value="en"
-                className="form-check-input"
-                checked={values.language === 'en'}
-              />
-              <label htmlFor="lang-en" className="form-check-label">English</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <Field
-                id="lang-fr"
-                type="radio"
-                name="language"
-                value="fr"
-                className="form-check-input"
-                checked={values.language === 'fr'}
-              />
-              <label htmlFor="lang-fr" className="form-check-label">French</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <Field
-                id="lang-es"
-                type="radio"
-                name="language"
-                value="es"
-                className="form-check-input"
-                checked={values.language === 'es'}
-              />
-              <label htmlFor="lang-es" className="form-check-label">Spanish</label>
-            </div>
+            {[['en', 'English'], ['fr', 'Français'], ['es', 'Español']].map(([code, label]) => (
+              <div key={code} className="form-check form-check-inline">
+                <Field
+                  id={`lang-${code}`}
+                  type="radio"
+                  name="language"
+                  value={code}
+                  className="form-check-input"
+                  checked={values.language === code}
+                />
+                <label htmlFor={`lang-${code}`} className="form-check-label">{label}</label>
+              </div>
+            ))}
           </div>
           <ImageUpload
             label="Set a picture so we can recognise you:"

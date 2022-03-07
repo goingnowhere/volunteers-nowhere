@@ -18,7 +18,7 @@ import { lookupUserTicket } from './quicket'
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()
   let ticketId
-  let profile = {}
+  let profile = options.language ? { language: options.language } : {}
   let ticket
   if (Meteor.isProduction || devConfig.testTicketApi) {
     const { fistOpenDate } = EventSettings.findOne() || {}
@@ -27,15 +27,12 @@ Accounts.onCreateUser((options, user) => {
       throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)
     }
     ticket = lookupUserTicket(email)
-    if (!ticket) {
-      const match = /([^@\s]+)@goingnowhere.org$/.exec(email)
-      if (match && match[1]) {
-        profile = { nickname: match[1] }
-      } else {
-        throw new Meteor.Error(404, 'You need a ticket to sign up. Please use the email your ticket is assigned to')
-      }
-    } else {
+    if (ticket) {
       ticketId = ticket.TicketId
+    }
+    const match = /([^@\s]+)@goingnowhere.org$/.exec(email)
+    if (match && match[1]) {
+      profile = { nickname: match[1] }
     }
   } else {
     profile = {
