@@ -11,6 +11,7 @@ import { extendMoment } from 'moment-range'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../both/init'
 import {
+  isLoggedInMixin,
   isManagerMixin,
   isNoInfoMixin,
   isSameUserOrManagerMixin,
@@ -23,7 +24,7 @@ import {
   intolerances,
 } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
-import { syncQuicketTicketList } from './quicket'
+import { lookupUserTicket, syncQuicketTicketList } from './quicket'
 
 const moment = extendMoment(Moment)
 
@@ -166,6 +167,16 @@ export const syncQuicketTicketListMethod = new ValidatedMethod({
   mixins: [isManagerMixin],
   validate: null,
   run: syncQuicketTicketList,
+})
+
+export const validateTicketId = new ValidatedMethod({
+  name: 'ticketId.check',
+  mixins: [isLoggedInMixin],
+  validate: null,
+  run: (ticketId) => {
+    const ticket = lookupUserTicket({ ticketId })
+    return { isValid: !!ticket }
+  },
 })
 
 const mapCsvExport = ({

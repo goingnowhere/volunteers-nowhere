@@ -7,6 +7,7 @@ import { volunteerFormSchema } from './collections/users'
 
 const userBioSchema = new SimpleSchema({
   userId: { type: String },
+  ticketId: { type: Number, optional: true },
 })
 userBioSchema.extend(MeteorProfile.Schemas.Profile)
 userBioSchema.extend(volunteerFormSchema)
@@ -17,6 +18,7 @@ export const updateUserBio = new ValidatedMethod({
   validate: userBioSchema.validator(),
   run({
     userId,
+    ticketId,
     firstName,
     lastName,
     nickname,
@@ -24,7 +26,9 @@ export const updateUserBio = new ValidatedMethod({
     language,
     ...nonProfileData
   }) {
-    Meteor.users.update({ _id: userId }, {
+    // TODO check ticket id again
+    const selector = ticketId ? { _id: userId } : { _id: userId, ticketId: { $exists: true } }
+    Meteor.users.update(selector, {
       $set: {
         profile: {
           firstName,
@@ -34,6 +38,7 @@ export const updateUserBio = new ValidatedMethod({
           picture,
           formFilled: true,
         },
+        ...ticketId ? { ticketId } : {},
       },
     })
     Volunteers.Collections.volunteerForm.upsert({ userId }, { $set: nonProfileData })

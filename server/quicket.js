@@ -91,8 +91,9 @@ export const syncQuicketTicketList = () => {
   })
 }
 
-export const lookupUserTicket = wrapAsync(async (email) => {
-  const response = await fetch(`${config.noonerHuntApi}?key=${config.noonerHuntKey}&nooner=${email}`, {
+export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
+  const lookup = ticketId ? `QTK${ticketId}` : email
+  const response = await fetch(`${config.noonerHuntApi}?key=${config.noonerHuntKey}&nooner=${lookup}`, {
     method: 'GET',
   })
   if (!response.ok) {
@@ -100,14 +101,14 @@ export const lookupUserTicket = wrapAsync(async (email) => {
       console.error('Error retrieving ticket', response)
       throw new Meteor.Error(500, 'Problem calling ticket API')
     } else {
-      console.log('Failed to find ticket', response.status, email)
+      console.log('Failed to find ticket', response.status, lookup)
       return false
     }
   } else {
     const tickets = await response.json()
     if (tickets.length >= 1) {
       if (tickets.length > 1) {
-        console.error('Got more than one ticket', email, tickets)
+        console.error('Got more than one ticket', lookup, tickets)
       }
       return tickets[0]
     }

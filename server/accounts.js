@@ -26,7 +26,7 @@ Accounts.onCreateUser((options, user) => {
     if (moment(fistOpenDate).isAfter() && !/@goingnowhere.org$/.test(email)) {
       throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)
     }
-    ticket = lookupUserTicket(email)
+    ticket = lookupUserTicket({ email })
     if (ticket) {
       ticketId = ticket.TicketId
     }
