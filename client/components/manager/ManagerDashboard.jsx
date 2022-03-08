@@ -66,18 +66,18 @@ export const ManagerDashboard = () => (
         <button type="button" className="btn btn-light btn-sm" onClick={addDepartment}>
           <T>add_department</T>
         </button>
-        <button type="button" className="btn btn-light btn-sm" onClick={syncQuicket}>
+        {/* <button type="button" className="btn btn-light btn-sm" onClick={syncQuicket}>
           Sync Quicket guestlist
-        </button>
+        </button> */}
         <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
-        <JsonExportButton
+        {/* <JsonExportButton
           method="rota.all.export"
           buttonText="rota_all_export"
           filename="rotas"
           // Hack to avoid having to make a form, etc.
           methodArgs={{ eventName: 'nowhere2020' }}
         />
-        <RotaImport />
+        <RotaImport /> */}
         <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
           Send Reminders to everyone
         </button>
