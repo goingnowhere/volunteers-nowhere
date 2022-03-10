@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { SignupApproval } from 'meteor/goingnowhere:volunteers'
 
 import { Modal } from '../common/Modal.jsx'
@@ -10,20 +10,20 @@ import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 export const SignupApprovalList = ({ query = {}, signups }) => {
   const [allSignups, setSignups] = useState(signups || [])
   const [modalUserId, setModalUserId] = useState('')
-  const reloadSignups = () => Meteor.call('signups.list', query, (err, signupList) => {
+  const reloadSignups = useCallback(() => Meteor.call('signups.list', query, (err, signupList) => {
     if (err) {
       console.error(err)
     } else {
       setSignups(signupList)
     }
-  })
+  }), [query])
   useEffect(() => {
     if (!signups) {
       reloadSignups()
     }
-  }, [query])
+  }, [query, signups, reloadSignups])
   return (
-    <Fragment>
+    <>
       <Modal
         title={t('user_details')}
         isOpen={!!modalUserId}
@@ -41,6 +41,6 @@ export const SignupApprovalList = ({ query = {}, signups }) => {
           />
         ))}
       </ul>
-    </Fragment>
+    </>
   )
 }
