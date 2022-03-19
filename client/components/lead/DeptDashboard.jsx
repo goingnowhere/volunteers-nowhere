@@ -32,17 +32,19 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
   })
   useEffect(reloadStats, [deptId])
 
-  AutoForm.addHooks([
-    'InsertTeamFormId',
-    'UpdateTeamFormId',
-    'InsertDepartmentFormId',
-    'UpdateDepartmentFormId',
-  ], {
-    onSuccess() {
-      reloadStats()
-      AutoFormComponents.modalHide()
-    },
-  })
+  useEffect(() => {
+    AutoForm.addHooks([
+      'InsertTeamFormId',
+      'UpdateTeamFormId',
+      'InsertDepartmentFormId',
+      'UpdateDepartmentFormId',
+    ], {
+      onSuccess() {
+        reloadStats()
+        AutoFormComponents.modalHide()
+      },
+    })
+  }, [reloadStats])
 
   const thisTeam = dept.teams && dept.teams.find((team) => team._id === deptId)
 
@@ -117,7 +119,9 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
         {pendingLeadRequests.length > 0 && (
           <div className="col-sm-12 col-md-5 pl-1 user-top">
             <h2 className="header"><T>pending_lead_requests</T></h2>
-            <SignupApprovalList signups={pendingLeadRequests} />
+            <SignupApprovalList
+              query={{ parentId: { $in: [deptId, ...dept.teamIds] }, type: 'lead', status: 'pending' }}
+            />
           </div>
         )}
       </div>

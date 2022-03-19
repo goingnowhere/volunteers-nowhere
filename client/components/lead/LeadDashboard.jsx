@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -27,14 +27,14 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
       { form: { collection: Volunteers.Collections.project }, data: { parentId: teamId } }, '', 'lg')
   }
 
-  const reload = () => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId },
+  const reload = useCallback(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId },
     (err, teamStats) => {
       if (err) console.error(err)
       else {
         setStats(teamStats)
       }
-    }
-  )
+    }), [teamId])
+
   useEffect(reload, [teamId])
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
         AutoFormComponents.modalHide()
       },
     })
-  }, [])
+  }, [reload])
 
   return (
     <div className="container-fluid">
