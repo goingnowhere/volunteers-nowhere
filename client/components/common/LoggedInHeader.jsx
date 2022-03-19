@@ -173,9 +173,9 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
   }
   const allDepartments = Volunteers.Collections.department.find().fetch()
 
-  //   // TODO replace with 'coordinator' role
-  const noInfo = Volunteers.Collections.team.findOne({ name: 'NoInfo' }) || {}
-  const isNoInfo = Volunteers.auth.isLead(userId, [noInfo._id])
+  // TODO replace with 'coordinator' role
+  const noInfo = Volunteers.Collections.team.findOne({ name: 'NoInfo' })
+  const isNoInfo = noInfo && Volunteers.auth.isLead(userId, noInfo._id)
 
   return {
     name: profile.nickname || profile.firstName,
@@ -189,8 +189,8 @@ export const LoggedInHeader = withRouter(withTracker(({ history }) => {
     userTeams: Volunteers.Collections.team.find(userTeamSearch, { sort: { name: 1 } }).fetch(),
     roles: {
       isManager,
-      isLead: Volunteers.auth.isLead(),
-      isManagerOrMetaLead: Volunteers.auth.isLead(userId, allDepartments.map((d) => d._id)),
+      isLead: Volunteers.auth.isALead(),
+      isManagerOrMetaLead: allDepartments.some((d) => Volunteers.auth.isLead(userId, d._id)),
       isNoInfo,
     },
   }

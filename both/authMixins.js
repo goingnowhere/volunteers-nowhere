@@ -12,7 +12,7 @@ export const ValidatedMethodWithMixin = (function add(method, mixins, name) {
 /* Check if the current user is a Manager or Volunteer part of no Info */
 const isNoInfo = () => {
   const noInfo = Volunteers.Collections.team.findOne({ name: 'NoInfo' })
-  return ((noInfo) && Volunteers.auth.isLead(Meteor.userId(), [noInfo._id]))
+  return ((noInfo) && Volunteers.auth.isLead(Meteor.userId(), noInfo._id))
 }
 
 /* check if the first argument is a String and compares it with the current user Id
@@ -70,7 +70,7 @@ export const isLeadMixin = ({ run, ...methodOptions }) => ({
   run(args) {
     // Check if lead of parentId from args if it has it
     const teamId = typeof args === 'object' ? args.parentId : args
-    if (!Volunteers.auth.isLead(this.userId, [teamId])) {
+    if (!Volunteers.auth.isLead(this.userId, teamId)) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
     return run(args)
@@ -81,7 +81,7 @@ export const isLeadMixin = ({ run, ...methodOptions }) => ({
 export const isAnyLeadMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
   run(args) {
-    if (!Volunteers.auth.isLead(this.userId)) {
+    if (!Volunteers.auth.isALead(this.userId)) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
     return run(args)

@@ -8,7 +8,7 @@ Meteor.publish('meteor-user-profiles.ProfilePictures', function publishProfilePi
   check(userId, String)
 
   if (this.userId === userId // the user asking for its picture
-    || Volunteers.auth.isLead()) { // a lead, metalead or admin asking
+    || Volunteers.auth.isALead()) { // a lead, metalead or admin asking
     return MeteorProfile.ProfilePictures.find({ userId }).cursor
   }
   return null
@@ -19,7 +19,7 @@ Meteor.publish('user.extra', function publishUserExtra(userId = this.userId) {
   check(userId, String)
 
   if (this.userId === userId // the user asking for its data
-    || Volunteers.auth.isLead()) { // a lead, metalead or admin asking
+    || Volunteers.auth.isALead()) { // a lead, metalead or admin asking
     return Meteor.users.find({ _id: userId }, {
       fields: {
         emails: true,
