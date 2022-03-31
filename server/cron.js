@@ -59,10 +59,9 @@ const EnrollmentTask = (time) => {
     },
     job() {
       const sel = { enrolled: true, notification: false, status: 'confirmed' }
-      const signups = Volunteers.Collections.signups.find(sel, { limit: 30 }).fetch()
+      const signups = Volunteers.Collections.signups.find(sel, { userId: true })
 
-      // TODO the logic of the limits here seems a little weird
-      Object.entries(_.groupBy(signups, 'userId')).forEach(([userId]) => {
+      new Set(signups.map((signup) => signup.userId)).forEach((userId) => {
         sendEnrollmentEmail(userId)
       })
     },
@@ -84,9 +83,9 @@ const ReviewTask = (time) => {
         reviewed: true,
         status: { $in: ['confirmed', 'refused'] },
       }
-      const signups = Volunteers.Collections.signups.find(sel, { limit: 30 }).fetch()
-      // TODO the logic of the limits here seems a little weird
-      Object.keys(_.groupBy(signups, 'userId')).forEach((userId) => {
+      const signups = Volunteers.Collections.signups.find(sel)
+
+      new Set(signups.map((signup) => signup.userId)).forEach((userId) => {
         sendReviewEmail(userId, true)
       })
     },

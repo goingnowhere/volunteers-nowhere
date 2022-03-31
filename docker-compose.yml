@@ -22,9 +22,8 @@ services:
       - MONGO_URL=mongodb://mongo/volunteers
       - ROOT_URL=https://fist.goingnowhere.org
       - MAIL_URL=smtp://USER:PASSWORD@mail.euroburners.net:587
-      - QUICKET_API_KEY=
-      - QUICKET_USER_TOKEN=
-      - QUICKET_EVENT_ID=
+      - NOONER_HUNT_API=https://fistbump.goingnowhere.org/huntthenooner
+      - NOONER_HUNT_KEY=NOONER_HUNT_KEY
       - NODE_ENV=production
     labels:
       - traefik.enable=true

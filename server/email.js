@@ -19,13 +19,21 @@ const EmailCache = new Mongo.Collection('emailCache')
 const EmailLogs = new Mongo.Collection('emailLogs')
 const EmailFails = new Mongo.Collection('emailFails')
 
-const sendEmail = ({
-  _id,
-  email,
-  userId,
-  retries,
-}) => {
-  if (email) {
+let emailLock = false
+let successiveFailures = 0
+let emailSendInterval
+const sendEmail = (cache) => {
+  if (!cache || !cache.email || (successiveFailures > 10)) {
+    emailLock = false
+    if (emailSendInterval) Meteor.clearInterval(emailSendInterval)
+    if (successiveFailures > 10) console.warn('Too many email failures. Aborting.')
+  } else {
+    const {
+      _id,
+      email,
+      userId,
+      retries,
+    } = cache
     try {
       Email.send(email)
       EmailLogs.insert({
@@ -35,7 +43,9 @@ const sendEmail = ({
         retries,
       })
       EmailCache.remove({ _id })
+      successiveFailures = 0
     } catch (error) {
+      successiveFailures += 1
       console.error('Error sending mail', error)
       if (retries < 5) {
         EmailCache.update({ _id }, { $inc: { retries: 1 } })
@@ -53,16 +63,22 @@ const sendEmail = ({
   }
 }
 
-let emailLock = false
 export const sendCachedEmails = () => {
   // A bit ugly but prevent this function running twice at a time, e.g. through the cron trigger
   if (!emailLock) {
     emailLock = true
-    EmailCache.find({}, {
+    const cachedEmails = EmailCache.find({}, {
       sort: { added: 1 },
-      limit: 150,
-    }).map(sendEmail)
-    emailLock = false
+      limit: 140,
+    }).fetch()
+    if (cachedEmails.length > 0) {
+      successiveFailures = 0
+      emailSendInterval = Meteor.setInterval(() => {
+        sendEmail(cachedEmails.shift())
+      }, 2000)
+    } else {
+      emailLock = false
+    }
   }
 }
 
@@ -363,7 +379,6 @@ export const sendReviewNotificationEmail = new ValidatedMethod({
   mixins: [isManagerMixin],
   run: sendReviewEmail,
 })
-
 
 // Defaults
 Accounts.emailTemplates.from = 'FIST <fist@goingnowhere.org>'
