@@ -11,7 +11,7 @@ networks:
 
 services:
   fist:
-    image: piemonkey/volunteers-nowhere:2022-01-14
+    image: piemonkey/volunteers-nowhere:2022-04-03
     restart: always
     links:
       - mongo

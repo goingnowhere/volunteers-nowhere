@@ -91,6 +91,18 @@ export const syncQuicketTicketList = () => {
   })
 }
 
+/** FistBump gives us a fake ticketId if they don't have one from Quicket and the number is always
+  * less than a real ticket, so take the highest ticket id */
+function pickBestTicket(tickets) {
+  let ticket = tickets[0]
+  tickets.forEach((tick) => {
+    if (tick.TicketId > ticket.TicketId) {
+      ticket = tick
+    }
+  })
+  return ticket
+}
+
 export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
   const lookup = ticketId ? `QTK${ticketId}` : email
   const response = await fetch(`${config.noonerHuntApi}?key=${config.noonerHuntKey}&nooner=${lookup}`, {
@@ -107,11 +119,19 @@ export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
   } else {
     const tickets = await response.json()
     if (tickets.length >= 1) {
-      if (tickets.length > 1) {
-        console.error('Got more than one ticket', lookup, tickets)
-      }
-      return tickets[0]
+      return pickBestTicket(tickets)
     }
     return false
   }
 })
+
+export function checkForTicketUpdate(user) {
+  const tickets = user.emails
+    .filter(({ verified }) => verified)
+    .map(({ address }) => lookupUserTicket({ email: address }))
+    .filter(Boolean)
+  // Just in case they have tickets for multiple emails
+  const ticket = pickBestTicket(tickets)
+
+  return user.ticketId !== ticket?.TicketId && ticket
+}

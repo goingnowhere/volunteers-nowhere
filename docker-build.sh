@@ -5,7 +5,7 @@ set -e
 
 CONTAINER=volunteers-nowhere
 # TODO automate this and add optional version letters from args (e.g. 2019-04-08b)
-TAG=2022-01-06
+TAG=2022-04-03
 REGISTRY=piemonkey
 
 FULL_NAME=${CONTAINER}:${TAG}
