@@ -39,13 +39,15 @@ const removeLeadSignup = (signupId, reload) => {
     reload()
   }
 }
-const enrollLead = (teamId, shiftId, policy) =>
+const enrollLead = (teamId, shiftId, policy, reload) => {
   AutoFormComponents.ModalShowWithTemplate('leadEnrollUsersTable', {
     page: 'LeadEnrollUserSearchPages',
     data: {
       teamId, shiftId, duty: 'lead', policy,
     },
   })
+  reload()
+}
 
 export const TeamList = ({ deptId, teams = [], reload }) => {
   const [moveTeam, setMoveTeam] = useState()
@@ -53,6 +55,8 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
   AutoForm.addHooks([
     'InsertTeamFormId',
     'UpdateTeamFormId',
+    'InsertLeadFormId',
+    'UpdateLeadFormId',
   ], {
     onSuccess() {
       reload()
@@ -101,7 +105,7 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                         <button
                           type="button"
                           className="btn btn-link btn-sm p-0"
-                          onClick={() => removeLead(leadRole._id)}
+                          onClick={() => removeLead(leadRole._id, reload)}
                         >
                           <FontAwesomeIcon icon="trash-alt" className="text-danger" />
                         </button>
@@ -121,21 +125,21 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                           <button
                             type="button"
                             className="btn btn-link btn-sm p-0"
-                            onClick={() => removeLeadSignup(leadRole.signups[0]._id)}
+                            onClick={() => removeLeadSignup(leadRole.signups[0]._id, reload)}
                           >
                             (<T>remove</T>)
                           </button>
                         </>
                       ) : (
-                          <>
-                            :
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-circle"
-                              onClick={() => enrollLead(team._id, leadRole._id, leadRole.policy)}
-                            >
-                              <FontAwesomeIcon icon="user-plus" />
-                            </button>
+                        <>
+                          :
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-circle"
+                            onClick={() => enrollLead(team._id, leadRole._id, leadRole.policy, reload)}
+                          >
+                            <FontAwesomeIcon icon="user-plus" />
+                          </button>
                         </>
                       )}
                     </li>
@@ -144,7 +148,7 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                     <button
                       type="button"
                       className="btn btn-link btn-sm p-0"
-                      onClick={() => editLead()}
+                      onClick={() => editLead({ parentId: team._id })}
                     >
                       <FontAwesomeIcon icon="plus-square" className="" />
                     </button>
