@@ -7,6 +7,9 @@
 [submodule "packages/meteor-autoform-datetimepicker"]
 	path = packages/meteor-autoform-datetimepicker
 	url = https://github.com/piemonkey/meteor-autoform-datetimepicker.git
+[submodule "packages/meteor-user-profiles"]
+	path = packages/meteor-user-profiles
+	url = https://gitlab.com/piemonkey/meteor-user-profiles.git
 [submodule "packages/meteor-autoform"]
 	path = packages/meteor-autoform
 	url = https://github.com/abate/meteor-autoform.git
