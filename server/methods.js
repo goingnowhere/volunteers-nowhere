@@ -280,6 +280,20 @@ export const deptRotaData = new ValidatedMethod({
   },
 })
 
+export const allRotaData = new ValidatedMethod({
+  name: 'all.rota',
+  mixins: [isManagerMixin],
+  validate: null,
+  run() {
+    return _.flatten(
+      Volunteers.Collections.team.find({})
+        .map((team) => getTeamRotaCsv({ parentId: team._id })
+          .map((rotaItem) => ({ team: team.name, ...rotaItem }))),
+      true,
+    )
+  },
+})
+
 /**
  * Export team structure, rotas and settings as JSON so they can be updated for the next
  * year and re-imported.

@@ -70,6 +70,12 @@ export const ManagerDashboard = () => (
           Sync Quicket guestlist
         </button> */}
         <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
+        <CsvExportButton
+          method="all.rota"
+          buttonText="rota_export"
+          filename="rota"
+          methodArgs={{}}
+        />
         {/* <JsonExportButton
           method="rota.all.export"
           buttonText="rota_all_export"

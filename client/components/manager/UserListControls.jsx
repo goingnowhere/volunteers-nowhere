@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Fa from 'react-fontawesome'
 import { Meteor } from 'meteor/meteor'
 import { T } from '../common/i18n'
@@ -11,7 +11,7 @@ const sendReview = userId => Meteor.call('email.sendReviewNotifications', userId
 const sendNotification = userId => Meteor.call('email.sendShiftReminder', userId)
 
 export const UserListControls = ({ userId, showUser }) => (
-  <Fragment>
+  <>
     <div className="btn-group">
       <button
         type="button"
@@ -93,5 +93,5 @@ export const UserListControls = ({ userId, showUser }) => (
     >
       <T>user_details</T>
     </button>
-  </Fragment>
+  </>
 )
