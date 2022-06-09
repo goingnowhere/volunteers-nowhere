@@ -65,12 +65,14 @@ export const isManagerMixin = ({ run, ...methodOptions }) => ({
   },
 })
 
+/** If arg is a parentId or an object containing one, are we a lead of that unit or manager?
+  * If we don't provide a parentId, throw unless we're a manager */
 export const isLeadMixin = ({ run, ...methodOptions }) => ({
   ...methodOptions,
   run(args) {
     // Check if lead of parentId from args if it has it
     const teamId = typeof args === 'object' ? args.parentId : args
-    if (!Volunteers.auth.isLead(this.userId, teamId)) {
+    if (!Volunteers.auth.isManager(this.userId) && !Volunteers.auth.isLead(this.userId, teamId)) {
       throw new Meteor.Error('403', "You don't have permission for this operation")
     }
     return run(args)

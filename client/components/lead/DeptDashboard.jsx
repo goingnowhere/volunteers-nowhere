@@ -109,6 +109,12 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
             filename="rota"
             methodArgs={{ parentId: deptId }}
           />
+          <CsvExportButton
+            method="ee.csv"
+            buttonText="early_entry"
+            filename="ee"
+            methodArgs={{ parentId: deptId }}
+          />
         </div>
         <div className={`${
           pendingLeadRequests.length > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'

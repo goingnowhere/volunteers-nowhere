@@ -294,6 +294,107 @@ export const allRotaData = new ValidatedMethod({
   },
 })
 
+function mapEECsvExport({
+  user,
+  type,
+  shift,
+  team,
+  ...signup
+}) {
+  const { start } = type === 'shift' ? shift : signup
+  return {
+    eeDate: moment(start).subtract(1, 'days').format('DD/MM/YY'),
+    start,
+    team: team.name,
+    name: user.profile.nickname || user.profile.firstName,
+    email: user.emails[0].address,
+    ticket: user.ticketId || '',
+    fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
+  }
+}
+
+export const eeCsvData = new ValidatedMethod({
+  name: 'ee.csv',
+  mixins: [isLeadMixin],
+  validate: null,
+  run({ parentId }) {
+    const eventSettings = EventSettings.findOne()
+    const { start, end } = eventSettings.buildPeriod
+    // Extra day to adjust for shifts on first day giving EE the day before
+    const buildEndMoment = moment(end).add(1, 'day')
+    const match = {
+      status: 'confirmed',
+      type: {
+        $in: [
+          'shift',
+          'project',
+        ],
+      },
+    }
+    // TODO actually filter projects and shifts for start date...
+    const startMatch = {
+      $gte: moment(start).startOf('day').toDate(),
+      $lt: moment(end).endOf('day').toDate(),
+    }
+    if (parentId) {
+      const dept = Volunteers.Collections.department.findOne({ _id: parentId })
+      if (dept) {
+        const teams = Volunteers.Collections.team.find({ parentId: dept._id }).fetch()
+        match.parentId = { $in: teams.map(team => team._id) }
+      } else {
+        match.parentId = parentId
+      }
+    }
+
+    const signups = Volunteers.Collections.signups.aggregate([
+      { $match: match },
+      {
+        $lookup: {
+          from: Meteor.users._name,
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: { path: '$user' } },
+      {
+        $lookup: {
+          from: Volunteers.Collections.team._name,
+          localField: 'parentId',
+          foreignField: '_id',
+          as: 'team',
+        },
+      },
+      { $unwind: { path: '$team' } },
+      {
+        $lookup: {
+          from: Volunteers.Collections.shift._name,
+          localField: 'shiftId',
+          foreignField: '_id',
+          as: 'shift',
+        },
+      },
+      {
+        $unwind: {
+          path: '$shift',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ]).map(mapEECsvExport)
+      .filter(signup => buildEndMoment.isAfter(signup.start))
+
+    const firstOnly = []
+    signups.sort((a, b) => (moment(a.start).isBefore(b.start) ? -1 : 1))
+    signups.forEach(signup => {
+      if (!firstOnly.some(first => first.email === signup.email)) {
+        firstOnly.push(signup)
+      }
+    })
+
+    return firstOnly
+  },
+})
+
 /**
  * Export team structure, rotas and settings as JSON so they can be updated for the next
  * year and re-imported.

@@ -76,6 +76,12 @@ export const ManagerDashboard = () => (
           filename="rota"
           methodArgs={{}}
         />
+        <CsvExportButton
+          method="ee.csv"
+          buttonText="early_entry"
+          filename="ee"
+          methodArgs={{}}
+        />
         {/* <JsonExportButton
           method="rota.all.export"
           buttonText="rota_all_export"
