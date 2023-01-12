@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import React, { useState, useEffect } from 'react'
 import moment from 'moment-timezone'
-import { DutiesListItem, ShiftDateInline, SignupButtons } from 'meteor/goingnowhere:volunteers'
+import { DutiesListItem, ShiftDateInline, SignupShiftButtons } from 'meteor/goingnowhere:volunteers'
 import { T } from '../common/i18n'
-
 
 export const NoInfoDashboard = () => {
   const [shiftsToday, setTodayShifts] = useState([])
@@ -32,7 +31,7 @@ export const NoInfoDashboard = () => {
               <DutiesListItem duty={shift} />
               <span>
                 <ShiftDateInline {...shift} />
-                <SignupButtons {...shift} />
+                <SignupShiftButtons {...shift} />
               </span>
             </div>
           ))}

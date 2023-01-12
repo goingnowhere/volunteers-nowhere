@@ -40,6 +40,7 @@ module.exports = {
     ],
     'no-param-reassign': ['error', { props: false }],
     'implicit-arrow-linebreak': ['off'],
+    'arrow-body-style': 'off',
     // Remove if we replace confirms with something better
     'no-alert': 'off',
     'one-var': 'off',

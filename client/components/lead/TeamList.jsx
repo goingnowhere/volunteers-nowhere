@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Meteor } from 'meteor/meteor'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
@@ -52,17 +52,19 @@ const enrollLead = (teamId, shiftId, policy, reload) => {
 export const TeamList = ({ deptId, teams = [], reload }) => {
   const [moveTeam, setMoveTeam] = useState()
 
-  AutoForm.addHooks([
-    'InsertTeamFormId',
-    'UpdateTeamFormId',
-    'InsertLeadFormId',
-    'UpdateLeadFormId',
-  ], {
-    onSuccess() {
-      reload()
-      AutoFormComponents.modalHide()
-    },
-  })
+  useEffect(() => {
+    AutoForm.addHooks([
+      'InsertTeamFormId',
+      'UpdateTeamFormId',
+      'InsertLeadFormId',
+      'UpdateLeadFormId',
+    ], {
+      onSuccess() {
+        reload()
+        AutoFormComponents.modalHide()
+      },
+    })
+  }, [reload])
   return (
     <>
       <Modal
