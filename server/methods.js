@@ -86,9 +86,9 @@ export const userStats = new ValidatedMethod({
   run() {
     const volunteers = Meteor.users.find().count()
     const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
-    const leads = Volunteers.Collections.signups.find({ type: 'lead', status: 'confirmed' }).count()
+    const leads = Volunteers.collections.signups.find({ type: 'lead', status: 'confirmed' }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
-    const withDuties = Promise.await(Volunteers.Collections.signups.rawCollection().distinct('userId'))
+    const withDuties = Promise.await(Volunteers.collections.signups.rawCollection().distinct('userId'))
     const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
     return {
       volunteers,
@@ -206,7 +206,7 @@ const mapCsvExport = ({
   }
 }
 
-const getTeamRotaCsv = ({ parentId }) => Volunteers.Collections.signups.aggregate([
+const getTeamRotaCsv = ({ parentId }) => Volunteers.collections.signups.aggregate([
   {
     $match: {
       parentId,
@@ -231,7 +231,7 @@ const getTeamRotaCsv = ({ parentId }) => Volunteers.Collections.signups.aggregat
   { $unwind: { path: '$user' } },
   {
     $lookup: {
-      from: Volunteers.Collections.dutiesCollections.shift._name,
+      from: Volunteers.collections.dutiesCollections.shift._name,
       localField: 'shiftId',
       foreignField: '_id',
       as: 'shift',
@@ -245,7 +245,7 @@ const getTeamRotaCsv = ({ parentId }) => Volunteers.Collections.signups.aggregat
   },
   {
     $lookup: {
-      from: Volunteers.Collections.dutiesCollections.project._name,
+      from: Volunteers.collections.dutiesCollections.project._name,
       localField: 'shiftId',
       foreignField: '_id',
       as: 'project',
@@ -272,7 +272,7 @@ export const deptRotaData = new ValidatedMethod({
   validate: null,
   run({ parentId }) {
     return _.flatten(
-      Volunteers.Collections.team.find({ parentId })
+      Volunteers.collections.team.find({ parentId })
         .map((team) => getTeamRotaCsv({ parentId: team._id })
           .map((rotaItem) => ({ ...rotaItem, team: team.name }))),
       true,
@@ -286,7 +286,7 @@ export const allRotaData = new ValidatedMethod({
   validate: null,
   run() {
     return _.flatten(
-      Volunteers.Collections.team.find({})
+      Volunteers.collections.team.find({})
         .map((team) => getTeamRotaCsv({ parentId: team._id })
           .map((rotaItem) => ({ team: team.name, ...rotaItem }))),
       true,
@@ -337,16 +337,16 @@ export const eeCsvData = new ValidatedMethod({
       $lt: moment(end).endOf('day').toDate(),
     }
     if (parentId) {
-      const dept = Volunteers.Collections.department.findOne({ _id: parentId })
+      const dept = Volunteers.collections.department.findOne({ _id: parentId })
       if (dept) {
-        const teams = Volunteers.Collections.team.find({ parentId: dept._id }).fetch()
+        const teams = Volunteers.collections.team.find({ parentId: dept._id }).fetch()
         match.parentId = { $in: teams.map(team => team._id) }
       } else {
         match.parentId = parentId
       }
     }
 
-    const signups = Volunteers.Collections.signups.aggregate([
+    const signups = Volunteers.collections.signups.aggregate([
       { $match: match },
       {
         $lookup: {
@@ -359,7 +359,7 @@ export const eeCsvData = new ValidatedMethod({
       { $unwind: { path: '$user' } },
       {
         $lookup: {
-          from: Volunteers.Collections.team._name,
+          from: Volunteers.collections.team._name,
           localField: 'parentId',
           foreignField: '_id',
           as: 'team',
@@ -368,7 +368,7 @@ export const eeCsvData = new ValidatedMethod({
       { $unwind: { path: '$team' } },
       {
         $lookup: {
-          from: Volunteers.Collections.shift._name,
+          from: Volunteers.collections.shift._name,
           localField: 'shiftId',
           foreignField: '_id',
           as: 'shift',
@@ -409,12 +409,12 @@ export const allRotaExport = new ValidatedMethod({
     // migrate it easily. Either some of the settings should be pulled in or there
     // should be a better migration strategy
     const settings = EventSettings.findOne()
-    const department = sourceEvent.Collections.department.find().fetch()
-    const team = sourceEvent.Collections.team.find().fetch()
-    const rotas = sourceEvent.Collections.rotas.find().fetch()
-    const shift = sourceEvent.Collections.shift.find().fetch()
-    const project = sourceEvent.Collections.project.find().fetch()
-    const lead = sourceEvent.Collections.lead.find().fetch()
+    const department = sourceEvent.collections.department.find().fetch()
+    const team = sourceEvent.collections.team.find().fetch()
+    const rotas = sourceEvent.collections.rotas.find().fetch()
+    const shift = sourceEvent.collections.shift.find().fetch()
+    const project = sourceEvent.collections.project.find().fetch()
+    const lead = sourceEvent.collections.lead.find().fetch()
 
     const deptNames = department.map(({ name }) => name)
     if (new Set(deptNames).size !== deptNames.length) {
@@ -509,12 +509,12 @@ export const allRotaImport = new ValidatedMethod({
     const eventStartDiff = moment(settings.eventPeriod.start)
       .diff(oldSettings.eventPeriod.start, 'days')
 
-    const divId = Volunteers.Collections.division.findOne()._id
+    const divId = Volunteers.collections.division.findOne()._id
 
     const deptIds = {}
-    Volunteers.Collections.department.remove({})
+    Volunteers.collections.department.remove({})
     departments.forEach(dept => {
-      const deptId = Volunteers.Collections.department.insert({
+      const deptId = Volunteers.collections.department.insert({
         ...dept,
         parentId: divId,
       })
@@ -524,13 +524,13 @@ export const allRotaImport = new ValidatedMethod({
     })
 
     const teamIds = {}
-    Volunteers.Collections.team.remove({})
+    Volunteers.collections.team.remove({})
     teams.forEach(({ department, ...rest }) => {
       const parentId = deptIds[department]
       if (!parentId) {
         throw new Error(`Department does not exist: ${department}`)
       }
-      const teamId = Volunteers.Collections.team.insert({
+      const teamId = Volunteers.collections.team.insert({
         ...rest,
         parentId,
       })
@@ -541,7 +541,7 @@ export const allRotaImport = new ValidatedMethod({
 
     const nonUniqueRotaNames = {}
     const rotaIds = {}
-    Volunteers.Collections.rotas.remove({})
+    Volunteers.collections.rotas.remove({})
     rotas.forEach(({
       _id,
       team,
@@ -553,7 +553,7 @@ export const allRotaImport = new ValidatedMethod({
       if (!parentId) {
         throw new Error(`Team does not exist: ${team}`)
       }
-      const rotaId = Volunteers.Collections.rotas.insert({
+      const rotaId = Volunteers.collections.rotas.insert({
         ...rest,
         parentId,
         start: moment(start).add(eventStartDiff, 'days').toDate(),
@@ -566,7 +566,7 @@ export const allRotaImport = new ValidatedMethod({
       }
     })
 
-    Volunteers.Collections.shift.remove({})
+    Volunteers.collections.shift.remove({})
     shifts.forEach(({
       _id,
       rota,
@@ -586,7 +586,7 @@ export const allRotaImport = new ValidatedMethod({
           throw new Error(`Rota does not exist: ${rota}`)
         }
       }
-      Volunteers.Collections.shift.insert({
+      Volunteers.collections.shift.insert({
         ...rest,
         rotaId,
         parentId,
@@ -595,7 +595,7 @@ export const allRotaImport = new ValidatedMethod({
       })
     })
 
-    Volunteers.Collections.project.remove({})
+    Volunteers.collections.project.remove({})
     projects.forEach(({
       _id,
       team,
@@ -607,7 +607,7 @@ export const allRotaImport = new ValidatedMethod({
       if (!parentId) {
         throw new Error(`Team does not exist: ${team}`)
       }
-      Volunteers.Collections.project.insert({
+      Volunteers.collections.project.insert({
         ...rest,
         parentId,
         start: moment(start).add(eventStartDiff, 'days').toDate(),
@@ -615,7 +615,7 @@ export const allRotaImport = new ValidatedMethod({
       })
     })
 
-    Volunteers.Collections.lead.remove({})
+    Volunteers.collections.lead.remove({})
     leads.forEach(({
       _id,
       team,
@@ -626,7 +626,7 @@ export const allRotaImport = new ValidatedMethod({
       if (!parentId) {
         throw new Error(`Team or department does not exist: ${team}, ${department}`)
       }
-      Volunteers.Collections.lead.insert({
+      Volunteers.collections.lead.insert({
         ...rest,
         parentId,
       })
@@ -644,7 +644,7 @@ export const cantinaSetupData = new ValidatedMethod({
   validate: null,
   run() {
     const { buildPeriod } = EventSettings.findOne()
-    const projectSignups = Volunteers.Collections.signups.aggregate([
+    const projectSignups = Volunteers.collections.signups.aggregate([
       {
         $match: {
           type: 'project',
@@ -659,7 +659,7 @@ export const cantinaSetupData = new ValidatedMethod({
       },
       {
         $lookup: {
-          from: Volunteers.Collections.volunteerForm._name,
+          from: Volunteers.collections.volunteerForm._name,
           localField: 'userId',
           foreignField: 'userId',
           as: 'user',
@@ -721,7 +721,7 @@ export const cantinaSetupData = new ValidatedMethod({
         },
       ]
     })
-    const shiftSignups = Volunteers.Collections.shift.aggregate([
+    const shiftSignups = Volunteers.collections.shift.aggregate([
       {
         $match: {
           start: {
@@ -734,7 +734,7 @@ export const cantinaSetupData = new ValidatedMethod({
         },
       }, {
         $lookup: {
-          from: Volunteers.Collections.signups._name,
+          from: Volunteers.collections.signups._name,
           localField: '_id',
           foreignField: 'shiftId',
           as: 'signup',
@@ -754,7 +754,7 @@ export const cantinaSetupData = new ValidatedMethod({
       // Filter total number of hours per day here?
       {
         $lookup: {
-          from: Volunteers.Collections.volunteerForm._name,
+          from: Volunteers.collections.volunteerForm._name,
           localField: '_id.userId',
           foreignField: 'userId',
           as: 'user',
@@ -810,7 +810,7 @@ export const getEmptyShifts = new ValidatedMethod({
   mixins: [isNoInfoMixin],
   validate: null,
   run(day) {
-    return Volunteers.Collections.shift.aggregate([
+    return Volunteers.collections.shift.aggregate([
       {
         $match: {
           end: { $gt: day },
@@ -819,7 +819,7 @@ export const getEmptyShifts = new ValidatedMethod({
         $sort: { start: 1 },
       }, {
         $lookup: {
-          from: Volunteers.Collections.signups._name,
+          from: Volunteers.collections.signups._name,
           localField: '_id',
           foreignField: 'shiftId',
           as: 'signups',
@@ -837,7 +837,7 @@ export const getEmptyShifts = new ValidatedMethod({
         $limit: 10,
       }, {
         $lookup: {
-          from: Volunteers.Collections.team._name,
+          from: Volunteers.collections.team._name,
           localField: 'parentId',
           foreignField: '_id',
           as: 'team',

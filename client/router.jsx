@@ -80,7 +80,7 @@ export const Routes = () => (
 //   },
 //   data() {
 //     if (this.params && this.params._id && this.ready()) {
-//       return Volunteers.Collections.team.findOne(this.params._id)
+//       return Volunteers.collections.team.findOne(this.params._id)
 //     }
 //     return null
 //   },

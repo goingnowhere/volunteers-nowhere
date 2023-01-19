@@ -1,12 +1,12 @@
 import { Random } from 'meteor/random'
 
 export const createShiftFixtures = (Volunteers, settings) => {
-  if (Volunteers.Collections.shift.find().count() === 0) {
-    // Volunteers.Collections.team.find({ name: 'Build Crew' }).forEach(team => {
+  if (Volunteers.collections.shift.find().count() === 0) {
+    // Volunteers.collections.team.find({ name: 'Build Crew' }).forEach(team => {
     //   methodBodies.projects
     // })
 
-    Volunteers.Collections.team.find().forEach((team) => {
+    Volunteers.collections.team.find().forEach((team) => {
       console.log(`creating rota fixtures for ${team.name}`)
       Volunteers.methodBodies.rota.insert({
         parentId: team._id,

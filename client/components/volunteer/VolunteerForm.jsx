@@ -415,9 +415,9 @@ export const VolunteerForm = withRouter(withTracker(({ history, location }) => {
     // TODO make something like 'has ticket' generally available
     && Meteor.subscribe('user.extra', user._id).ready()
 
-  const skills = Volunteers.getSkillsList()
-  const quirks = Volunteers.getQuirksList()
-  const { _id, ...existing } = Volunteers.Collections.volunteerForm
+  const skills = Volunteers.collections.utils.getSkillsList()
+  const quirks = Volunteers.collections.utils.getQuirksList()
+  const { _id, ...existing } = Volunteers.collections.volunteerForm
     .findOne({ userId: user._id }) || {}
   return {
     user,

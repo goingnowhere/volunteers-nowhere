@@ -16,15 +16,15 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
 
   const editTeam = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.team }, data: team }, '', 'lg')
+      { form: { collection: Volunteers.collections.team }, data: team }, '', 'lg')
   }
   const addShiftGroup = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.rotas }, data: { parentId: teamId } }, '', 'lg')
+      { form: { collection: Volunteers.collections.rotas }, data: { parentId: teamId } }, '', 'lg')
   }
   const addProject = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.project }, data: { parentId: teamId } }, '', 'lg')
+      { form: { collection: Volunteers.collections.project }, data: { parentId: teamId } }, '', 'lg')
   }
 
   const reload = useCallback(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId },

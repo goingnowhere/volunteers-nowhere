@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -17,19 +17,19 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
 
   const editDept = () =>
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.department }, data: dept }, '', 'lg')
+      { form: { collection: Volunteers.collections.department }, data: dept }, '', 'lg')
   const addTeam = () =>
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-      { form: { collection: Volunteers.Collections.team }, data: { parentId: deptId } }, '', 'lg')
+      { form: { collection: Volunteers.collections.team }, data: { parentId: deptId } }, '', 'lg')
   const earlyEntry = () =>
     AutoFormComponents.ModalShowWithTemplate('earlyEntry', dept, 'Early Entries')
 
-  const reloadStats = () => Meteor.call(`${Volunteers.eventName}.Volunteers.getDeptStats`, { deptId }, (err, teamStats) => {
+  const reloadStats = useCallback(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getDeptStats`, { deptId }, (err, teamStats) => {
     if (err) console.error(err)
     else {
       setStats(teamStats)
     }
-  })
+  }), [deptId])
   useEffect(reloadStats, [deptId])
 
   useEffect(() => {

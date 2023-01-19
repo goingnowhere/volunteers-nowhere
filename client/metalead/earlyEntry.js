@@ -25,7 +25,7 @@ Template.earlyEntry.helpers({
     const parentId = template.departmentId
     const { start, end } = template.buildPeriod.get()
     if (start && end) {
-      const teams = Volunteers.Collections.team.find({ parentId }).fetch()
+      const teams = Volunteers.collections.team.find({ parentId }).fetch()
       const teamIds = _.pluck(teams, '_id')
       const sel = {
         // TODO Can we include shifts? We'd need to aggregate in shifts for start time
@@ -37,10 +37,10 @@ Template.earlyEntry.helpers({
         parentId: { $in: teamIds },
         status: 'confirmed',
       }
-      const projects = Volunteers.Collections.signups.find(sel).fetch()
+      const projects = Volunteers.collections.signups.find(sel).fetch()
       return _.chain(projects).map((pr) => {
         const { profile, emails } = Meteor.users.findOne(pr.userId)
-        const { name } = Volunteers.Collections.team.findOne(pr.parentId)
+        const { name } = Volunteers.collections.team.findOne(pr.parentId)
         return {
           teamName: name,
           ticketNumber: profile.ticketNumber,

@@ -10,12 +10,12 @@ export function FilteredSignupList() {
   const [dutyType, setDutyType] = useState('event')
   const [filters, setFilters] = useState({})
   const { quirks, skills, ready } = useTracker(() => {
-    const volForm = Volunteers.Collections.volunteerForm
+    const volForm = Volunteers.collections.volunteerForm
       .findOne({ userId: Meteor.userId() }) || {}
     return {
       ready: Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, {}).ready(),
-      skills: Volunteers.getSkillsList(),
-      quirks: Volunteers.getQuirksList(),
+      skills: Volunteers.collections.utils.getSkillsList(),
+      quirks: Volunteers.collections.utils.getQuirksList(),
       userQuirks: volForm.quirks,
       userSkills: volForm.skills,
     }

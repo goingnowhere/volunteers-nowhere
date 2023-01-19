@@ -22,7 +22,7 @@ export function UserDashboard() {
     return {
       user: me,
       bookedMissions:
-        Volunteers.Collections.signups.find(signupsSel).count() > 0,
+        Volunteers.collections.signups.find(signupsSel).count() > 0,
       ready: teamSub.ready() && signupsSub.ready(),
     }
   }, [])

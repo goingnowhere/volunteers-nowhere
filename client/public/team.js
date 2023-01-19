@@ -18,7 +18,7 @@ Template.publicTeamView.onCreated(function onCreated() {
   template.autorun(() => {
     if (subs.every(sub => sub.ready())) {
       // const settings = EventSettings.findOne()
-      const team = Volunteers.Collections.team.findOne(_teamId)
+      const team = Volunteers.collections.team.findOne(_teamId)
       // switch (_period) {
       //   case 'event':
       //     team = _.extend(team, { period: settings.eventPeriod })

@@ -41,6 +41,6 @@ export const updateUserBio = new ValidatedMethod({
         ...ticketId ? { ticketId } : {},
       },
     })
-    Volunteers.Collections.volunteerForm.upsert({ userId }, { $set: nonProfileData })
+    Volunteers.collections.volunteerForm.upsert({ userId }, { $set: nonProfileData })
   },
 })

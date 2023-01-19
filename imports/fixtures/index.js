@@ -6,7 +6,7 @@ import { createUserFixtures } from './users-fixtures'
 
 export const runFixtures = (Volunteers) => {
   // XXX this should be something else. This check is a bit dangerous
-  const shouldRun = Volunteers.Collections.team.find().count() === 0
+  const shouldRun = Volunteers.collections.team.find().count() === 0
   if (shouldRun) {
     console.log('Run fixtures')
     createEmailTemplateFixtures()

@@ -72,6 +72,6 @@ export const NoInfoUserProfile = withTracker(({ userId }) => {
   return {
     user,
     profilePic: picture && picture.link(),
-    volForm: Volunteers.Collections.volunteerForm.findOne({ userId }),
+    volForm: Volunteers.collections.volunteerForm.findOne({ userId }),
   }
 })(NoInfoUserProfileComponent)

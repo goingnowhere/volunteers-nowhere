@@ -107,11 +107,11 @@ const getContext = (cntxlist, user, context = {}) => {
     switch (cntx.name) {
     case 'UserTeams': {
       const sel = { userId: user._id, status: { $in: ['confirmed', 'pending', 'refused'] } }
-      const signups = Volunteers.Collections.signups.find(sel).fetch()
+      const signups = Volunteers.collections.signups.find(sel).fetch()
       const emails = Object.keys(_.groupBy(signups, 'parentId')).map((parentId) => {
-        let unit = Volunteers.Collections.team.findOne(parentId)
+        let unit = Volunteers.collections.team.findOne(parentId)
         if (!unit) {
-          unit = Volunteers.Collections.department.findOne(parentId)
+          unit = Volunteers.collections.department.findOne(parentId)
         }
         if (unit) { return { email: unit.email, name: unit.name } }
         return { name: unit.name }
@@ -126,12 +126,12 @@ const getContext = (cntxlist, user, context = {}) => {
     }
     case 'Leads': {
       const sel = { userId: user._id, type: 'lead', status: { $in: ['confirmed', 'pending', 'refused'] } }
-      const list = Volunteers.Collections.signups.find(sel)
+      const list = Volunteers.collections.signups.find(sel)
       const allLeads = list.map((s) => {
-        const duty = Volunteers.Collections.lead.findOne(s.shiftId)
-        let unit = Volunteers.Collections.team.findOne(s.parentId)
+        const duty = Volunteers.collections.lead.findOne(s.shiftId)
+        let unit = Volunteers.collections.team.findOne(s.parentId)
         if (!unit) {
-          unit = Volunteers.Collections.department.findOne(s.parentId)
+          unit = Volunteers.collections.department.findOne(s.parentId)
         }
         if (duty && unit) {
           const {
@@ -162,10 +162,10 @@ const getContext = (cntxlist, user, context = {}) => {
     }
     case 'Shifts': {
       const sel = { userId: user._id, type: 'shift', status: { $in: ['confirmed', 'pending', 'refused'] } }
-      const list = Volunteers.Collections.signups.find(sel)
+      const list = Volunteers.collections.signups.find(sel)
       const allShifts = list.map((s) => {
-        const duty = Volunteers.Collections.shift.findOne(s.shiftId)
-        const team = Volunteers.Collections.team.findOne(s.parentId)
+        const duty = Volunteers.collections.shift.findOne(s.shiftId)
+        const team = Volunteers.collections.team.findOne(s.parentId)
         /* duty and team should always exists for a signup. If not the GC should
             remove these signups */
         if (duty && team) {
@@ -201,10 +201,10 @@ const getContext = (cntxlist, user, context = {}) => {
     }
     case 'Projects': {
       const sel = { userId: user._id, type: 'project', status: { $in: ['confirmed', 'pending', 'refused'] } }
-      const list = Volunteers.Collections.signups.find(sel, { sort: { start: 1 } })
+      const list = Volunteers.collections.signups.find(sel, { sort: { start: 1 } })
       const allProjects = list.map((s) => {
-        const duty = Volunteers.Collections.project.findOne(s.shiftId)
-        const team = Volunteers.Collections.team.findOne(s.parentId)
+        const duty = Volunteers.collections.project.findOne(s.shiftId)
+        const team = Volunteers.collections.team.findOne(s.parentId)
         if (duty && team) {
           const {
             enrolled, notification, status, reviewed,
@@ -257,11 +257,11 @@ const sendNotificationEmail = ({
     if (template === 'reviewed') {
       sel.status.$in.push('refused')
     }
-    const signupIds = Volunteers.Collections.signups.find(sel).map((signup) => signup._id)
+    const signupIds = Volunteers.collections.signups.find(sel).map((signup) => signup._id)
     if (recipient && (signupIds.length > 0)) {
       const doc = EmailForms.previewTemplate(template, recipient, getContext)
       WrapEmailSend(recipient, doc, isBulk, { userId: recipient._id, template, selector })
-      Volunteers.Collections.signups.update({ _id: { $in: signupIds } },
+      Volunteers.collections.signups.update({ _id: { $in: signupIds } },
         { $set: { notification: true } }, { multi: true })
     }
   }
@@ -358,7 +358,7 @@ export const sendMassShiftReminderEmail = new ValidatedMethod({
   validate: null,
   mixins: [isManagerMixin],
   run() {
-    const userIds = Promise.await(Volunteers.Collections.signups.rawCollection().distinct('userId', {
+    const userIds = Promise.await(Volunteers.collections.signups.rawCollection().distinct('userId', {
       status: { $in: ['confirmed', 'pending'] },
     }))
     const interval = Meteor.setInterval(() => {

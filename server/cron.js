@@ -20,7 +20,7 @@ const signupsGC = (time) => {
     },
     job() {
       ['lead', 'shift', 'project'].forEach((duty) => {
-        Volunteers.Collections.signups.aggregate([{
+        Volunteers.collections.signups.aggregate([{
           $match: {
             type: duty,
             status: {
@@ -29,7 +29,7 @@ const signupsGC = (time) => {
           },
         }, {
           $lookup: {
-            from: Volunteers.Collections.dutiesCollections[duty]._name,
+            from: Volunteers.collections.dutiesCollections[duty]._name,
             localField: 'shiftId',
             foreignField: '_id',
             as: 'shift',
@@ -43,7 +43,7 @@ const signupsGC = (time) => {
         }]).forEach((signup) => {
           console.log(`remove signup: ${duty} not found`, signup)
           signupGcBackup.insert({ duty, signup })
-          Volunteers.Collections.signups.remove(signup._id)
+          Volunteers.collections.signups.remove(signup._id)
         })
       })
     },
@@ -59,7 +59,7 @@ const EnrollmentTask = (time) => {
     },
     job() {
       const sel = { enrolled: true, notification: false, status: 'confirmed' }
-      const signups = Volunteers.Collections.signups.find(sel, { userId: true })
+      const signups = Volunteers.collections.signups.find(sel, { userId: true })
 
       new Set(signups.map((signup) => signup.userId)).forEach((userId) => {
         sendEnrollmentEmail(userId)
@@ -83,7 +83,7 @@ const ReviewTask = (time) => {
         reviewed: true,
         status: { $in: ['confirmed', 'refused'] },
       }
-      const signups = Volunteers.Collections.signups.find(sel)
+      const signups = Volunteers.collections.signups.find(sel)
 
       new Set(signups.map((signup) => signup.userId)).forEach((userId) => {
         sendReviewEmail(userId, true)

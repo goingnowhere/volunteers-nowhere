@@ -232,22 +232,22 @@ const leadDefaults = {
 }
 
 export const createUnitFixtures = (Volunteers) => {
-  if (Volunteers.Collections.division.find().count() === 0) {
+  if (Volunteers.collections.division.find().count() === 0) {
     units.divisions.forEach((doc) => {
       console.log(`creating division ${doc.name}`)
-      const id = Volunteers.Collections.division.insert(doc)
+      const id = Volunteers.collections.division.insert(doc)
       Roles.createRole(id)
     })
   }
-  if (Volunteers.Collections.department.find().count() === 0) {
+  if (Volunteers.collections.department.find().count() === 0) {
     units.departments.forEach((dep) => {
       console.log(`creating department and meta-lead ${dep.name}`)
-      const parentId = Volunteers.Collections.division.findOne({ name: dep.parent })._id
-      const depId = Volunteers.Collections.department.insert({
+      const parentId = Volunteers.collections.division.findOne({ name: dep.parent })._id
+      const depId = Volunteers.collections.department.insert({
         ...dep,
         parentId,
       })
-      Volunteers.Collections.lead.insert({
+      Volunteers.collections.lead.insert({
         ...leadDefaults,
         description: `Meta-Lead of the ${dep.name} department.`,
         parentId: depId,
@@ -256,15 +256,15 @@ export const createUnitFixtures = (Volunteers) => {
       Roles.addRolesToParent(depId, parentId)
     })
   }
-  if (Volunteers.Collections.team.find().count() === 0) {
+  if (Volunteers.collections.team.find().count() === 0) {
     units.teams.forEach((team) => {
       console.log(`creating team and lead ${team.name}`)
-      const parentId = Volunteers.Collections.department.findOne({ name: team.parent })._id
-      const teamId = Volunteers.Collections.team.insert({
+      const parentId = Volunteers.collections.department.findOne({ name: team.parent })._id
+      const teamId = Volunteers.collections.team.insert({
         ...team,
         parentId,
       })
-      Volunteers.Collections.lead.insert({
+      Volunteers.collections.lead.insert({
         ...leadDefaults,
         description: `Lead of the ${team.name} team.`,
         parentId: teamId,

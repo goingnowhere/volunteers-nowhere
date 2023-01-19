@@ -17,7 +17,7 @@ const leadName = (leads, userId) => {
 
 const editTeam = (team) =>
   AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-    { form: { collection: Volunteers.Collections.team }, data: team }, '', 'lg')
+    { form: { collection: Volunteers.collections.team }, data: team }, '', 'lg')
 const deleteTeam = (team, reload) => {
   if (window.confirm(`Are you sure you want to delete the ${team.name} team entirely?`)) {
     Meteor.call(`${Volunteers.eventName}.Volunteers.team.remove`, team._id)
@@ -26,7 +26,7 @@ const deleteTeam = (team, reload) => {
 }
 const editLead = (lead) =>
   AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
-    { form: { collection: Volunteers.Collections.lead }, data: lead }, '', 'lg')
+    { form: { collection: Volunteers.collections.lead }, data: lead }, '', 'lg')
 const removeLead = (leadId, reload) => {
   if (window.confirm('Are you sure you want to remove this lead position?')) {
     Meteor.call(`${Volunteers.eventName}.Volunteers.lead.remove`, leadId)

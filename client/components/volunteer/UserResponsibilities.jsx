@@ -34,13 +34,13 @@ export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
   const userId = userIdIn || Meteor.userId()
   const isManager = Volunteers.auth.isManager(userId)
   // TODO use roles?
-  const leadSignupTeamIds = Volunteers.Collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
+  const leadSignupTeamIds = Volunteers.collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
     .map((signup) => signup.parentId)
   return {
-    leads: Volunteers.Collections.team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
-    metaleads: Volunteers.Collections.department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
+    leads: Volunteers.collections.team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
+    metaleads: Volunteers.collections.department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
     isManager,
     isNoInfo: isManager
-      || !!Volunteers.Collections.team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
+      || !!Volunteers.collections.team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
   }
 })(UserResponsibilitiesComponent)
