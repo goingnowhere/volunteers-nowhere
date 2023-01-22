@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import React, { memo } from 'react'
 import {
   BrowserRouter,
@@ -26,6 +25,8 @@ import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
 import { LeadDashboard } from './components/lead/LeadDashboard.jsx'
 import { DeptDashboard } from './components/lead/DeptDashboard.jsx'
 import { UserDashboard } from './components/volunteer/UserDashboard.jsx'
+import { PublicTeamView } from './components/public/PublicTeamView.jsx'
+import { PublicDeptView } from './components/public/PublicDeptView.jsx'
 
 export const Routes = () => (
   <BrowserRouter>
@@ -43,8 +44,8 @@ export const Routes = () => (
         <LoggedInRoute path="/profile" component={VolunteerForm} />
         <LoggedInRoute path="/dashboard" component={UserDashboard} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <LoggedInRoute path="/department/:_id/team/:_teamId/:_period?" component={memo(({ match }) => <Blaze template="publicTeamView" {...match.params} />)} />
-        <LoggedInRoute path="/department/:id" component={memo(({ match }) => <Blaze template="publicDepartmentView" _id={match.params.id} />)} />
+        <LoggedInRoute path="/department/:deptId/team/:teamId/" component={PublicTeamView} />
+        <LoggedInRoute path="/department/:deptId" component={PublicDeptView} />
         {/* FIXME needs to check for lead */}
         <LoggedInRoute path="/lead/team/:teamId" component={LeadDashboard} />
         {/* FIXME needs to check for metalead */}
