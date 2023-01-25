@@ -109,5 +109,6 @@
   "to_send": "To Send",
   "upload": "Upload",
   "unknown_error": "Unknown Error",
-  "invalid_json": "Invalid JSON"
+  "invalid_json": "Invalid JSON",
+  "danger_zone": "Danger Zone!"
 }

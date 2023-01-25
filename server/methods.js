@@ -23,7 +23,7 @@ import {
   allergies,
   intolerances,
 } from '../both/collections/users'
-import { EventSettings } from '../both/collections/settings'
+import { EventSettings, SettingsSchema } from '../both/collections/settings'
 import { lookupUserTicket, syncQuicketTicketList } from './quicket'
 
 const moment = extendMoment(Moment)
@@ -392,6 +392,170 @@ export const eeCsvData = new ValidatedMethod({
     })
 
     return firstOnly
+  },
+})
+
+/**
+ * Take a new event name and event dates and migrate everything over from the
+ * previous event.
+ * Currently using anything but the current `eventName` might not work as we need to
+ * avoid singletons including this eventName in the main (not submodule) project
+ */
+export const newEventMigration = new ValidatedMethod({
+  name: 'event.new.event',
+  mixins: [isManagerMixin],
+  validate: SettingsSchema.validator({ keys: ['eventName', 'eventPeriod'] }),
+  run(newSettings) {
+    const oldSettings = EventSettings.findOne()
+    if (!oldSettings.eventName) {
+      throw new Meteor.Error(500, "We don't have an event name so can't proceed :(")
+    }
+    const sourceEvent = new VolunteersClass(oldSettings.eventName, true)
+    const departments = sourceEvent.collections.department.find().fetch()
+    const teams = sourceEvent.collections.team.find().fetch()
+    const rotas = sourceEvent.collections.rotas.find().fetch()
+    const shifts = sourceEvent.collections.shift.find().fetch()
+    const projects = sourceEvent.collections.project.find().fetch()
+    const leads = sourceEvent.collections.lead.find().fetch()
+
+    const eventStartDiff = moment(newSettings.eventPeriod.start)
+      .diff(oldSettings.eventPeriod.start, 'days')
+
+    const shiftDate = (date) =>
+      moment(date).add(eventStartDiff, 'days').toDate()
+
+    // We don't really use divisions, so just find the one new one
+    const divId = Volunteers.collections.division.findOne()._id
+
+    const deptIds = {}
+    Volunteers.collections.department.remove({})
+    departments.forEach(({ _id: oldId, ...dept }) => {
+      const deptId = Volunteers.collections.department.insert({
+        ...dept,
+        parentId: divId,
+      })
+      Roles.createRole(deptId)
+      Roles.addRolesToParent(deptId, divId)
+      deptIds[oldId] = deptId
+    })
+
+    const teamIds = {}
+    Volunteers.collections.team.remove({})
+    teams.forEach(({ _id: oldId, parentId: oldParent, ...rest }) => {
+      const parentId = deptIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Department does not exist: ${oldParent}`)
+      }
+      const teamId = Volunteers.collections.team.insert({
+        ...rest,
+        parentId,
+      })
+      Roles.createRole(teamId)
+      Roles.addRolesToParent(teamId, parentId)
+      teamIds[oldId] = teamId
+    })
+
+    // const nonUniqueRotaNames = {}
+    const rotaIds = {}
+    Volunteers.collections.rotas.remove({})
+    rotas.forEach(({
+      _id: oldId,
+      parentId: oldParent,
+      start,
+      end,
+      ...rest
+    }) => {
+      const parentId = teamIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${oldParent}`)
+      }
+      const rotaId = Volunteers.collections.rotas.insert({
+        ...rest,
+        parentId,
+        start: shiftDate(start),
+        end: shiftDate(end),
+      })
+      rotaIds[oldId] = rotaId
+    })
+
+    Volunteers.collections.shift.remove({})
+    shifts.forEach(({
+      _id,
+      rotaId: oldRota,
+      parentId: oldParent,
+      start,
+      end,
+      ...rest
+    }) => {
+      const rotaId = rotaIds[oldRota]
+      const parentId = teamIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${oldParent}`)
+      }
+      if (!rotaId) {
+        throw new Error(`Rota does not exist: ${oldRota}`)
+      }
+      Volunteers.collections.shift.insert({
+        ...rest,
+        rotaId,
+        parentId,
+        start: shiftDate(start),
+        end: shiftDate(end),
+      })
+    })
+
+    Volunteers.collections.project.remove({})
+    projects.forEach(({
+      _id,
+      parentId: oldParent,
+      start,
+      end,
+      ...rest
+    }) => {
+      const parentId = teamIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Team does not exist: ${oldParent}`)
+      }
+      Volunteers.collections.project.insert({
+        ...rest,
+        parentId,
+        start: shiftDate(start),
+        end: shiftDate(end),
+      })
+    })
+
+    Volunteers.collections.lead.remove({})
+    leads.forEach(({
+      _id,
+      parentId: oldParent,
+      ...rest
+    }) => {
+      const parentId = teamIds[oldParent] || deptIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Team or department does not exist: ${oldParent}`)
+      }
+      Volunteers.collections.lead.insert({
+        ...rest,
+        parentId,
+      })
+    })
+
+    EventSettings.update({}, {
+      $set: {
+        eventPeriod: newSettings.eventPeriod,
+        eventName: newSettings.eventName,
+        buildPeriod: {
+          start: shiftDate(oldSettings.buildPeriod.start),
+          end: shiftDate(oldSettings.buildPeriod.end),
+        },
+        strikePeriod: {
+          start: shiftDate(oldSettings.strikePeriod.start),
+          end: shiftDate(oldSettings.strikePeriod.end),
+        },
+        barriosArrivalDate: shiftDate(oldSettings.barriosArrivalDate),
+        fistOpenDate: shiftDate(oldSettings.fistOpenDate),
+      },
+    })
   },
 })
 

@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { Migrations } from 'meteor/percolate:migrations'
 
+import { EventSettings } from '../both/collections/settings'
+
 Migrations.config({
   log: true,
   logIfLatest: false,
@@ -41,5 +43,15 @@ Migrations.add({
       { $addToSet: { roles: { _id: 'manager', scope: 'nowhere2022', assigned: true } } },
       { multi: true },
     )
+  },
+})
+
+Migrations.add({
+  version: 12,
+  up() {
+    const existing = EventSettings.findOne()
+    if (!existing.eventName) {
+      EventSettings.update({}, { $set: { eventName: 'nowhere2022' } })
+    }
   },
 })

@@ -2,9 +2,7 @@ import { Mongo } from 'meteor/mongo'
 import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
 import { check } from 'meteor/check'
-import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import i18n from 'meteor/universe:i18n'
-import { isManagerMixin } from '../authMixins'
 
 SimpleSchema.defineValidationErrorTransform((error) => {
   const ddpError = new Meteor.Error(error.message)
@@ -15,7 +13,30 @@ SimpleSchema.defineValidationErrorTransform((error) => {
 
 export const EventSettings = new Mongo.Collection('settings')
 
-const SettingsSchema = new SimpleSchema({
+export const SettingsSchema = new SimpleSchema({
+  eventName: {
+    type: String,
+    optional: false,
+    // TODO i18n
+    label: 'Event Name',
+    autoform: {
+      afFieldHelpText: 'For now you can\'t change this...',
+      disabled: true,
+    },
+  },
+
+  previousEventName: {
+    type: String,
+    optional: false,
+    // TODO i18n
+    label: 'Previous Event Name',
+    autoform: {
+      afFieldHelpText: 'This decides where previous volunteer lists are pulled from.'
+      + ' You probably don\'t want to change this',
+    },
+    // TODO use rawDatabase().collections() to limit to valid names
+  },
+
   buildPeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
     autoform: {
@@ -89,26 +110,6 @@ const SettingsSchema = new SimpleSchema({
 }, { check })
 
 EventSettings.attachSchema(SettingsSchema)
-
-export const insertSettings = new ValidatedMethod({
-  name: 'settings.insert',
-  validate: SettingsSchema.validator({ clean: true }),
-  mixins: [isManagerMixin],
-  run(doc) {
-    EventSettings.insert(doc)
-  },
-})
-
-export const updateSetting = new ValidatedMethod({
-  name: 'settings.update',
-  validate: (doc) => {
-    SettingsSchema.validate(doc.modifier, { clean: true, modifier: true })
-  },
-  mixins: [isManagerMixin],
-  run(doc) {
-    EventSettings.update(doc._id, doc.modifier)
-  },
-})
 
 if (Meteor.isServer) {
   Meteor.publish('eventSettings', () => EventSettings.find({}))

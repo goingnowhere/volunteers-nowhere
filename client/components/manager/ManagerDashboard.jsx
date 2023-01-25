@@ -1,15 +1,15 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { T } from '../common/i18n'
+import { Modal } from '../common/Modal.jsx'
 import { CsvExportButton } from '../lead/CsvExportButton.jsx'
-// import { JsonExportButton } from '../lead/JsonExportButton.jsx'
 import { Volunteers } from '../../../both/init'
 import { SignupApprovalList } from '../lead/SignupApprovalList.jsx'
-// import { RotaImport } from './RotaImport.jsx'
+import { NewEvent } from './NewEvent.jsx'
 
 // name of the organization. Nowhere is a two level hierarchy
 // (departments,teams) with one top level division
@@ -44,6 +44,8 @@ const sendMassReminders = () => {
 //   // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
 // },
 export const ManagerDashboard = () => {
+  const [showNewEventModal, setShowNewEventModal] = useState(false)
+
   const { divisionId } = useTracker(() => {
     const division = Volunteers.collections.division.findOne({ name: topLevelDivision })
     return { divisionId: division?._id }
@@ -51,8 +53,15 @@ export const ManagerDashboard = () => {
 
   return (
     <div className="container-fluid h-100">
+      <Modal
+        title="Migrate teams and rotas to a new event"
+        isOpen={showNewEventModal}
+        closeModal={() => setShowNewEventModal(false)}
+      >
+        <NewEvent closeModal={() => setShowNewEventModal(false)} />
+      </Modal>
       <div className="row h-100">
-        <div className="col-md-2 bg-grey">
+        <div className="col-md-2 bg-grey dashboard-side-panel">
           <h3><T>manager</T></h3>
           <h5 className="mb-2 dark-text"><T>leads</T></h5>
           <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
@@ -92,16 +101,16 @@ export const ManagerDashboard = () => {
             filename="ee"
             methodArgs={{}}
           />
-          {/* <JsonExportButton
-            method="rota.all.export"
-            buttonText="rota_all_export"
-            filename="rotas"
-            // Hack to avoid having to make a form, etc.
-            methodArgs={{ eventName: 'nowhere2020' }}
-          />
-          <RotaImport /> */}
+          <h3><T>danger_zone</T></h3>
           <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
             Send Reminders to everyone
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-light"
+            onClick={() => setShowNewEventModal(true)}
+          >
+            Prepare FIST for a new event
           </button>
         </div>
         <div className="col-md-5">

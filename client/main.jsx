@@ -11,7 +11,7 @@ Meteor.startup(() => {
   const { Provider } = Volunteers.reactContext
   render(
     <Provider value={Volunteers}>
-      <Routes />,
+      <Routes />
     </Provider>,
     document.getElementById('react-root'),
   )

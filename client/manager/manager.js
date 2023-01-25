@@ -7,6 +7,6 @@ Template.managerEventSettings.onCreated(function onCreated() {
 })
 
 Template.managerEventSettings.helpers({
-  form: () => ({ collection: EventSettings }),
+  form: () => ({ collection: EventSettings, omitFields: 'eventName' }),
   data: () => (EventSettings.findOne()),
 })

@@ -30,7 +30,7 @@ export function UserDashboard() {
   return ready && (
     <div className="container-fluid h-100">
       <div className="row h-100">
-        <div className="col-sm-12 col-md-2 pr-1 bg-grey">
+        <div className="col-sm-12 col-md-2 pr-1 bg-grey dashboard-side-panel">
           {user.profile.picture ? (
             <>
               <h3><T>welcome</T> {displayName(user.profile)}</h3>

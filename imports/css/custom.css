@@ -96,7 +96,8 @@ p.card-text {
 }
 
 /* for buttons in the left pannel */
-.btn-light {
+.dashboard-side-panel > .btn {
+  display: block;
   border-radius: 0px;
   font-size: 16px;
   font-weight: 200;

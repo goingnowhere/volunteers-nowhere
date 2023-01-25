@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import SimpleSchema from 'simpl-schema'
-import { isSameUserOrManagerMixin } from './authMixins'
+
+import { isManagerMixin, isSameUserOrManagerMixin } from './authMixins'
 import { MeteorProfile, Volunteers } from './init'
 import { volunteerFormSchema } from './collections/users'
+import { EventSettings, SettingsSchema } from './collections/settings'
 
 const userBioSchema = new SimpleSchema({
   userId: { type: String },
@@ -42,5 +44,34 @@ export const updateUserBio = new ValidatedMethod({
       },
     })
     Volunteers.collections.volunteerForm.upsert({ userId }, { $set: nonProfileData })
+  },
+})
+
+export const fetchSettings = new ValidatedMethod({
+  name: 'settings.fetch',
+  validate: null,
+  mixins: [],
+  run() {
+    return EventSettings.findOne()
+  },
+})
+
+export const insertSettings = new ValidatedMethod({
+  name: 'settings.insert',
+  validate: SettingsSchema.validator({ clean: true }),
+  mixins: [isManagerMixin],
+  run(doc) {
+    EventSettings.insert(doc)
+  },
+})
+
+export const updateSettings = new ValidatedMethod({
+  name: 'settings.update',
+  validate: (doc) => {
+    SettingsSchema.validate(doc.modifier, { clean: true, modifier: true })
+  },
+  mixins: [isManagerMixin],
+  run(doc) {
+    EventSettings.update(doc._id, doc.modifier)
   },
 })

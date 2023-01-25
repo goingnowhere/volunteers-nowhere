@@ -15,7 +15,7 @@ export const NoInfoDashboard = () => {
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
-        <div className="col-md-2 bg-grey">
+        <div className="col-md-2 bg-grey dashboard-side-panel">
           <h3>NoInfo</h3>
           <h5 className="mb-2 dark-text"><T>needs_of_the_day</T>:</h5>
           XX/XX

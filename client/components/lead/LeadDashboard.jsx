@@ -56,7 +56,7 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2 bg-grey">
+        <div className="col-md-2 bg-grey dashboard-side-panel">
           <h3>
             {team.name}
             <small>
