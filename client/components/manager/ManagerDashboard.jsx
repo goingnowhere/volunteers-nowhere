@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { T } from '../common/i18n'
 import { Modal } from '../common/Modal.jsx'
@@ -44,6 +44,7 @@ const sendMassReminders = () => {
 //   // AutoFormComponents.ModalShowWithTemplate('teamEnrollLead', dept)
 // },
 export const ManagerDashboard = () => {
+  const history = useHistory()
   const [showNewEventModal, setShowNewEventModal] = useState(false)
 
   const { divisionId } = useTracker(() => {
@@ -58,7 +59,11 @@ export const ManagerDashboard = () => {
         isOpen={showNewEventModal}
         closeModal={() => setShowNewEventModal(false)}
       >
-        <NewEvent closeModal={() => setShowNewEventModal(false)} />
+        <NewEvent onSubmitted={() => {
+          setShowNewEventModal(false)
+          history.push('/manager/eventSettings')
+        }}
+        />
       </Modal>
       <div className="row h-100">
         <div className="col-md-2 bg-grey dashboard-side-panel">

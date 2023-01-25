@@ -1,2 +1,2 @@
 export const displayName = (profile) =>
-  profile.nickname || profile.firstName || `Mx ${profile.lastName}`
+  profile.nickname || profile.firstName || (profile.lastName && `Mx ${profile.lastName}`)

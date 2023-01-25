@@ -8,7 +8,7 @@ import { Volunteers } from '../../../both/init'
 import { fetchSettings } from '../../../both/methods'
 import { EventSettings } from '../../../both/collections/settings'
 
-export const NewEvent = ({ closeModal }) => {
+export const NewEvent = ({ onSubmitted }) => {
   const [settings, setSettings] = useState()
   useEffect(() => {
     AutoForm.addHooks(
@@ -20,7 +20,7 @@ export const NewEvent = ({ closeModal }) => {
           Meteor.call('event.new.event', toSubmit, () => {
             this.done()
             // eslint-disable-next-line no-unused-expressions
-            closeModal?.()
+            onSubmitted?.()
           })
         },
       },
@@ -38,7 +38,7 @@ export const NewEvent = ({ closeModal }) => {
         })
       }
     })
-  }, [closeModal])
+  }, [onSubmitted])
 
   return (
     <div>
@@ -50,7 +50,7 @@ export const NewEvent = ({ closeModal }) => {
           doc={settings}
           buttonContent="Overwrite current data with last year's"
           buttonClasses="btn btn-danger btn-sm"
-          fields="previousEventName,eventName,eventPeriod"
+          fields="eventName,eventPeriod"
           validation="none"
         />
       )}

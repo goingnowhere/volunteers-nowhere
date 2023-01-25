@@ -8,11 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Volunteers } from '../../../both/init'
 import { T, t } from '../common/i18n'
 import { Modal } from '../common/Modal.jsx'
+import { displayName } from '../common/utils'
 import { MoveTeam } from './MoveTeam.jsx'
 
 const leadName = (leads, userId) => {
-  const { profile } = leads.find((lead) => lead._id === userId) || {}
-  return profile && (profile.nickname || profile.firstName)
+  const { emails, profile } = leads.find((lead) => lead._id === userId) || {}
+  return displayName(profile)
+    || emails?.find(({ address }) => address.endsWith('@goingnowhere.org'))?.address
+    || emails?.[0]?.address
 }
 
 const editTeam = (team) =>

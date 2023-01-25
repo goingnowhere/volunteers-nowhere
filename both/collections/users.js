@@ -62,6 +62,10 @@ export const userSchema = new SimpleSchema({
     type: Number,
     optional: true,
   },
+  rawTicketInfo: {
+    type: Object,
+    optional: true,
+  },
   profile: {
     type: profileSchema,
     optional: true,

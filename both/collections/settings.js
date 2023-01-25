@@ -37,7 +37,7 @@ export const SettingsSchema = new SimpleSchema({
     // TODO use rawDatabase().collections() to limit to valid names
   },
 
-  buildPeriod: {
+  eventPeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
     autoform: {
       type: 'flatpickerange',
@@ -48,7 +48,7 @@ export const SettingsSchema = new SimpleSchema({
     },
   },
 
-  eventPeriod: {
+  buildPeriod: {
     type: new SimpleSchema({ start: Date, end: Date }),
     autoform: {
       type: 'flatpickerange',

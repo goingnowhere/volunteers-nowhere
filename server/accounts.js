@@ -9,7 +9,7 @@ import {
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
-import { ticketsCollection } from '../both/collections/users'
+// import { ticketsCollection } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
 
 import { devConfig } from './config'

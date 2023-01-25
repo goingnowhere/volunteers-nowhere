@@ -417,6 +417,10 @@ export const newEventMigration = new ValidatedMethod({
     const shifts = sourceEvent.collections.shift.find().fetch()
     const projects = sourceEvent.collections.project.find().fetch()
     const leads = sourceEvent.collections.lead.find().fetch()
+    const leadSignups = sourceEvent.collections.signups.find({
+      type: 'lead',
+      status: 'confirmed',
+    }).fetch()
 
     const eventStartDiff = moment(newSettings.eventPeriod.start)
       .diff(oldSettings.eventPeriod.start, 'days')
@@ -525,8 +529,9 @@ export const newEventMigration = new ValidatedMethod({
     })
 
     Volunteers.collections.lead.remove({})
+    const leadIds = {}
     leads.forEach(({
-      _id,
+      _id: oldId,
       parentId: oldParent,
       ...rest
     }) => {
@@ -534,16 +539,41 @@ export const newEventMigration = new ValidatedMethod({
       if (!parentId) {
         throw new Error(`Team or department does not exist: ${oldParent}`)
       }
-      Volunteers.collections.lead.insert({
+      const leadId = Volunteers.collections.lead.insert({
         ...rest,
         parentId,
       })
+      leadIds[oldId] = leadId
+    })
+
+    Volunteers.collections.signups.remove({})
+    leadSignups.forEach(({
+      _id: __,
+      parentId: oldParent,
+      shiftId: oldShift,
+      ...rest
+    }) => {
+      const parentId = teamIds[oldParent] || deptIds[oldParent]
+      if (!parentId) {
+        throw new Error(`Team or department does not exist: ${oldParent}`)
+      }
+      const shiftId = leadIds[oldShift]
+      if (!shiftId) {
+        throw new Error(`Lead position does not exist: ${oldShift}`)
+      }
+      Volunteers.collections.signups.insert({
+        ...rest,
+        parentId,
+        shiftId,
+      })
+      Roles.addUsersToRoles(rest.userId, parentId, newSettings.eventName)
     })
 
     EventSettings.update({}, {
       $set: {
         eventPeriod: newSettings.eventPeriod,
         eventName: newSettings.eventName,
+        previousEventName: oldSettings.eventName,
         buildPeriod: {
           start: shiftDate(oldSettings.buildPeriod.start),
           end: shiftDate(oldSettings.buildPeriod.end),
@@ -556,6 +586,10 @@ export const newEventMigration = new ValidatedMethod({
         fistOpenDate: shiftDate(oldSettings.fistOpenDate),
       },
     })
+
+    // TODO Offer choice of whether to do this
+    Meteor.users.update({},
+      { $unset: { ticketId: '', rawTicketInfo: {} } }, { multi: true })
   },
 })
 
