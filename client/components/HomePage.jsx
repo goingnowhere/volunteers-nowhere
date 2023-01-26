@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 import React, {
-  Fragment,
   useMemo,
   useState,
   useEffect,
@@ -30,7 +29,7 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
     return () => interval && clearInterval(interval)
   }, [loaded, openMoment])
   return (
-    <Fragment>
+    <>
       <header id="page-top" className="masthead bg-primary text-white text-center">
         <div className="container">
           <h1 className="home-title">Co-Create Nowhere 2022</h1>
@@ -42,33 +41,36 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
                 </div>
               ) : seconds > 0
                 ? (
-                  <Fragment>
+                  <>
                     <p className="lead">
-                      You can help make Nowhere happen from {openMoment.format('Do MMMM')}:
+                      You can register for on-site roles from {openMoment.format('Do MMMM')}:
                     </p>
                     <div className="row">
                       <button type="button" className="col btn btn-secondary m-1" disabled>
                         {seconds} seconds
                       </button>
                       <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
-                        {loggedIn ? 'I want to be a lead!' : 'Volunteer!'}
+                        I can&apos;t wait, I want to volunteer now!
                       </a>
                     </div>
-                  </Fragment>
+                  </>
                 ) : (
-                  <Fragment>
+                  <>
                     <p className="lead">
                       For Information and Scheduling of Teams
                     </p>
                     <div className="row">
-                      <Link to="/signup" className="col btn btn-secondary m-1">
-                        Register now
+                      <Link
+                        to={loggedIn ? '/dashboard/' : '/signup'}
+                        className="col btn btn-secondary m-1"
+                      >
+                        {loggedIn ? 'Get to it' : 'Register now'}
                       </Link>
                       <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
-                        I want to be a lead!
+                        I want to help before getting to site!
                       </a>
                     </div>
-                  </Fragment>
+                  </>
                 )}
             </div>
           </div>
@@ -148,7 +150,7 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
           <Fa name="chevron-up" />
         </a>
       </div>
-    </Fragment>
+    </>
   )
 }
 

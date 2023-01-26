@@ -16,12 +16,18 @@ const LoggedInRouteComponent = ({
   // Meteor seems to set user as 'null' when not logged in and 'undefined' when loading
   if (typeof user === 'undefined') return null
   if (user) {
-    if (!user.emails.some((email) => email.verified)) return <Redirect to="/verify-email" />
-    if (moment().isBefore(openDate) && !Volunteers.auth.isALead()) {
+    if (!user.emails.some((email) => email.verified)) {
+      return <Redirect to="/verify-email" />
+    }
+    if (moment().isBefore(openDate)
+      && !user.emails.some((email) => email.verified && email.address.endsWith('@goingnowhere.org'))
+      && !Volunteers.auth.isALead()) {
       // FIST is closed for now
       return <Redirect to="/" />
     }
-    if (user.profile.formFilled || navProps.match.path === '/profile') return <Component {...navProps} />
+    if (user.profile.formFilled || navProps.match.path === '/profile') {
+      return <Component {...navProps} />
+    }
     return <Redirect to={{ pathname: '/profile', state: { from: navProps.location } }} />
   }
   return <Redirect to={{ pathname: '/login', state: { from: navProps.location } }} />
