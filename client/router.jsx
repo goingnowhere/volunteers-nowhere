@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
+
 import Blaze from 'meteor/gadicc:blaze-react-component'
 import { HomePage } from './components/HomePage.jsx'
 import { Header } from './components/common/Header.jsx'
@@ -18,6 +19,7 @@ import { VolunteerForm } from './components/volunteer/VolunteerForm.jsx'
 import { ManagerDashboard } from './components/manager/ManagerDashboard.jsx'
 import { ManagerUserList } from './components/manager/ManagerUserList.jsx'
 import { EmailApproval } from './components/manager/EmailApproval.jsx'
+import { EventSettingsScreen } from './components/manager/EventSettingsScreen.jsx'
 import { LoggedInRoute } from './components/LoggedInRoute.jsx'
 import { VerifyEmail } from './components/VerifyEmail.jsx'
 import { NoInfoDashboard } from './components/noinfo/NoInfoDashboard.jsx'
@@ -50,7 +52,7 @@ export const Routes = () => (
         {/* FIXME needs to check for metalead */}
         <LoggedInRoute path="/metalead/department/:deptId" component={DeptDashboard} />
         {/* FIXME needs to check for manager */}
-        <LoggedInRoute path="/manager/eventSettings" component={memo(() => <Blaze template="managerEventSettings" />)} />
+        <LoggedInRoute path="/manager/eventSettings" component={EventSettingsScreen} />
         <LoggedInRoute path="/manager/emailForms" component={memo(() => <Blaze template="managerEmailForms" />)} />
         <LoggedInRoute path="/manager/emailApproval" component={EmailApproval} />
         <LoggedInRoute path="/manager/userList" component={ManagerUserList} />
