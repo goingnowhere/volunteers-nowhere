@@ -4,7 +4,7 @@ import { MeteorProfileClass } from 'meteor/abate:meteor-user-profiles'
 import { Roles } from 'meteor/alanning:roles'
 import { initLocale } from './locale'
 
-const eventName = 'nowhere2022'
+const eventName = 'nowhere2023'
 export const Volunteers = new VolunteersClass(eventName)
 
 const roles = ['admin', 'manager', 'user']
