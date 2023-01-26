@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { Volunteers } from './init'
 
-// TODO There's no point in this function, should just use the constructor directly
+// TODO Used for weird package stuff. Remove when removing meteor-user-profiles
 export const ValidatedMethodWithMixin = (function add(method, mixins, name) {
   if (name) { method.name = name } // optionally redefine method name
   method.mixins = mixins

@@ -148,9 +148,8 @@ const LoggedInHeaderComponent = ({
             <T>welcome</T> {name}
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown3">
-            <NavLink to="/profile" exact className="dropdown-item"><T>volunteer_form</T></NavLink>
+            <NavLink to="/profile" exact className="dropdown-item"><T>user_details</T></NavLink>
             <NavLink to="/password" className="dropdown-item"><T>change_password</T></NavLink>
-            <NavLink to="/profile/settings" className="dropdown-item"><T>user_details</T></NavLink>
             {roles.isImpersonating
               && <a className="dropdown-item" data-action="unimpersonate"><T>impersonate</T></a>}
             <a className="dropdown-item" role="button" href="#" onClick={logout}><T>logout</T></a>
@@ -163,6 +162,9 @@ const LoggedInHeaderComponent = ({
 
 export const LoggedInHeader = withRouter(withTracker(({ history }) => {
   const { _id: userId, profile = {} } = Meteor.user() || {}
+  // FIXME Leads to a bug where private teams are not shown in the team list.
+  // We should just replace all this subscription mess across components with a single
+  // method call for basic info which is passed around
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.organization`)
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, userId, ['lead'])
   const isManager = Volunteers.auth.isManager()

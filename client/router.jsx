@@ -40,7 +40,6 @@ export const Routes = () => (
         <Route path="/verify-email" component={VerifyEmail} />
         <Route path="/volunteers-agreement" render={() => <Blaze template="volAgreement" />} />
         <LoggedInRoute path="/password" component={Password} />
-        <LoggedInRoute path="/profile/settings" component={memo(() => <Blaze template="accountSettings" />)} />
         <LoggedInRoute path="/profile" component={VolunteerForm} />
         <LoggedInRoute path="/dashboard" component={UserDashboard} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}

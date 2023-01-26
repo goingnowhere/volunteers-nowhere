@@ -4,19 +4,28 @@
 set -e
 
 CONTAINER=volunteers-nowhere
-# TODO automate this and add optional version letters from args (e.g. 2019-04-08b)
-TAG=2022-04-03
+DATE=$(date +%Y-%m-%d)
+if [[ "$1" ]]; then
+  TAG=$DATE-$1
+else
+  TAG=$DATE
+fi
 REGISTRY=piemonkey
 
-FULL_NAME=${CONTAINER}:${TAG}
+FULL_NAME=$CONTAINER:$TAG
 
-echo "Start building ${FULL_NAME} ..."
+if docker image inspect $FULL_NAME 1>/dev/null 2>/dev/null; then
+  echo "Image $FULL_NAME already exists! aborting"
+  echo "Specify a suffix using ./docker-build.sh suffix to build $FULL_NAME-suffix"
+  exit 1
+fi
+
+echo "Start building $FULL_NAME ..."
 
 # build container
-docker build -t ${FULL_NAME} .
+docker build -t $FULL_NAME -t $REGISTRY/$FULL_NAME .
 
-# create tag and push
-docker tag ${FULL_NAME} ${REGISTRY}/${FULL_NAME}
-docker push ${REGISTRY}/${FULL_NAME}
+# push to docker hub
+docker push $REGISTRY/$FULL_NAME
 
 echo "Build complete"

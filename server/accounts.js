@@ -4,7 +4,6 @@ import moment from 'moment-timezone'
 
 import { MeteorProfile } from '../both/init'
 import {
-  isManagerMixin,
   ValidatedMethodWithMixin,
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
@@ -57,46 +56,29 @@ Accounts.validateLoginAttempt((info) => {
   } return false
 })
 
-// TODO I don't think these are used any more
-export const userProfileRemoveUser =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userProfileRemoveUser,
-    [isManagerMixin],
-  )
-
-export const userProfileUpdateUser =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userProfileUpdateUser,
-    [isSameUserOrNoInfoMixin],
-  )
-
+// TODO These are used to inject our mixins into the user-profile package
 // Just send an enrollment message to the user
-export const userProfileSendEnrollAccount =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userProfileSendEnrollAccount,
-    [isNoInfoMixin], // Manager and noInfo leads
-  )
+export const userProfileSendEnrollAccount = ValidatedMethodWithMixin(
+  MeteorProfile.Methods.userProfileSendEnrollAccount,
+  [isNoInfoMixin], // Manager and noInfo leads
+)
 
-export const userProfileAddEmail =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userAddEmail,
-    [isSameUserOrNoInfoMixin],
-  )
+export const userProfileAddEmail = ValidatedMethodWithMixin(
+  MeteorProfile.Methods.userAddEmail,
+  [isSameUserOrNoInfoMixin],
+)
 
-export const userMakeEmailPrimary =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userMakeEmailPrimary,
-    [isSameUserOrNoInfoMixin],
-  )
+export const userMakeEmailPrimary = ValidatedMethodWithMixin(
+  MeteorProfile.Methods.userMakeEmailPrimary,
+  [isSameUserOrNoInfoMixin],
+)
 
-export const sendVerificationEmail =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.sendVerificationEmail,
-    [isSameUserOrNoInfoMixin],
-  )
+export const sendVerificationEmail = ValidatedMethodWithMixin(
+  MeteorProfile.Methods.sendVerificationEmail,
+  [isSameUserOrNoInfoMixin],
+)
 
-export const userRemoveEmail =
-  ValidatedMethodWithMixin(
-    MeteorProfile.Methods.userRemoveEmail,
-    [isSameUserOrNoInfoMixin],
-  )
+export const userRemoveEmail = ValidatedMethodWithMixin(
+  MeteorProfile.Methods.userRemoveEmail,
+  [isSameUserOrNoInfoMixin],
+)

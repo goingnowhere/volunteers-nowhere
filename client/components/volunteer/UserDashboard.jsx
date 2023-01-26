@@ -40,7 +40,7 @@ export function UserDashboard() {
             <>
               <h3><T>welcome</T> {displayName(user.profile)}</h3>
               <img src="img/mr_nobody.jpg" className="rounded-circle header-avatar" alt="" />
-              <Link to="/profile/settings"><T>add_picture</T></Link>
+              <Link to="/profile"><T>add_picture</T></Link>
             </>
           )}
           <h5 className="mb-2 dark-text"><T>responsibilities</T> </h5>
