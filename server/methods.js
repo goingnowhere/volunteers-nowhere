@@ -428,8 +428,18 @@ export const newEventMigration = new ValidatedMethod({
     const shiftDate = (date) =>
       moment(date).add(eventStartDiff, 'days').toDate()
 
-    // We don't really use divisions, so just find the one new one
-    const divId = Volunteers.collections.division.findOne()._id
+    // We don't really use divisions, so just find the current one or create it
+    const division = Volunteers.collections.division.findOne()
+    let divId
+    if (division) {
+      divId = division._id
+    } else {
+      divId = Volunteers.collections.division.insert({
+        name: 'NOrg',
+        policy: 'public',
+        parentId: 'TopEntity',
+      })
+    }
 
     const deptIds = {}
     Volunteers.collections.department.remove({})

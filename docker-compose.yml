@@ -11,7 +11,7 @@ networks:
 
 services:
   fist:
-    image: piemonkey/volunteers-nowhere:2022-04-03
+    image: piemonkey/volunteers-nowhere:2023-01-28
     restart: always
     links:
       - mongo
@@ -40,7 +40,7 @@ services:
       - user_data:/home/node/app/bundle/programs/server/profilePictures
 
   mongo:
-    image: mongo:4.0-xenial
+    image: mongo:4.4.18
     command: mongod --storageEngine=wiredTiger
     restart: always
     networks:
