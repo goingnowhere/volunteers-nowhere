@@ -458,7 +458,9 @@ export const newEventMigration = new ValidatedMethod({
     teams.forEach(({ _id: oldId, parentId: oldParent, ...rest }) => {
       const parentId = deptIds[oldParent]
       if (!parentId) {
-        throw new Error(`Department does not exist: ${oldParent}`)
+        console.error('Error finding department for team', rest.title)
+        console.error(new Error(`Department does not exist: ${oldParent}`))
+        return
       }
       const teamId = Volunteers.collections.team.insert({
         ...rest,
@@ -481,7 +483,9 @@ export const newEventMigration = new ValidatedMethod({
     }) => {
       const parentId = teamIds[oldParent]
       if (!parentId) {
-        throw new Error(`Team does not exist: ${oldParent}`)
+        console.error('Error finding team for rota', rest.title)
+        console.error(new Error(`Team does not exist: ${oldParent}`))
+        return
       }
       const rotaId = Volunteers.collections.rotas.insert({
         ...rest,
@@ -504,10 +508,14 @@ export const newEventMigration = new ValidatedMethod({
       const rotaId = rotaIds[oldRota]
       const parentId = teamIds[oldParent]
       if (!parentId) {
-        throw new Error(`Team does not exist: ${oldParent}`)
+        console.error('Error finding team for shift', rest.title)
+        console.error(new Error(`Team does not exist: ${oldParent}`))
+        return
       }
       if (!rotaId) {
-        throw new Error(`Rota does not exist: ${oldRota}`)
+        console.error('Error finding rota for shift', rest.title)
+        console.error(new Error(`Rota does not exist: ${oldRota}`))
+        return
       }
       Volunteers.collections.shift.insert({
         ...rest,
@@ -528,7 +536,9 @@ export const newEventMigration = new ValidatedMethod({
     }) => {
       const parentId = teamIds[oldParent]
       if (!parentId) {
-        throw new Error(`Team does not exist: ${oldParent}`)
+        console.error('Error finding team for project', rest.title)
+        console.error(new Error(`Team does not exist: ${oldParent}`))
+        return
       }
       Volunteers.collections.project.insert({
         ...rest,
@@ -547,7 +557,9 @@ export const newEventMigration = new ValidatedMethod({
     }) => {
       const parentId = teamIds[oldParent] || deptIds[oldParent]
       if (!parentId) {
-        throw new Error(`Team or department does not exist: ${oldParent}`)
+        console.error('Error finding team for lead', rest.title)
+        console.error(new Error(`Team does not exist: ${oldParent}`))
+        return
       }
       const leadId = Volunteers.collections.lead.insert({
         ...rest,
@@ -565,11 +577,15 @@ export const newEventMigration = new ValidatedMethod({
     }) => {
       const parentId = teamIds[oldParent] || deptIds[oldParent]
       if (!parentId) {
-        throw new Error(`Team or department does not exist: ${oldParent}`)
+        console.error('Error finding team for signup', rest.shiftId)
+        console.error(new Error(`Team does not exist: ${oldParent}`))
+        return
       }
       const shiftId = leadIds[oldShift]
       if (!shiftId) {
-        throw new Error(`Lead position does not exist: ${oldShift}`)
+        console.error('Error finding team for signup', rest.parentId)
+        console.error(new Error(`Team does not exist: ${oldShift}`))
+        return
       }
       Volunteers.collections.signups.insert({
         ...rest,
