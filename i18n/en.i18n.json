@@ -77,7 +77,6 @@
   "notification_sent": "Notifications Sent",
   "invitation_sent": "Invitation Sent",
   "real_name": "Real Name",
-  "manual_registration": "Manual Registration",
   "online": "Online",
   "settings": "Settings",
   "early_entry": "Early Entry",
@@ -110,5 +109,9 @@
   "upload": "Upload",
   "unknown_error": "Unknown Error",
   "invalid_json": "Invalid JSON",
-  "danger_zone": "Danger Zone!"
+  "danger_zone": "Danger Zone!",
+  "make_manager": "Make Manager",
+  "remove_manager": "Remove Manager",
+  "make_admin": "Make Admin",
+  "remove_admin": "Remove Admin"
 }

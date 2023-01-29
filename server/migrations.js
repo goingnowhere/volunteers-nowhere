@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Migrations } from 'meteor/percolate:migrations'
+import { Roles } from 'meteor/alanning:roles'
 
 import { EventSettings } from '../both/collections/settings'
 
@@ -45,5 +46,13 @@ Migrations.add({
       { $addToSet: { roles: { _id: 'manager', scope: 'nowhere2023', assigned: true } } },
       { multi: true },
     )
+  },
+})
+
+// Remove 'user' role as it served no purpose
+Migrations.add({
+  version: 14,
+  up() {
+    Roles.deleteRole('user')
   },
 })

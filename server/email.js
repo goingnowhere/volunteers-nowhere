@@ -10,10 +10,9 @@ import moment from 'moment-timezone'
 
 import { Volunteers } from '../both/init'
 import './accounts'
-import {
-  isManagerMixin,
-} from '../both/authMixins'
 import { EventSettings } from '../both/collections/settings'
+
+const authMixins = Volunteers.services.auth.mixins
 
 const EmailCache = new Mongo.Collection('emailCache')
 const EmailLogs = new Mongo.Collection('emailLogs')
@@ -269,7 +268,7 @@ const sendNotificationEmail = ({
 
 export const getCachedEmailsMethod = new ValidatedMethod({
   name: 'emailCache.get',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: null,
   run() {
     return EmailCache.find().fetch()
@@ -277,7 +276,7 @@ export const getCachedEmailsMethod = new ValidatedMethod({
 })
 export const sendCachedEmailMethod = new ValidatedMethod({
   name: 'emailCache.send',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate({ emailId }) {
     check(emailId, String)
   },
@@ -287,7 +286,7 @@ export const sendCachedEmailMethod = new ValidatedMethod({
 })
 export const deleteCachedEmailMethod = new ValidatedMethod({
   name: 'emailCache.delete',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate({ emailId }) {
     check(emailId, String)
   },
@@ -297,7 +296,7 @@ export const deleteCachedEmailMethod = new ValidatedMethod({
 })
 export const reGenerateCachedEmailMethod = new ValidatedMethod({
   name: 'emailCache.reGenerate',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate({ emailId }) {
     check(emailId, String)
   },
@@ -310,17 +309,17 @@ export const reGenerateCachedEmailMethod = new ValidatedMethod({
 })
 
 export const insertEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   ...EmailForms.insertEmailTemplate,
 })
 
 export const updateEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   ...EmailForms.updateEmailTemplate,
 })
 
 export const removeEmailTemplateMethod = new ValidatedMethod({
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   ...EmailForms.removeEmailTemplate,
 })
 
@@ -349,14 +348,14 @@ export const sendShiftReminderEmail = new ValidatedMethod({
   validate(userId) {
     check(userId, String)
   },
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   run: (userId) => sendNotificationEmail({ userId, template: 'shiftReminder' }),
 })
 
 export const sendMassShiftReminderEmail = new ValidatedMethod({
   name: 'email.sendMassShiftReminder',
   validate: null,
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   run() {
     const userIds = Promise.await(Volunteers.collections.signups.rawCollection().distinct('userId', {
       status: { $in: ['confirmed', 'pending'] },
@@ -376,7 +375,7 @@ export const sendReviewNotificationEmail = new ValidatedMethod({
   validate(userId) {
     check(userId, String)
   },
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   run: sendReviewEmail,
 })
 

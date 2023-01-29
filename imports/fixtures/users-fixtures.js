@@ -19,7 +19,7 @@ const defaultUsers = [
     name: 'normal user',
     email: 'normal@example.com',
     password: 'testtest',
-    roles: ['user'],
+    roles: [],
   },
 ]
 
@@ -39,11 +39,7 @@ export const createUserFixtures = (Volunteers) => {
         },
       })
       options.roles.forEach((role) => {
-        if (role === 'admin') {
-          Roles.addUsersToRoles(userId, role)
-        } else {
-          Roles.addUsersToRoles(userId, role, Volunteers.eventName)
-        }
+        Roles.addUsersToRoles(userId, role, Volunteers.eventName)
       })
     }
   })

@@ -11,12 +11,7 @@ import { extendMoment } from 'moment-range'
 import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../both/init'
 import {
-  isLoggedInMixin,
-  isManagerMixin,
   isNoInfoMixin,
-  isSameUserOrManagerMixin,
-  isLeadMixin,
-  isAnyLeadMixin,
 } from '../both/authMixins'
 import {
   dietGroups,
@@ -27,6 +22,7 @@ import { EventSettings, SettingsSchema } from '../both/collections/settings'
 import { lookupUserTicket, syncQuicketTicketList } from './quicket'
 
 const moment = extendMoment(Moment)
+const authMixins = Volunteers.services.auth.mixins
 
 Meteor.methods({
   sendVerificationEmail() {
@@ -51,7 +47,7 @@ const EnrollUserSchema = new SimpleSchema({
 export const enrollUser = ({
   name: 'Accounts.enrollUserCustom',
   validate: EnrollUserSchema.validator(),
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   run() {
   // run(user) {
     throw new Meteor.Error(501)
@@ -68,7 +64,7 @@ const ChangePasswordSchema = new SimpleSchema({
 
 export const adminChangeUserPassword = new ValidatedMethod({
   name: 'Accounts.adminChangeUserPassword',
-  mixins: [isSameUserOrManagerMixin],
+  mixins: [authMixins.isSameUserOrManager],
   validate: ChangePasswordSchema.validator(),
   run(doc) {
     if (doc.password === doc.password_again) {
@@ -89,11 +85,13 @@ export const userStats = new ValidatedMethod({
     const leads = Volunteers.collections.signups.find({ type: 'lead', status: 'confirmed' }).count()
     const online = Meteor.users.find({ 'status.online': true }).count()
     const withDuties = Promise.await(Volunteers.collections.signups.rawCollection().distinct('userId'))
+    const withTicket = Meteor.users.find({ ticketId: { $exists: true } }).count()
     const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
     return {
       volunteers,
       bioFilled,
       withDuties: withDuties.length,
+      withTicket,
       withPicture,
       leads,
       online,
@@ -103,7 +101,7 @@ export const userStats = new ValidatedMethod({
 
 export const userList = new ValidatedMethod({
   name: 'users.paged',
-  mixins: [isAnyLeadMixin],
+  mixins: [authMixins.isAnyLead],
   validate: () => {},
   run({ search = {}, page, perPage = 20 }) {
     const usersCursor = Meteor.users.find(search, {
@@ -127,7 +125,7 @@ export const userList = new ValidatedMethod({
 
 export const userListManager = new ValidatedMethod({
   name: 'users.paged.manager',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: () => {},
   run({ search = {}, page, perPage = 20 }) {
     const usersCursor = Meteor.users.find(search, {
@@ -151,7 +149,7 @@ export const userListManager = new ValidatedMethod({
         const allRoles = Roles.getRolesForUser(user._id, { scope: Volunteers.eventName })
         const roles = [
           ...allRoles.filter(role => ['manager', 'admin'].includes(role)),
-          allRoles.some(role => !['manager', 'admin', 'user'].includes(role)) ? 'lead' : undefined,
+          allRoles.some(role => !['manager', 'admin'].includes(role)) ? 'lead' : undefined,
         ]
         return [
           user._id,
@@ -164,14 +162,14 @@ export const userListManager = new ValidatedMethod({
 
 export const syncQuicketTicketListMethod = new ValidatedMethod({
   name: 'ticketList.sync',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: null,
   run: syncQuicketTicketList,
 })
 
 export const validateTicketId = new ValidatedMethod({
   name: 'ticketId.check',
-  mixins: [isLoggedInMixin],
+  mixins: [authMixins.isLoggedIn],
   validate: null,
   run: (ticketId) => {
     const ticket = lookupUserTicket({ ticketId })
@@ -261,14 +259,14 @@ const getTeamRotaCsv = ({ parentId }) => Volunteers.collections.signups.aggregat
 
 export const teamRotaData = new ValidatedMethod({
   name: 'team.rota',
-  mixins: [isLeadMixin],
+  mixins: [authMixins.isLead],
   validate: null,
   run: getTeamRotaCsv,
 })
 
 export const deptRotaData = new ValidatedMethod({
   name: 'dept.rota',
-  mixins: [isLeadMixin],
+  mixins: [authMixins.isLead],
   validate: null,
   run({ parentId }) {
     return _.flatten(
@@ -282,7 +280,7 @@ export const deptRotaData = new ValidatedMethod({
 
 export const allRotaData = new ValidatedMethod({
   name: 'all.rota',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: null,
   run() {
     return _.flatten(
@@ -315,7 +313,7 @@ function mapEECsvExport({
 
 export const eeCsvData = new ValidatedMethod({
   name: 'ee.csv',
-  mixins: [isLeadMixin],
+  mixins: [authMixins.isLead],
   validate: null,
   run({ parentId }) {
     const eventSettings = EventSettings.findOne()
@@ -403,7 +401,7 @@ export const eeCsvData = new ValidatedMethod({
  */
 export const newEventMigration = new ValidatedMethod({
   name: 'event.new.event',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: SettingsSchema.validator({ keys: ['eventName', 'eventPeriod'] }),
   run(newSettings) {
     const oldSettings = EventSettings.findOne()
@@ -625,7 +623,7 @@ export const newEventMigration = new ValidatedMethod({
  */
 export const allRotaExport = new ValidatedMethod({
   name: 'rota.all.export',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: null,
   run({ eventName }) {
     const sourceEvent = new VolunteersClass(eventName, true)
@@ -708,7 +706,7 @@ export const allRotaExport = new ValidatedMethod({
 
 export const allRotaImport = new ValidatedMethod({
   name: 'rota.all.import',
-  mixins: [isManagerMixin],
+  mixins: [authMixins.isManager],
   validate: ({ rotaJson }) => {
     try {
       JSON.parse(rotaJson)
@@ -864,7 +862,7 @@ export const allRotaImport = new ValidatedMethod({
 
 export const cantinaSetupData = new ValidatedMethod({
   name: 'cantina.setup',
-  mixins: [isManagerMixin], // TODO allow cantina lead?
+  mixins: [authMixins.isManager], // TODO allow cantina lead?
   validate: null,
   run() {
     const { buildPeriod } = EventSettings.findOne()

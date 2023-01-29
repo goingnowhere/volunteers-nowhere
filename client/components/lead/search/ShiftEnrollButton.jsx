@@ -65,17 +65,21 @@ const enroll = (type, {
 }
 
 // TODO wrap with an async methos HOC for loading state
-export const ShiftEnrollButton = (details) => (
+export const ShiftEnrollButton = ({ refreshSearch, ...details }) => (
   <button
     type="button"
     className="btn btn-primary fl"
-    onClick={() => enroll(details.duty, details)}
+    onClick={() => {
+      enroll(details.duty, details)
+      refreshSearch()
+    }}
   >
     <T>enroll</T>
   </button>
 )
 
 export const ProjectEnrollButton = ({
+  refreshSearch,
   start,
   end,
   ...details
@@ -98,11 +102,14 @@ export const ProjectEnrollButton = ({
         type="button"
         className="btn btn-primary float-right"
         disabled={!startEnroll || !endEnroll}
-        onClick={() => enroll('project', {
-          start: setTimezoneForUpload(startEnroll),
-          end: setTimezoneForUpload(endEnroll),
-          ...details,
-        })}
+        onClick={() => {
+          enroll('project', {
+            start: setTimezoneForUpload(startEnroll),
+            end: setTimezoneForUpload(endEnroll),
+            ...details,
+          })
+          refreshSearch()
+        }}
       >
         <T>enroll</T>
       </button>
@@ -113,17 +120,19 @@ export const ProjectEnrollButton = ({
 export const getShiftEnrollButton = ({
   duty,
   ...details
-}) => ({ userId }) => {
+}) => ({ userId, refreshSearch }) => {
   if (duty === 'project') {
     return ProjectEnrollButton({
       duty,
       ...details,
       userId,
+      refreshSearch,
     })
   }
   return ShiftEnrollButton({
     duty,
     ...details,
     userId,
+    refreshSearch,
   })
 }

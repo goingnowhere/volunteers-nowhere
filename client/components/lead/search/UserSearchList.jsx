@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { _ } from 'meteor/underscore'
 import { t } from '../../common/i18n'
 import { PagesPicker } from './PagesPicker.jsx'
@@ -61,26 +61,8 @@ const SearchBox = ({ setSearch }) => {
   )
 }
 
-const UserSearchListComponent = ({
-  ResultItem,
-  users,
-  userCount,
-  Controls,
-  setSearch,
-  page,
-  changePage,
-  showUser,
-}) => (
-  <Fragment>
-    <SearchBox setSearch={setSearch} />
-    {users.map((user) =>
-      <ResultItem key={user._id} user={user} Controls={Controls} showUser={showUser} />)}
-    <PagesPicker totalPages={Math.ceil(userCount / PER_PAGE)} page={page} changePage={changePage} />
-  </Fragment>
-)
-
 export const UserSearchList = ({
-  component,
+  Component,
   Controls,
   showUser,
   getManagerDetails,
@@ -90,27 +72,36 @@ export const UserSearchList = ({
   const [search, setSearch] = useState({})
   const [page, changePage] = useState(1)
   const method = getManagerDetails ? 'users.paged.manager' : 'users.paged'
-  useEffect(() => Meteor.call(method, { search, page, perPage: PER_PAGE }, (err, res) => {
-    if (err) {
-      console.error(err)
-    } else {
-      setList(res.users.map((user) => ({
-        ...user,
-        fistRoles: res.extras?.[user._id].roles,
-      })))
-      setUserCount(res.count)
-    }
-  }), [search, page, getManagerDetails, method])
+  const refreshSearch = useCallback(() =>
+    Meteor.call(method, { search, page, perPage: PER_PAGE }, (err, res) => {
+      if (err) {
+        console.error(err)
+      } else {
+        setList(res.users.map((user) => ({
+          ...user,
+          fistRoles: res.extras?.[user._id].roles,
+        })))
+        setUserCount(res.count)
+      }
+    }), [search, page, method])
+  useEffect(() => refreshSearch(), [refreshSearch])
   return (
-    <UserSearchListComponent
-      ResultItem={component}
-      users={users}
-      userCount={userCount}
-      Controls={Controls}
-      setSearch={setSearch}
-      page={page}
-      changePage={changePage}
-      showUser={showUser}
-    />
+    <>
+      <SearchBox setSearch={setSearch} />
+      {users.map((user) => (
+        <Component
+          key={user._id}
+          user={user}
+          Controls={Controls}
+          showUser={showUser}
+          refreshSearch={refreshSearch}
+        />
+      ))}
+      <PagesPicker
+        totalPages={Math.ceil(userCount / PER_PAGE)}
+        page={page}
+        changePage={changePage}
+      />
+    </>
   )
 }

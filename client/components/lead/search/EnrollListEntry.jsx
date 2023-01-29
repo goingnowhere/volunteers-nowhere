@@ -9,6 +9,7 @@ export const EnrollListEntry = ({
     profile,
     emails,
   },
+  refreshSearch,
   Controls,
 }) => (
   // TODO fix the layout
@@ -18,6 +19,6 @@ export const EnrollListEntry = ({
     </div>
     <div className="col-3">{displayName(profile)}</div>
     <div className="col-4">{emails[0].address}</div>
-    <div className="col-4"><Controls userId={_id} /></div>
+    <div className="col-4"><Controls userId={_id} refreshSearch={refreshSearch} /></div>
   </div>
 )

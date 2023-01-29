@@ -29,7 +29,7 @@ export const NoInfoUserListComponent = ({
         </div>
         <div className="col pt-2">
           <UserSearchList
-            component={UserListEntry}
+            Component={UserListEntry}
             Controls={UserListControls}
             showUser={userId => setModalUserId(userId)}
             getManagerDetails

@@ -73,5 +73,9 @@
   "upload": "Upload",
   "unknown_error": "Unknown Error",
   "invalid_json": "Invalid JSON",
-  "danger_zone": "Zone de danger !"
+  "danger_zone": "Zone de danger !",
+  "make_manager": "Rendre Responsable",
+  "remove_manager": "Retirer Responsable",
+  "make_admin": "Rendre Admin",
+  "remove_admin": "Retirer Admin"
 }

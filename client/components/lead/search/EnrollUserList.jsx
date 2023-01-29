@@ -8,5 +8,5 @@ export const EnrollUserList = ({
   data,
 }) => {
   const EnrollButton = getShiftEnrollButton(data)
-  return <UserSearchList component={EnrollListEntry} Controls={EnrollButton} />
+  return <UserSearchList Component={EnrollListEntry} Controls={EnrollButton} />
 }
