@@ -11,8 +11,8 @@ export const Volunteers = new VolunteersClass({
   previousEventName: 'nowhere2022',
 })
 
-const roles = ['admin', 'manager']
 // this is exported to handle the publication of the ProfilePictures
-export const MeteorProfile = new MeteorProfileClass(Volunteers.eventName, roles)
+// Note: we pass in empty roles array as we create our own roles
+export const MeteorProfile = new MeteorProfileClass(Volunteers.eventName, [])
 
 initLocale(Volunteers)
