@@ -4,13 +4,12 @@ import 'bootstrap-select/dist/css/bootstrap-select.css'
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
-import { BookedTable } from 'meteor/goingnowhere:volunteers'
+import { BookedTable, displayName } from 'meteor/goingnowhere:volunteers'
 import { Link } from 'react-router-dom'
 import { Volunteers } from '../../../both/init'
 import { UserResponsibilities } from './UserResponsibilities.jsx'
 import { FilteredSignupList } from '../lead/FilteredSignupList.jsx'
 import { T } from '../common/i18n'
-import { displayName } from '../common/utils'
 
 export function UserDashboard() {
   const { user, bookedMissions, ready } = useTracker(() => {
@@ -33,12 +32,12 @@ export function UserDashboard() {
         <div className="col-sm-12 col-md-2 pr-1 bg-grey dashboard-side-panel">
           {user.profile.picture ? (
             <>
-              <h3><T>welcome</T> {displayName(user.profile)}</h3>
+              <h3><T>welcome</T> {displayName(user)}</h3>
               <img src="{{imageFileLink user.profile.picture}}" className="rounded-circle header-avatar" alt="" />
             </>
           ) : (
             <>
-              <h3><T>welcome</T> {displayName(user.profile)}</h3>
+              <h3><T>welcome</T> {displayName(user)}</h3>
               <img src="img/mr_nobody.jpg" className="rounded-circle header-avatar" alt="" />
               <Link to="/profile"><T>add_picture</T></Link>
             </>

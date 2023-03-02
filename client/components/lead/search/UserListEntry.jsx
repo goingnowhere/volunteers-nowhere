@@ -1,6 +1,6 @@
 import React from 'react'
 import Fa from 'react-fontawesome'
-import { displayName } from 'meteor/abate:meteor-user-profiles'
+import { displayName } from 'meteor/goingnowhere:volunteers'
 
 import { T, t } from '../../common/i18n'
 import { formatDateTime } from '../../common/dates'
@@ -38,7 +38,7 @@ export const UserListEntry = ({
               <tbody>
                 <tr>
                   <td><T>name</T></td>
-                  <td>{displayName({ profile, emails })}
+                  <td>{displayName(user)}
                     {status?.online && <span className="text-success"> <Fa name="circle" /></span>}
                   </td>
                 </tr>

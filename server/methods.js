@@ -408,7 +408,7 @@ export const newEventMigration = new ValidatedMethod({
     if (!oldSettings.eventName) {
       throw new Meteor.Error(500, "We don't have an event name so can't proceed :(")
     }
-    const sourceEvent = new VolunteersClass(oldSettings.eventName, true)
+    const sourceEvent = new VolunteersClass(oldSettings, true)
     const departments = sourceEvent.collections.department.find().fetch()
     const teams = sourceEvent.collections.team.find().fetch()
     const rotas = sourceEvent.collections.rotas.find().fetch()

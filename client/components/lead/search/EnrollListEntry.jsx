@@ -1,24 +1,27 @@
 import React from 'react'
-import { displayName } from '../../common/utils'
+import { displayName } from 'meteor/goingnowhere:volunteers'
 
 import { ProfilePicture } from '../../common/ProfilePicture.jsx'
 
 export const EnrollListEntry = ({
-  user: {
+  user,
+  refreshSearch,
+  Controls,
+}) => {
+  const {
     _id,
     profile,
     emails,
-  },
-  refreshSearch,
-  Controls,
-}) => (
+  } = user
+  return (
   // TODO fix the layout
-  <div className="row border-top border-bottom p-2">
-    <div className="col-1 p-0">
-      <ProfilePicture userId={_id} id={profile.picture} />
+    <div className="row border-top border-bottom p-2">
+      <div className="col-1 p-0">
+        <ProfilePicture userId={_id} id={profile.picture} />
+      </div>
+      <div className="col-3">{displayName(user)}</div>
+      <div className="col-4">{emails[0].address}</div>
+      <div className="col-4"><Controls userId={_id} refreshSearch={refreshSearch} /></div>
     </div>
-    <div className="col-3">{displayName(profile)}</div>
-    <div className="col-4">{emails[0].address}</div>
-    <div className="col-4"><Controls userId={_id} refreshSearch={refreshSearch} /></div>
-  </div>
-)
+  )
+}

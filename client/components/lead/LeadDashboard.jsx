@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { useMethodCallData } from 'meteor/goingnowhere:volunteers'
 
 import { T, t } from '../common/i18n'
 import { TabbedDutySummary } from './TabbedDutySummary.jsx'
@@ -12,7 +12,10 @@ import { SignupApprovalList } from './SignupApprovalList.jsx'
 import { Volunteers } from '../../../both/init'
 
 export const LeadDashboard = ({ match: { params: { teamId } } }) => {
-  const [{ team, pendingRequests, volunteerNumber }, setStats] = useState({ team: {} })
+  const [{ team = {}, pendingRequests, volunteerNumber }, isLoaded, reload] = useMethodCallData(
+    `${Volunteers.eventName}.Volunteers.getTeamStats`,
+    { teamId },
+  )
 
   const editTeam = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
@@ -26,16 +29,6 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
       { form: { collection: Volunteers.collections.project }, data: { parentId: teamId } }, '', 'lg')
   }
-
-  const reload = useCallback(() => Meteor.call(`${Volunteers.eventName}.Volunteers.getTeamStats`, { teamId },
-    (err, teamStats) => {
-      if (err) console.error(err)
-      else {
-        setStats(teamStats)
-      }
-    }), [teamId])
-
-  useEffect(reload, [teamId])
 
   useEffect(() => {
     AutoForm.addHooks([
