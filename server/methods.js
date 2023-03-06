@@ -99,12 +99,13 @@ export const userStats = new ValidatedMethod({
   },
 })
 
+const onlyFilled = { 'profile.formFilled': true }
 export const userList = new ValidatedMethod({
   name: 'users.paged',
   mixins: [authMixins.isAnyLead],
   validate: () => {},
   run({ search = {}, page, perPage = 20 }) {
-    const usersCursor = Meteor.users.find(search, {
+    const usersCursor = Meteor.users.find({ ...onlyFilled, ...search }, {
       sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
       skip: (page - 1) * perPage,
       limit: perPage,
@@ -112,11 +113,11 @@ export const userList = new ValidatedMethod({
       // what we don't need
       fields: {
         profile: true,
-        emails: true,
         isBanned: true,
         status: true,
         createdAt: true,
         roles: true,
+        ticketId: true,
       },
     })
     return { count: usersCursor.count(), users: usersCursor.fetch() }
@@ -128,7 +129,7 @@ export const userListManager = new ValidatedMethod({
   mixins: [authMixins.isManager],
   validate: () => {},
   run({ search = {}, page, perPage = 20 }) {
-    const usersCursor = Meteor.users.find(search, {
+    const usersCursor = Meteor.users.find({ ...onlyFilled, ...search }, {
       sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
       skip: (page - 1) * perPage,
       limit: perPage,
@@ -139,6 +140,7 @@ export const userListManager = new ValidatedMethod({
         status: true,
         createdAt: true,
         roles: true,
+        ticketId: true,
       },
     })
     return {
@@ -149,7 +151,7 @@ export const userListManager = new ValidatedMethod({
         const allRoles = Roles.getRolesForUser(user._id, { scope: Volunteers.eventName })
         const roles = [
           ...allRoles.filter(role => ['manager', 'admin'].includes(role)),
-          allRoles.some(role => !['manager', 'admin'].includes(role)) ? 'lead' : undefined,
+          ...allRoles.some(role => !['manager', 'admin'].includes(role)) ? ['lead'] : [],
         ]
         return [
           user._id,

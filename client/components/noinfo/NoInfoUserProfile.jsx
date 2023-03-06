@@ -6,6 +6,7 @@ import { displayName, BookedTable } from 'meteor/goingnowhere:volunteers'
 import { Volunteers, MeteorProfile } from '../../../both/init'
 import { T } from '../common/i18n'
 import { UserResponsibilities } from '../volunteer/UserResponsibilities.jsx'
+import { UserInfoList } from '../lead/UserInfoList.jsx'
 import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
 
 const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
@@ -13,37 +14,15 @@ const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
     {user && user.profile && (
       <div className="row">
         <div className="col">
-          <div className="raw">
-            <div className="col-md-3 col-lg-3 " align="center">
+          <div className="row">
+            <div className="col-md-3">
               {user.profile.picture
                 ? <img src={profilePic} className="rounded-circle header-avatar img-fluid" alt="Profile" />
                 : <img src="/img/mr_nobody.jpg" className="rounded-circle header-avatar" alt="Profile" />}
             </div>
           </div>
           <div className="row">
-            <table className="table table-user-information">
-              <tbody>
-                <tr>
-                  <td><T>name</T></td>
-                  <td>{displayName(user)}
-                    {user.status && user.status.online && <span className="text-success"> <Fa name="circle" /></span>}
-                  </td>
-                </tr>
-                <tr>
-                  <td><T>real_name</T></td>
-                  <td>{user.profile.firstName} {user.profile.lastName}</td>
-                </tr>
-                <tr><td><T>ticket_number</T></td><td>{user.ticketId}</td></tr>
-                <tr><td><T>email</T> </td>
-                  <td>
-                    {user.emails[0].address}
-                    {user.emails[0].verified
-                      ? <span className="text-success"><Fa name="check" /></span>
-                      : <span className="text-danger"><Fa name="warning" /></span>}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <UserInfoList user={user} />
           </div>
           <VolunteerFormDisplay form={volForm} />
         </div>

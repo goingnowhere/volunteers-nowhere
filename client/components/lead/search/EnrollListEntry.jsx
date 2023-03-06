@@ -11,7 +11,6 @@ export const EnrollListEntry = ({
   const {
     _id,
     profile,
-    emails,
   } = user
   return (
   // TODO fix the layout
@@ -20,7 +19,7 @@ export const EnrollListEntry = ({
         <ProfilePicture userId={_id} id={profile.picture} />
       </div>
       <div className="col-3">{displayName(user)}</div>
-      <div className="col-4">{emails[0].address}</div>
+      <div className="col-4"><small>({profile.firstName} {profile.lastName})</small></div>
       <div className="col-4"><Controls userId={_id} refreshSearch={refreshSearch} /></div>
     </div>
   )
