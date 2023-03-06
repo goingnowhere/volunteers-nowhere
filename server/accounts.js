@@ -42,7 +42,7 @@ Accounts.onCreateUser((options, user) => {
     ...user,
     ticketId,
     profile,
-    rawTicketInfo: ticket,
+    rawTicketInfo: ticket || undefined,
   }
 })
 

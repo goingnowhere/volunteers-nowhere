@@ -59,7 +59,9 @@ const extractTicketId = (ticketString) => {
 }
 const validateTicketId = async (ticketId) => new Promise((resolve, reject) => {
   const ticketIdNum = extractTicketId(ticketId)
-  if (!ticketIdNum) {
+  if (!ticketId) {
+    resolve()
+  } else if (!ticketIdNum) {
     resolve('Ticket ID must look like QTK12345678, find it at the top-right of your ticket')
   } else {
     Meteor.call('ticketId.check', ticketIdNum, (err, res) => {
@@ -125,7 +127,6 @@ const VolunteerFormComponent = ({
                       name="ticketId"
                       className={`form-control${errors.ticketId ? ' is-invalid' : ''}`}
                       placeholder="QTK12345678"
-                      required
                       validate={validateTicketId}
                     />
                     {errors.ticketId && (

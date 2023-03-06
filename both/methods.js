@@ -30,8 +30,7 @@ export const updateUserBio = new ValidatedMethod({
     ...nonProfileData
   }) {
     // TODO check ticket id again
-    const selector = ticketId ? { _id: userId } : { _id: userId, ticketId: { $exists: true } }
-    Meteor.users.update(selector, {
+    Meteor.users.update({ _id: userId }, {
       $set: {
         profile: {
           firstName,
