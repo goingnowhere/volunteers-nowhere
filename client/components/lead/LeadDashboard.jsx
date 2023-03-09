@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
@@ -12,10 +12,16 @@ import { SignupApprovalList } from './SignupApprovalList.jsx'
 import { Volunteers } from '../../../both/init'
 
 export const LeadDashboard = ({ match: { params: { teamId } } }) => {
-  const [{ team = {}, pendingRequests, volunteerNumber }, isLoaded, reload] = useMethodCallData(
+  const [{ team = {}, pendingRequests, volunteerNumber }, , reloadStats] = useMethodCallData(
     `${Volunteers.eventName}.Volunteers.getTeamStats`,
     { teamId },
   )
+
+  const dutiesRef = useRef()
+  const reload = useCallback(() => {
+    reloadStats()
+    dutiesRef.current?.()
+  }, [reloadStats])
 
   const editTeam = () => {
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
@@ -113,12 +119,12 @@ export const LeadDashboard = ({ match: { params: { teamId } } }) => {
         <div className={`${pendingRequests > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
           } pl-1 user-top`}
         >
-          <TabbedDutySummary teamId={teamId} />
+          <TabbedDutySummary reloadRef={dutiesRef} teamId={teamId} />
         </div>
         {pendingRequests > 0 && (
           <div className="col-sm-12 col-md-5 pl-1 user-top">
             <h2 className="header"><T>applications</T></h2>
-            <SignupApprovalList query={{ parentId: teamId, status: 'pending' }} />
+            <SignupApprovalList query={{ parentId: teamId, status: 'pending' }} onReload={reload} />
           </div>
         )}
       </div>

@@ -1,26 +1,29 @@
-import { Meteor } from 'meteor/meteor'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, {
+  useEffect,
+  useState,
+} from 'react'
 import moment from 'moment-timezone'
-import { TeamShiftsTable, TeamProjectsTable } from 'meteor/goingnowhere:volunteers'
+import { TeamShiftsTable, TeamProjectsTable, useMethodCallData } from 'meteor/goingnowhere:volunteers'
 import { T } from '../common/i18n'
 import { WeekStrip } from '../common/WeekStrip.jsx'
 import { NoInfoUserProfile } from '../noinfo/NoInfoUserProfile.jsx'
 
-export const TabbedDutySummary = ({ teamId }) => {
+export const TabbedDutySummary = ({ reloadRef, teamId }) => {
   const [tab, setTab] = useState('shift')
   const [stuff, setInitialWeek] = useState([])
   const [initialWeek, year] = stuff
   // TODO Move up somehow, either by passing in or finally adding redux
-  useEffect(() => Meteor.call('eventSettings', (err, settings) => {
-    if (err) console.error(err)
-    else {
+  const [settings, settingsLoaded] = useMethodCallData('eventSettings')
+  useEffect(() => {
+    if (settingsLoaded) {
       const eventStart = moment(settings.eventPeriod.start)
       setInitialWeek([eventStart.week(), eventStart.year()])
     }
-  }), [])
+  }, [settingsLoaded, settings])
   const [currentDay, setCurrentDay] = useState()
+
   return (
-    <Fragment>
+    <>
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <button type="button" className={`nav-link${tab === 'shift' ? ' active' : ''}`} onClick={() => setTab('shift')}>
@@ -45,6 +48,7 @@ export const TabbedDutySummary = ({ teamId }) => {
                 setDay={setCurrentDay}
               />
               <TeamShiftsTable
+                reloadRef={reloadRef}
                 teamId={teamId}
                 date={currentDay}
                 UserInfoComponent={NoInfoUserProfile}
@@ -54,10 +58,14 @@ export const TabbedDutySummary = ({ teamId }) => {
         )}
         {tab === 'project' && (
           <div role="tabpanel" className={`tab-pane${tab === 'project' ? ' active' : ''}`}>
-            <TeamProjectsTable teamId={teamId} UserInfoComponent={NoInfoUserProfile} />
+            <TeamProjectsTable
+              reloadRef={reloadRef}
+              teamId={teamId}
+              UserInfoComponent={NoInfoUserProfile}
+            />
           </div>
         )}
       </div>
-    </Fragment>
+    </>
   )
 }
