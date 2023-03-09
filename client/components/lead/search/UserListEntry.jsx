@@ -1,7 +1,7 @@
 import React from 'react'
+import { UserInfoList } from 'meteor/goingnowhere:volunteers'
 
 import { ProfilePicture } from '../../common/ProfilePicture.jsx'
-import { UserInfoList } from '../UserInfoList.jsx'
 
 // TODO put this into a fork of meteor-user-profiles or abandon that module as it's too specific
 export const UserListEntry = ({

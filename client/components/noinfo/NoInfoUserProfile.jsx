@@ -1,12 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import React from 'react'
-import Fa from 'react-fontawesome'
 import { withTracker } from 'meteor/react-meteor-data'
-import { displayName, BookedTable } from 'meteor/goingnowhere:volunteers'
+import { BookedTable, UserInfoList } from 'meteor/goingnowhere:volunteers'
 import { Volunteers, MeteorProfile } from '../../../both/init'
 import { T } from '../common/i18n'
 import { UserResponsibilities } from '../volunteer/UserResponsibilities.jsx'
-import { UserInfoList } from '../lead/UserInfoList.jsx'
 import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
 
 const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
