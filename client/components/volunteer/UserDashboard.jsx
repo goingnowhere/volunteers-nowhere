@@ -10,6 +10,7 @@ import { Volunteers } from '../../../both/init'
 import { UserResponsibilities } from './UserResponsibilities.jsx'
 import { FilteredSignupList } from '../lead/FilteredSignupList.jsx'
 import { T } from '../common/i18n'
+import { ProfilePicture } from '../common/ProfilePicture.jsx'
 
 export function UserDashboard() {
   const { user, bookedMissions, ready } = useTracker(() => {
@@ -29,18 +30,11 @@ export function UserDashboard() {
   return ready && (
     <div className="container-fluid h-100">
       <div className="row h-100">
-        <div className="col-sm-12 col-md-2 pr-1 bg-grey dashboard-side-panel">
-          {user.profile.picture ? (
-            <>
-              <h3><T>welcome</T> {displayName(user)}</h3>
-              <img src="{{imageFileLink user.profile.picture}}" className="rounded-circle header-avatar" alt="" />
-            </>
-          ) : (
-            <>
-              <h3><T>welcome</T> {displayName(user)}</h3>
-              <img src="img/mr_nobody.jpg" className="rounded-circle header-avatar" alt="" />
-              <Link to="/profile"><T>add_picture</T></Link>
-            </>
+        <div className="col-sm-12 col-md-2 bg-grey dashboard-side-panel">
+          <h3><T>welcome</T> {displayName(user)}</h3>
+          <ProfilePicture user={user} width="100%" height="" />
+          {!user.profile.picture && (
+            <Link to="/profile"><T>add_picture</T></Link>
           )}
           <h5 className="mb-2 dark-text"><T>responsibilities</T> </h5>
           <UserResponsibilities />

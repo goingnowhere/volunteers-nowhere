@@ -28,7 +28,7 @@ const LoggedInHeaderComponent = ({
       <span className="navbar-toggler-icon" />
     </button>
     <NavLink className="navbar-brand" to="/dashboard">
-      <img src="/img/compass.svg" className="img-fluid header-avatar" alt="" />
+      <img src="/img/compass.svg" width="48" height="48" alt="" />
     </NavLink>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">

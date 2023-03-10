@@ -2,21 +2,20 @@ import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
 import { BookedTable, UserInfoList } from 'meteor/goingnowhere:volunteers'
-import { Volunteers, MeteorProfile } from '../../../both/init'
+import { Volunteers } from '../../../both/init'
 import { T } from '../common/i18n'
 import { UserResponsibilities } from '../volunteer/UserResponsibilities.jsx'
 import { VolunteerFormDisplay } from './VolunteerFormDisplay.jsx'
+import { ProfilePicture } from '../common/ProfilePicture.jsx'
 
-const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
+const NoInfoUserProfileComponent = ({ user, volForm }) => (
   <div className="container-fluid">
     {user && user.profile && (
       <div className="row">
         <div className="col">
           <div className="row">
             <div className="col-md-3">
-              {user.profile.picture
-                ? <img src={profilePic} className="rounded-circle header-avatar img-fluid" alt="Profile" />
-                : <img src="/img/mr_nobody.jpg" className="rounded-circle header-avatar" alt="Profile" />}
+              <ProfilePicture user={user} />
             </div>
           </div>
           <div className="row">
@@ -39,15 +38,11 @@ const NoInfoUserProfileComponent = ({ user, profilePic, volForm }) => (
 
 export const NoInfoUserProfile = withTracker(({ userId }) => {
   Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, userId)
-  Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId)
   Meteor.subscribe('user.extra', userId)
   const user = Meteor.users.findOne(userId)
-  const picture = user && user.profile && user.profile.picture
-    && MeteorProfile.ProfilePictures.findOne(user.profile.picture)
 
   return {
     user,
-    profilePic: picture && picture.link(),
     volForm: Volunteers.collections.volunteerForm.findOne({ userId }),
   }
 })(NoInfoUserProfileComponent)

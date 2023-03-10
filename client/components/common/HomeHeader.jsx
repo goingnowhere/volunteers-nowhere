@@ -4,7 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 export const HomeHeader = withRouter(() => (
   <nav className="navbar navbar-expand-lg bg-primary sticky-top text-uppercase" id="mainNav">
     <a className="navbar-brand" href="/">
-      <img src="/img/compass.svg" className="img-fluid header-avatar" alt="" />
+      <img src="/img/compass.svg" width="48" height="48" alt="" />
     </a>
     <button
       className="navbar-toggler navbar-toggler-right text-uppercase text-white rounded"

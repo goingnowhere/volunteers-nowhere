@@ -10,17 +10,13 @@ export const UserListEntry = ({
   showUser,
   refreshSearch,
 }) => {
-  const {
-    _id,
-    profile,
-  } = user
   return (
   // TODO fix the layout
     <div className="card">
       <div className="card-body pb-0">
         <div className="row">
           <div className="col-md-3">
-            <ProfilePicture userId={_id} id={profile.picture} />
+            <ProfilePicture user={user} />
             <div className="row">
               <Controls user={user} showUser={showUser} refreshSearch={refreshSearch} />
             </div>

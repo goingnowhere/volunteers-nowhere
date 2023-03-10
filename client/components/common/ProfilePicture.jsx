@@ -1,20 +1,35 @@
 import { Meteor } from 'meteor/meteor'
 import React from 'react'
-import { withTracker } from 'meteor/react-meteor-data'
+import { useTracker } from 'meteor/react-meteor-data'
 import { MeteorProfile } from '../../../both/init'
 
-const ProfilePictureComponent = ({ src }) => (
-  <img src={src} alt="" className="rounded-circle header-avatar img-fluid" />
-)
+const nobody = '/img/mr_nobody.jpg'
 
-export const ProfilePicture = withTracker(({ userId, id }) => {
-  let src = '/img/mr_nobody.jpg'
-  if (id) {
-    Meteor.subscribe('meteor-user-profiles.ProfilePictures', userId)
-    const pic = MeteorProfile.ProfilePictures.findOne(id)
-    if (pic) {
-      src = pic.link()
+export function ProfilePicture({
+  srcOverride,
+  user,
+  width,
+  height,
+}) {
+  const photoId = user?.profile?.picture
+  const src = useTracker(() => {
+    if (photoId && !srcOverride) {
+      Meteor.subscribe('meteor-user-profiles.ProfilePictures', user._id)
+      const pic = MeteorProfile.ProfilePictures.findOne(photoId)
+      if (pic) {
+        return pic.link()
+      }
     }
-  }
-  return { src }
-})(ProfilePictureComponent)
+    return srcOverride || nobody
+  })
+
+  return (
+    <img
+      src={src}
+      alt=""
+      width={width ?? 48}
+      height={height ?? 48}
+      className="rounded profile-pic"
+    />
+  )
+}

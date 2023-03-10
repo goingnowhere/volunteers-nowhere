@@ -10,7 +10,7 @@ html {
 }
 
 /* FONTS */
-h1, h2, h3 {
+h1, h2, h3, h1 *, h2 *, h3 * {
   font-family: 'Unica One' /*'Roboto Condensed'*/;
 }
 h2 {
@@ -151,10 +151,8 @@ et injecter la typo */
   }
 }
 
-/* Avatar image on the toolbar */
-.header-avatar {
-  width: 48px;
-  height: 48px;
+.profile-pic {
+  object-fit: cover;
 }
 
 /* Automatically add red * to autoform required fields */

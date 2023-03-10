@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 import React, { Component } from 'react'
 import { MeteorProfile } from '../../../../both/init'
+import { ProfilePicture } from '../../common/ProfilePicture.jsx'
 
 // TODO Clean up this mess
 
@@ -20,7 +21,7 @@ const IndividualFile = ({ fileName, fileUrl, fileId }) => (
     </div>
 
     <div className="col-md-3">
-      <img className="rounded-circle header-avatar" src={fileUrl} alt="profile" />
+      <ProfilePicture srcOverride={fileUrl} alt="profile" />
     </div>
 
     <div className="col-md-4">

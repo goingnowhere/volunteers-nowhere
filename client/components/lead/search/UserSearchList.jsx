@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor'
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { _ } from 'meteor/underscore'
+import { Loading, useMethodCallData } from 'meteor/goingnowhere:volunteers'
 import { t } from '../../common/i18n'
 import { PagesPicker } from './PagesPicker.jsx'
 
@@ -67,41 +67,41 @@ export const UserSearchList = ({
   showUser,
   getManagerDetails,
 }) => {
-  const [users, setList] = useState([])
-  const [userCount, setUserCount] = useState(0)
   const [search, setSearch] = useState({})
   const [page, changePage] = useState(1)
   const method = getManagerDetails ? 'users.paged.manager' : 'users.paged'
-  const refreshSearch = useCallback(() =>
-    Meteor.call(method, { search, page, perPage: PER_PAGE }, (err, res) => {
-      if (err) {
-        console.error(err)
-      } else {
-        setList(res.users.map((user) => ({
-          ...user,
-          fistRoles: res.extras?.[user._id].roles,
-        })))
-        setUserCount(res.count)
-      }
-    }), [search, page, method])
-  useEffect(() => refreshSearch(), [refreshSearch])
+  const [{ users, extras, count: userCount }, isLoaded, refreshSearch] = useMethodCallData(
+    method,
+    { search, page, perPage: PER_PAGE },
+  )
+  const userList = useMemo(() => (!isLoaded ? [] : users.map((user) => ({
+    ...user,
+    fistRoles: extras?.[user._id].roles,
+  }))), [users, extras, isLoaded])
+
   return (
     <>
       <SearchBox setSearch={setSearch} />
-      {users.map((user) => (
-        <Component
-          key={user._id}
-          user={user}
-          Controls={Controls}
-          showUser={showUser}
-          refreshSearch={refreshSearch}
-        />
-      ))}
-      <PagesPicker
-        totalPages={Math.ceil(userCount / PER_PAGE)}
-        page={page}
-        changePage={changePage}
-      />
+      {!isLoaded ? (
+        <Loading />
+      ) : (
+        <>
+          {userList.map((user) => (
+            <Component
+              key={user._id}
+              user={user}
+              Controls={Controls}
+              showUser={showUser}
+              refreshSearch={refreshSearch}
+            />
+          ))}
+          <PagesPicker
+            totalPages={Math.ceil(userCount / PER_PAGE)}
+            page={page}
+            changePage={changePage}
+          />
+        </>
+      )}
     </>
   )
 }
