@@ -29,7 +29,7 @@ export const WeekStrip = ({
         <li className="page-item">
           <button
             type="button"
-            className="page-link h-100"
+            className="page-link h-100 p-2"
             title="Previous week"
             onClick={() => setWeekNumber((week || initialWeek) - 1)}
           >
@@ -43,11 +43,11 @@ export const WeekStrip = ({
             <li key={day.dayOfYear()} className={`page-item${isCurrentDay ? ' active' : ''}`}>
               <button
                 type="button"
-                className="page-link h-100"
+                className="page-link h-100 p-1"
                 title=""
                 onClick={() => setDay(isCurrentDay ? null : day)}
               >
-                {day.format('ddd Do')} <small>{day.format('MMM')}</small>
+                {day.format('ddd Do')} <br /><small>{day.format('MMM')}</small>
               </button>
             </li>
           )
@@ -55,7 +55,7 @@ export const WeekStrip = ({
         <li className="page-item">
           <button
             type="button"
-            className="page-link h-100"
+            className="page-link h-100 p-2"
             title="Next week"
             onClick={() => setWeekNumber((week || initialWeek) + 1)}
           >

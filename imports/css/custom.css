@@ -27,7 +27,7 @@ h2.header {
   line-height: normal;
 }
 
-h4, h5, h6, p {
+* {
   font-family: 'Roboto Condensed';
 }
 h5 {
