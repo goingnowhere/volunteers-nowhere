@@ -34,7 +34,7 @@
     "react-select": "^3.2.0",
     "simpl-schema": "^1.13.1",
     "underscore": "^1.13.6",
-    "webpack": "^5.75.0"
+    "webpack": "^5.76.0"
   },
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
