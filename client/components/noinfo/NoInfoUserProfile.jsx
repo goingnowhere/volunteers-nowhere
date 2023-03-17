@@ -22,8 +22,7 @@ const NoInfoUserProfileComponent = ({ user, volForm }) => (
           <VolunteerFormDisplay form={volForm} />
         </div>
         <div className="col">
-          <h5 className="mb-2 dark-text"><T>responsibilities</T> </h5>
-          <div><UserResponsibilities userId={user._id} /></div>
+          <UserResponsibilities userId={user._id} />
           <h2 className="header"><T>shifts</T></h2>
           <div>
             <BookedTable userId={user._id} />

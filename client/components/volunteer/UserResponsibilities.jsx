@@ -1,46 +1,66 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
-import { withTracker } from 'meteor/react-meteor-data'
-// import { Link } from 'react-router-dom'
+import { useTracker } from 'meteor/react-meteor-data'
+import { Link } from 'react-router-dom'
 import { Volunteers } from '../../../both/init'
 import { T } from '../common/i18n'
-import { Link } from '../common/BlazeLink.jsx'
 
-export const UserResponsibilitiesComponent = ({
-  isManager,
-  isNoInfo,
-  leads,
-  metaleads,
-}) => (
-  <ul className="list-unstyled">
-    {isManager && <li><span className="mb-2 dark-text"><T>role</T>: </span>Manager</li>}
-    {isNoInfo && <li><span className="mb-2 dark-text"><T>noInfo</T>: </span>Member</li>}
-    {leads.map((team) => (
-      <li key={team._id}>
-        <span className="mb-2 dark-text"><T>lead</T>: </span>
-        <Link to={`/lead/team/${team._id}`}>{team.name}</Link>
-      </li>
-    ))}
-    {metaleads.map((dept) => (
-      <li key={dept._id}>
-        <span className="mb-2 dark-text"><T>metalead</T>: </span>
-        <Link to={`/metalead/department/${dept._id}`}>{dept.name}</Link>
-      </li>
-    ))}
-  </ul>
-)
+const { collections, services } = Volunteers
 
-export const UserResponsibilities = withTracker(({ userId: userIdIn }) => {
-  const userId = userIdIn || Meteor.userId()
-  const isManager = Volunteers.auth.isManager(userId)
-  // TODO use roles?
-  const leadSignupTeamIds = Volunteers.collections.signups.find({ userId, type: 'lead', status: 'confirmed' })
-    .map((signup) => signup.parentId)
-  return {
-    leads: Volunteers.collections.team.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
-    metaleads: Volunteers.collections.department.find({ _id: { $in: leadSignupTeamIds } }).fetch(),
+export function UserResponsibilities({ userId: userIdIn }) {
+  const {
     isManager,
-    isNoInfo: isManager
-      || !!Volunteers.collections.team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
-  }
-})(UserResponsibilitiesComponent)
+    leads,
+    metaleads,
+    isNoInfo,
+  } = useTracker(() => {
+    const userId = userIdIn || Meteor.userId()
+    const hasManagerRole = services.auth.isManager(userId)
+    const leadSignupTeamIds = services.auth.getLeadUnitIds(userId)
+    if (leadSignupTeamIds) {
+      const metaleadDepts = collections.department.find({ _id: { $in: leadSignupTeamIds } }).fetch()
+      const metaleadDeptIds = metaleadDepts.map((dept) => dept._id)
+      const leadTeams = collections.team.find({
+        _id: { $in: leadSignupTeamIds },
+        parentId: { $not: { $in: metaleadDeptIds } },
+      }).fetch()
+      return {
+        leads: leadTeams,
+        metaleads: metaleadDepts,
+        isManager: hasManagerRole,
+        isNoInfo: hasManagerRole
+          || !!collections.team.findOne({ name: 'NoInfo', _id: { $in: leadSignupTeamIds } }),
+      }
+    }
+    return {
+      leads: [],
+      metaleads: [],
+      isManager: hasManagerRole,
+      isNoInfo: hasManagerRole,
+    }
+  }, [userIdIn])
+
+  const hasResponsibility = isManager || isNoInfo || leads.length > 0 || metaleads.length > 0
+
+  return hasResponsibility && (
+    <>
+      <h5 className="dark-text"><T>responsibilities</T> </h5>
+      <ul className="list-unstyled">
+        {isManager && <li><span className="mb-2 dark-text"><T>role</T>: </span>Manager</li>}
+        {isNoInfo && <li><span className="mb-2 dark-text"><T>noInfo</T>: </span>Member</li>}
+        {leads.map((team) => (
+          <li key={team._id}>
+            <span className="mb-2 dark-text"><T>lead</T>: </span>
+            <Link to={`/lead/team/${team._id}`}>{team.name}</Link>
+          </li>
+        ))}
+        {metaleads.map((dept) => (
+          <li key={dept._id}>
+            <span className="mb-2 dark-text"><T>metalead</T>: </span>
+            <Link to={`/metalead/department/${dept._id}`}>{dept.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}

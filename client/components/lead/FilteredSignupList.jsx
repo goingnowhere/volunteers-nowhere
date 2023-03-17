@@ -9,7 +9,13 @@ import { Volunteers } from '../../../both/init'
 export function FilteredSignupList() {
   const [dutyType, setDutyType] = useState('event')
   const [filters, setFilters] = useState({})
-  const { quirks, skills, ready } = useTracker(() => {
+  const {
+    quirks,
+    skills,
+    userQuirks,
+    userSkills,
+    ready,
+  } = useTracker(() => {
     const volForm = Volunteers.collections.volunteerForm
       .findOne({ userId: Meteor.userId() }) || {}
     return {
@@ -29,7 +35,7 @@ export function FilteredSignupList() {
 
   return ready && (
     <>
-      <div className="signupListFilters row no-gutters">
+      <div className="row no-gutters">
         <select
           id='typeSelect'
           className='col-md-6 col-lg-3'
@@ -79,7 +85,7 @@ export function FilteredSignupList() {
           className="col-md-6 col-lg-3"
         />
       </div>
-      <SignupsList dutyType={dutyType} filters={filters} skills={skills} quirks={quirks} />
+      <SignupsList dutyType={dutyType} filters={filters} skills={userSkills} quirks={userQuirks} />
     </>
   )
 }

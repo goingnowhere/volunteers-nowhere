@@ -67,7 +67,7 @@ const validateTicketId = async (ticketId) => new Promise((resolve, reject) => {
     Meteor.call('ticketId.check', ticketIdNum, (err, res) => {
       if (err) reject(err)
       if (res.isValid) resolve()
-      else resolve('Ticket ID not found. Please check your email')
+      else resolve('Ticket ID not found. Please check your ticket')
     })
   }
 })
@@ -118,24 +118,22 @@ const VolunteerFormComponent = ({
               isSubmitting, values, setFieldValue, errors,
             }) => (
               <Form>
-                {!user.ticketId && (
-                  <div className="form-group">
-                    <label htmlFor="ticketId">Ticket ID</label>
-                    <Field
-                      id="ticketId"
-                      type="text"
-                      name="ticketId"
-                      className={`form-control${errors.ticketId ? ' is-invalid' : ''}`}
-                      placeholder="QTK12345678"
-                      validate={validateTicketId}
-                    />
-                    {errors.ticketId && (
-                      <p className='form-text text-danger'>
-                        {errors.ticketId}
-                      </p>
-                    )}
-                  </div>
-                )}
+                <div className="form-group">
+                  <label htmlFor="ticketId">Ticket ID</label>
+                  <Field
+                    id="ticketId"
+                    type="text"
+                    name="ticketId"
+                    className={`form-control${errors.ticketId ? ' is-invalid' : ''}`}
+                    placeholder="QTK12345678"
+                    validate={validateTicketId}
+                  />
+                  {errors.ticketId && (
+                    <p className='form-text text-danger'>
+                      {errors.ticketId}
+                    </p>
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="nickname">Playa Name/FoD Name/Nickname</label>
                   <Field id="nickname" type="text" name="nickname" className="form-control" />

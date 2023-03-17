@@ -36,9 +36,7 @@ export function UserDashboard() {
           {!user.profile.picture && (
             <Link to="/profile"><T>add_picture</T></Link>
           )}
-          <h5 className="mb-2 dark-text"><T>responsibilities</T> </h5>
           <UserResponsibilities />
-          <br />
           <Link to="/profile" className="btn btn-light btn-sm">
             <T>edit_user_info</T>
           </Link>
