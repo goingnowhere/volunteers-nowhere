@@ -13,10 +13,8 @@ const NoInfoUserProfileComponent = ({ user, volForm }) => (
     {user && user.profile && (
       <div className="row">
         <div className="col">
-          <div className="row">
-            <div className="col-md-3">
-              <ProfilePicture user={user} />
-            </div>
+          <div className="row mb-2">
+            <ProfilePicture user={user} width={192} height={192} />
           </div>
           <div className="row">
             <UserInfoList user={user} />

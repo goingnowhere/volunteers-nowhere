@@ -8,7 +8,7 @@ import { Match } from 'meteor/check'
 import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
-import { VolunteersClass } from 'meteor/goingnowhere:volunteers'
+import { VolunteersClass, wrapAsync } from 'meteor/goingnowhere:volunteers'
 import { Volunteers } from '../both/init'
 import {
   isNoInfoMixin,
@@ -100,54 +100,42 @@ export const userStats = new ValidatedMethod({
 })
 
 const onlyFilled = { 'profile.formFilled': true }
-export const userList = new ValidatedMethod({
-  name: 'users.paged',
-  mixins: [authMixins.isAnyLead],
-  validate: () => {},
-  run({ search = {}, page, perPage = 20 }) {
-    const usersCursor = Meteor.users.find({ ...onlyFilled, ...search }, {
-      sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
-      skip: (page - 1) * perPage,
-      limit: perPage,
-      // TODO We shouldn't need much here, now that the methods are separated we should remove
-      // what we don't need
-      fields: {
-        profile: true,
-        isBanned: true,
-        status: true,
-        createdAt: true,
-        roles: true,
-        ticketId: true,
-      },
-    })
-    return { count: usersCursor.count(), users: usersCursor.fetch() }
-  },
-})
-
-export const userListManager = new ValidatedMethod({
-  name: 'users.paged.manager',
-  mixins: [authMixins.isManager],
-  validate: () => {},
-  run({ search = {}, page, perPage = 20 }) {
-    const usersCursor = Meteor.users.find({ ...onlyFilled, ...search }, {
-      sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
-      skip: (page - 1) * perPage,
-      limit: perPage,
-      fields: {
-        profile: true,
-        emails: true,
-        isBanned: true,
-        status: true,
-        createdAt: true,
-        roles: true,
-        ticketId: true,
-      },
-    })
-    return {
-      count: usersCursor.count(),
-      users: usersCursor.fetch(),
-      extras:
-      Object.fromEntries(usersCursor.map(user => {
+const userSearch = ({
+  search,
+  page,
+  perPage = 20,
+  isManager,
+  includeIncomplete,
+}) => {
+  const query = !includeIncomplete ? { ...onlyFilled, ...search } : search
+  // TODO We shouldn't need much here, now that the methods are separated we should remove
+  // what we don't need for non-managers
+  const fields = {
+    profile: true,
+    isBanned: true,
+    status: true,
+    createdAt: true,
+    ticketId: true,
+    ...isManager ? {
+      emails: true,
+      roles: true,
+    } : {},
+  }
+  const usersCursor = Meteor.users.find(query, {
+    sort: { 'status.online': -1, 'status.lastLogin': -1, createdAt: -1 },
+    skip: !page ? 0 : (page - 1) * perPage,
+    limit: perPage,
+    fields,
+  })
+  // Page is undefined for the first page, so we get a new count, otherwise save the extra query
+  const getCount = wrapAsync(async () => {
+    return page === undefined ? Meteor.users.countDocuments(query) : undefined
+  })
+  return {
+    count: getCount(),
+    users: usersCursor.fetch(),
+    extras: !isManager ? undefined
+      : Object.fromEntries(usersCursor.map(user => {
         const allRoles = Roles.getRolesForUser(user._id, { scope: Volunteers.eventName })
         const roles = [
           ...allRoles.filter(role => ['manager', 'admin'].includes(role)),
@@ -158,7 +146,45 @@ export const userListManager = new ValidatedMethod({
           { roles },
         ]
       })),
-    }
+  }
+}
+
+export const userList = new ValidatedMethod({
+  name: 'users.paged',
+  mixins: [authMixins.isAnyLead],
+  validate: () => {},
+  run({
+    search,
+    page,
+    perPage,
+    includeIncomplete,
+  }) {
+    return userSearch({
+      search,
+      page,
+      perPage,
+      includeIncomplete,
+    })
+  },
+})
+
+export const userListManager = new ValidatedMethod({
+  name: 'users.paged.manager',
+  mixins: [authMixins.isManager],
+  validate: () => {},
+  run({
+    search,
+    page,
+    perPage,
+    includeIncomplete,
+  }) {
+    return userSearch({
+      search,
+      page,
+      perPage,
+      isManager: true,
+      includeIncomplete,
+    })
   },
 })
 

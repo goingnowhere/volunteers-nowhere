@@ -77,5 +77,10 @@
   "make_manager": "Make Manager",
   "remove_manager": "Remove Manager",
   "make_admin": "Make Admin",
-  "remove_admin": "Remove Admin"
+  "remove_admin": "Remove Admin",
+  "total_number_of_teams": "Total number of teams",
+  "skills": "skills",
+  "quirks": "quirks",
+  "priorities": "priorities",
+  "include_incomplete": "Include incomplete profiles"
 }

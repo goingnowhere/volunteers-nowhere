@@ -11,13 +11,12 @@ export const UserListEntry = ({
   refreshSearch,
 }) => {
   return (
-  // TODO fix the layout
     <div className="card">
       <div className="card-body pb-0">
         <div className="row">
           <div className="col-md-3">
-            <ProfilePicture user={user} />
-            <div className="row">
+            <ProfilePicture user={user} width={96} height={96} />
+            <div className="mt-2">
               <Controls user={user} showUser={showUser} refreshSearch={refreshSearch} />
             </div>
           </div>

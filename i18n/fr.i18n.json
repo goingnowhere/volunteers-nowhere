@@ -55,10 +55,10 @@
   "before_after_event": "Avant et après l'événement",
   "name_or_email": "Nom ou email",
   "filter_by_skill": "Par compétence",
-  "filter_by_quirk": "Par appétance",
+  "filter_by_quirk": "Par bizarrerie",
   "filter_by_priority": "Par priorité",
   "filter_selected_skill": "Compétences sélectionnées",
-  "filter_selected_quirk": "qualités sélectionnées ",
+  "filter_selected_quirk": "bizarreries sélectionnées ",
   "filter_selected_priority": "Priorités sélectionnées",
   "wrong_or_required_field": "Erreur lors de la validation du formulaire",
   "email_templates": "Modèles d'email",
@@ -77,5 +77,10 @@
   "make_manager": "Rendre Responsable",
   "remove_manager": "Retirer Responsable",
   "make_admin": "Rendre Admin",
-  "remove_admin": "Retirer Admin"
+  "remove_admin": "Retirer Admin",
+  "total_number_of_teams": "nombre total d'équipes",
+  "skills": "compétences",
+  "quirks": "bizarreries",
+  "priorities": "priorités",
+  "include_incomplete": "inclure des profils incomplets"
 }

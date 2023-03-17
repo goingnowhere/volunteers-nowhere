@@ -153,6 +153,8 @@ et injecter la typo */
 
 .profile-pic {
   object-fit: cover;
+  max-width: 192px;
+  max-height: 192px;
 }
 
 /* Automatically add red * to autoform required fields */

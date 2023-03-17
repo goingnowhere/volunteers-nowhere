@@ -1,7 +1,12 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { _ } from 'meteor/underscore'
 import { Loading, useMethodCallData } from 'meteor/goingnowhere:volunteers'
-import { t } from '../../common/i18n'
+import { t, T } from '../../common/i18n'
 import { PagesPicker } from './PagesPicker.jsx'
 
 const PER_PAGE = 10
@@ -23,7 +28,8 @@ const debouncedSearch = _.debounce((setSearch, text, ticketNumber) => {
   }
 }, 1000)
 
-const SearchBox = ({ setSearch }) => {
+const NUM_REGEX = /\D/g
+const SearchBox = ({ setSearch, includeIncomplete, setIncludeIncomplete }) => {
   const [text, setText] = useState('')
   const [ticketNumber, setTicketNumber] = useState('')
   useEffect(() => {
@@ -44,17 +50,32 @@ const SearchBox = ({ setSearch }) => {
           />
         </div>
       </div>
-      <div className="col-sm-4">
+      <div className="col-sm-3">
         <div className="form-group">
           <input
-            type="number"
+            type="text"
             name="ticketNumber"
             id="ticketNumber"
             className="form-control"
             placeholder={t('ticket_number_search')}
             value={ticketNumber}
-            onChange={(event) => setTicketNumber(parseInt(event.target.value, 10))}
+            onChange={(event) => setTicketNumber(event.target.value.replaceAll(NUM_REGEX, ''))}
           />
+        </div>
+      </div>
+      <div className="col-sm-3">
+        <div className="form-group">
+          <input
+            id="terms"
+            type="checkbox"
+            className="form-check-input"
+            name="terms"
+            checked={includeIncomplete}
+            onChange={(event) => setIncludeIncomplete(event.target.checked)}
+          />
+          <label htmlFor="terms" className="form-check-label">
+            <T>include_incomplete</T>
+          </label>
         </div>
       </div>
     </div>
@@ -69,11 +90,32 @@ export const UserSearchList = ({
 }) => {
   const [search, setSearch] = useState({})
   const [page, changePage] = useState(1)
+  const [includeIncomplete, setIncludeIncomplete] = useState(false)
+  const changeSearch = useCallback((terms, newInclude) => {
+    setSearch(terms)
+    changePage(undefined)
+    if (newInclude !== undefined) {
+      setIncludeIncomplete(newInclude)
+    }
+  }, [setSearch, changePage])
   const method = getManagerDetails ? 'users.paged.manager' : 'users.paged'
-  const [{ users, extras, count: userCount }, isLoaded, refreshSearch] = useMethodCallData(
+  const [{ users, extras, count: returnedCount }, isLoaded, refreshSearch] = useMethodCallData(
     method,
-    { search, page, perPage: PER_PAGE },
+    {
+      search,
+      page,
+      perPage: PER_PAGE,
+      includeIncomplete,
+    },
   )
+
+  const [userCount, setUserCount] = useState(0)
+  useEffect(() => {
+    if (typeof returnedCount === 'number') {
+      setUserCount(returnedCount)
+    }
+  }, [returnedCount])
+
   const userList = useMemo(() => (!isLoaded ? [] : users.map((user) => ({
     ...user,
     fistRoles: extras?.[user._id].roles,
@@ -81,7 +123,11 @@ export const UserSearchList = ({
 
   return (
     <>
-      <SearchBox setSearch={setSearch} />
+      <SearchBox
+        setSearch={changeSearch}
+        includeIncomplete={includeIncomplete}
+        setIncludeIncomplete={(newInclude) => changeSearch(search, newInclude)}
+      />
       {!isLoaded ? (
         <Loading />
       ) : (
@@ -97,7 +143,7 @@ export const UserSearchList = ({
           ))}
           <PagesPicker
             totalPages={Math.ceil(userCount / PER_PAGE)}
-            page={page}
+            page={page || 1}
             changePage={changePage}
           />
         </>
