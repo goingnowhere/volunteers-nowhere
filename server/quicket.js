@@ -111,18 +111,18 @@ export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
   if (!response.ok) {
     if (response.status >= 500) {
       console.error('Error retrieving ticket', response)
-      throw new Meteor.Error(500, 'Problem calling ticket API')
+      // We no longer need to error out on this as a ticket isn't required up-front
+      // throw new Meteor.Error(500, 'Problem calling ticket API')
     } else {
       console.log('Failed to find ticket', response.status, lookup)
-      return false
-    }
-  } else {
-    const tickets = await response.json()
-    if (tickets.length >= 1) {
-      return pickBestTicket(tickets)
     }
     return false
   }
+  const tickets = await response.json()
+  if (tickets.length >= 1) {
+    return pickBestTicket(tickets)
+  }
+  return false
 })
 
 export function checkForTicketUpdate(user) {

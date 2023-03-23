@@ -17,10 +17,10 @@ module.exports = {
     'import-resolver': 'meteor',
     'import/core-modules': [
       'meteor',
-    ]
+    ],
   },
   globals: {
-    "_": false
+    _: false,
   },
   rules: {
     semi: ['error', 'never'],
@@ -31,12 +31,12 @@ module.exports = {
       asyncArrow: 'always',
     }],
     'no-underscore-dangle': ['off', {
-        allow: [
-          '_id',
-          '__',
-          '_name',
-        ],
-      },
+      allow: [
+        '_id',
+        '__',
+        '_name',
+      ],
+    },
     ],
     'no-param-reassign': ['error', { props: false }],
     'implicit-arrow-linebreak': ['off'],
@@ -50,6 +50,7 @@ module.exports = {
     'arrow-parens': 'off',
     'no-nested-ternary': 'off',
     'no-unused-vars': ['error', { args: 'after-used', ignoreRestSiblings: true }],
+    'prefer-destructuring': ['error', { object: true, array: false }],
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {
@@ -58,7 +59,7 @@ module.exports = {
       ],
     }],
     'meteor/eventmap-params': ['error', {
-      "templateInstanceParamName": "template",
+      templateInstanceParamName: 'template',
     }],
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-fragments': ['warn', 'syntax'],
@@ -72,16 +73,16 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
     // Below added to workaround babel-eslint bug github.com/babel/babel-eslint/issues/799
-    "indent": [
-      "error",
+    indent: [
+      'error',
       2,
       {
-          "ignoredNodes": [
-              "TemplateLiteral"
-          ]
-      }
+        ignoredNodes: [
+          'TemplateLiteral',
+        ],
+      },
     ],
-    "template-curly-spacing": ["off", "never"],
+    'template-curly-spacing': ['off', 'never'],
     // end bugfix
   },
 }
