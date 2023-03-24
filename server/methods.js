@@ -437,6 +437,7 @@ export const newEventMigration = new ValidatedMethod({
       throw new Meteor.Error(500, "We don't have an event name so can't proceed :(")
     }
     const sourceEvent = new VolunteersClass(oldSettings, true)
+    const volForms = sourceEvent.collections.volunteerForm.find().fetch()
     const departments = sourceEvent.collections.department.find().fetch()
     const teams = sourceEvent.collections.team.find().fetch()
     const rotas = sourceEvent.collections.rotas.find().fetch()
@@ -447,6 +448,11 @@ export const newEventMigration = new ValidatedMethod({
       type: 'lead',
       status: 'confirmed',
     }).fetch()
+
+    wrapAsync(async () => {
+      await Volunteers.collections.volunteerForm.rawCollection()
+        .insertMany(volForms)
+    })()
 
     const eventStartDiff = moment(newSettings.eventPeriod.start)
       .diff(oldSettings.eventPeriod.start, 'days')
