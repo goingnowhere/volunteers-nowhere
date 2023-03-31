@@ -66,6 +66,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/destructuring-assignment': 'off',
     'jsx-a11y/label-has-associated-control': ['error', {
       controlComponents: ['Field'],
     }],

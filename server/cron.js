@@ -153,11 +153,11 @@ const cronActivate = ({ cronFrequency, emailManualCheck }) => {
     }
 
     signupsGC('at 03:00 every 3 days')
-    if (Meteor.isProduction) {
-      checkForMissingTickets('at 04:00 every day')
-      // TODO handle manually set ticket checks and then turn this on
-      // checkAllTickets('at 04:00 every day'
-    }
+    // if (Meteor.isProduction) {
+    //   checkForMissingTickets('at 04:00 every day')
+    //   // TODO handle manually set ticket checks and then turn this on
+    //   // checkAllTickets('at 04:00 every day'
+    // }
     SyncedCron.start()
   } else {
     console.log('Disable Cron')

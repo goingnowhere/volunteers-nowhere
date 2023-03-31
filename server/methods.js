@@ -9,7 +9,7 @@ import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
 import { VolunteersClass, wrapAsync } from 'meteor/goingnowhere:volunteers'
-import { Volunteers } from '../both/init'
+import { MeteorProfile, Volunteers } from '../both/init'
 import {
   isNoInfoMixin,
 } from '../both/authMixins'
@@ -17,6 +17,7 @@ import {
   dietGroups,
   allergies,
   intolerances,
+  volunteerFormSchema,
 } from '../both/collections/users'
 import { EventSettings, SettingsSchema } from '../both/collections/settings'
 import { lookupUserTicket, syncQuicketTicketList } from './quicket'
@@ -202,6 +203,69 @@ export const validateTicketId = new ValidatedMethod({
   run: (ticketId) => {
     const ticket = lookupUserTicket({ ticketId })
     return { isValid: !!ticket }
+  },
+})
+
+const userBioSchema = new SimpleSchema({
+  userId: { type: String },
+  ticketId: { type: Number, optional: true },
+})
+userBioSchema.extend(MeteorProfile.Schemas.Profile)
+userBioSchema.extend(volunteerFormSchema)
+
+export const updateUserBio = new ValidatedMethod({
+  name: 'volunteerBio.update',
+  mixins: [authMixins.isSameUserOrManager],
+  validate: userBioSchema.validator(),
+  run({
+    userId,
+    ticketId,
+    firstName,
+    lastName,
+    nickname,
+    picture,
+    language,
+    ...nonProfileData
+  }) {
+    const currentUser = Meteor.user()
+    let ticketInfo = {}
+    let hasTicket = !!ticketId
+    if (ticketId && ticketId !== currentUser.ticketId) {
+      const ticket = lookupUserTicket({ ticketId })
+      if (ticket) {
+        ticketInfo = {
+          ticketId: ticket.ticketId,
+          rawTicketInfo: ticket,
+        }
+      } else {
+        hasTicket = false
+      }
+    }
+
+    Meteor.users.update({ _id: userId }, {
+      $set: {
+        profile: {
+          firstName,
+          lastName,
+          nickname,
+          language,
+          picture,
+          formFilled: true,
+        },
+        ...ticketInfo,
+      },
+      ...(!hasTicket && {
+        $unset: {
+          ticketId: true,
+          rawTicketInfo: true,
+        },
+      }),
+    })
+    Volunteers.collections.volunteerForm.upsert({ userId }, { $set: nonProfileData })
+
+    return {
+      hasTicket,
+    }
   },
 })
 

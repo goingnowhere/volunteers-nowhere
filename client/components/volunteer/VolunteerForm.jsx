@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
-import { withTracker } from 'meteor/react-meteor-data'
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { useTracker } from 'meteor/react-meteor-data'
+import React, { useCallback, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import {
   Formik,
   Form,
@@ -9,10 +9,10 @@ import {
   FieldArray,
 } from 'formik'
 import Blaze from 'meteor/gadicc:blaze-react-component'
+import { methodCallback } from 'meteor/goingnowhere:volunteers'
 
 import { Volunteers } from '../../../both/init'
 import { setLocale } from '../../../both/locale'
-import { updateUserBio } from '../../../both/methods'
 import { volunteerFormQs } from '../../../both/collections/users'
 import { ImageUpload } from './volunteerForm/ImageUpload.jsx'
 import { MultiSelect } from './volunteerForm/MultiSelect.jsx'
@@ -57,30 +57,81 @@ const extractTicketId = (ticketString) => {
   }
   return undefined
 }
-const validateTicketId = async (ticketId) => new Promise((resolve, reject) => {
+const validateTicketId = async (ticketId) => new Promise((resolve) => {
   const ticketIdNum = extractTicketId(ticketId)
-  if (!ticketId) {
+  if (ticketIdNum || !ticketId) {
     resolve()
-  } else if (!ticketIdNum) {
-    resolve('Ticket ID must look like QTK12345678, find it at the top-right of your ticket')
   } else {
-    Meteor.call('ticketId.check', ticketIdNum, (err, res) => {
-      if (err) reject(err)
-      if (res.isValid) resolve()
-      else resolve('Ticket ID not found. Please check your ticket')
-    })
+    resolve('Ticket ID must look like QTK12345678, find it at the top-right of your ticket')
   }
 })
 
-// Lots of copy-paste. Better than over-abstracting before we have a coherent plan for forms...
-const VolunteerFormComponent = ({
-  ready,
-  user,
-  existing,
-  skills,
-  quirks,
-  onSubmit,
-}) => {
+// TODO Lots of copy-paste. Better than over-abstracting before we have a coherent plan for forms...
+export function VolunteerForm() {
+  const history = useHistory()
+  const location = useLocation()
+
+  const submit = useCallback((user) => (formData, actions) => {
+    setLocale(formData.language)
+
+    const ticketId = formData.ticketId ? extractTicketId(formData.ticketId) : undefined
+    Meteor.call(
+      'volunteerBio.update', {
+        userId: user._id,
+        ...formData,
+        ticketId,
+      }, methodCallback((_err, res) => {
+        actions.setSubmitting(false)
+        // TODO when adding a modal should bother people who have not entered a ticket id
+        if (res && (res.hasTicket || !ticketId)) {
+          if (location.state && location.state.from) {
+            history.push(location.state.from)
+          } else {
+            history.push('/dashboard')
+          }
+        } else if (res && !res.hasTicket) {
+          // FIXME Add modal for confirmation in place of confirm
+          if (window.confirm('Your ticket number doesn\'t seem to be valid, the rest of the form'
+            + ' has been saved. Do you want to continue and enter your ticket ID later or cancel'
+            + ' to try again now?')) {
+            // This is repetative but don't want to refactor since we should replace it anyway
+            if (location.state && location.state.from) {
+              history.push(location.state.from)
+            } else {
+              history.push('/dashboard')
+            }
+          }
+        }
+      }),
+    )
+  }, [history, location.state])
+
+  const {
+    ready,
+    user,
+    existing,
+    skills,
+    quirks,
+    onSubmit,
+  } = useTracker(() => {
+    const usr = Meteor.user() || {}
+    const subsReady = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, usr._id).ready()
+      && Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, {}).ready() // TODO Replace with a method
+      // TODO make something like 'has ticket' generally available
+      && Meteor.subscribe('user.extra', usr._id).ready()
+
+    const { _id, ...existingForm } = Volunteers.collections.volunteerForm
+      .findOne({ userId: usr._id }) || {}
+    return {
+      user: usr,
+      ready: subsReady,
+      existing: existingForm,
+      skills: Volunteers.collections.utils.getSkillsList(),
+      quirks: Volunteers.collections.utils.getQuirksList(),
+      onSubmit: submit(usr),
+    }
+  }, [])
+
   // Formik requires initialValues to be populated for some types, e.g. 'text'
   const defaultInitialValues = {
     ticketId: user.ticketId ? `QTK${user.ticketId}` : '',
@@ -249,7 +300,8 @@ const VolunteerFormComponent = ({
                     </label>
                   </div>
                   <small id="gender-help" className="text-muted">
-                    This info is only used for particular shifts where a gender balance is desirable.
+                    This info is only used for particular shifts where a gender balance is
+                    desirable.
                   </small>
                 </div>
                 <div className="form-group">
@@ -346,8 +398,8 @@ const VolunteerFormComponent = ({
                   />
                   <small id="intolerances-help" className="text-muted">
                     You are not going to die if you come into contact with traces of these common
-                    allergens. There might be contamination. Please be flexible and come talk to us for
-                    very special requirements.
+                    allergens. There might be contamination. Please be flexible and come talk to us
+                    for very special requirements.
                   </small>
                 </div>
                 <div className="form-group">
@@ -403,39 +455,3 @@ const VolunteerFormComponent = ({
     </div>
   )
 }
-
-const submit = (user, history, location) => (formData, actions) => {
-  setLocale(formData.language)
-  updateUserBio.call({
-    userId: user._id,
-    ...formData,
-    ticketId: user.ticketId ? undefined : extractTicketId(formData.ticketId),
-  }, (err) => { if (err) console.error(err) }) // TODO proper error handling
-  actions.setSubmitting(false)
-  if (location.state && location.state.from) {
-    history.push(location.state.from)
-  } else {
-    history.push('/dashboard')
-  }
-}
-
-export const VolunteerForm = withRouter(withTracker(({ history, location }) => {
-  const user = Meteor.user() || {}
-  const ready = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.volunteerForm`, user._id).ready()
-    && Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`, {}).ready() // TODO Replace with a method
-    // TODO make something like 'has ticket' generally available
-    && Meteor.subscribe('user.extra', user._id).ready()
-
-  const skills = Volunteers.collections.utils.getSkillsList()
-  const quirks = Volunteers.collections.utils.getQuirksList()
-  const { _id, ...existing } = Volunteers.collections.volunteerForm
-    .findOne({ userId: user._id }) || {}
-  return {
-    user,
-    ready,
-    existing,
-    skills,
-    quirks,
-    onSubmit: submit(user, history, location),
-  }
-})(VolunteerFormComponent))
