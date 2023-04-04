@@ -2,7 +2,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Migrations } from 'meteor/percolate:migrations'
 import { Roles } from 'meteor/alanning:roles'
-import { wrapAsync } from 'meteor/goingnowhere:volunteers'
+import { rawCollectionOp } from 'meteor/goingnowhere:volunteers'
 
 import { EventSettings } from '../both/collections/settings'
 import { Volunteers } from '../both/init'
@@ -85,15 +85,12 @@ Migrations.add({
       },
     ])
 
-    wrapAsync(async () => {
-      const toInsert = noProfileUsers.filter(user => user.prevForm.length >= 1)
-        .map(user => user.prevForm[0])
-      if (toInsert.length >= 1) {
-        const insertResult = await collections.volunteerForm.rawCollection()
-          .insertMany(toInsert)
-        console.log('Copied ', insertResult.insertedCount, ' profiles from prev event')
-      }
-    })()
+    const toInsert = noProfileUsers.filter(user => user.prevForm.length >= 1)
+      .map(user => user.prevForm[0])
+    if (toInsert.length >= 1) {
+      const insertResult = rawCollectionOp(collections.volunteerForm, 'insertMany', toInsert)
+      console.log('Copied ', insertResult.insertedCount, ' profiles from prev event')
+    }
 
     const stillNoProfileIds = noProfileUsers
       .filter(user => user.prevForm.length === 0 && user.profile.formFilled)

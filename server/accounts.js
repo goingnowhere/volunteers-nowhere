@@ -8,11 +8,10 @@ import {
   isNoInfoMixin,
   isSameUserOrNoInfoMixin,
 } from '../both/authMixins'
-// import { ticketsCollection } from '../both/collections/users'
 import { EventSettings } from '../both/collections/settings'
 
 import { devConfig } from './config'
-import { lookupUserTicket } from './quicket'
+import { lookupUserTicket } from './fistbump'
 
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()

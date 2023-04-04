@@ -8,7 +8,7 @@ import { Match } from 'meteor/check'
 import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
-import { VolunteersClass, wrapAsync } from 'meteor/goingnowhere:volunteers'
+import { rawCollectionOp, VolunteersClass, wrapAsync } from 'meteor/goingnowhere:volunteers'
 import { MeteorProfile, Volunteers } from '../both/init'
 import {
   isNoInfoMixin,
@@ -20,7 +20,7 @@ import {
   volunteerFormSchema,
 } from '../both/collections/users'
 import { EventSettings, SettingsSchema } from '../both/collections/settings'
-import { lookupUserTicket, syncQuicketTicketList } from './quicket'
+import { lookupUserTicket } from './fistbump'
 
 const moment = extendMoment(Moment)
 const authMixins = Volunteers.services.auth.mixins
@@ -186,23 +186,6 @@ export const userListManager = new ValidatedMethod({
       isManager: true,
       includeIncomplete,
     })
-  },
-})
-
-export const syncQuicketTicketListMethod = new ValidatedMethod({
-  name: 'ticketList.sync',
-  mixins: [authMixins.isManager],
-  validate: null,
-  run: syncQuicketTicketList,
-})
-
-export const validateTicketId = new ValidatedMethod({
-  name: 'ticketId.check',
-  mixins: [authMixins.isLoggedIn],
-  validate: null,
-  run: (ticketId) => {
-    const ticket = lookupUserTicket({ ticketId })
-    return { isValid: !!ticket }
   },
 })
 
@@ -513,10 +496,7 @@ export const newEventMigration = new ValidatedMethod({
       status: 'confirmed',
     }).fetch()
 
-    wrapAsync(async () => {
-      await Volunteers.collections.volunteerForm.rawCollection()
-        .insertMany(volForms)
-    })()
+    rawCollectionOp(Volunteers.collections.volunteerForm, 'insertMany', volForms)
 
     const eventStartDiff = moment(newSettings.eventPeriod.start)
       .diff(oldSettings.eventPeriod.start, 'days')

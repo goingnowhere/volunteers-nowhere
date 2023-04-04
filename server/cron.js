@@ -8,7 +8,18 @@ import {
   sendReviewEmail,
   sendCachedEmails,
 } from './email'
-import { checkForTicketUpdate } from './quicket'
+import { processTicketCheckItem, queueTicketChecks } from './ticketCron'
+import { devConfig } from './config'
+
+const setCron = ({ name, time, job }) => {
+  SyncedCron.add({
+    name,
+    schedule(parser) {
+      return parser.text(time)
+    },
+    job,
+  })
+}
 
 const signupGcBackup = new Mongo.Collection('signupGcBackup')
 
@@ -92,54 +103,6 @@ const ReviewTask = (time) => {
   })
 }
 
-const emailSend = (time) => {
-  // Send cached emails
-  SyncedCron.add({
-    name: 'EmailCache',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job: sendCachedEmails,
-  })
-}
-
-/** Go through all users and check for invalid or missing ticketIds */
-function checkUserTickets(checkAll) {
-  const query = checkAll
-    ? {}
-    : { $or: [{ ticketId: { $lt: 10000 } }, { ticketId: { $exists: false } }] }
-  Meteor.users.find(query)
-    .map((user) => {
-      const ticket = checkForTicketUpdate(user)
-      return ticket && [user, ticket]
-    })
-    .filter(Boolean)
-    .forEach(([user, ticket]) => {
-      console.log(`Updating ${user._id} to have ticket ${ticket.TicketId} from ${user.ticketId}`, user.emails)
-      Meteor.users.update({ _id: user._id }, { $set: { ticketId: ticket.TicketId } })
-    })
-}
-
-const checkForMissingTickets = (time) => {
-  SyncedCron.add({
-    name: 'MissingTicketCheck',
-    schedule(parser) {
-      return parser.text(time)
-    },
-    job: () => checkUserTickets(false),
-  })
-}
-
-// const checkAllTickets = (time) => {
-//   SyncedCron.add({
-//     name: 'MissingTicketCheck',
-//     schedule(parser) {
-//       return parser.text(time)
-//     },
-//     job: () => checkUserTickets(false),
-//   })
-// }
-
 const cronActivate = ({ cronFrequency, emailManualCheck }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
@@ -149,15 +112,16 @@ const cronActivate = ({ cronFrequency, emailManualCheck }) => {
     ReviewTask(`every ${cronFrequency}`)
 
     if (!emailManualCheck) {
-      emailSend('every 5 minutes')
+      setCron({ name: 'EmailCache', time: 'every 5 minutes', job: sendCachedEmails })
     }
 
     signupsGC('at 03:00 every 3 days')
-    // if (Meteor.isProduction) {
-    //   checkForMissingTickets('at 04:00 every day')
-    //   // TODO handle manually set ticket checks and then turn this on
-    //   // checkAllTickets('at 04:00 every day'
-    // }
+
+    if (Meteor.isProduction || devConfig.testTicketApi) {
+      setCron({ name: 'MissingTicketCheck', time: 'at 04:00 every day', job: () => queueTicketChecks(false) })
+      setCron({ name: 'AllTicketCheck', time: 'at 04:00 every monday', job: () => queueTicketChecks(true) })
+      setCron({ name: 'ProcessTicketCheck', time: 'every 20 seconds', job: () => processTicketCheckItem() })
+    }
     SyncedCron.start()
   } else {
     console.log('Disable Cron')
