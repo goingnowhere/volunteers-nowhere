@@ -2,16 +2,11 @@ import { fetch } from 'meteor/fetch'
 import { wrapAsync } from 'meteor/goingnowhere:volunteers'
 import { config } from './config'
 
-/** FistBump gives us a fake ticketId if they don't have one from Quicket and the number is always
-  * less than a real ticket, so take the highest ticket id */
-function pickBestTicket(tickets) {
-  let ticket = tickets[0]
-  tickets.forEach((tick) => {
-    if (tick.TicketId > ticket.TicketId) {
-      ticket = tick
-    }
-  })
-  return ticket
+function pickBestTicket(tickets, { email, ticketId }) {
+  if (ticketId) {
+    return tickets.find(tick => tick.TicketId === ticketId) || tickets[0]
+  }
+  return tickets.find(tick => tick.Email === email) || tickets[0]
 }
 
 export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
@@ -27,14 +22,14 @@ export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
     } else {
       console.log('Failed to find ticket', response.status, lookup)
     }
-    return false
+    return -1
   }
   const tickets = await response.json()
   if (tickets.length >= 1) {
-    return pickBestTicket(tickets)
+    return pickBestTicket(tickets, { email, ticketId })
   }
 
-  return false
+  return 0
 })
 
 export function checkForTicketUpdate(user) {
@@ -50,8 +45,6 @@ export function checkForTicketUpdate(user) {
     .filter(({ verified }) => verified)
     .map(({ address }) => lookupUserTicket({ email: address }))
     .filter(Boolean)
-  // Just in case they have tickets for multiple emails
-  ticket = pickBestTicket(tickets)
-
-  return ticket
+  // First ticket could be -1 if there's an error but we should handle that by not changing anything
+  return tickets[0] || 0
 }

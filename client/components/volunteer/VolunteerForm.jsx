@@ -91,9 +91,13 @@ export function VolunteerForm() {
           }
         } else if (res && !res.hasTicket) {
           // FIXME Add modal for confirmation in place of confirm
-          if (window.confirm('Your ticket number doesn\'t seem to be valid, the rest of the form'
-            + ' has been saved. Do you want to continue and enter your ticket ID later or cancel'
-            + ' to try again now?')) {
+          const message = `${res.wasError
+            ? 'We\'re having technical problems looking up your ticket.'
+            : 'Your ticket number doesn\'t seem to be valid.'}`
+            + ' The rest of the form'
+              + ' has been saved. Do you want to continue and enter your ticket ID later or cancel'
+              + ' to try again now?'
+          if (window.confirm(message)) {
             // This is repetative but don't want to refactor since we should replace it anyway
             if (location.state && location.state.from) {
               history.push(location.state.from)

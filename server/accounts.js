@@ -33,9 +33,9 @@ Accounts.onCreateUser((options, user) => {
 
   return {
     ...user,
-    ticketId: ticket ? ticket.TicketId : undefined,
+    ticketId: typeof ticket === 'object' ? ticket.TicketId : undefined,
     profile,
-    rawTicketInfo: ticket || undefined,
+    rawTicketInfo: typeof ticket === 'object' ? ticket : undefined,
   }
 })
 

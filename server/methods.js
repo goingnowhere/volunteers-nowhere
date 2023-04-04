@@ -212,10 +212,12 @@ export const updateUserBio = new ValidatedMethod({
   }) {
     const currentUser = Meteor.user()
     let ticketInfo = {}
+    // 0 is no ticket, -1 is error
+    let ticket = 0
     let hasTicket = !!ticketId
     if (ticketId && ticketId !== currentUser.ticketId) {
-      const ticket = lookupUserTicket({ ticketId })
-      if (ticket) {
+      ticket = lookupUserTicket({ ticketId })
+      if (ticket && ticket !== -1) {
         ticketInfo = {
           ticketId: ticket.ticketId,
           rawTicketInfo: ticket,
@@ -237,7 +239,8 @@ export const updateUserBio = new ValidatedMethod({
         },
         ...ticketInfo,
       },
-      ...(!hasTicket && {
+      // Only unset ticket if there was no error and no ticket
+      ...(ticket === 0 && {
         $unset: {
           ticketId: true,
           rawTicketInfo: true,
@@ -248,6 +251,7 @@ export const updateUserBio = new ValidatedMethod({
 
     return {
       hasTicket,
+      wasError: ticket === -1,
     }
   },
 })
