@@ -37,7 +37,7 @@ services:
       - traefik.http.middlewares.SwitchToHttps.redirectscheme.scheme=https
       - traefik.http.services.app-fist.loadbalancer.server.port=3000
     volumes:
-      - user_data:/home/node/app/bundle/programs/server/profilePictures
+      - user_data:/home/node/bundle/bundle/programs/server/profilePictures
 
   mongo:
     image: mongo:4.4.18
