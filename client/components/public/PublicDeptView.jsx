@@ -1,14 +1,15 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { SignupsListTeam } from 'meteor/goingnowhere:volunteers'
 
 import { Volunteers } from '../../../both/init'
 import { T, t } from '../common/i18n'
 
 // TODO Make this more useful e.g. at least adding personal signups
-export const PublicDeptView = ({ match: { params: { deptId } } }) => {
+export const PublicDeptView = () => {
+  const { deptId } = useParams()
   const { dept, teams, ready } = useTracker(() => {
     const deptSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.department`, { _id: deptId })
     const subs = [

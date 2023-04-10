@@ -1,5 +1,4 @@
-import { Meteor } from 'meteor/meteor'
-import { withTracker } from 'meteor/react-meteor-data'
+import { Loading } from 'meteor/goingnowhere:volunteers'
 import React, {
   useMemo,
   useState,
@@ -8,16 +7,16 @@ import React, {
 import Fa from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import moment from 'moment-timezone'
-import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 
-import { EventSettings } from '../../both/collections/settings'
+export function HomePage({ user, settings, isLoaded }) {
+  const openMoment = useMemo(() =>
+    (isLoaded ? moment(settings.fistOpenDate) : null),
+  [isLoaded, settings.fistOpenDate])
 
-const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
-  const openMoment = useMemo(() => moment(openDate), [openDate])
   const [seconds, setSeconds] = useState()
   useEffect(() => {
     let interval
-    if (loaded) {
+    if (isLoaded) {
       const secondsNow = openMoment.diff(moment(), 'seconds')
       setSeconds(secondsNow)
       if (secondsNow > 0) {
@@ -27,7 +26,8 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
       }
     }
     return () => interval && clearInterval(interval)
-  }, [loaded, openMoment])
+  }, [isLoaded, openMoment])
+
   return (
     <>
       <header id="page-top" className="masthead bg-primary text-white text-center">
@@ -35,10 +35,8 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
           <h1 className="home-title">Co-Create Nowhere 2023</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
-              {!loaded || !openDate ? (
-                <div className="spinner-border" role="status">
-                  <span className="sr-only">Loading...</span>
-                </div>
+              {!isLoaded ? (
+                <Loading />
               ) : seconds > 0
                 ? (
                   <>
@@ -61,10 +59,10 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
                     </p>
                     <div className="row">
                       <Link
-                        to={loggedIn ? '/dashboard/' : '/signup'}
+                        to={user ? '/dashboard/' : '/signup'}
                         className="col btn btn-secondary m-1"
                       >
-                        {loggedIn ? 'Get to it' : 'Register now'}
+                        {user ? 'Get to it' : 'Register now'}
                       </Link>
                       <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
                         I want to help before getting to site!
@@ -80,7 +78,7 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
       <section className="home bg-secondary mb-0" id="about">
         <div className="container">
           <h2 className="text-center text-uppercase">About</h2>
-          {loggedIn ? (
+          {user ? (
             <div className="row">
               <div className="col-lg-4 ml-auto">
                 <p className="lead">
@@ -153,15 +151,3 @@ const HomePageComponent = ({ loaded, openDate, loggedIn }) => {
     </>
   )
 }
-
-export const HomePage = withTracker(({ history }) => {
-  // Allows accounts-ui to redirect based on hashes such as for password resets
-  setRouterHistory(history)
-  const settingsSub = Meteor.subscribe('eventSettings')
-  const settings = EventSettings.findOne()
-  return {
-    loaded: settingsSub.ready(),
-    openDate: settings && settings.fistOpenDate,
-    loggedIn: !!Meteor.userId(),
-  }
-})(HomePageComponent)

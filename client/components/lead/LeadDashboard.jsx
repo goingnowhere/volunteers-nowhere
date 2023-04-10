@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import Fa from 'react-fontawesome'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import { useMethodCallData } from 'meteor/goingnowhere:volunteers'
@@ -11,7 +11,8 @@ import { CsvExportButton } from './CsvExportButton.jsx'
 import { SignupApprovalList } from './SignupApprovalList.jsx'
 import { Volunteers } from '../../../both/init'
 
-export const LeadDashboard = ({ match: { params: { teamId } } }) => {
+export const LeadDashboard = () => {
+  const { teamId } = useParams()
   const [{ team = {}, pendingRequests, volunteerNumber }, , reloadStats] = useMethodCallData(
     `${Volunteers.eventName}.Volunteers.getTeamStats`,
     { teamId },

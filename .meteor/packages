@@ -36,7 +36,6 @@ goingnowhere:volunteers
 alanning:roles@2.2.0 # v3 exists but requires migration
 
 abate:meteor-user-profiles
-markdown@1.0.12
 
 themeteorchef:bert
 universe:i18n

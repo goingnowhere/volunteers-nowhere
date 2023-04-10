@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { useCallback, useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 
@@ -12,7 +12,8 @@ import { Volunteers } from '../../../both/init'
 import { TeamList } from './TeamList.jsx'
 
 // TODO combine with LeadDashboard to make it 'unit' agnostic
-export const DeptDashboard = ({ match: { params: { deptId } } }) => {
+export const DeptDashboard = () => {
+  const { deptId } = useParams()
   const [{ dept, pendingLeadRequests }, setStats] = useState({ dept: {}, pendingLeadRequests: [] })
 
   const editDept = () =>
@@ -30,7 +31,7 @@ export const DeptDashboard = ({ match: { params: { deptId } } }) => {
       setStats(teamStats)
     }
   }), [deptId])
-  useEffect(reloadStats, [deptId])
+  useEffect(reloadStats, [reloadStats])
 
   useEffect(() => {
     AutoForm.addHooks([

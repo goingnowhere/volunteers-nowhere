@@ -8,17 +8,9 @@ import { EventSettings } from '../../../both/collections/settings'
 
 const FORM_ID = 'EventSettingsEdit'
 
-export const EventSettingsScreen = () => {
+export const EventSettingsScreen = ({ settings, isLoaded }) => {
   const history = useHistory()
-  const [settings, setSettings] = useState()
   useEffect(() => {
-    fetchSettings.call((err, sett) => {
-      if (err) {
-        console.error(err)
-      } else {
-        setSettings(sett)
-      }
-    })
     AutoForm.addHooks(
       FORM_ID,
       {
@@ -32,7 +24,7 @@ export const EventSettingsScreen = () => {
 
   return (
     <div className="container">
-      {settings && (
+      {isLoaded && settings && (
         <Blaze
           template="quickForm"
           collection={EventSettings}

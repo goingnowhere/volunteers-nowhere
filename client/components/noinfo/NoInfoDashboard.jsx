@@ -27,7 +27,7 @@ export const NoInfoDashboard = () => {
         <div className="col">
           <h2 className="header"> <T>urgent_shifts_today</T> </h2>
           {shiftsToday.map(shift => (
-            <div className="px-2 pb-0 signupsListItem">
+            <div key={shift._id} className="px-2 pb-0 signupsListItem">
               <DutiesListItem duty={shift} />
               <span>
                 <ShiftDateInline {...shift} />

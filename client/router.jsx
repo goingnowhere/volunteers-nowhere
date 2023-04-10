@@ -1,11 +1,14 @@
-import React, { memo } from 'react'
+import React from 'react'
 import {
   BrowserRouter,
   Route,
   Switch,
+  useHistory,
 } from 'react-router-dom'
+import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
 
 import Blaze from 'meteor/gadicc:blaze-react-component'
+import { RequireAuth } from './components/RequireAuth.jsx'
 import { HomePage } from './components/HomePage.jsx'
 import { Header } from './components/common/Header.jsx'
 import { NotFound } from './components/common/NotFound.jsx'
@@ -20,7 +23,6 @@ import { ManagerDashboard } from './components/manager/ManagerDashboard.jsx'
 import { ManagerUserList } from './components/manager/ManagerUserList.jsx'
 import { EmailApproval } from './components/manager/EmailApproval.jsx'
 import { EventSettingsScreen } from './components/manager/EventSettingsScreen.jsx'
-import { LoggedInRoute } from './components/LoggedInRoute.jsx'
 import { VerifyEmail } from './components/VerifyEmail.jsx'
 import { NoInfoDashboard } from './components/noinfo/NoInfoDashboard.jsx'
 import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
@@ -29,43 +31,82 @@ import { DeptDashboard } from './components/lead/DeptDashboard.jsx'
 import { UserDashboard } from './components/volunteer/UserDashboard.jsx'
 import { PublicTeamView } from './components/public/PublicTeamView.jsx'
 import { PublicDeptView } from './components/public/PublicDeptView.jsx'
+import { Magic } from './components/accounts/Magic.jsx'
 
-export const Routes = () => (
-  <BrowserRouter>
-    <>
-      <Header />
+// Maybe there's a better way to do this but we also want to remove accounts-ui
+function AccountsRedirector() {
+  const history = useHistory()
+  // Allows accounts-ui to redirect based on hashes such as for password resets
+  setRouterHistory(history)
+  return null
+}
+
+export function Routes(eventInfo) {
+  const { user, settings, isLoaded } = eventInfo
+  return (
+    <BrowserRouter>
+      <AccountsRedirector />
+      <Header user={user} />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/password-reset" component={Reset} />
-        <Route path="/verify-email" component={VerifyEmail} />
-        <Route path="/volunteers-agreement" render={() => <Blaze template="volAgreement" />} />
-        <LoggedInRoute path="/password" component={Password} />
-        <LoggedInRoute path="/profile" component={VolunteerForm} />
-        <LoggedInRoute path="/dashboard" component={UserDashboard} />
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <LoggedInRoute path="/department/:deptId/team/:teamId/" component={PublicTeamView} />
-        <LoggedInRoute path="/department/:deptId" component={PublicDeptView} />
-        {/* FIXME needs to check for lead */}
-        <LoggedInRoute path="/lead/team/:teamId" component={LeadDashboard} />
-        {/* FIXME needs to check for metalead */}
-        <LoggedInRoute path="/metalead/department/:deptId" component={DeptDashboard} />
-        {/* FIXME needs to check for manager */}
-        <LoggedInRoute path="/manager/eventSettings" component={EventSettingsScreen} />
-        <LoggedInRoute path="/manager/emailForms" component={memo(() => <Blaze template="managerEmailForms" />)} />
-        <LoggedInRoute path="/manager/emailApproval" component={EmailApproval} />
-        <LoggedInRoute path="/manager/userList" component={ManagerUserList} />
-        <LoggedInRoute path="/manager" component={ManagerDashboard} />
+        <Route exact path="/"><HomePage {...eventInfo} /></Route>
+        <Route path="/login"><Login /></Route>
+        <Route path="/signup"><Signup /></Route>
+        <Route path="/password-reset"><Reset /></Route>
+        <Route path="/verify-email"><VerifyEmail /></Route>
+        <Route path="/magic"><Magic user={user} /></Route>
+        <Route path="/password">
+          <RequireAuth {...eventInfo}><Password /></RequireAuth>
+        </Route>
+        <Route path="/profile">
+          <RequireAuth {...eventInfo}><VolunteerForm /></RequireAuth>
+        </Route>
+        <Route path="/dashboard">
+          <RequireAuth {...eventInfo}><UserDashboard user={user} /></RequireAuth>
+        </Route>
+        {/* TODO Make a publically visible version of these */}
+        <Route path="/department/:deptId/team/:teamId/">
+          <RequireAuth {...eventInfo}><PublicTeamView /></RequireAuth>
+        </Route>
+        <Route path="/department/:deptId">
+          <RequireAuth {...eventInfo}><PublicDeptView /></RequireAuth>
+        </Route>
+        <Route path="/lead/team/:teamId">
+          <RequireAuth {...eventInfo} authTest="isLead" leadIdParam="teamId"><LeadDashboard /></RequireAuth>
+        </Route>
+        <Route path="/metalead/department/:deptId">
+          <RequireAuth {...eventInfo} authTest="isLead" leadIdParam="deptId"><DeptDashboard /></RequireAuth>
+        </Route>
+        <Route path="/manager/eventSettings">
+          <RequireAuth {...eventInfo} authTest="isManager">
+            <EventSettingsScreen settings={settings} isLoaded={isLoaded} />
+          </RequireAuth>
+        </Route>
+        <Route path="/manager/emailForms">
+          <RequireAuth {...eventInfo} authTest="isManager"><Blaze template="managerEmailForms" /></RequireAuth>
+        </Route>
+        <Route path="/manager/emailApproval">
+          <RequireAuth {...eventInfo} authTest="isManager"><EmailApproval /></RequireAuth>
+        </Route>
+        <Route path="/manager/userList">
+          <RequireAuth {...eventInfo} authTest="isManager"><ManagerUserList /></RequireAuth>
+        </Route>
+        <Route path="/manager">
+          <RequireAuth {...eventInfo} authTest="isManager"><ManagerDashboard /></RequireAuth>
+        </Route>
         {/* FIXME needs to check for NoInfo lead */}
-        <LoggedInRoute path="/noinfo/userList" component={NoInfoUserList} />
-        <LoggedInRoute path="/noinfo" component={NoInfoDashboard} />
-        <Route component={NotFound} />
+        <Route path="/noinfo/userList">
+          <RequireAuth {...eventInfo} authTest="isALead"><NoInfoUserList /></RequireAuth>
+        </Route>
+        <Route path="/noinfo">
+          <RequireAuth {...eventInfo} auth="isALead"><NoInfoDashboard /></RequireAuth>
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
       </Switch>
-    </>
-  </BrowserRouter>
-)
-
+    </BrowserRouter>
+  )
+}
 // TODO Implement as a sub-route under /lead/team/:id
 // Router.route('/lead/team/:_id/rota', {
 //   name: 'leadTeamRota',

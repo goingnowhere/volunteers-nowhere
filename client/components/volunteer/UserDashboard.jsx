@@ -12,17 +12,14 @@ import { FilteredSignupList } from '../lead/FilteredSignupList.jsx'
 import { T } from '../common/i18n'
 import { ProfilePicture } from '../common/ProfilePicture.jsx'
 
-export function UserDashboard() {
-  const { user, bookedMissions, ready } = useTracker(() => {
-    const me = Meteor.user()
-    const signupsSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, me._id)
+export function UserDashboard({ user }) {
+  const { bookedMissions, ready } = useTracker(() => {
+    const signupsSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, user._id)
     const teamSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`)
 
     const signupsSel = { status: { $in: ['confirmed', 'pending'] }, type: { $ne: 'lead' } }
     return {
-      user: me,
-      bookedMissions:
-        Volunteers.collections.signups.find(signupsSel).count() > 0,
+      bookedMissions: Volunteers.collections.signups.countDocuments(signupsSel) > 0,
       ready: teamSub.ready() && signupsSub.ready(),
     }
   }, [])
