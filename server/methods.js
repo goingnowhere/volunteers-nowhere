@@ -1117,6 +1117,7 @@ export const getEmptyShifts = new ValidatedMethod({
     return Volunteers.collections.shift.aggregate([
       {
         $match: {
+          policy: { $in: ['public', 'requireApproval'] },
           end: { $gt: day },
         },
       }, {
