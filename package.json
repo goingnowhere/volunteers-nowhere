@@ -28,6 +28,7 @@
     "react-dom": "^16.14.0",
     "react-flatpickr": "^3.10.13",
     "react-fontawesome": "^1.7.1",
+    "react-hook-form": "^7.43.8",
     "react-modal": "^3.16.1",
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^5.3.4",

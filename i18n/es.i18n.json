@@ -82,5 +82,6 @@
   "skills": "skills",
   "quirks": "quirks",
   "priorities": "priorities",
-  "include_incomplete": "Include incomplete profiles"
+  "include_incomplete": "Include incomplete profiles",
+  "magiclink_welcome": "¡Bienvenido a FIST! Aquí es donde puedes encontrar turnos, puestos de montaje y desmontaje para ayudar a hacer realidad el marco de Nowhere."
 }

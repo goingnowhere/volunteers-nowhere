@@ -9,7 +9,6 @@ import { Promise } from 'meteor/promise'
 import moment from 'moment-timezone'
 
 import { Volunteers } from '../both/init'
-import './accounts'
 import { EventSettings } from '../both/collections/settings'
 
 const authMixins = Volunteers.services.auth.mixins
@@ -323,11 +322,6 @@ export const removeEmailTemplateMethod = new ValidatedMethod({
   ...EmailForms.removeEmailTemplate,
 })
 
-// const generateEnrollmentLink = (userId, fakeEmail) => {
-//   const { token } = Accounts.generateResetToken(userId, fakeEmail, 'enrollAccount')
-//   return Accounts.urls.enrollAccount(token)
-// }
-
 export const sendEnrollmentEmail = (userId) =>
   sendNotificationEmail({
     userId,
@@ -420,17 +414,19 @@ Accounts.sendEnrollmentEmail = (userId) => {
 
 const tmpEmailVr = Accounts.sendVerificationEmail
 Accounts.sendVerificationEmail = (userId) => {
-  try {
-    tmpEmailVr(userId)
-    const template = EmailForms.Collections.EmailTemplate.findOne({ name: 'verifyEmail' })._id
-    EmailLogs.insert({
-      userId,
-      template,
-      sent: Date(),
-    })
-  } catch (error) {
-    const user = Meteor.users.findOne(userId)
-    console.error(`Error Sending verifyEmail to ${user.emails[0].address}:`, error)
-    throw new Meteor.Error('500', `Error Sending verifyEmail to ${user.emails[0].address}`, error)
+  const user = Meteor.users.findOne(userId)
+  if (!user.fistbumpHash) {
+    try {
+      tmpEmailVr(userId)
+      const template = EmailForms.Collections.EmailTemplate.findOne({ name: 'verifyEmail' })._id
+      EmailLogs.insert({
+        userId,
+        template,
+        sent: Date(),
+      })
+    } catch (error) {
+      console.error(`Error Sending verifyEmail to ${user.emails[0].address}:`, error)
+      throw new Meteor.Error('500', `Error Sending verifyEmail to ${user.emails[0].address}`, error)
+    }
   }
 }

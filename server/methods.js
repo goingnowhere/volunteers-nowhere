@@ -4,7 +4,7 @@ import SimpleSchema from 'simpl-schema'
 import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { _ } from 'meteor/underscore'
-import { Match } from 'meteor/check'
+import { check, Match } from 'meteor/check'
 import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
@@ -20,7 +20,7 @@ import {
   volunteerFormSchema,
 } from '../both/collections/users'
 import { EventSettings, SettingsSchema } from '../both/collections/settings'
-import { lookupUserTicket } from './fistbump'
+import { lookupUserTicket, serverCheckHash } from './fistbump'
 
 const moment = extendMoment(Moment)
 const authMixins = Volunteers.services.auth.mixins
@@ -1154,4 +1154,11 @@ export const getEmptyShifts = new ValidatedMethod({
       },
     ])
   },
+})
+
+export const checkFistbumpHash = new ValidatedMethod({
+  name: 'accounts.fistbump.check',
+  mixins: [],
+  validate: ({ hash }) => check(hash, Match.Maybe(String)),
+  run: serverCheckHash,
 })

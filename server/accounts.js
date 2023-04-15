@@ -11,7 +11,7 @@ import {
 import { EventSettings } from '../both/collections/settings'
 
 import { devConfig } from './config'
-import { lookupUserTicket } from './fistbump'
+import { lookupUserTicket, serverCheckHash } from './fistbump'
 
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()
@@ -31,11 +31,23 @@ Accounts.onCreateUser((options, user) => {
     profile = { nickname: match[1] }
   }
 
+  let verifiedHash
+  if (options.fistbumpHash) {
+    // Failure throws
+    const ticketInfo = serverCheckHash({ hash: options.fistbumpHash })
+    verifiedHash = options.fistbumpHash
+    const userEmail = user.emails.find(emailEntry => emailEntry.address === ticketInfo.email)
+    if (userEmail) {
+      userEmail.verified = true
+    }
+  }
+
   return {
     ...user,
     ticketId: typeof ticket === 'object' ? ticket.TicketId : undefined,
     profile,
-    rawTicketInfo: typeof ticket === 'object' ? ticket : undefined,
+    rawTicketInfo: typeof ticket === 'object' ? ticket.raw : undefined,
+    fistbumpHash: verifiedHash,
   }
 })
 

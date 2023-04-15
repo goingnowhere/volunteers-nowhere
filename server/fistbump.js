@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { fetch } from 'meteor/fetch'
 import { wrapAsync } from 'meteor/goingnowhere:volunteers'
 import { config } from './config'
@@ -11,7 +12,7 @@ function pickBestTicket(tickets, { email, ticketId }) {
 
 export const lookupUserTicket = wrapAsync(async ({ email, ticketId }) => {
   const lookup = ticketId ? `QTK${ticketId}` : email
-  const response = await fetch(`${config.noonerHuntApi}?key=${config.noonerHuntKey}&nooner=${lookup}`, {
+  const response = await fetch(`${config.noonerHuntApi}/huntthenooner?key=${config.noonerHuntKey}&nooner=${lookup}`, {
     method: 'GET',
   })
   if (!response.ok) {
@@ -47,4 +48,41 @@ export function checkForTicketUpdate(user) {
     .filter(Boolean)
   // First ticket could be -1 if there's an error but we should handle that by not changing anything
   return tickets[0] || 0
+}
+
+async function checkHash(hash) {
+  const response = await fetch(`${config.noonerHuntApi}/verify?key=${config.noonerHuntKey}&v=${hash}`, {
+    method: 'GET',
+  })
+  if (!response.ok) {
+    if (response.status >= 500) {
+      console.error('Error checking Fistbump hash', response)
+      throw new Meteor.Error(500, 'Problem calling ticket API')
+    } else {
+      console.log('Failed to find nobody', response.status, hash)
+      return false
+    }
+  }
+  const ticketDetails = await response.json()
+  if (ticketDetails.length >= 1) {
+    const raw = ticketDetails[0]
+    return { email: raw.Email, ticketId: raw.TicketId, raw }
+  }
+  return false
+}
+
+export function serverCheckHash({ hash }) {
+  if (!hash) {
+    throw new Meteor.Error(400, 'This link is invalid')
+  }
+  let checkResult
+  try {
+    checkResult = wrapAsync(checkHash)(hash)
+  } catch (err) {
+    throw new Meteor.Error(500, 'There was an error on the server, if this persists, contact fist@goingnowhere.org')
+  }
+  if (!checkResult) {
+    throw new Meteor.Error(400, 'Invalid log in link, please check your email')
+  }
+  return checkResult
 }

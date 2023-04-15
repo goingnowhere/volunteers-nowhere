@@ -48,7 +48,7 @@
   "profile_form": "Formulaire de profil (modifier)",
   "add_picture": "Ajouter une photo",
   "your_preferences": "Tes équipes favorites",
-  "build_strike": "Build/Strike",
+  "build_strike": "Montage/Démontage",
   "event_shifts": "Shifts pendant l'évènement",
   "lead_positions": "Positions de Lead",
   "event_time": "Pendant l'événement",
@@ -82,5 +82,6 @@
   "skills": "compétences",
   "quirks": "bizarreries",
   "priorities": "priorités",
-  "include_incomplete": "inclure des profils incomplets"
+  "include_incomplete": "inclure des profils incomplets",
+  "magiclink_welcome": "Bienvenue sur FIST ! C'est ici que vous trouverez des postes de travail, de montage et de démontage pour aider à mettre en place le cadre pour la réalisation de Nowhere."
 }
