@@ -1160,5 +1160,16 @@ export const checkFistbumpHash = new ValidatedMethod({
   name: 'accounts.fistbump.check',
   mixins: [],
   validate: ({ hash }) => check(hash, Match.Maybe(String)),
-  run: serverCheckHash,
+  run({ hash }) {
+    const result = serverCheckHash({ hash })
+    // In practice any result should have an email, otherwise it would throw, but check anyway
+    if (result.email) {
+      const existingUser = Meteor.users.findOne({ 'emails.address': result.email })
+      if (existingUser) {
+        this.setUserId(existingUser._id)
+        return { existingUser }
+      }
+    }
+    return result
+  },
 })

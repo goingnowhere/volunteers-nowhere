@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Accounts } from 'meteor/accounts-base'
@@ -20,6 +21,9 @@ export function Magic({ user }) {
   useEffect(() => {
     let failureListener
     if (isLoaded && checkResult) {
+      if (checkResult.existingUser) {
+        Meteor.connection.setUserId(checkResult.existingUser._id)
+      }
       setEmail(checkResult.email)
       failureListener = Accounts.onLoginFailure(err => setError(err.error))
     }
