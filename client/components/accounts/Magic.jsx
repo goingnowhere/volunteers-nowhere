@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { Loading, TextField, useMethodCallData } from 'meteor/goingnowhere:volunteers'
 import { useForm } from 'react-hook-form'
 
+import { TermsCheckbox } from './TermsCheckbox.jsx'
 import { t, T } from '../common/i18n'
 
 export function Magic({ user }) {
@@ -15,6 +16,7 @@ export function Magic({ user }) {
 
   const [email, setEmail] = useState('')
   const [error, setError] = useState()
+  const [termsAgreed, checkTerms] = useState(false)
   useEffect(() => {
     let failureListener
     if (isLoaded && checkResult) {
@@ -65,10 +67,11 @@ export function Magic({ user }) {
             registerProps={register('password', { required: true })}
             error={errors.email ? t(`password_error_${errors.email.type}`) : false}
           />
+          <TermsCheckbox termsAgreed={termsAgreed} checkTerms={checkTerms} />
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={!isValid}
+            disabled={!isValid || !termsAgreed}
           >
             <T>submit</T>
           </button>

@@ -14,7 +14,7 @@ export class Form extends Accounts.ui.Form {
     }
   }
 
-  checkTerms = event => this.setState({ termsAgreed: event.target.checked })
+  checkTerms = checked => this.setState({ termsAgreed: checked })
 
   changeLang(event) {
     const language = event.target.value

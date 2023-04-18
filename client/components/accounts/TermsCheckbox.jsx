@@ -12,7 +12,7 @@ export const TermsCheckbox = ({ termsAgreed, checkTerms }) => (
         className="form-check-input"
         name="terms"
         checked={termsAgreed}
-        onChange={checkTerms}
+        onChange={event => checkTerms(event.target.checked)}
       />
       <label htmlFor="terms" className="form-check-label">
         I&apos;ve read and agree to the&nbsp;
