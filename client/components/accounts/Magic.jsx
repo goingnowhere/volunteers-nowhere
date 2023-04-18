@@ -2,11 +2,17 @@ import { Meteor } from 'meteor/meteor'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Accounts } from 'meteor/accounts-base'
-import { Loading, TextField, useMethodCallData } from 'meteor/goingnowhere:volunteers'
+import {
+  emailRegex,
+  Loading,
+  TextField,
+  useMethodCallData,
+} from 'meteor/goingnowhere:volunteers'
 import { useForm } from 'react-hook-form'
 
 import { TermsCheckbox } from './TermsCheckbox.jsx'
 import { t, T } from '../common/i18n'
+import { MIN_PWD_LENGTH } from '../../../both/accounts'
 
 export function Magic({ user }) {
   const history = useHistory()
@@ -38,8 +44,8 @@ export function Magic({ user }) {
   }, [history, user])
 
   const {
-    register, handleSubmit, formState: { errors, isValid },
-  } = useForm({ values: { email } })
+    register, handleSubmit, formState: { errors },
+  } = useForm({ mode: 'onTouched', values: { email } })
   const onSubmit = ({ password }) => {
     const toCreate = {
       email,
@@ -62,20 +68,24 @@ export function Magic({ user }) {
           <TextField
             label={t('email')}
             type="email"
-            registerProps={register('email', { required: true, disabled: true })}
-            error={errors.email ? t(`email_error_${errors.email.type}`) : false}
+            registerProps={register('email', {
+              required: true,
+              pattern: emailRegex,
+              disabled: true,
+            })}
+            error={errors.email ? t(`email_error.${errors.email.type}`) : false}
           />
           <TextField
-            label={t('password')}
+            label={t('newPassword')}
             type="password"
-            registerProps={register('password', { required: true })}
-            error={errors.email ? t(`password_error_${errors.email.type}`) : false}
+            registerProps={register('password', { required: true, minLength: MIN_PWD_LENGTH })}
+            error={errors.password ? t(`password_error.${errors.password.type}`) : false}
           />
           <TermsCheckbox termsAgreed={termsAgreed} checkTerms={checkTerms} />
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={!isValid || !termsAgreed}
+            disabled={!termsAgreed}
           >
             <T>submit</T>
           </button>

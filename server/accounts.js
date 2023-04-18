@@ -13,6 +13,8 @@ import { EventSettings } from '../both/collections/settings'
 import { devConfig } from './config'
 import { lookupUserTicket, serverCheckHash } from './fistbump'
 
+const GN_EMAIL_REGEX = /([^@\s]+)@goingnowhere.org$/
+
 Accounts.onCreateUser((options, user) => {
   const email = options.email.toLowerCase()
   let profile = options.language ? { language: options.language } : {}
@@ -23,10 +25,10 @@ Accounts.onCreateUser((options, user) => {
 
   const { fistOpenDate } = EventSettings.findOne() || {}
   // Temporarily only allow @gn signups
-  if (moment(fistOpenDate).isAfter() && !/@goingnowhere.org$/.test(email)) {
+  if (moment(fistOpenDate).isAfter() && !GN_EMAIL_REGEX.test(email)) {
     throw new Meteor.Error(401, `You can't sign up yet, come back on ${moment(fistOpenDate).format('Do MMMM')}`)
   }
-  const match = /([^@\s]+)@goingnowhere.org$/.exec(email)
+  const match = GN_EMAIL_REGEX.exec(email)
   if (match && match[1]) {
     profile = { nickname: match[1] }
   }
