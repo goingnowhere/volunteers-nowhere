@@ -53,7 +53,7 @@ export function Routes(eventInfo) {
         <Route path="/signup"><Signup /></Route>
         <Route path="/password-reset"><Reset /></Route>
         <Route path="/verify-email"><VerifyEmail /></Route>
-        <Route path="/magic"><Magic user={user} /></Route>
+        <Route path="/work"><Magic user={user} /></Route>
         <Route path="/password">
           <RequireAuth {...eventInfo}><Password /></RequireAuth>
         </Route>

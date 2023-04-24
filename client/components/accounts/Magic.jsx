@@ -18,7 +18,7 @@ export function Magic({ user }) {
   const history = useHistory()
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
-  const hash = searchParams.get('hash')
+  const hash = searchParams.get('fornothing')
   const [checkResult, isLoaded] = useMethodCallData('accounts.fistbump.check', { hash })
 
   const [email, setEmail] = useState('')
