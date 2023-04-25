@@ -48,7 +48,6 @@ export function FilteredSignupList({ initialShiftType }) {
         >
           <option value="event">{t('event_shifts')}</option>
           <option value="build-strike">{t('build_strike')}</option>
-          <option value="lead">{t('lead_positions')}</option>
         </select>
         <MultiSelect
           options={skills}
