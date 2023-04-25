@@ -6,8 +6,8 @@ import { MultiSelect } from 'react-multi-select-component'
 import { t } from '../common/i18n'
 import { Volunteers } from '../../../both/init'
 
-export function FilteredSignupList() {
-  const [dutyType, setDutyType] = useState('event')
+export function FilteredSignupList({ initialShiftType }) {
+  const [dutyType, setDutyType] = useState(initialShiftType || 'event')
   const [filters, setFilters] = useState({})
   const {
     quirks,
@@ -47,7 +47,7 @@ export function FilteredSignupList() {
           }}
         >
           <option value="event">{t('event_shifts')}</option>
-          <option value="project">{t('build_strike')}</option>
+          <option value="build-strike">{t('build_strike')}</option>
           <option value="lead">{t('lead_positions')}</option>
         </select>
         <MultiSelect

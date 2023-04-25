@@ -5,7 +5,7 @@ import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { BookedTable, displayName } from 'meteor/goingnowhere:volunteers'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Volunteers } from '../../../both/init'
 import { UserResponsibilities } from './UserResponsibilities.jsx'
 import { FilteredSignupList } from '../lead/FilteredSignupList.jsx'
@@ -13,6 +13,12 @@ import { T } from '../common/i18n'
 import { ProfilePicture } from '../common/ProfilePicture.jsx'
 
 export function UserDashboard({ user }) {
+  // Get type of shifts to show from search or use default
+  const { search } = useLocation()
+  const searchParams = new URLSearchParams(search)
+  // TODO sync changes
+  const initialShiftType = searchParams.get('type') || 'event'
+
   const { bookedMissions, ready } = useTracker(() => {
     const signupsSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, user._id)
     const teamSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.team`)
@@ -48,12 +54,12 @@ export function UserDashboard({ user }) {
             </div>
             <div className="col-sm-12 col-md-5 px-1">
               <h2 className="header"><T>shift_need_help</T></h2>
-              <FilteredSignupList />
+              <FilteredSignupList initialShiftType={initialShiftType} />
             </div>
           </>
         ) : (
           <div className="col-sm-12 col-md-10 px-1">
-            <FilteredSignupList />
+            <FilteredSignupList initialShiftType={initialShiftType} />
           </div>
         )}
       </div>
