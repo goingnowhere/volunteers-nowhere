@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Accounts } from 'meteor/accounts-base'
 import {
@@ -17,9 +17,11 @@ import { MIN_PWD_LENGTH } from '../../../both/accounts'
 export function Magic({ user }) {
   const history = useHistory()
   const { search } = useLocation()
-  const searchParams = new URLSearchParams(search)
+  const searchParams = useMemo(() => new URLSearchParams(search), [search])
   const hash = searchParams.get('fornothing')
   const [checkResult, isLoaded] = useMethodCallData('accounts.fistbump.check', { hash })
+
+  const successRedirect = searchParams.get('path') || 'dashboard'
 
   const [email, setEmail] = useState('')
   const [error, setError] = useState()
@@ -39,9 +41,11 @@ export function Magic({ user }) {
   useEffect(() => {
     if (user) {
       // We've logged in!
-      history.push('/dashboard')
+      searchParams.delete('fornothing')
+      searchParams.delete('path')
+      history.push(`/${successRedirect}${searchParams.size > 0 ? `?${searchParams.toString()}` : ''}`)
     }
-  }, [history, user])
+  }, [history, user, successRedirect, searchParams])
 
   const {
     register, handleSubmit, formState: { errors },
