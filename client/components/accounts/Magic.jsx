@@ -43,7 +43,8 @@ export function Magic({ user }) {
       // We've logged in!
       searchParams.delete('fornothing')
       searchParams.delete('path')
-      history.push(`/${successRedirect}${searchParams.size > 0 ? `?${searchParams.toString()}` : ''}`)
+      const remainingParams = [...searchParams.keys()].length
+      history.push(`/${successRedirect}${remainingParams > 0 ? `?${searchParams.toString()}` : ''}`)
     }
   }, [history, user, successRedirect, searchParams])
 
