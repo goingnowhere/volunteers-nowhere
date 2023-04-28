@@ -25,7 +25,7 @@ export function UserDashboard({ user }) {
 
     const signupsSel = { status: { $in: ['confirmed', 'pending'] }, type: { $ne: 'lead' } }
     return {
-      bookedMissions: Volunteers.collections.signups.countDocuments(signupsSel) > 0,
+      bookedMissions: Volunteers.collections.signups.find(signupsSel).count() > 0,
       ready: teamSub.ready() && signupsSub.ready(),
     }
   }, [])
