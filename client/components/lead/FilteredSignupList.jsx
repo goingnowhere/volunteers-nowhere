@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
-import { SignupsList } from 'meteor/goingnowhere:volunteers'
+import { SignupsList, SignupsListNew } from 'meteor/goingnowhere:volunteers'
 import { MultiSelect } from 'react-multi-select-component'
 import { t } from '../common/i18n'
 import { Volunteers } from '../../../both/init'
@@ -86,7 +86,19 @@ export function FilteredSignupList({ initialShiftType }) {
           className="col-md-6 col-lg-3"
         />
       </div>
-      <SignupsList dutyType={dutyType} filters={filters} skills={userSkills} quirks={userQuirks} />
+      {['build', 'strike'].includes(dutyType) ? (
+        <SignupsListNew
+          dutyType={dutyType}
+          filters={filters}
+        />
+      ) : (
+        <SignupsList
+          dutyType={dutyType}
+          filters={filters}
+          skills={userSkills}
+          quirks={userQuirks}
+        />
+      )}
     </>
   )
 }
