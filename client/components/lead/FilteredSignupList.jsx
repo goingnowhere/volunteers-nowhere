@@ -48,6 +48,8 @@ export function FilteredSignupList({ initialShiftType }) {
         >
           <option value="event">{t('event_shifts')}</option>
           <option value="build-strike">{t('build_strike')}</option>
+          <option value="build">{t('build')}</option>
+          <option value="strike">{t('strike')}</option>
         </select>
         <MultiSelect
           options={skills}
@@ -86,7 +88,7 @@ export function FilteredSignupList({ initialShiftType }) {
           className="col-md-6 col-lg-3"
         />
       </div>
-      {['build', 'strike'].includes(dutyType) ? (
+      {['build', 'strike', 'build-strike'].includes(dutyType) ? (
         <SignupsListNew
           dutyType={dutyType}
           filters={filters}
