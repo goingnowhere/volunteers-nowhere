@@ -334,6 +334,9 @@ const getTeamRotaCsv = ({ parentId }) => Volunteers.collections.signups.aggregat
       preserveNullAndEmptyArrays: true,
     },
   },
+  {
+    $match: { $or: [{ project: { $exists: true } }, { shift: { $exists: true } }] },
+  },
 ]).map(mapCsvExport)
 
 export const teamRotaData = new ValidatedMethod({
