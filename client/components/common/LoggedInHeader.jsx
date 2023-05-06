@@ -36,10 +36,6 @@ export function LoggedInHeader({ user }) {
     }
     const departments = Volunteers.collections.department.find().fetch()
 
-    // TODO replace with 'coordinator' role
-    const noInfo = Volunteers.collections.team.findOne({ name: 'NoInfo' })
-    const isNoInfo = noInfo && Volunteers.auth.isLead(userId, noInfo._id)
-
     return {
       allDepartments: departments,
       userDepartments:
@@ -49,7 +45,7 @@ export function LoggedInHeader({ user }) {
         isManager,
         isLead: Volunteers.auth.isALead(),
         isManagerOrMetaLead: departments.some((d) => Volunteers.auth.isLead(userId, d._id)),
-        isNoInfo,
+        isNoInfo: Volunteers.services.auth.isNoInfo(),
       },
     }
   }, [user])

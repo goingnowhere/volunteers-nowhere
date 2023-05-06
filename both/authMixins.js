@@ -11,8 +11,7 @@ export const ValidatedMethodWithMixin = (function add(method, mixins, name) {
 
 /* Check if the current user is a Manager or Volunteer part of no Info */
 const isNoInfo = () => {
-  const noInfo = Volunteers.collections.team.findOne({ name: 'NoInfo' })
-  return ((noInfo) && Volunteers.auth.isLead(Meteor.userId(), noInfo._id))
+  return Volunteers.services.auth.isNoInfo()
 }
 
 export const isSameUserOrNoInfoMixin = ({ run, ...methodOptions }) => ({
