@@ -215,11 +215,12 @@ export const updateUserBio = new ValidatedMethod({
     // 0 is no ticket, -1 is error
     let ticket = 0
     let hasTicket = !!ticketId
+    console.log({ticketId, hasTicket})
     if (ticketId && ticketId !== currentUser.ticketId) {
       ticket = lookupUserTicket({ ticketId })
       if (ticket && ticket !== -1) {
         ticketInfo = {
-          ticketId: ticket.ticketId,
+          ticketId: ticket.TicketId,
           rawTicketInfo: ticket,
         }
       } else {
@@ -240,7 +241,7 @@ export const updateUserBio = new ValidatedMethod({
         ...ticketInfo,
       },
       // Only unset ticket if there was no error and no ticket
-      ...(ticket === 0 && {
+      ...((ticket === 0 && !hasTicket) && {
         $unset: {
           ticketId: true,
           rawTicketInfo: true,

@@ -69,6 +69,7 @@ export const userSchema = new SimpleSchema({
   rawTicketInfo: {
     type: Object,
     optional: true,
+    blackbox: true,
   },
   profile: {
     type: profileSchema,
