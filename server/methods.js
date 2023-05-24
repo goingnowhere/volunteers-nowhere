@@ -385,7 +385,7 @@ function mapEECsvExport({
   const { start } = type === 'shift' ? shift : signup
   return {
     eeDate: moment(start).subtract(1, 'days').format('DD/MM/YY'),
-    start,
+    start: moment(start).format(),
     team: team.name,
     name: user.profile.nickname || user.profile.firstName,
     email: user.emails[0].address,
@@ -415,7 +415,7 @@ export const eeCsvData = new ValidatedMethod({
     // TODO actually filter projects and shifts for start date...
     const startMatch = {
       $gte: moment(start).startOf('day').toDate(),
-      $lt: moment(end).endOf('day').toDate(),
+      $lte: moment(end).endOf('day').toDate(),
     }
     if (parentId) {
       const dept = Volunteers.collections.department.findOne({ _id: parentId })
@@ -460,6 +460,10 @@ export const eeCsvData = new ValidatedMethod({
           path: '$shift',
           preserveNullAndEmptyArrays: true,
         },
+      },
+      {
+        // Either it's a shift with a start or a project signup which has a start itself
+        $match: { $or: [{ shift: { $exists: true } }, { start: { $exists: true } }] },
       },
     ]).map(mapEECsvExport)
       .filter(signup => buildEndMoment.isAfter(signup.start))
