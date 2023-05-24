@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
+import { BuildAndStrikeVolunteerReport } from 'meteor/goingnowhere:volunteers'
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -118,20 +119,18 @@ export const ManagerDashboard = () => {
             Prepare FIST for a new event
           </button>
         </div>
-        <div className="col-md-5">
-          <h2 className="header"><T>departments</T></h2>
-          {/* {{> departmentsList }} */}
-          <h2 className="header"><T>teams</T></h2>
-          {/* {{> teamsList}} */}
+        <div className="col">
+          <BuildAndStrikeVolunteerReport type="build-strike" />
         </div>
-        <div className="col-md-5">
-          <h2 className="header"><T>pending_metalead_requests</T></h2>
-          {divisionId && (
+        {/* TODO fix this */}
+        {divisionId && (
+          <div className="col-md-5">
+            <h2 className="header"><T>pending_metalead_requests</T></h2>
             <SignupApprovalList
               query={{ type: 'lead', status: 'pending', parentId: divisionId }}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   )
