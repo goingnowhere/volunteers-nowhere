@@ -8,7 +8,12 @@ import { check, Match } from 'meteor/check'
 import { Roles } from 'meteor/alanning:roles'
 import Moment from 'moment-timezone'
 import { extendMoment } from 'moment-range'
-import { rawCollectionOp, VolunteersClass, wrapAsync } from 'meteor/goingnowhere:volunteers'
+import {
+  displayName,
+  rawCollectionOp,
+  VolunteersClass,
+  wrapAsync,
+} from 'meteor/goingnowhere:volunteers'
 import { MeteorProfile, Volunteers } from '../both/init'
 import {
   isNoInfoMixin,
@@ -379,15 +384,18 @@ function mapEECsvExport({
   user,
   type,
   shift,
+  project,
   team,
   ...signup
 }) {
   const { start } = type === 'shift' ? shift : signup
+  const { title } = type === 'shift' ? shift : project
   return {
     eeDate: moment(start).subtract(1, 'days').format('DD/MM/YY'),
     start: moment(start).format(),
     team: team.name,
-    name: user.profile.nickname || user.profile.firstName,
+    title,
+    name: displayName(user),
     email: user.emails[0].address,
     ticket: user.ticketId || '',
     fullName: `${user.profile.firstName} ${user.profile.lastName || ''}`,
@@ -401,8 +409,9 @@ export const eeCsvData = new ValidatedMethod({
   run({ parentId }) {
     const eventSettings = EventSettings.findOne()
     const { start, end } = eventSettings.buildPeriod
-    // Extra day to adjust for shifts on first day giving EE the day before
-    const buildEndMoment = moment(end).add(1, 'day')
+    // Extra days, one to adjust for shifts on first day giving EE the day before, the other to push
+    // it to include people on the first day of the event
+    const buildEndMoment = moment(end).add(2, 'day')
     const match = {
       status: 'confirmed',
       type: {
@@ -462,8 +471,22 @@ export const eeCsvData = new ValidatedMethod({
         },
       },
       {
-        // Either it's a shift with a start or a project signup which has a start itself
-        $match: { $or: [{ shift: { $exists: true } }, { start: { $exists: true } }] },
+        $lookup: {
+          from: Volunteers.collections.project._name,
+          localField: 'shiftId',
+          foreignField: '_id',
+          as: 'project',
+        },
+      },
+      {
+        $unwind: {
+          path: '$project',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        // Either it's a shift or it's a project
+        $match: { $or: [{ shift: { $exists: true } }, { project: { $exists: true } }] },
       },
     ]).map(mapEECsvExport)
       .filter(signup => buildEndMoment.isAfter(signup.start))
