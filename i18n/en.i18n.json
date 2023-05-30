@@ -124,5 +124,6 @@
   "quirks": "quirks",
   "priorities": "priorities",
   "include_incomplete": "include incomplete profiles",
-  "magiclink_welcome": "Welcome to FIST! This is where you can find shifts, set-up and strike positions to help make the framework for Nowhere to happen."
+  "magiclink_welcome": "Welcome to FIST! This is where you can find shifts, set-up and strike positions to help make the framework for Nowhere to happen.",
+  "staffing_report": "Staffing Report"
 }

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { useCallback, useEffect, useState } from 'react'
 import Fa from 'react-fontawesome'
 import { Link, useParams } from 'react-router-dom'
+import { BuildAndStrikeVolunteerReport } from 'meteor/goingnowhere:volunteers'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 
@@ -122,20 +123,30 @@ export const DeptDashboard = () => {
               methodArgs={{ parentId: deptId }}
             />
           </div>
-          <div className={`${
-            pendingLeadRequests.length > 0 ? 'col-sm-12 col-md-5 pr-1' : 'col-sm-6 col-md-10'
-            } pl-1 user-top`}
-          >
-            <TeamList deptId={deptId} teams={dept.teams} reload={reloadStats} />
-          </div>
-          {pendingLeadRequests.length > 0 && (
-            <div className="col-sm-12 col-md-5 pl-1 user-top">
-              <h2 className="header"><T>pending_lead_requests</T></h2>
-              <SignupApprovalList
-                query={{ parentId: { $in: [deptId, ...dept.teamIds] }, type: 'lead', status: 'pending' }}
-              />
+          <div className="col-md-10">
+            <div className="row">
+              <div className="col">
+                <h2 className="header"><T>staffing_report</T>: <T>build_strike</T></h2>
+                <BuildAndStrikeVolunteerReport type="build-strike" deptId={deptId} />
+              </div>
             </div>
-          )}
+            <div className="row">
+              {pendingLeadRequests.length > 0 && (
+                <div className="col-md-6 order-md-last">
+                  <h2 className="header"><T>pending_lead_requests</T></h2>
+                  <SignupApprovalList
+                    query={{ parentId: { $in: [deptId, ...dept.teamIds] }, type: 'lead', status: 'pending' }}
+                  />
+                </div>
+              )}
+              <div className={`${
+pendingLeadRequests.length > 0 ? 'col-md-6' : 'col'
+} pl-1 user-top`}
+              >
+                <TeamList deptId={deptId} teams={dept.teams} reload={reloadStats} />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

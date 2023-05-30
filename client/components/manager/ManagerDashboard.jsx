@@ -67,7 +67,7 @@ export const ManagerDashboard = () => {
         />
       </Modal>
       <div className="row h-100">
-        <div className="col-md-2 bg-grey dashboard-side-panel">
+        <div className="col-2 bg-grey dashboard-side-panel">
           <h3><T>manager</T></h3>
           <h5 className="mb-2 dark-text"><T>leads</T></h5>
           <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
@@ -119,18 +119,10 @@ export const ManagerDashboard = () => {
             Prepare FIST for a new event
           </button>
         </div>
-        <div className="col">
+        <div className="col-10">
+          <h2 className="header"><T>staffing_report</T>: <T>build_strike</T></h2>
           <BuildAndStrikeVolunteerReport type="build-strike" />
         </div>
-        {/* TODO fix this */}
-        {divisionId && (
-          <div className="col-md-5">
-            <h2 className="header"><T>pending_metalead_requests</T></h2>
-            <SignupApprovalList
-              query={{ type: 'lead', status: 'pending', parentId: divisionId }}
-            />
-          </div>
-        )}
       </div>
     </div>
   )

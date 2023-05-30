@@ -124,5 +124,6 @@
   "quirks": "bizarreries",
   "priorities": "priorités",
   "include_incomplete": "inclure des profils incomplets",
-  "magiclink_welcome": "Bienvenue sur FIST ! C'est ici que vous trouverez des postes de travail, de montage et de démontage pour aider à mettre en place le cadre pour la réalisation de Nowhere."
+  "magiclink_welcome": "Bienvenue sur FIST ! C'est ici que vous trouverez des postes de travail, de montage et de démontage pour aider à mettre en place le cadre pour la réalisation de Nowhere.",
+  "staffing_report": "état des effectifs"
 }
