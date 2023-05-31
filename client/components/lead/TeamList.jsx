@@ -5,6 +5,7 @@ import { AutoForm } from 'meteor/aldeed:autoform'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { displayName } from 'meteor/goingnowhere:volunteers'
+import moment from 'moment-timezone'
 
 import { Volunteers } from '../../../both/init'
 import { T, t } from '../common/i18n'
@@ -52,7 +53,12 @@ const enrollLead = (teamId, shiftId, policy, reload) => {
   reload()
 }
 
-export const TeamList = ({ deptId, teams = [], reload }) => {
+export const TeamList = ({
+  deptId,
+  teams = [],
+  pendingRequests,
+  reload,
+}) => {
   const [moveTeam, setMoveTeam] = useState()
 
   useEffect(() => {
@@ -68,6 +74,9 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
       },
     })
   }, [reload])
+
+  const pendingByTeam = Object.fromEntries(teams.map((team =>
+    [team._id, pendingRequests.filter(({ parentId }) => parentId === team._id)])))
   return (
     <>
       <Modal
@@ -164,6 +173,22 @@ export const TeamList = ({ deptId, teams = [], reload }) => {
                 <span className="badge badge-pill badge-primary" title={`${t('confirmed')}/${t('needed')}`}>
                   {team.shiftRate && `${team.shiftRate.confirmed}/${team.shiftRate.needed}`}
                 </span>
+                {pendingByTeam[team._id].length > 0 && (
+                  <>
+                    <div>
+                      <small>
+                        <T>pending</T>: {pendingByTeam[team._id].length}
+                      </small>
+                    </div>
+                    <div title={pendingByTeam[team._id][0].createdAt.toLocaleString()}>
+                      <small>
+                        <T>oldest_request</T>: {
+                          moment(pendingByTeam[team._id][0].createdAt).fromNow()
+                        }
+                      </small>
+                    </div>
+                  </>
+                )}
               </td>
               <td>
                 <div className="btn-group inline pull-left">
