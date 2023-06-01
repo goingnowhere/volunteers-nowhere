@@ -111,7 +111,6 @@ export const LeadDashboard = () => {
         </aside>
         {pendingRequests > 0 && (
           <div className="col-sm-8 col-md-5 pl-1 pr-1 order-md-last">
-            <h2 className="header"><T>applications</T></h2>
             <SignupApprovalList query={{ parentId: teamId, status: 'pending' }} onReload={reload} />
           </div>
         )}

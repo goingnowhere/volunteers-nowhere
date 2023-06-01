@@ -127,7 +127,6 @@ export const DeptDashboard = () => {
               <div className="row">
                 {pendingLeadRequests.length > 0 && (
                   <div className="col-md-6 order-md-last">
-                    <h2 className="header"><T>pending_lead_requests</T></h2>
                     <SignupApprovalList
                       query={{ parentId: { $in: [deptId, ...dept.teamIds] }, type: 'lead', status: 'pending' }}
                     />
