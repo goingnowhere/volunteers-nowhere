@@ -21,6 +21,8 @@ To run this project you must [install meteor](https://www.meteor.com/install) an
 git clone git@github.com:goingnowhere/volunteers-nowhere.git --recurse-submodules
 cd volunteers-nowhere
 cp server/env.example server/env.json
+# If you missed the '--recurse-submodules' above, then add this step to get them:
+# git submodule update --init
 meteor npm install
 meteor
 ```

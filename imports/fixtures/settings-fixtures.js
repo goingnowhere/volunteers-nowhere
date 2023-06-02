@@ -22,6 +22,8 @@ const settings = {
     start: moment(nextEventStart).day(8).toDate(),
     end: moment(nextEventStart).day(14).toDate(),
   },
+  eventName: 'nowhere2023',
+  previousEventName: 'nowhere2022',
   earlyEntryMax: 120,
   barriosArrivalDate: moment(nextEventStart).day(-1).subtract(1, 'weeks').toDate(),
   cronFrequency: 'every 15 mins',
