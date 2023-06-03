@@ -388,11 +388,12 @@ function mapEECsvExport({
   team,
   ...signup
 }) {
-  const { start } = type === 'shift' ? shift : signup
+  const { start, end } = type === 'shift' ? shift : signup
   const { title } = type === 'shift' ? shift : project
   return {
     eeDate: moment(start).subtract(1, 'days').format('DD/MM/YY'),
     start: moment(start).format(),
+    end: moment(end).format(),
     team: team.name,
     title,
     name: displayName(user),
@@ -408,10 +409,10 @@ export const eeCsvData = new ValidatedMethod({
   validate: null,
   run({ parentId }) {
     const eventSettings = EventSettings.findOne()
-    const { start, end } = eventSettings.buildPeriod
+    const { end: buildEnd } = eventSettings.buildPeriod
     // Extra days, one to adjust for shifts on first day giving EE the day before, the other to push
     // it to include people on the first day of the event
-    const buildEndMoment = moment(end).add(2, 'day')
+    const buildEndMoment = moment(buildEnd).add(2, 'day')
     const match = {
       status: 'confirmed',
       type: {
@@ -421,11 +422,11 @@ export const eeCsvData = new ValidatedMethod({
         ],
       },
     }
-    // TODO actually filter projects and shifts for start date...
-    const startMatch = {
-      $gte: moment(start).startOf('day').toDate(),
-      $lte: moment(end).endOf('day').toDate(),
-    }
+    // TODO actually filter projects and shifts for start date before the end
+    // const startMatch = {
+    //   $gte: moment(start).startOf('day').toDate(),
+    //   $lte: moment(end).endOf('day').toDate(),
+    // }
     if (parentId) {
       const dept = Volunteers.collections.department.findOne({ _id: parentId })
       if (dept) {
@@ -491,15 +492,25 @@ export const eeCsvData = new ValidatedMethod({
     ]).map(mapEECsvExport)
       .filter(signup => buildEndMoment.isAfter(signup.start))
 
-    const firstOnly = []
     signups.sort((a, b) => (moment(a.start).isBefore(b.start) ? -1 : 1))
-    signups.forEach(signup => {
-      if (!firstOnly.some(first => first.email === signup.email)) {
-        firstOnly.push(signup)
+    const byUserSorted = new Map()
+    signups.forEach((signup) => {
+      let allForUser = byUserSorted.get(signup.email)
+      if (!allForUser) {
+        allForUser = []
+        byUserSorted.set(signup.email, allForUser)
       }
+      allForUser.push(signup)
     })
 
-    return firstOnly
+    return [...byUserSorted.entries()].map(([, allForUser]) => {
+      return {
+        ...allForUser[0],
+        end: allForUser[allForUser.length - 1].end,
+        teamProgression: allForUser.map(({ team, title }) => `${team}: ${title}`).join(' -> '),
+        dates: allForUser.map(({ start, end }) => `${start} - ${end}`).join(' // '),
+      }
+    })
   },
 })
 
