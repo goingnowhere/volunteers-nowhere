@@ -51,6 +51,7 @@ module.exports = {
     'no-nested-ternary': 'off',
     'no-unused-vars': ['error', { args: 'after-used', ignoreRestSiblings: true }],
     'prefer-destructuring': ['error', { object: true, array: false }],
+    'operator-linebreak': ['error', 'before', { overrides: { '=': 'after' } }],
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {

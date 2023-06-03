@@ -1,6 +1,5 @@
 import { createUnitFixtures } from './units-fixtures'
 import { createSettingFixtures, createEmailTemplateFixtures } from './settings-fixtures'
-// import './duties-fixtures'
 import { createShiftFixtures } from './shifts-fixtures'
 import { createUserFixtures } from './users-fixtures'
 
