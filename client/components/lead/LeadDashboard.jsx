@@ -111,7 +111,11 @@ export const LeadDashboard = () => {
         </aside>
         {pendingRequests > 0 && (
           <div className="col-sm-8 col-md-5 pl-1 pr-1 order-md-last">
-            <SignupApprovalList query={{ parentId: teamId, status: 'pending' }} onReload={reload} />
+            <SignupApprovalList
+              heading="applications"
+              query={{ parentId: teamId, status: 'pending' }}
+              onReload={reload}
+            />
           </div>
         )}
         <div className={`${pendingRequests > 0 ? 'col-md-5' : 'col-sm-8 col-md-10'

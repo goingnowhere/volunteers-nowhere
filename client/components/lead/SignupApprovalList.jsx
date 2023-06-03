@@ -10,7 +10,7 @@ import { Volunteers } from '../../../both/init'
 const SORT_OPTIONS = ['created', 'start', 'end']
 
 // Should probably be in meteor-volunteers but need to figure out noinfo stuff
-export const SignupApprovalList = ({ query = {}, onReload }) => {
+export const SignupApprovalList = ({ heading, query = {}, onReload }) => {
   const [modalUserId, setModalUserId] = useState('')
   const [sort, setSort] = useState('created')
   const [allSignups, isLoaded, reloadSignups] = useMethodCallData(
@@ -44,7 +44,7 @@ export const SignupApprovalList = ({ query = {}, onReload }) => {
       >
         <NoInfoUserProfile userId={modalUserId} />
       </Modal>
-      <h2 className="header mb-0"><T>pending_lead_requests</T></h2>
+      <h2 className="header mb-0"><T>{heading}</T></h2>
       <div className="mb-2">
         <T>sort</T>:
         <select
