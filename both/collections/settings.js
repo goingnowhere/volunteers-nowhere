@@ -96,6 +96,18 @@ export const SettingsSchema = new SimpleSchema({
     },
   },
 
+  earlyEntryClose: {
+    type: Date,
+    autoform: {
+      type: 'flatpicker',
+      opts: {
+        altInput: true,
+        altFormat: 'F j, Y',
+      },
+      afFieldHelpText: 'Date after which early entry shifts can only be changed by leads',
+    },
+  },
+
   cronFrequency: {
     type: String,
     optional: true,

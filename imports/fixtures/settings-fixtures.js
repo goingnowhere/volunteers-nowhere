@@ -26,6 +26,7 @@ const settings = {
   previousEventName: 'nowhere2022',
   earlyEntryMax: 120,
   barriosArrivalDate: moment(nextEventStart).day(-1).subtract(1, 'weeks').toDate(),
+  earlyEntryClose: moment(nextEventStart).subtract(3, 'weeks').toDate(),
   cronFrequency: 'every 15 mins',
   fistOpenDate: moment(nextEventStart).month(0).date(1).toDate(),
 }
