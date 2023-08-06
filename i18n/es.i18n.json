@@ -75,6 +75,8 @@
   "enrolled": "Enrolled",
   "profile_filled": "With Profile",
   "with_duties": "With Duties",
+  "with_event_time_roles": "With Event Time Duties",
+  "with_three_event_time_roles": "At least 3 Event Time Duties",
   "enrollment_sent": "Enrollment Sent",
   "shifts_in_this_team": "Shifts in this Team",
   "public_link": "Public Link",

@@ -86,22 +86,85 @@ export const userStats = new ValidatedMethod({
   mixins: [isNoInfoMixin],
   validate: null,
   run() {
-    const volunteers = Meteor.users.find().count()
-    const bioFilled = Meteor.users.find({ 'profile.formFilled': true }).count()
-    const leads = Volunteers.collections.signups.find({ type: 'lead', status: 'confirmed' }).count()
-    const online = Meteor.users.find({ 'status.online': true }).count()
-    const withDuties = Promise.await(Volunteers.collections.signups.rawCollection().distinct('userId'))
-    const withTicket = Meteor.users.find({ ticketId: { $exists: true } }).count()
-    const withPicture = Meteor.users.find({ 'profile.picture': { $exists: true } }).count()
-    return {
-      volunteers,
-      bioFilled,
-      withDuties: withDuties.length,
-      withTicket,
-      withPicture,
-      leads,
-      online,
-    }
+    const settings = EventSettings.findOne()
+    const eventStart = settings.eventPeriod.start
+    const eventEnd = moment(settings.eventPeriod.end).add(1, 'day').toDate().toISOString()
+    const [stats] = Meteor.users.aggregate([
+      {
+        $match: { isBanned: false },
+      }, {
+        $lookup: {
+          from: Volunteers.collections.signups._name,
+          as: 'signups',
+          let: { userId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$userId', '$$userId'] }, status: 'confirmed' } },
+            {
+              $lookup: {
+                from: Volunteers.collections.shift._name,
+                as: 'shift',
+                let: { shiftId: '$shiftId' },
+                pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$shiftId'] } } }],
+              },
+            }, {
+              $unwind: { path: '$shift', preserveNullAndEmptyArrays: true },
+            }, {
+              $addFields: {
+                start: {
+                  $cond: { if: { $eq: ['$type', 'shift'] }, then: '$shift.start', else: '$start' },
+                },
+                end: {
+                  $cond: { if: { $eq: ['$type', 'shift'] }, then: '$shift.end', else: '$end' },
+                },
+              },
+            }, {
+              $group: {
+                _id: null,
+                count: { $sum: 1 },
+                leads: { $sum: { $cond: { if: { $eq: ['$type', 'lead'] }, then: 1, else: 0 } } },
+                eventTime: {
+                  $sum: {
+                    $cond: {
+                      if: {
+                        $and: [{ $gt: ['$start', eventStart] }, { $lt: ['$end', { $toDate: eventEnd }] }],
+                      },
+                      then: 1,
+                      else: 0,
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }, {
+        $unwind: { path: '$signups', preserveNullAndEmptyArrays: true },
+      }, {
+        $group: {
+          _id: null,
+          registered: { $sum: 1 },
+          bioFilled: { $sum: { $cond: { if: '$profile.formFilled', then: 1, else: 0 } } },
+          online: { $sum: { $cond: { if: '$status.online', then: 1, else: 0 } } },
+          withTicket: {
+            $sum: { $cond: { if: { $ne: [{ $type: '$ticketId' }, 'missing'] }, then: 1, else: 0 } },
+          },
+          withPicture: {
+            $sum: {
+              $cond: { if: { $ne: [{ $type: '$profile.picture' }, 'missing'] }, then: 1, else: 0 },
+            },
+          },
+          withDuties: { $sum: { $cond: { if: { $gt: ['$signups.count', 0] }, then: 1, else: 0 } } },
+          leads: { $sum: { $cond: { if: { $gt: ['$signups.leads', 0] }, then: 1, else: 0 } } },
+          eventTimeAny: {
+            $sum: { $cond: { if: { $gt: ['$signups.eventTime', 0] }, then: 1, else: 0 } },
+          },
+          eventTimeThree: {
+            $sum: { $cond: { if: { $gt: ['$signups.eventTime', 2] }, then: 1, else: 0 } },
+          },
+        },
+      },
+    ])
+    return stats
   },
 })
 
