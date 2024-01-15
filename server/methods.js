@@ -595,7 +595,10 @@ export const newEventMigration = new ValidatedMethod({
     if (oldSettings.eventName === newSettings.eventName) {
       throw new Meteor.Error(400, 'Not ready to move on. We still need to process last year')
     }
-    const sourceEvent = new VolunteersClass(oldSettings, true)
+    const sourceEvent = new VolunteersClass({
+      ...oldSettings,
+      SettingsCollection: EventSettings,
+    }, true)
     const volForms = sourceEvent.collections.volunteerForm.find().fetch()
     const departments = sourceEvent.collections.department.find().fetch()
     const teams = sourceEvent.collections.team.find().fetch()
@@ -609,6 +612,24 @@ export const newEventMigration = new ValidatedMethod({
     }).fetch()
 
     rawCollectionOp(Volunteers.collections.volunteerForm, 'insertMany', volForms)
+
+    // Maintain managers and admins from last event
+    // Not used as we need to update the hard-coded event name first, then we need a manager to be
+    // able to press the magic button
+    // Meteor.users.update(
+    //   {
+    //     roles: { $elemMatch: { _id: 'admin', scope: oldSettings.eventName } },
+    //   },
+    //   { $addToSet: { roles: { _id: 'admin', scope: newSettings.eventName, assigned: true } } },
+    //   { multi: true },
+    // )
+    // Meteor.users.update(
+    //   {
+    //     roles: { $elemMatch: { _id: 'manager', scope: oldSettings.eventName } },
+    //   },
+    //   { $addToSet: { roles: { _id: 'manager', scope: newSettings.eventName, assigned: true } } },
+    //   { multi: true },
+    // )
 
     const eventStartDiff = moment(newSettings.eventPeriod.start)
       .diff(oldSettings.eventPeriod.start, 'days')
