@@ -8,8 +8,8 @@ import { EventSettings } from './collections/settings'
 // const settings = EventSettings.findOne()
 // For now, pass the settings collection in and use that where appropriate
 export const Volunteers = new VolunteersClass({
-  eventName: 'nowhere2023',
-  previousEventName: 'nowhere2022',
+  eventName: 'nowhere2024',
+  previousEventName: 'nowhere2023',
   SettingsCollection: EventSettings,
 })
 
