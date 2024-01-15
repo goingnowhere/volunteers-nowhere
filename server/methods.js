@@ -592,6 +592,9 @@ export const newEventMigration = new ValidatedMethod({
     if (!oldSettings.eventName) {
       throw new Meteor.Error(500, "We don't have an event name so can't proceed :(")
     }
+    if (oldSettings.eventName === newSettings.eventName) {
+      throw new Meteor.Error(400, 'Not ready to move on. We still need to process last year')
+    }
     const sourceEvent = new VolunteersClass(oldSettings, true)
     const volForms = sourceEvent.collections.volunteerForm.find().fetch()
     const departments = sourceEvent.collections.department.find().fetch()

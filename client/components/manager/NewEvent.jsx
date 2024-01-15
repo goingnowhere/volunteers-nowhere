@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { useEffect, useState } from 'react'
 import Blaze from 'meteor/gadicc:blaze-react-component'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { Loading } from 'meteor/goingnowhere:volunteers'
 
 import { Volunteers } from '../../../both/init'
 import { fetchSettings } from '../../../both/methods'
@@ -42,7 +43,8 @@ export const NewEvent = ({ onSubmitted }) => {
 
   return (
     <div>
-      {settings && (
+      {!settings && (<Loading />)}
+      {settings && settings.previousEventName !== Volunteers.eventName && (
         <Blaze
           template="quickForm"
           collection={EventSettings}
@@ -53,6 +55,13 @@ export const NewEvent = ({ onSubmitted }) => {
           fields="eventName,eventPeriod"
           validation="none"
         />
+      )}
+      {settings && settings.previousEventName === Volunteers.eventName && (
+        <p>
+          Unfortunately, due to how this system was built, we currently need a developer to set
+          things up for the next year. Send bribe details to fist@goingnowhere.org before this
+          will work.
+        </p>
       )}
     </div>
   )
