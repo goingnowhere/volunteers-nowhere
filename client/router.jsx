@@ -6,6 +6,10 @@ import {
   useHistory,
 } from 'react-router-dom'
 import { setRouterHistory } from 'meteor/piemonkey:accounts-ui'
+import {
+  PublicDeptView,
+  PublicTeamView,
+} from 'meteor/goingnowhere:volunteers';
 
 import Blaze from 'meteor/gadicc:blaze-react-component'
 import { RequireAuth } from './components/RequireAuth.jsx'
@@ -29,8 +33,6 @@ import { NoInfoUserList } from './components/noinfo/NoInfoUserList.jsx'
 import { LeadDashboard } from './components/lead/LeadDashboard.jsx'
 import { DeptDashboard } from './components/lead/DeptDashboard.jsx'
 import { UserDashboard } from './components/volunteer/UserDashboard.jsx'
-import { PublicTeamView } from './components/public/PublicTeamView.jsx'
-import { PublicDeptView } from './components/public/PublicDeptView.jsx'
 import { Magic } from './components/accounts/Magic.jsx'
 
 // Maybe there's a better way to do this but we also want to remove accounts-ui

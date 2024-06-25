@@ -4,11 +4,14 @@ import 'bootstrap-select/dist/css/bootstrap-select.css'
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
-import { BookedTable, displayName } from 'meteor/goingnowhere:volunteers'
+import {
+  BookedTable,
+  displayName,
+  FilteredSignupList,
+} from 'meteor/goingnowhere:volunteers'
 import { Link, useLocation } from 'react-router-dom'
 import { Volunteers } from '../../../both/init'
 import { UserResponsibilities } from './UserResponsibilities.jsx'
-import { FilteredSignupList } from '../lead/FilteredSignupList.jsx'
 import { T } from '../common/i18n'
 import { ProfilePicture } from '../common/ProfilePicture.jsx'
 
@@ -17,7 +20,7 @@ export function UserDashboard({ user }) {
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   // TODO sync changes
-  const initialShiftType = searchParams.get('type') || 'event'
+  const initialShiftType = searchParams.get('type') || 'all'
 
   const { bookedMissions, ready } = useTracker(() => {
     const signupsSub = Meteor.subscribe(`${Volunteers.eventName}.Volunteers.Signups.byUser`, user._id)
@@ -44,24 +47,18 @@ export function UserDashboard({ user }) {
             <T>edit_user_info</T>
           </Link>
         </div>
-        {bookedMissions ? (
-          <>
-            <div className="col-sm-12 col-md-5 px-1">
-              <h2 className="header"><T>booked_missions</T></h2>
-              <div>
-                <BookedTable />
-              </div>
+        {bookedMissions && (
+          <div className="col-sm-12 col-md-5 px-1">
+            <h2 className="header"><T>booked_missions</T></h2>
+            <div>
+              <BookedTable />
             </div>
-            <div className="col-sm-12 col-md-5 px-1">
-              <h2 className="header"><T>shift_need_help</T></h2>
-              <FilteredSignupList initialShiftType={initialShiftType} />
-            </div>
-          </>
-        ) : (
-          <div className="col-sm-12 col-md-10 px-1">
-            <FilteredSignupList initialShiftType={initialShiftType} />
           </div>
         )}
+        <div className={`col-sm-12 px-1 ${bookedMissions ? 'col-md-5' : 'col-md-10'}`}>
+          <h2 className="header"><T>shift_need_help</T></h2>
+          <FilteredSignupList initialShiftType={initialShiftType} />
+        </div>
       </div>
     </div>
   )

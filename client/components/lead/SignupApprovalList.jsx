@@ -54,7 +54,7 @@ export const SignupApprovalList = ({ heading, query = {}, onReload }) => {
             setSort(event.currentTarget.value)
           }}
         >
-          {SORT_OPTIONS.map((opt) => <option value={opt}>{t(opt)}</option>)}
+          {SORT_OPTIONS.map((opt) => <option key={opt} value={opt}>{t(opt)}</option>)}
         </select>
       </div>
       <ul className="list-group">
