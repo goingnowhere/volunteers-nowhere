@@ -23,7 +23,7 @@ const enroll = (type, {
       parentId,
       enrolled: true,
     },
-    (err, signupId) => {
+    (err, insertResult) => {
       if (err) {
         switch (err.error) {
         case 409: {
@@ -57,8 +57,14 @@ const enroll = (type, {
             style: 'growl-top-right',
           })
         }
-      } if (signupId && (policy === 'requireApproval' || policy === 'adminOnly')) {
-        Meteor.call(`${Volunteers.eventName}.Volunteers.signups.confirm`, signupId)
+      } else if (insertResult) {
+        Bert.alert({
+          hideDelay: 6500,
+          title: t('success'),
+          message: t('voluntell_success'),
+          type: 'success',
+          style: 'growl-top-right',
+        })
       }
     },
   )
