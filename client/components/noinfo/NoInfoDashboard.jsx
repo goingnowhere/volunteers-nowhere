@@ -19,7 +19,8 @@ export const NoInfoDashboard = () => {
   const [datesFilter, setDatesFilter] = useState({})
   useEffect(() => {
     if (settingsLoaded) {
-      setDatesFilter({ start: settings.eventPeriod.start, end: settings.eventPeriod.end })
+      const start = settings.eventPeriod.start.valueOf() < Date.now() ? new Date() : settings.eventPeriod.start
+      setDatesFilter({ start, end: settings.eventPeriod.end })
     }
   }, [settingsLoaded])
   const [duties, isLoaded] = useMethodCallData(methods.listOpenShifts, {
