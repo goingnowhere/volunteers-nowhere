@@ -99,8 +99,11 @@ export function Routes(eventInfo) {
         <Route path="/noinfo/userList">
           <RequireAuth {...eventInfo} authTest="isALead"><NoInfoUserList /></RequireAuth>
         </Route>
+        <Route path="/noinfo/strike">
+          <RequireAuth {...eventInfo} auth="isALead"><NoInfoDashboard period="strike" /></RequireAuth>
+        </Route>
         <Route path="/noinfo">
-          <RequireAuth {...eventInfo} auth="isALead"><NoInfoDashboard /></RequireAuth>
+          <RequireAuth {...eventInfo} auth="isALead"><NoInfoDashboard period="event" /></RequireAuth>
         </Route>
         <Route>
           <NotFound />
