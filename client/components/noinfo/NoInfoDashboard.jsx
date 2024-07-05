@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import moment from 'moment-timezone'
 import {
   DutiesListItem,
   ShiftDate,
@@ -20,7 +21,8 @@ export const NoInfoDashboard = () => {
   useEffect(() => {
     if (settingsLoaded) {
       const start = settings.eventPeriod.start.valueOf() < Date.now() ? new Date() : settings.eventPeriod.start
-      setDatesFilter({ start, end: settings.eventPeriod.end })
+      const end = moment(settings.eventPeriod.end).add(1, 'day').toDate()
+      setDatesFilter({ start, end })
     }
   }, [settingsLoaded])
   const [duties, isLoaded] = useMethodCallData(methods.listOpenShifts, {
