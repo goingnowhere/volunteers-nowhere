@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import SimpleSchema from 'simpl-schema'
-import { Promise } from 'meteor/promise'
 import { ValidatedMethod } from 'meteor/mdg:validated-method'
 import { _ } from 'meteor/underscore'
 import { check, Match } from 'meteor/check'
@@ -283,7 +282,6 @@ export const updateUserBio = new ValidatedMethod({
     // 0 is no ticket, -1 is error
     let ticket = 0
     let hasTicket = !!ticketId
-    console.log({ticketId, hasTicket})
     if (ticketId && ticketId !== currentUser.ticketId) {
       ticket = lookupUserTicket({ ticketId })
       if (ticket && ticket !== -1) {

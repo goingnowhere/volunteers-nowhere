@@ -58,7 +58,8 @@ const emailTemplates = [{
 ]
 
 export const createEmailTemplateFixtures = () => {
-  // if (!EmailForms.Collections.EmailTemplate.find({ name: { $in: ['enrollAccount', 'verifyEmail'] } }) === 0) {
+  // if (!EmailForms.Collections.EmailTemplate
+  //   .find({ name: { $in: ['enrollAccount', 'verifyEmail'] } }) === 0) {
   console.log('creating email templates')
   emailTemplates.forEach(doc =>
     EmailForms.Collections.EmailTemplate.insert(doc))

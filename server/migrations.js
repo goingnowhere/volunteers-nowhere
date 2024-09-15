@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import { Meteor } from 'meteor/meteor'
 import { Migrations } from 'meteor/percolate:migrations'
-import { Roles } from 'meteor/alanning:roles'
-import { rawCollectionOp } from 'meteor/goingnowhere:volunteers'
+// import { Roles } from 'meteor/alanning:roles'
+// import { rawCollectionOp } from 'meteor/goingnowhere:volunteers'
 
-import { EventSettings } from '../both/collections/settings'
-import { Volunteers } from '../both/init'
+// import { EventSettings } from '../both/collections/settings'
+// import { Volunteers } from '../both/init'
 
 Migrations.config({
   log: true,

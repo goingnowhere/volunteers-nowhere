@@ -52,6 +52,8 @@ module.exports = {
     'no-unused-vars': ['error', { args: 'after-used', ignoreRestSiblings: true }],
     'prefer-destructuring': ['error', { object: true, array: false }],
     'operator-linebreak': ['error', 'before', { overrides: { '=': 'after' } }],
+    // Remove if we add proper logging
+    'no-console': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'import/no-unresolved': ['error', {
