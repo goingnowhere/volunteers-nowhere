@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { SyncedCron } from 'meteor/littledata:synced-cron'
+import moment from 'moment-timezone'
 import { Volunteers } from '../both/init'
 import { EventSettings } from '../both/collections/settings'
 import {
@@ -103,7 +104,7 @@ const ReviewTask = (time) => {
   })
 }
 
-const cronActivate = ({ cronFrequency, emailManualCheck }) => {
+const cronActivate = ({ cronFrequency, emailManualCheck, eventPeriod }) => {
   if (cronFrequency) {
     console.log('Set Cron to ', cronFrequency)
     SyncedCron.stop()
@@ -118,9 +119,22 @@ const cronActivate = ({ cronFrequency, emailManualCheck }) => {
     signupsGC('at 03:00 every 3 days')
 
     if (Meteor.isProduction || devConfig.testTicketApi) {
-      setCron({ name: 'MissingTicketCheck', time: 'at 04:00 every day', job: () => queueTicketChecks(false) })
-      setCron({ name: 'AllTicketCheck', time: 'at 04:00 every monday', job: () => queueTicketChecks(true) })
-      setCron({ name: 'ProcessTicketCheck', time: 'every 20 seconds', job: () => processTicketCheckItem() })
+      const eventEnd = moment(eventPeriod.end)
+      setCron({
+        name: 'MissingTicketCheck',
+        time: 'at 04:00 every day',
+        job: () => eventEnd.isAfter(Date.now()) && queueTicketChecks(false),
+      })
+      setCron({
+        name: 'AllTicketCheck',
+        time: 'at 04:00 every monday',
+        job: () => eventEnd.isAfter(Date.now()) && queueTicketChecks(true),
+      })
+      setCron({
+        name: 'ProcessTicketCheck',
+        time: 'every 20 seconds',
+        job: () => eventEnd.isAfter(Date.now()) && processTicketCheckItem(),
+      })
     }
     SyncedCron.start()
   } else {
