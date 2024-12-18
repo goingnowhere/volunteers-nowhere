@@ -5,19 +5,19 @@ import { Accounts } from 'meteor/accounts-base'
 const defaultUsers = [
   {
     name: 'manager',
-    email: 'manager@example.com',
+    email: 'manager@goingnowhere.org',
     password: 'testtest',
     roles: ['manager'],
   },
   {
     name: 'admin',
-    email: 'admin@example.com',
+    email: 'admin@goingnowhere.org',
     password: 'testtest',
     roles: ['admin'],
   },
   {
     name: 'normal user',
-    email: 'normal@example.com',
+    email: 'normal@goingnowhere.org',
     password: 'testtest',
     roles: [],
   },
