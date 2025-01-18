@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
-import { BuildAndStrikeVolunteerReport } from 'meteor/goingnowhere:volunteers'
+import { BuildAndStrikeVolunteerReport, Loading, useMethodCallData } from 'meteor/goingnowhere:volunteers'
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -52,6 +52,7 @@ export const ManagerDashboard = () => {
     const division = Volunteers.collections.division.findOne({ name: topLevelDivision })
     return { divisionId: division?._id }
   })
+  const [{ leadsStats, metaleadsStats, shiftsStats }, isLoaded] = useMethodCallData('staffing.stats', {})
 
   return (
     <div className="container-fluid h-100">
@@ -66,20 +67,21 @@ export const ManagerDashboard = () => {
         }}
         />
       </Modal>
+     {!isLoaded ? <Loading /> :
       <div className="row h-100">
         <div className="col-2 bg-grey dashboard-side-panel">
           <h3><T>manager</T></h3>
           <h5 className="mb-2 dark-text"><T>leads</T></h5>
           <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-            occupied/total
+            occupied/total: {leadsStats.confirmed}/{leadsStats.needed}
           </div>
           <h5 className="mb-2 dark-text"><T>metalead</T></h5>
           <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-            occupied/total
+            occupied/total: {metaleadsStats.confirmed}/{metaleadsStats.needed}
           </div>
           <h5 className="mb-2 dark-text"><T>shifts</T></h5>
           <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-            booked/total
+            booked/total: {shiftsStats.confirmed}/{shiftsStats.needed}
           </div>
           <Link to="/manager/eventSettings" className="btn btn-light btn-sm">
             <T>event_settings</T>
@@ -124,6 +126,7 @@ export const ManagerDashboard = () => {
           <BuildAndStrikeVolunteerReport type="build-strike" />
         </div>
       </div>
+     }
     </div>
   )
 }
