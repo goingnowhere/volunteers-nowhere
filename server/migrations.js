@@ -14,28 +14,28 @@ Migrations.config({
 })
 
 Migrations.add({
-  version: 15,
+  version: 16,
   up() {
     // Last run migration needs to still exist for some reason
   },
 })
 
-// Make anyone who was a 2023 admin one for 2024
+// Make anyone who was a 2024 admin one for 2025
 Migrations.add({
-  version: 16,
+  version: 17,
   up() {
     Meteor.users.update(
       {
-        roles: { $elemMatch: { _id: 'admin', scope: 'nowhere2023' } },
+        roles: { $elemMatch: { _id: 'admin', scope: 'nowhere2024' } },
       },
-      { $addToSet: { roles: { _id: 'admin', scope: 'nowhere2024', assigned: true } } },
+      { $addToSet: { roles: { _id: 'admin', scope: 'nowhere2025', assigned: true } } },
       { multi: true },
     )
     Meteor.users.update(
       {
-        roles: { $elemMatch: { _id: 'manager', scope: 'nowhere2023' } },
+        roles: { $elemMatch: { _id: 'manager', scope: 'nowhere2024' } },
       },
-      { $addToSet: { roles: { _id: 'manager', scope: 'nowhere2024', assigned: true } } },
+      { $addToSet: { roles: { _id: 'manager', scope: 'nowhere2025', assigned: true } } },
       { multi: true },
     )
   },
