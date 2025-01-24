@@ -32,7 +32,7 @@ export function HomePage({ user, settings, isLoaded }) {
     <>
       <header id="page-top" className="masthead bg-primary text-white text-center">
         <div className="container">
-          <h1 className="home-title">Co-Create Nowhere 2024</h1>
+          <h1 className="home-title">Co-Create Nowhere 2025</h1>
           <div className="row justify-content-center">
             <div className="col-lg-6">
               {!isLoaded ? (
