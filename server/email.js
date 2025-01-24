@@ -375,7 +375,7 @@ export const sendReviewNotificationEmail = new ValidatedMethod({
 
 // Defaults
 Accounts.emailTemplates.from = 'FIST <fist@goingnowhere.org>'
-Accounts.emailTemplates.siteName = 'FIST Nowhere 2024'
+Accounts.emailTemplates.siteName = 'FIST Nowhere 2025'
 
 Accounts.emailTemplates.enrollAccount.from = () => EmailForms.getFrom('enrollAccount')
 Accounts.emailTemplates.enrollAccount.subject = (user) => {
