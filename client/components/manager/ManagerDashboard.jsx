@@ -66,68 +66,70 @@ export const ManagerDashboard = () => {
         }}
         />
       </Modal>
-      {!isLoaded
-        ? <Loading />
-        : (
-          <div className="row h-100">
-            <div className="col-2 bg-grey dashboard-side-panel">
-              <h3><T>manager</T></h3>
-              <h5 className="mb-2 dark-text"><T>leads</T></h5>
-              <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-                occupied/total: {leadsStats.confirmed}/{leadsStats.needed}
-              </div>
-              <h5 className="mb-2 dark-text"><T>metalead</T></h5>
-              <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-                occupied/total: {metaleadsStats.confirmed}/{metaleadsStats.needed}
-              </div>
-              <h5 className="mb-2 dark-text"><T>shifts</T></h5>
-              <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
-                booked/total: {shiftsStats.confirmed}/{shiftsStats.needed}
-              </div>
-              <Link to="/manager/eventSettings" className="btn btn-light btn-sm">
-                <T>event_settings</T>
-              </Link>
-              <button
-                type="button"
-                className="btn btn-light btn-sm"
-                onClick={() => addDepartment(divisionId)}
-              >
-                <T>add_department</T>
-              </button>
-              {/* <button type="button" className="btn btn-light btn-sm" onClick={syncQuicket}>
-              Sync Quicket guestlist
-            </button> */}
-              <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
-              <CsvExportButton
-                method="all.rota"
-                buttonText="rota_export"
-                filename="rota"
-                methodArgs={{}}
-              />
-              <CsvExportButton
-                method="ee.csv"
-                buttonText="early_entry"
-                filename="ee"
-                methodArgs={{}}
-              />
-              <h3><T>danger_zone</T></h3>
-              <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
-                Send Reminders to everyone
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-light"
-                onClick={() => setShowNewEventModal(true)}
-              >
-                Prepare FIST for a new event
-              </button>
-            </div>
-            <div className="col-10">
-              <h2 className="header"><T>staffing_report</T>: <T>build_strike</T></h2>
-              <BuildAndStrikeVolunteerReport type="build-strike" />
-            </div>
-          </div>
-        )}
+      <div className="row h-100">
+        <div className="col-2 bg-grey dashboard-side-panel">
+          <h3><T>manager</T></h3>
+          {!isLoaded
+            ? <Loading />
+            : (
+              <>
+                <h5 className="mb-2 dark-text"><T>leads</T></h5>
+                <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
+                  occupied/total: {leadsStats.confirmed}/{leadsStats.needed}
+                </div>
+                <h5 className="mb-2 dark-text"><T>metalead</T></h5>
+                <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
+                  occupied/total: {metaleadsStats.confirmed}/{metaleadsStats.needed}
+                </div>
+                <h5 className="mb-2 dark-text"><T>shifts</T></h5>
+                <div data-toggle="tooltip" data-placement="top" title="{{__ wanted_covered_confirmed}}">
+                  booked/total: {shiftsStats.confirmed}/{shiftsStats.needed}
+                </div>
+              </>
+            )}
+          <Link to="/manager/eventSettings" className="btn btn-light btn-sm">
+            <T>event_settings</T>
+          </Link>
+          <button
+            type="button"
+            className="btn btn-light btn-sm"
+            onClick={() => addDepartment(divisionId)}
+          >
+            <T>add_department</T>
+          </button>
+          {/* <button type="button" className="btn btn-light btn-sm" onClick={syncQuicket}>
+          Sync Quicket guestlist
+        </button> */}
+          <CsvExportButton method="cantina.setup" buttonText="cantina_setup_export" filename="cantina" />
+          <CsvExportButton
+            method="all.rota"
+            buttonText="rota_export"
+            filename="rota"
+            methodArgs={{}}
+          />
+          <CsvExportButton
+            method="ee.csv"
+            buttonText="early_entry"
+            filename="ee"
+            methodArgs={{}}
+          />
+          <h3><T>danger_zone</T></h3>
+          <button type="button" className="btn btn-light btn-sm" onClick={sendMassReminders}>
+            Send Reminders to everyone
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-light"
+            onClick={() => setShowNewEventModal(true)}
+          >
+            Prepare FIST for a new event
+          </button>
+        </div>
+        <div className="col-10">
+          <h2 className="header"><T>staffing_report</T>: <T>build_strike</T></h2>
+          <BuildAndStrikeVolunteerReport type="build-strike" />
+        </div>
+      </div>
     </div>
   )
 }
