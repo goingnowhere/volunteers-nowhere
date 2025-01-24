@@ -51,7 +51,9 @@ export const ManagerDashboard = () => {
     const division = Volunteers.collections.division.findOne({ name: topLevelDivision })
     return { divisionId: division?._id }
   })
-  const [{ leadsStats, metaleadsStats, shiftsStats }, isLoaded] = useMethodCallData('staffing.stats', {})
+  const [{ leadsStats, metaleadsStats, shiftsStats }, isLoaded] = useMethodCallData(
+    `${Volunteers.eventName}.Volunteers.getAllDeptStats.manager`,
+  )
 
   return (
     <div className="container-fluid h-100">

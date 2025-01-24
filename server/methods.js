@@ -80,35 +80,6 @@ export const adminChangeUserPassword = new ValidatedMethod({
   },
 })
 
-export const staffingStats = new ValidatedMethod({
-  name: 'staffing.stats',
-  mixins: [authMixins.isManager],
-  validate: null,
-  run() {
-    const leadsStats = { needed: 0, confirmed: 0 }
-    Volunteers.services.stats.getLeads({}, true).forEach((lead) => {
-      leadsStats.needed += lead.needed
-      leadsStats.confirmed += lead.confirmed
-    })
-    const metaleadsStats = { needed: 0, confirmed: 0 }
-    Volunteers.collections.department.find().fetch().forEach((dept) => {
-      metaleadsStats.needed += 1
-      Volunteers.collections.lead.find({ parentId: dept._id }).forEach((metalead) => {
-        metaleadsStats.confirmed += Volunteers.collections.signups.find(
-          { shiftId: metalead._id, status: 'confirmed' },
-        ).count()
-      })
-    })
-    const shiftsStats = {
-      needed: 0,
-      confirmed: Volunteers.collections.signups.find({ type: 'shift', status: 'confirmed' }).count(),
-    }
-    Volunteers.collections.shift.find().fetch()
-      .forEach((shift) => { shiftsStats.needed += shift.max })
-    return { leadsStats, metaleadsStats, shiftsStats }
-  },
-})
-
 export const userStats = new ValidatedMethod({
   name: 'users.stats',
   mixins: [isNoInfoMixin],
