@@ -76,6 +76,11 @@ export const DeptDashboard = () => {
                 </li>
                 <li>
                   <div title={`${t('confirmed')}/${t('needed')}`}>
+                    <T>metaleads</T>: {dept.metaleadRate && `${dept.metaleadRate.confirmed}/${dept.metaleadRate.needed}`}
+                  </div>
+                </li>
+                <li>
+                  <div title={`${t('confirmed')}/${t('needed')}`}>
                     <T>leads</T>: {dept.leadRate && `${dept.leadRate.confirmed}/${dept.leadRate.needed}`}
                   </div>
                 </li>
