@@ -47,7 +47,7 @@ export function HomePage({ user, settings, isLoaded }) {
                       <button type="button" className="col btn btn-secondary m-1" disabled>
                         {seconds} seconds
                       </button>
-                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
+                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/about/join/">
                         I can&apos;t wait, I want to volunteer now!
                       </a>
                     </div>
@@ -64,7 +64,7 @@ export function HomePage({ user, settings, isLoaded }) {
                       >
                         {user ? 'Get to it' : 'Register now'}
                       </Link>
-                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/get-involved/volunteering/">
+                      <a className="col btn btn-secondary m-1" href="https://www.goingnowhere.org/about/join/">
                         I want to help before getting to site!
                       </a>
                     </div>

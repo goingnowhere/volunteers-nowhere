@@ -17,9 +17,9 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.11.0
 FROM node:14.21.3-alpine
 
-ENV NODE_HOME /home/node
-ENV APP_BUNDLE_FOLDER $NODE_HOME/bundle
-ENV SCRIPTS_FOLDER $NODE_HOME/docker
+ENV NODE_HOME=/home/node
+ENV APP_BUNDLE_FOLDER=$NODE_HOME/bundle
+ENV SCRIPTS_FOLDER=$NODE_HOME/docker
 
 # Runtime dependencies; if your dependencies need compilation (native modules such as bcrypt) or you are using Meteor <1.8.1, use app-with-native-dependencies.dockerfile instead
 RUN apk --no-cache add \
@@ -37,7 +37,7 @@ COPY --from=bundler $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 
-ENV PORT 3000
+ENV PORT=3000
 EXPOSE 3000
 
 # Start app
