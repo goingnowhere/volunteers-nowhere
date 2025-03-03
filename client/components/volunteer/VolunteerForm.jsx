@@ -42,7 +42,7 @@ const allergyOptions = [
 ]
 const intoleranceOptions = [
   ['gluten', 'Intolerance to gluten'],
-  ['peppers', 'Fish/shellfish'],
+  ['peppers', 'Peppers'],
   ['shellfish', 'Shellfish'],
   ['nuts', 'Peanuts/Nuts'],
   ['egg', 'Egg'],
