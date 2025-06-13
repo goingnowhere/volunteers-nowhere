@@ -1,7 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/react-meteor-data'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
-import { BuildAndStrikeVolunteerReport, Loading, useMethodCallData } from 'meteor/goingnowhere:volunteers'
+import {
+  BuildAndStrikeVolunteerReport,
+  EarlyEntryModalButton,
+  Loading,
+  useMethodCallData,
+} from 'meteor/goingnowhere:volunteers'
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -109,6 +114,7 @@ export const ManagerDashboard = () => {
             filename="rota"
             methodArgs={{}}
           />
+          <EarlyEntryModalButton />
           <CsvExportButton
             method="ee.csv"
             buttonText="early_entry"

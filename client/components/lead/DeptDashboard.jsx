@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react'
 import Fa from 'react-fontawesome'
 import { Link, useParams } from 'react-router-dom'
-import { BuildAndStrikeVolunteerReport, Loading, useMethodCallData } from 'meteor/goingnowhere:volunteers'
+import {
+  BuildAndStrikeVolunteerReport,
+  EarlyEntryModalButton,
+  Loading,
+  useMethodCallData,
+} from 'meteor/goingnowhere:volunteers'
 import { AutoFormComponents } from 'meteor/abate:autoform-components'
 import { AutoForm } from 'meteor/aldeed:autoform'
 
@@ -106,6 +111,7 @@ export const DeptDashboard = () => {
               <button type="button" className="btn btn-light btn-sm d-block" onClick={addTeam}>
                 <Fa name="wrench" /> <T>add_team</T>
               </button>
+              <EarlyEntryModalButton deptId={deptId} />
               <button type="button" className="btn btn-light btn-sm d-block" onClick={earlyEntry}>
                 <Fa name="wrench" /> <T>early_entry</T>
               </button>
