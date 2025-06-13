@@ -108,6 +108,22 @@ export const SettingsSchema = new SimpleSchema({
     },
   },
 
+  // TODO switch this to a less shitty datetime picker (and all others while we're at it)
+  earlyEntryRequirementEnd: {
+    type: Date,
+    autoform: {
+      afFieldHelpText() { return 'The time after which an Early Entry is no longer needed' },
+      afFieldInput: {
+        type: 'datetimepicker',
+        placeholder: 'After this date no Early Entry is needed',
+        opts: () => ({
+          format: 'DD-MM-YYYY HH:mm',
+          timepicker: true,
+        }),
+      },
+    },
+  },
+
   cronFrequency: {
     type: String,
     optional: true,
