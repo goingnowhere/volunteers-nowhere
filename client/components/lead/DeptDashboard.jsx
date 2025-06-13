@@ -29,8 +29,6 @@ export const DeptDashboard = () => {
   const addTeam = () =>
     AutoFormComponents.ModalShowWithTemplate('insertUpdateTemplate',
       { form: { collection: Volunteers.collections.team }, data: { parentId: deptId } }, '', 'lg')
-  const earlyEntry = () =>
-    AutoFormComponents.ModalShowWithTemplate('earlyEntry', dept, 'Early Entries')
 
   useEffect(() => {
     AutoForm.addHooks([
@@ -112,9 +110,6 @@ export const DeptDashboard = () => {
                 <Fa name="wrench" /> <T>add_team</T>
               </button>
               <EarlyEntryModalButton deptId={deptId} />
-              <button type="button" className="btn btn-light btn-sm d-block" onClick={earlyEntry}>
-                <Fa name="wrench" /> <T>early_entry</T>
-              </button>
               <CsvExportButton
                 method="dept.rota"
                 buttonText="rota_export"
