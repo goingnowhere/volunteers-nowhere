@@ -40,6 +40,6 @@ export const ExportButton = ({
       parse,
     })}
   >
-    <Fa name="file" /> <T>{buttonText}</T>
+    <Fa name="download" /> <T>{buttonText}</T>
   </button>
 )
